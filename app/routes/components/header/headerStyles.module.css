@@ -1,0 +1,11 @@
+.headerContainer {
+}
+
+.menuIcon {
+  position: relative;
+}
+
+.menuIcon:hover {
+  cursor: pointer;
+}
+

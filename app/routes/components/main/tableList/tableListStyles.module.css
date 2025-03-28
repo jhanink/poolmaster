@@ -1,0 +1,13 @@
+.tableListContainer {
+    min-width: 300px;
+}
+
+.bottomScrollSpacer {
+  height: 0;
+}
+
+@media (min-width: 640px) {
+  .bottomScrollSpacer {
+    height: 40px;
+  }
+}

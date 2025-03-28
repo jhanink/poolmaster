@@ -1,0 +1,36 @@
+.itemCardContainer {
+  margin-top: 10px;
+  text-align: center;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.itemDurationContainer {
+  min-width: 60px;
+}
+
+.itemDurationBox {
+  min-width: 90px;
+}
+
+.itemCard {
+  min-width: 200px;
+}
+
+.itemCardName {
+  flex-basis: 100%;
+}
+
+.itemCardInitial {
+  background-color: yellow;
+  opacity: 0;
+  transition: opacity ease-in-out 2.0s;
+  -webkit-transition: opacity 2.0s ease-in;
+  -moz-transition: opacity 2.0s ease-in;
+  -o-transition: opacity 2.0s ease-in;
+}
+.itemCardExpanded {
+  background-color: red;
+  opacity: 1;
+}

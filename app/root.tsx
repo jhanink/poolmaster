@@ -7,6 +7,8 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { useAtom } from "jotai";
+import { appStateAtom } from "./appStateGlobal/atoms";
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -24,6 +26,7 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [APP_STATE] = useAtom(appStateAtom);
   return (
     <html lang="en">
       <head>
@@ -32,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className={`${APP_STATE.isDarkModeEnabled ? 'dark' : ''} bg-black touch-none`}>
         {children}
         <ScrollRestoration />
         <Scripts />
