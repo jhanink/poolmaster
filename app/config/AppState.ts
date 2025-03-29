@@ -1,5 +1,4 @@
 export interface AppState {
-  isSidebarOpen: boolean,
   isDarkModeEnabled: boolean,
   account?: Account,
   guestList: Guest[],
@@ -8,8 +7,20 @@ export interface AppState {
 }
 
 export const DefaultAppState: AppState = {
-  isSidebarOpen: false,
   isDarkModeEnabled: false,
+  account: {
+    id: 1,
+    name: "Shane Van Boening",
+    avatar: "https://avatars.githubusercontent.com/u/1000000?v=4",
+    initials: "SVB",
+    email: "",
+    phone: "",
+    address: "",
+    venue: "South Dakota Billiards",
+    password: "password",
+    createdAt: 0,
+    modifiedAt: 0
+  },
   guestList: [],
   reservations:[],
   tables: []

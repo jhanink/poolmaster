@@ -1,0 +1,47 @@
+{
+  "isDarkModeEnabled": true,
+  "account": {
+    "id": 0,
+    "name": "Shane Van Boening",
+    "avatar": "https://avatars.githubusercontent.com/u/1000000?v=4",
+    "initials": "SVB",
+    "email": "",
+    "phone": "",
+    "address": "",
+    "venue": "South Dakota Billiards",
+    "password": "password",
+    "createdAt": 0,
+    "modifiedAt": 0
+  },
+  "guestList": [],
+  "reservations": [],
+  "tables": [
+    {
+      "id": 1,
+      "number": 1,
+      "name": "Table 1",
+      "type": "Regulation",
+      "capacity": 4,
+      "subtype": "9ft",
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "number": 2,
+      "name": "Table 2",
+      "type": "Bar",
+      "capacity": 4,
+      "subtype": "7ft",
+      "isActive": true
+    },
+    {
+      "id": 3,
+      "number": 3,
+      "name": "Table 3",
+      "type": "Bar",
+      "capacity": 4,
+      "subtype": "7ft",
+      "isActive": true
+    }
+  ]
+}

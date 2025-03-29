@@ -7,7 +7,6 @@ class WebSocketManager {
   private ID = Math.random().toString(36).substr(2, 9);
 
   private constructor() {
-    console.log('---- WebSocketManager CONSTRUCTOR', this.ID);
   }
 
   public static getInstance(): WebSocketManager {
@@ -20,19 +19,19 @@ class WebSocketManager {
   public initialize(server: Server): void {
     if (!this.wss) {
       this.wss = new WebSocketServer({ server });
-      console.log('---- WebSocket server initialized', this.ID);
+      console.log('--- WebSocket server initialized', this.ID);
 
       this.wss.on('connection', (ws: WebSocket) => {
-        console.log('---- client connected', this.ID);
+        console.log('--- Client connected', this.ID);
         ws.on('message', (message: string) => {
-          console.log('---- received from client: %s', this.ID);
+          console.log('--- Received from client: %s', this.ID);
         });
       });
       this.wss.on('close', (code, reason) => {
-        console.log('---- WebSocket server closed', this.ID, code, reason);
+        console.log('--- WebSocket server closed', this.ID, code, reason);
       });
       this.wss.on('error', (error) => {
-        console.error('---- WebSocket server error:', this.ID, error.name);
+        console.error('--- WebSocket server error:', this.ID, error.name);
       }
       );
     }
@@ -44,7 +43,7 @@ class WebSocketManager {
 
   public broadcast(message: any) {
     if (!this.wss) {
-      console.error("WebSocket server not initialized.");
+      console.error("--- WebSocket server not initialized.");
       return;
     }
 

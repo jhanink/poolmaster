@@ -1,9 +1,7 @@
 import mainStyles from '../mainStyles.module.css'
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestListStyles.module.css";
-import { ArrowRightIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { appStateAtom, guestFormOpenAtom } from "~/appStateGlobal/atoms";
 import { DefaultGuestData, type Guest } from "~/config/AppState";
@@ -39,17 +37,6 @@ export default function GuestList() {
             </div>
           )}
         </div>
-      </div>
-
-      <div className="flex mt-5">
-        {
-          APP_STATE.guestList.length === 0 && !GUEST_FORM_OPEN && (
-              <div className="flex-1 text-center mx-auto motion-preset-confetti">
-                <FontAwesomeIcon className="size-5 mr-1 text-gray-400" icon={faCoffee} />
-                <span className="text-xl text-gray-600 ml-3">( NO GUESTS WAITING )</span>
-              </div>
-          )
-        }
       </div>
 
       <div className={`WAITLIST text-sm text-gray-500`}>

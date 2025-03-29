@@ -9,7 +9,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { appStateFilePath } from "~/config/AppConfig";
 import fs from 'fs/promises';
-import type { AppState } from "~/config/AppState";
+import { type AppState } from "~/config/AppState";
 import type { AppConfig } from '~/config/AppConfig';
 import config from '~/config/app-config.json';
 
