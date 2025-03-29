@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
     const newAppState = handleDelete(fileAppState, requestData);
     await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-    console.log('deleteGuestService')
+    //console.log('deleteGuestService')
     webSocketManager.broadcast({...newAppState});
 
     return Response.json(newAppState);
@@ -24,7 +24,7 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 const handleDelete = (fileAppState: AppState, requestData: {guestId: number}): AppState => {
-  console.log({id: requestData.guestId})
+  //console.log({id: requestData.guestId})
   const guestList = fileAppState.guestList;
   const tables = fileAppState.tables;
 

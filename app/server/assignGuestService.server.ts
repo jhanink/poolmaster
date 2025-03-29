@@ -12,7 +12,7 @@ export const action: ActionFunction = async ({ request }) => {
     const newAppState = handleAssignment(fileAppState, requestData);
     await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-    console.log('assignGuestService')
+    //console.log('assignGuestService')
     webSocketManager.broadcast({...newAppState});
 
     return Response.json(newAppState);

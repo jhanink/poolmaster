@@ -1,32 +1,38 @@
+import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
+import ReconnectingWebSocket from 'reconnecting-websocket';
 import AppFooter from "../footer/footer";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import styles from "./poolMasterStyles.module.css";
 import { appStateAtom } from "~/appStateGlobal/atoms";
-import { useEffect, useRef } from "react";
 import { AppStorage } from "~/util/AppStorage";
 
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const ws = useRef<WebSocket | null>(null);
+
+  const ws = useRef<ReconnectingWebSocket | null>(null);
 
   // Function to initialize the WebSocket connection
   const initializeWebSocket = () => {
+    const clientId = Math.random().toString(36).slice(2, 9);
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const host = window.location.host; // Includes hostname and port
     const wsUrl = `${protocol}//${host}`;
 
+
     // Close the existing WebSocket if it exists
     if (ws.current) {
+      ws.current.onclose = null;
       ws.current.close();
+      ws.current = null;
     }
 
-    // Create a new WebSocket connection
-    ws.current = new WebSocket(wsUrl);
+    ws.current = new ReconnectingWebSocket(wsUrl);
 
     ws.current.onopen = () => {
-      //console.log("---(ws) WebSocket connection established");
+      console.log("---(ws) connection established");
+      ws.current?.send(`Client/${clientId}`); // Send a message to the server
     };
 
     ws.current.onmessage = (event) => {
@@ -39,11 +45,13 @@ export default function AppPoolMaster() {
 
     ws.current.onerror = (error) => {
       //console.error("---(ws) WebSocket error:", error);
+      setTimeout(initializeWebSocket, 5000); // Attempt to reconnect after 5 seconds
     };
 
     ws.current.onclose = (event) => {
       //console.log("---(ws) WebSocket connection closed:", event.code, event.reason);
     };
+
   };
 
   useEffect(() => {
@@ -56,13 +64,13 @@ export default function AppPoolMaster() {
         console.log(`Visible at (${Date.now()}). Reconnecting ws.`);
         try {
           initializeWebSocket(); // Reconnect WebSocket when the page becomes visible
-          AppStorage.getAppStateRemote().then((appState) => {
-            if (appState) {
-              setAppState(appState);
-            }
-          }).catch((error) => {
-            console.error("Error fetching app state:", error);
-          });
+          // AppStorage.getAppStateRemote().then((appState) => {
+          //   if (appState) {
+          //     setAppState(appState);
+          //   }
+          // }).catch((error) => {
+          //   console.error("Error fetching app state:", error);
+          // });
         } catch(e) {
           console.log('Error reinitializing websocket after interruption')
         }

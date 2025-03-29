@@ -20,7 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
       const newAppState: AppState = await request.json();
       await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-      console.log('storageService');
+      //console.log('storageService');
       webSocketManager.broadcast({...newAppState});
 
       return Response.json({ message: 'App state saved successfully again' });

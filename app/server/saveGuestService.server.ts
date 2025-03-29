@@ -13,7 +13,7 @@ export const action: ActionFunction = async ({ request }) => {
     const newAppState = mergeToGuestList(fileAppState, requestData);
     await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-    console.log('saveGuestService')
+    //console.log('saveGuestService')
     webSocketManager.broadcast({...newAppState});
 
     return Response.json(newAppState);
