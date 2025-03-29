@@ -291,9 +291,9 @@ export default function GuestItem(props: {
       <ModalConfirm
         show={SHOW_CONFIRM_DELETE}
         dialogTitle={`CONFIRM DELETE`}
-        dialogMessageFn={() => <div className="text-lg">
+        dialogMessageFn={() => <span className="text-lg">
           Delete <span className="text-red-500 font-bold">{guest.name.toUpperCase()}</span> from Wait List?
-        </div>}
+        </span>}
         onConfirm={onConfirmDelete}
         onCancel={onCancelDelete}
       />

@@ -20,7 +20,6 @@ export default function AppPoolMaster() {
     const host = window.location.host; // Includes hostname and port
     const wsUrl = `${protocol}//${host}`;
 
-
     // Close the existing WebSocket if it exists
     if (ws.current) {
       ws.current.onclose = null;
@@ -51,7 +50,6 @@ export default function AppPoolMaster() {
     ws.current.onclose = (event) => {
       //console.log("---(ws) WebSocket connection closed:", event.code, event.reason);
     };
-
   };
 
   useEffect(() => {
