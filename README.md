@@ -1,6 +1,6 @@
 # Pool Master
 
-A pool hall management application.
+An App for Pool Hall Operations Management.
 
 # Development Notes
 
