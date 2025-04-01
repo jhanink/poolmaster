@@ -9,7 +9,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
 export default function AppPoolMaster() {
-  const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [, setAppState] = useAtom(appStateAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
@@ -62,13 +62,13 @@ export default function AppPoolMaster() {
         console.log(`Visible at (${Date.now()}). Reconnecting ws.`);
         try {
           initializeWebSocket(); // Reconnect WebSocket when the page becomes visible
-          // AppStorage.getAppStateRemote().then((appState) => {
-          //   if (appState) {
-          //     setAppState(appState);
-          //   }
-          // }).catch((error) => {
-          //   console.error("Error fetching app state:", error);
-          // });
+          AppStorage.getAppStateRemote().then((appState) => {
+            if (appState) {
+              setAppState(appState);
+            }
+          }).catch((error) => {
+            console.error("Error fetching app state:", error);
+          });
         } catch(e) {
           console.log('Error reinitializing websocket after interruption')
         }

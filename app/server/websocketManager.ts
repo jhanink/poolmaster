@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import { appStateFilePath } from "../config/AppConfig";
 import type { AppState } from "../config/AppState";
 
-const BROADCAST_INTERVAL = 1000 * 15; // 15 seconds
+const BROADCAST_INTERVAL = 1000 * 10; // 10 seconds
 
 class WebSocketManager {
   private static instance: WebSocketManager;

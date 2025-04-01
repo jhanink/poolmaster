@@ -8,7 +8,7 @@ import { DefaultGuestData, type Guest } from "~/config/AppState";
 import GuestForm from "../guestForm/guestForm";
 import GuestListItem from "../guestListItem/guestListItem";
 
-const guestButtonStyles = `text-gray-500 border-gray-800 font-normal ${actionButtonStyles} px-3 py-2 hover:ring-1`;
+const guestButtonStyles = `text-gray-500 border-gray-800 font-normal ${actionButtonStyles} hover:ring-1`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -23,11 +23,10 @@ export default function GuestList() {
       <div className="flex m-1">
         <div className="flex-1">
           { !GUEST_FORM_OPEN && (
-            <div className="flex-1 m-2 mt-3 text-center nowrap">
+            <div className="flex-1 mx-2 mt-3 mb-5 text-center nowrap">
               <button type="button" className={`${guestButtonStyles}`} onClick={onClickAddToGuestList}>
-                {/* <PlusIcon aria-hidden="true" className="mr-3 size-4" /> */}
-                <ArrowRightIcon aria-hidden="true" className="mr-2 size-5" />
-                <span className="text-md">Guest Check In</span>
+                <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
+                <span className="text-sm">Add Guest</span>
               </button>
             </div>
           )}
@@ -39,9 +38,9 @@ export default function GuestList() {
         </div>
       </div>
 
-      <div className={`WAITLIST text-sm text-gray-500`}>
+      {/* <div className={`WAITLIST text-sm text-gray-500`}>
         Wait List ({APP_STATE.guestList.length})
-      </div>
+      </div> */}
       <div className={`${mainStyles.column} justify-center`}>
         {
           APP_STATE.guestList

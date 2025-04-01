@@ -3,7 +3,7 @@ import ProfileMenu from "../profileMenu/ProfileMenu";
 import { useAtom } from "jotai";
 import { type ListFilterType, appStateAtom, dndGuestToAssignTableAtom, guestFormOpenAtom, manageTablesAtom, profileMenuOpenAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
-import { dialogBackdropStyles} from "~/util/GlobalStylesUtil";
+import { buttonHoverRing, dialogBackdropStyles} from "~/util/GlobalStylesUtil";
 import { useDrop } from 'react-dnd';
 import { type Guest } from "~/config/AppState";
 
@@ -22,8 +22,8 @@ export default function AppHeader() {
   const [PROFILE_MENU_OPEN, setProfileMenuOpen] = useAtom(profileMenuOpenAtom);
   const [IS_MANAGE_TABLES] = useAtom(manageTablesAtom);
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
-  const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
-  const [GUEST_FORM_OPEN, setGuestFormOpen] = useAtom(guestFormOpenAtom);
+  const [, setSelectedTable] = useAtom(selectedTableAtom);
+  const [, setGuestFormOpen] = useAtom(guestFormOpenAtom);
   const [DND_GUEST, setDndGuestToAssignTable] = useAtom(dndGuestToAssignTableAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -57,7 +57,7 @@ export default function AppHeader() {
 
   return (
     <>
-      <div className="flex items-center relative text-center border-b border-t border-zinc-800 p-1 font-roboto select-none">
+      <div className="flex items-center relative text-center border-b border-t border-zinc-800 p-1 select-none">
         <div className="flex-1 m-3 text-left text-nowrap">
           <div className="text-md text-gray-200">{APP_STATE.account?.venue}</div>
         </div>
@@ -89,18 +89,18 @@ export default function AppHeader() {
             <span className={`${statusPillStyles}`}>{Helpers.reservations(APP_STATE).length}</span>
             <span>RSVP</span>
           </span> */}
-          <span className={`${SELECTED_LIST_FILTER === 'waitlist' ? selectedFilterStyle : ''} py-1 px-2 mx-2 border border-blue-500 text-blue-500 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('waitlist')}>
+          <span className={`${buttonHoverRing} ${SELECTED_LIST_FILTER === 'waitlist' ? selectedFilterStyle : ''}  py-1 px-2 mx-2 border border-gray-500 text-blue-500 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('waitlist')}>
             <span className={`${statusPillStyles}`}>{APP_STATE.guestList.length}</span>
             <span>WAITING</span>
           </span>
-          <span className={`${SELECTED_LIST_FILTER === 'tablelist' ? selectedFilterStyle : ''} py-1 px-2 mx-2 text-green-600 border border-green-500 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('tablelist')}>
+          <span className={`${buttonHoverRing} ${SELECTED_LIST_FILTER === 'tablelist' ? selectedFilterStyle : ''} py-1 px-2 mx-2 border border-gray-500 text-green-600 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('tablelist')}>
             <span className={`${statusPillStyles}`}>{Helpers.tablesAssigned(APP_STATE).length}</span>
             <span>ACTIVE</span>
           </span>
-          <span className={`py-1 mx-2 text-gray-500`}>
+          {/* <span className={`py-1 mx-2 text-gray-500`}>
             <span className={`${statusPillStyles}`}>{Helpers.tablesAvailable(APP_STATE).length}</span>
             <span>OPEN</span>
-          </span>
+          </span> */}
         </div>
       </>}
       {IS_MANAGE_TABLES && <>

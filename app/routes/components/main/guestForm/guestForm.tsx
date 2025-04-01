@@ -129,7 +129,7 @@ export default function GuestForm(props: {
   }, [GUEST_FORM_OPEN]);
 
   return ( <>
-    <fetcher.Form method="POST" className={`bg-transparent motion-preset-pop motion-duration-200`} onClick={onClickForm}>
+    <fetcher.Form method="POST" className={`bg-transparent`} onClick={onClickForm}>
       <div>
         <div className={formColumnStyles}>
           <div className={`${labelStyles} ml-1 mt-4`}>

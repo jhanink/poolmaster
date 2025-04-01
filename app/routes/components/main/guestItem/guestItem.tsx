@@ -34,7 +34,7 @@ export default function GuestItem(props: {
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
   const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-md`;
-  const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-2xl`;
+  const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
 
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TIME_ELAPSED, setTimeElapsed] = useState({minutes: 0, hours: 0, days: 0});
@@ -94,6 +94,7 @@ export default function GuestItem(props: {
     const appState = await AppStorage.deleteGuestRemote(props.guest.id);
     setAppState(appState);
     props.setItemExpanded(prev => false);
+    setSelectedTable(undefined);
   }
 
   const editItemClicked = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -206,7 +207,7 @@ export default function GuestItem(props: {
 
   const itemDetailBodyContent = () => {
     return !(ITEM_EDIT || props.isEditForm) && ( // Expanded State: item Detail
-      <div className="motion-preset-pop motion-duration-200">
+      <div className="">
         <div className="flex">
           <div className="COLUMN text-left flex-1 text-gray-400 ml-7 my-3">
             { guest.phoneNumber && (
@@ -215,7 +216,7 @@ export default function GuestItem(props: {
             {guest.partySize > 1 && (
               <div className="ROW">{guest.partySize - 1} Extra Players
                 {guest.extraPlayersString && (
-                  <div className="ml-5 mb-2 text-blue-400 text-sm uppercase">{guest.extraPlayersString}</div>
+                  <div className="ml-5 mb-2 text-purple-400 text-sm uppercase">{guest.extraPlayersString}</div>
                 )}
               </div>
             )}
@@ -223,7 +224,7 @@ export default function GuestItem(props: {
             { guest.notes && (
               <div className="ROW mt-2">
                 Notes
-                <div className="italic ml-5 text-sm text-blue-400">{guest.notes} </div>
+                <div className="italic ml-5 text-sm text-purple-400">{guest.notes} </div>
               </div>
             )}
           </div>
@@ -261,7 +262,7 @@ export default function GuestItem(props: {
 
   const itemCollapsedRowContent = () => {
     return ( // Collapsed: Item row
-      <div className="flex text-lg motion-preset-focus">
+      <div className="flex text-lg">
         <div className="flex-grow-0 text-left min-w-7">
           {!props.isAssigned && (
             <span className="text-gray-600">{props.index + 1}. </span>
@@ -281,7 +282,7 @@ export default function GuestItem(props: {
   return (
     <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
       { props.itemExpanded && ( // Expanded State
-        <div className={`text-left text-lg rounded-lg`}>
+        <div className={`text-left text-lg rounded-lg motion-preset-expand`}>
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}

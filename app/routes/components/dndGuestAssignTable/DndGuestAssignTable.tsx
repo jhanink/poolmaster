@@ -38,7 +38,7 @@ export function DndGuestAssignTable() {
   }
 
   return (
-    <div className="border-white">
+    <div className="border-white select-none">
       <div className="flex-1 text-center">
         {tables.filter((table: TableItemData) => !table.guest).length === 0 && (
           <div className="text-gray-200 text-sm mt-3 p-3">

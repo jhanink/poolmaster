@@ -7,9 +7,9 @@ import { webSocketManager } from "./app/server/websocketManager";
 export default defineConfig({
   server: {
     hmr: {
-      port: 8980
+      port: 13715,
     },
-    allowedHosts: ['devbake.ngrok.io'],
+    allowedHosts: true,
     watch: {
       ignored: ['**/fileStorage/**'], // Ignore the fileStorage directory
     },

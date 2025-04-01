@@ -6,8 +6,9 @@ import { TrashIcon, PencilSquareIcon, ArrowsPointingInIcon } from "@heroicons/re
 import { useAtom } from "jotai";
 import { manageTablesAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 
-const guestUnassigned =`${styles.itemCard} select-none p-2 text-gray-700 border border-gray-800 rounded-2xl`;
-const guestAssigned = `${styles.itemCard} select-none p-2 text-green-600 border border-green-800 rounded-2xl`
+const cardStyle = `${styles.itemCard} select-none p-2 text-gray-700 border border-gray-800 rounded-xl`;
+const guestUnassigned =`${cardStyle} text-gray-700`;
+const guestAssigned = `${cardStyle} border-green-800 text-green-700`;
 
 export default function TableListItem(props: {
     table: TableItemData,
@@ -21,8 +22,8 @@ export default function TableListItem(props: {
     const table = props.table;
 
     useEffect(() => {
-      if (SELECTED_TABLE && SELECTED_TABLE.id === table.id) {
-        setItemExpanded(true);
+      if (SELECTED_TABLE && SELECTED_TABLE.id !== table.id) {
+        //setItemExpanded(false);
       }
     }, [SELECTED_TABLE]);
 
@@ -31,9 +32,6 @@ export default function TableListItem(props: {
         return;
       }
       setItemExpanded(true);
-      setTimeout(() => {
-        props.tableRef.current && props.tableRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      })
     }
 
     const onCloseExpandedClicked = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -51,9 +49,9 @@ export default function TableListItem(props: {
     }
 
     return (
-      <div className={`${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onTableClicked}>
+      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onTableClicked}>
         <div className="uppercase">
-          <div className="text-xl motion-preset-focus">
+          <div className="text-xl">
             {table.nickname || table.name}
             <div className="absolute top-2 right-0 hover:cursor-pointer">
               {isManageTables && <>
