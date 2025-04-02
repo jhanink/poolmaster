@@ -9,7 +9,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
 export default function AppPoolMaster() {
-  const [, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE, setAppState] = useAtom(appStateAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
@@ -27,11 +27,12 @@ export default function AppPoolMaster() {
       ws.current = null;
     }
 
-    ws.current = new ReconnectingWebSocket(wsUrl);
+    const sourceId = APP_STATE.account.id.split('-')[4];
+    ws.current = new ReconnectingWebSocket(`${wsUrl}?sourceId=${sourceId}&clientId=${clientId}`);
 
     ws.current.onopen = () => {
       console.log("---(ws) connection established");
-      ws.current?.send(`Client/${clientId}`); // Send a message to the server
+      //ws.current?.send(`Client/${clientId}`); // Send a message to the server
     };
 
     ws.current.onmessage = (event) => {

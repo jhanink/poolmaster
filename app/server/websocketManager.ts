@@ -28,10 +28,17 @@ class WebSocketManager {
     this.wss = new WebSocketServer({ server });
     console.log('--- WebSocket server initialized');
 
-    this.wss.on('connection', (ws: WebSocket) => {
-      //console.log('--- Client connected');
+    this.wss.on('connection', (ws: WebSocket, request: Request) => {
+      const fakePrefix = 'http://localhost';
+      const url = new URL(`${fakePrefix}${request.url}`);
+      const sourceId = url.searchParams.get('sourceId');
+      const clientId = url.searchParams.get('clientId');
+
+      (ws as any).sourceId = sourceId;
+      console.log(`--- Client ${clientId} connected - source ${sourceId}`);
+
       ws.on('message', (message: string) => {
-        console.log(`--- ${message}`, `(${this.wss.clients.size} clients)`);
+        console.log(`--- ${message}`, `(${this.wss.clients.size} clients), ${sourceId}`);
       });
     });
     this.wss.on('close', (code, reason) => {
@@ -40,6 +47,10 @@ class WebSocketManager {
     this.wss.on('error', (error) => {
       console.error('--- WebSocket server error:', error.name);
     });
+
+    // NOTE: In a SAAS environment, every account APP_STATE
+    // needs to be pushed out to all connected clients
+    // associated by client sourceId === account.id
 
     // synchronize state with clients every 10 seconds
     this.interval = setInterval(this.broadcastState, BROADCAST_INTERVAL);
@@ -55,16 +66,20 @@ class WebSocketManager {
     return this.wss;
   }
 
-  public broadcast(message: any) {
+  public broadcast(appState: AppState) {
     if (!this.wss) {
       console.error("--- WebSocket server not initialized.");
       return;
     }
 
-    const messageString = JSON.stringify(message);
-    //console.log(`Broadcasting message to ${this.wss.clients.size} clients`);
+    const sourceId = appState.account?.sourceId;
+    const messageString = JSON.stringify(appState);
+    //console.debug(`Broadcasting message to ${this.wss.clients.size} clients`);
 
     this.wss.clients.forEach((client) => {
+      const clientSourceId = (client as any).sourceId
+      if (!!sourceId && (sourceId !== clientSourceId)) return;
+
       if (client.readyState === WebSocket.OPEN) {
         client.send(messageString);
       }

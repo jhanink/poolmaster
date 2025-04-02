@@ -1,7 +1,8 @@
 {
   "isDarkModeEnabled": true,
   "account": {
-    "id": 0,
+    "id": "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
+    "sourceId": "4b1d0ae4aa52",
     "name": "Shane Van Boening",
     "avatar": "https://avatars.githubusercontent.com/u/1000000?v=4",
     "initials": "SVB",

@@ -9,7 +9,8 @@ export interface AppState {
 export const DefaultAppState: AppState = {
   isDarkModeEnabled: false,
   account: {
-    id: 1,
+    id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
+    sourceId: "4b1d0ae4aa52",
     name: "Shane Van Boening",
     avatar: "https://avatars.githubusercontent.com/u/1000000?v=4",
     initials: "SVB",
@@ -27,7 +28,8 @@ export const DefaultAppState: AppState = {
 }
 
 export interface Account {
-  id: number,
+  id: string,
+  sourceId: string,
   name: string,
   avatar: string,
   initials: string,
