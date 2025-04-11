@@ -1,6 +1,7 @@
 export interface AppState {
   isDarkModeEnabled: boolean,
   account?: Account,
+  billing: CheckoutSettings,
   guestList: Guest[],
   reservations: Reservation[],
   tables: TableItemData[]
@@ -22,6 +23,10 @@ export const DefaultAppState: AppState = {
     createdAt: 0,
     modifiedAt: 0
   },
+  billing: {
+    maxBillablePlayers: 5,
+    defaultBillingRate: "10.00",
+  },
   guestList: [],
   reservations:[],
   tables: []
@@ -42,6 +47,11 @@ export interface Account {
   modifiedAt?: number,
 }
 
+export interface CheckoutSettings {
+  maxBillablePlayers: number,
+  defaultBillingRate: string,
+}
+
 export interface Guest {
   id: number,
   name: string,
@@ -50,9 +60,11 @@ export interface Guest {
   createdAt: number,
   modifiedAt?: number,
   assignedAt: number,
+  checkedOutAt: number,
+  closedOutAt: number,
   partySize: number,
   extraPlayersString?: string,
-  extraPlayers?: {id: number, name: string, assignedAt: number}[],
+  extraPlayers?: {id: number, name: string, assignedAt: number, timeStoppedAt?: number}[],
   notes: string,
   reservation?: Reservation,
 }
@@ -64,23 +76,28 @@ export const DefaultGuestData: Guest = {
   tableType: "Regulation",
   createdAt: 0,
   assignedAt : 0,
+  checkedOutAt: 0,
+  closedOutAt: 0,
   partySize: 1,
   notes: "",
 }
 
 export interface Reservation {
   date: number,
-  // createdAt: number,
-  // modifiedAt?: number,
 }
 
 export interface TableItemData {
   id: number,
   type: string,
-  subtype: string,
   number: number,
   name: string,
-  nickname?: string,
+  tableRate: string,
+  createdAt?: number,
+  modifiedAt?: number,
   isActive: boolean,
+  nickname?: string,
   guest?: Guest,
+  subtype?: string, // TODO: remove this
+  forDelete?: boolean,
+  forAdd?: boolean,
 }

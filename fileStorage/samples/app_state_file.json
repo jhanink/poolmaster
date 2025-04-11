@@ -14,6 +14,10 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
+  "billing": {
+    "maxBillablePlayers": 5,
+    "defaultBillingRate": "10.00"
+  },
   "guestList": [],
   "reservations": [],
   "tables": [
@@ -22,7 +26,7 @@
       "number": 1,
       "name": "Table 1",
       "type": "Regulation",
-      "capacity": 4,
+      "tableRate": "10.00",
       "subtype": "9ft",
       "isActive": true
     },
@@ -31,7 +35,7 @@
       "number": 2,
       "name": "Table 2",
       "type": "Bar",
-      "capacity": 4,
+      "tableRate": "10.00",
       "subtype": "7ft",
       "isActive": true
     },
@@ -40,7 +44,7 @@
       "number": 3,
       "name": "Table 3",
       "type": "Bar",
-      "capacity": 4,
+      "tableRate": "10.00",
       "subtype": "7ft",
       "isActive": true
     }

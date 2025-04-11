@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { actionButtonStyles, dialogBackdropStyles } from '~/util/GlobalStylesUtil';
 
-const dialogPanelStyles=`relative transform overflow-hidden rounded-lg bg-black text-gray-200 px-10 pr-14 py-8 sm:my-8 p-6 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95`;
+const dialogPanelStyles=`text-sm relative transform overflow-hidden rounded-lg bg-black text-gray-200 px-10 pr-14 py-8 sm:my-8 p-6 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95`;
 const exclamationTriangleIconStyles = `mx-auto flex shrink-0 items-center justify-center rounded-full font-bold sm:mx-0 sm:size-10`;
 
 export default function ModalConfirm(props: {

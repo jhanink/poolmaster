@@ -1,13 +1,13 @@
 # Pool Master
 
-An App for Pool Hall Operations Management.
+A Management App for Pool Hall Operations.
 
-# Development Notes
+# System Notes
 
-This is a React application using React Router v7 in "framework" mode with Vite.
+Full-stack React application with React Router v7 in Vite "framework" mode.
 
-* "Remix" style Loaders and Actions
+* "Remix" style data Loaders and Actions
 * TypeScript, Tailwind, tailwindcss-motion animations, react-dnd drag and drop
-* Server websocket for realtime state synchronization across clients
-* React hooks for local state and jotai for global state management
-* Filesystem storage for central shared source of truth state
+* WebSocket real-time App data state synchronization
+* React useState hooks + jotai atoms local/global state
+* JSON file storage shared state
