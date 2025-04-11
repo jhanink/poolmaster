@@ -2,20 +2,26 @@ import styles from "./mainStyles.module.css";
 import TableList from "./tableList/tableList";
 import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
-import { dndGuestToAssignTableAtom, manageTablesAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { DndGuestAssignTable } from "../dndGuestAssignTable/DndGuestAssignTable";
+import { adminScreenAtom, dndGuestToAssignTableAtom, guestCheckoutAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { DndGuestAssignTable } from "../interstitial/dndGuestAssignTable/DndGuestAssignTable";
+import GuestCheckout from "../interstitial/guestCheckout/guestCheckout";
+import Admin from "../admin/admin";
 
 export default function AppMain() {
-  const [IS_MANAGE_TABLES] = useAtom(manageTablesAtom);
-  const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
-  const [DND_GUEST, setDndGuestToAssignTable] = useAtom(dndGuestToAssignTableAtom);
+  const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
+  const [DND_GUEST] = useAtom(dndGuestToAssignTableAtom);
+  const [GUEST_CHECKOUT_STARTED] = useAtom(guestCheckoutAtom);
+  const [ADMIN_SCREEN] = useAtom(adminScreenAtom);
 
   return (
     <div className={`${styles.mainContainer} grow`}>
+      {GUEST_CHECKOUT_STARTED && <GuestCheckout></GuestCheckout>}
       {DND_GUEST && <DndGuestAssignTable></DndGuestAssignTable>}
-      {!DND_GUEST &&
+      {ADMIN_SCREEN && <Admin></Admin>}
+
+      {!DND_GUEST && !GUEST_CHECKOUT_STARTED && !ADMIN_SCREEN &&
         <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>
-          {!(SELECTED_LIST_FILTER === "tablelist") && !IS_MANAGE_TABLES && <>
+          {!(SELECTED_LIST_FILTER === "tablelist") && <>
             <GuestList></GuestList>
           </>}
           {!(SELECTED_LIST_FILTER === "waitlist") && <>

@@ -5,7 +5,6 @@ import TableListItem from "../tableListItem/tableListItem";
 import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
-import { buttonHoverRing } from "~/util/GlobalStylesUtil";
 
 const assignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-green-800 text-green-600 font-bold hover:cursor-pointer`;
 const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-700 text-gray-600 font-bold  `;
@@ -17,8 +16,8 @@ type TableRefs = {
 
 export default function TableList() {
   const [APP_STATE] = useAtom(appStateAtom);
-  const [TABLE_REFS, setTableRefs] = useState<TableRefs>({});
   const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
+  const [TABLE_REFS, setTableRefs] = useState<TableRefs>({});
 
   const tables = APP_STATE.tables;
   const miniMapRef = useRef<HTMLDivElement>(null);
@@ -52,7 +51,7 @@ export default function TableList() {
                 A.number - B.number
               )
               .map((table: TableItemData, index: number) =>
-                <div className={`CHIP ${table.guest && buttonHoverRing} ${table.guest ? assignedStyle : unassignedStyle} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
+                <div className={`CHIP ${table.guest ? assignedStyle : unassignedStyle} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
                   key={table.id}
                   data-table-id={table.id}
                   onClick={(event) => onClickTableChip(event, table)}
@@ -62,11 +61,6 @@ export default function TableList() {
               )
           }
         </div>
-        {/* <div className="text-gray-200 text-sm mt-3 p-2 text-gray-500">
-          {
-            SELECTED_TABLE ? `Selected Table` : `Active Tables (${tables.filter((table) => table.guest).length})`
-          }
-        </div> */}
         <div>
           {tables
           .filter((table) => table.guest)

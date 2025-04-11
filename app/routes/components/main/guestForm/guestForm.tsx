@@ -5,9 +5,8 @@ import { DefaultGuestData, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, guestFormOpenAtom } from "~/appStateGlobal/atoms";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import styles from "./guestFormStyles.module.css";
-import { formFieldStyles } from "~/util/GlobalStylesUtil";
+import { formFieldStylesFullWidth } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { useFetcher } from 'react-router';
 
@@ -35,7 +34,6 @@ export default function GuestForm(props: {
     extraPlayersString: props.guest.extraPlayersString || "",
     tableType: props.guest.tableType || "Regulation",
     notes: props.guest.notes || "",
-
   });
 
   const nameToAddField = useRef<HTMLInputElement>(null);
@@ -62,7 +60,7 @@ export default function GuestForm(props: {
 
     const extraPlayersMap = FORM_FIELDS.extraPlayersString?.split(',').map((v) => v.trim()).filter((v) => v.length);
     const extraPlayersString = extraPlayersMap?.join(', ');
-    const extraPlayers = extraPlayersMap?.map((name, index) => ({id: index, name, assignedAt: 0}));
+    const extraPlayers = extraPlayersMap?.map((name, index) => ({id: index, name, assignedAt: 0, timeStoppedAt: 0})) || [];
 
     setFormFields(prev => ({
       ...prev,
@@ -138,9 +136,13 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles} onDragStart={(event) => {event.preventDefault();event.stopPropagation();}}>
           <div className={`${fieldStyles} flex-grow text-nowrap`}>
-            <input ref={nameToAddField} required name="name"
-
-            onChange={onChangeField} className={`${formFieldStyles}`} placeholder="Enter Guest Name..." maxLength={40}/>
+            <input ref={nameToAddField}
+              required
+              name="name"
+              onChange={onChangeField}
+              className={`${formFieldStylesFullWidth}`}
+              placeholder="Enter Guest Name..."
+              maxLength={40}/>
           </div>
         </div>
         <div className={formColumnStyles}>
@@ -153,7 +155,7 @@ export default function GuestForm(props: {
             <input ref={phoneInputRef}
               name="phoneNumber"
               onChange={onChangeField}
-              className={`${formFieldStyles}`}
+              className={`${formFieldStylesFullWidth}`}
               placeholder="Add Phone Number..."
             />
           </div>
@@ -167,7 +169,12 @@ export default function GuestForm(props: {
             </div>
             <div className={`ROW ${formColumnStyles}`}>
               <div className={`flex-1 flex-grow text-nowrap`}>
-                <select ref={partySizeField} name="partySize" onChange={onChangeField} defaultValue="1" className={`pb-3 ${formFieldStyles}`}>
+                <select ref={partySizeField}
+                  name="partySize"
+                  onChange={onChangeField}
+                  defaultValue="1"
+                  className={`pb-3 ${formFieldStylesFullWidth}`}
+                >
                   {partySizeArray.map((size) => (
                     <option key={size} className={optionStyles} value={size}>{size}</option>
                   ))}
@@ -184,7 +191,13 @@ export default function GuestForm(props: {
           </div>
           <div className={formColumnStyles}>
             <div className={`${fieldStyles} flex-grow text-nowrap`}>
-              <input ref={extraPlayersField} required name="extraPlayersString" onChange={onChangeField} className={`${formFieldStyles}`} placeholder="Enter Player Names..." maxLength={200}/>
+              <input ref={extraPlayersField}
+                required
+                name="extraPlayersString"
+                onChange={onChangeField}
+                className={`${formFieldStylesFullWidth}`}
+                placeholder="Enter Player Names..."
+                maxLength={200}/>
             </div>
           </div>
         </div>
@@ -195,8 +208,14 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
-            <select ref={tableTypeField} name="tableType" onChange={onChangeField} defaultValue="Regulation" className={`uppercase bg-transparent pb-3 ${formFieldStyles}`}>
-              <option className={optionStyles} value="Regulation">Regulation Table</option>
+            <select ref={tableTypeField}
+              name="tableType"
+              onChange={onChangeField}
+              defaultValue="Regulation"
+              className={`uppercase bg-transparent pb-3
+              ${formFieldStylesFullWidth}`}
+            >
+              <option className={optionStyles} value="Regulation">Regulation</option>
               <option className={optionStyles} value="Bar">Bar Table</option>
               <option className={optionStyles} value="Pro">Pro Table</option>
             </select>
@@ -209,28 +228,21 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
-            <textarea ref={notesField} name="notes" onChange={onChangeField} className={`${styles.noScrollbar} text-left resize-none h-24 ${formFieldStyles}`} maxLength={500} placeholder="Add Notes...">
+            <textarea ref={notesField}
+              name="notes"
+              onChange={onChangeField}
+              className={`${styles.noScrollbar} text-left resize-none h-24 ${formFieldStylesFullWidth}`}
+              maxLength={500}
+              placeholder="Add Notes...">
             </textarea>
           </div>
         </div>
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end mr-2">
-        {/* <div className="flex-1 items-center flex-shrink-0 text-right">
-          <input id="reservationCheckbox" type="checkbox" className="hover:cursor-pointer" />
-          <label htmlFor="reservationCheckbox" className="mx-2 text-sm font-medium text-yellow-400 hover:cursor-pointer">RESERVATION</label>
-        </div> */}
-        <button
-          type="button"
-          onClick={onClickCancel}
-          className={`${actionButtonStyles}`}
-        >
+        <button type="button" onClick={onClickCancel} className={`${actionButtonStyles}`}>
           Cancel
         </button>
-        <button
-          onClick={onClickSaveItem}
-          className={actionButtonStyles}
-        >
-          <PlusIcon aria-hidden="true" className="mr-2 size-5" />
+        <button onClick={onClickSaveItem} className={actionButtonStyles}>
           Save
         </button>
       </div>

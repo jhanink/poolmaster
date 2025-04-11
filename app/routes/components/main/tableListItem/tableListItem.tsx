@@ -2,9 +2,9 @@ import { type TableItemData } from "~/config/AppState";
 import styles from "./tableListItemStyles.module.css";
 import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
-import { TrashIcon, PencilSquareIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { manageTablesAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 
 const cardStyle = `${styles.itemCard} select-none p-2 text-gray-700 border border-gray-800 rounded-xl`;
 const guestUnassigned =`${cardStyle} text-gray-700`;
@@ -15,26 +15,31 @@ export default function TableListItem(props: {
     index: number,
     tableRef: React.RefObject<HTMLDivElement | null>,
   }) {
-    const [isManageTables, setManageTables] = useAtom(manageTablesAtom);
+    const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
+    const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);
     const [EDIT_FORM, setEditForm] = useState(false);
-    const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
+
     const table = props.table;
 
     useEffect(() => {
-      if (SELECTED_TABLE && SELECTED_TABLE.id !== table.id) {
-        //setItemExpanded(false);
+      switch (SELECTED_LIST_FILTER) {
+        case (ListFilterTypeEnum.TABLELIST):
+          setItemExpanded(true);
+          break;
+        default:
+          setItemExpanded(false);
       }
-    }, [SELECTED_TABLE]);
+    }, [SELECTED_LIST_FILTER]);
 
-    const onTableClicked = (event: React.MouseEvent<HTMLDivElement>) => {
+    const onClickTable = (event: React.MouseEvent<HTMLDivElement>) => {
       if (ITEM_EXPANDED || !props.table.guest) {
         return;
       }
       setItemExpanded(true);
     }
 
-    const onCloseExpandedClicked = (event: React.MouseEvent<HTMLDivElement>) => {
+    const onClickCloseExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
       setItemExpanded(prev => false);
       setEditForm(prev => false);
       setSelectedTable(undefined as TableItemData);
@@ -49,21 +54,13 @@ export default function TableListItem(props: {
     }
 
     return (
-      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onTableClicked}>
-        <div className="uppercase">
-          <div className="text-xl">
+      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
+        <div className="uppercase text-sm">
+          <div>
             {table.nickname || table.name}
             <div className="absolute top-2 right-0 hover:cursor-pointer">
-              {isManageTables && <>
-                <div>
-                  <span onClick={onClickEditTable}><PencilSquareIcon className="inline-block ml-2 mr-2 size-6 text-gray-500"></PencilSquareIcon></span>
-                  {!props.table.guest && <>
-                    <span onClick={onClickDeleteTable}><TrashIcon className="inline-block ml-2 size-6 text-gray-500"></TrashIcon></span>
-                  </>}
-                </div>
-              </>}
               {table.guest && ITEM_EXPANDED && <>
-                <div className="text-gray-500" onClick={onCloseExpandedClicked}>
+                <div className="text-gray-500" onClick={onClickCloseExpanded}>
                   <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-3 size-7 hover:stroke-white" />
                 </div>
               </>}

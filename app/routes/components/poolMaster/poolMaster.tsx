@@ -20,7 +20,6 @@ export default function AppPoolMaster() {
     const host = window.location.host; // Includes hostname and port
     const wsUrl = `${protocol}//${host}`;
 
-    // Close the existing WebSocket if it exists
     if (ws.current) {
       ws.current.onclose = null;
       ws.current.close();
@@ -32,11 +31,10 @@ export default function AppPoolMaster() {
 
     ws.current.onopen = () => {
       console.log("---(ws) connection established");
-      //ws.current?.send(`Client/${clientId}`); // Send a message to the server
+
     };
 
     ws.current.onmessage = (event) => {
-      //console.log("---(ws) Message received:", event.data);
       if (typeof event.data === "string") {
         const appStateFromWebSocket = JSON.parse(event.data);
         setAppState(appStateFromWebSocket);
@@ -44,17 +42,14 @@ export default function AppPoolMaster() {
     };
 
     ws.current.onerror = (error) => {
-      //console.error("---(ws) WebSocket error:", error);
       setTimeout(initializeWebSocket, 5000); // Attempt to reconnect after 5 seconds
     };
 
     ws.current.onclose = (event) => {
-      //console.log("---(ws) WebSocket connection closed:", event.code, event.reason);
     };
   };
 
   useEffect(() => {
-    // Initialize WebSocket on component mount
     initializeWebSocket();
 
     // Listen for visibility changes
@@ -80,13 +75,12 @@ export default function AppPoolMaster() {
 
     // Cleanup function
     return () => {
-      //console.log("---(ws) Cleanup: closing WebSocket");
       if (ws.current) {
         ws.current.close();
       }
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, []); // Empty dependency array: runs only once on mount
+  }, []);
 
   return (
     <>
