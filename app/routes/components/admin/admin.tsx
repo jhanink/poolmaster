@@ -23,7 +23,6 @@ export default function Admin() {
   }
 
   const onClickResetTables = (event: any) => {
-    // return value objects, not [...APP_STATE.tables] references!
     const tables = APP_STATE.tables.map((table: TableItemData ) => ({...table}));
     setTables(tables);
   }
@@ -38,15 +37,8 @@ export default function Admin() {
 
   const onClickSaveTables = (event: any) => {
     const tables = TABLES
-      .map((table: TableItemData) => {
-        return {
-          ...table,
-          forAdd: false,
-        }
-      })
-      .filter((table: TableItemData) => {
-        return !table.forDelete;
-      });
+      .map((table: TableItemData) => ({...table, forAdd: false}))
+      .filter((table: TableItemData) => !table.forDelete);
 
     const newState = {
       ...APP_STATE,
@@ -88,19 +80,15 @@ export default function Admin() {
     setTables([...TABLES]);
   }
 
-  const onClickAddOne = (event: any) => {
-    const newTable = generateNewTable();
-    const tables = [...TABLES, newTable];
-    setTables(tables);
-  }
-
-  const onClickAddThree = (event: any) => {
+  const onClickAddTables = (num: 1 | 3 | 10) => {
+    const nums = [1,2,3,4,5,6,7,8,9,10];
+    const tnums = nums.slice(0,num);
     const tables = [...TABLES];
-    [1,2,3].forEach((index) => {
+    tnums.forEach((index) => {
       const newTable = generateNewTable(index);
       tables.push(newTable);
     })
-    setTables(tables)
+    setTables(tables);
   }
 
   const generateNewTable = (index: number = 1) => {
@@ -138,9 +126,10 @@ export default function Admin() {
           <div className={`${SECTION}`}>
             <h2 className={`${HEADER}`}>
               Table Settings
-              <button className={` ${actionButtonStyles}`} onClick={onClickAddOne}>Add 1</button>
-              <button className={` ${actionButtonStyles}`} onClick={onClickAddThree}>Add 3</button>
-              </h2>
+              <button className={actionButtonStyles} onClick={() => {onClickAddTables(1)}}>+ 1</button>
+              <button className={actionButtonStyles} onClick={() => {onClickAddTables(3)}}>+ 3</button>
+              <button className={actionButtonStyles} onClick={() => {onClickAddTables(10)}}>+ 10</button>
+            </h2>
             <div className={`${CONTENT}`}>
               {TABLES.map((table: TableItemData, index: number) => (
                 <div className="mb-3" key={table.id}>
@@ -273,9 +262,7 @@ export default function Admin() {
                   className={`w-[100px] ${formFieldStyles}`}
                   onChange={(event) => {
                     BILLING.defaultBillingRate = event.target.value;
-                    setBilling({
-                      ...BILLING,
-                    });
+                    setBilling({...BILLING});
                   }}
                 />
               </div>
