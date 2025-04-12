@@ -8,7 +8,7 @@ import { DefaultGuestData, type Guest } from "~/config/AppState";
 import GuestForm from "../guestForm/guestForm";
 import GuestListItem from "../guestListItem/guestListItem";
 
-const guestButtonStyles = `text-gray-500 border-gray-800 font-normal ${actionButtonStyles} hover:ring-1`;
+const guestButtonStyles = `text-gray-500 border-gray-800 ${actionButtonStyles} hover:ring-1`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -25,7 +25,7 @@ export default function GuestList() {
           { !GUEST_FORM_OPEN && (
             <div className="flex-1 mx-2 mt-3 mb-5 text-center nowrap">
               <button type="button" className={`${guestButtonStyles}`} onClick={onClickAddToGuestList}>
-                <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
+                <ArrowRightIcon aria-hidden="true" className="mr-2 size-3" />
                 <span className="text-sm">Add Guest</span>
               </button>
             </div>
@@ -38,9 +38,6 @@ export default function GuestList() {
         </div>
       </div>
 
-      {/* <div className={`WAITLIST text-sm text-gray-500`}>
-        Wait List ({APP_STATE.guestList.length})
-      </div> */}
       <div className={`${mainStyles.column} justify-center`}>
         {
           APP_STATE.guestList
@@ -52,10 +49,6 @@ export default function GuestList() {
             )
         }
       </div>
-
-      {/* <div className={`RESERVATIONS mt-10 text-sm text-gray-500`}>
-        Reservations ({Helpers.reservations(APP_STATE).length})
-      </div> */}
 
       <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
     </div>

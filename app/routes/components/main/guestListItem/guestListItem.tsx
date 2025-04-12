@@ -2,6 +2,8 @@ import GuestItem from "../guestItem/guestItem";
 import { type Guest } from "~/config/AppState";
 import { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-dnd';
+import { ListFilterTypeEnum, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { useAtom } from "jotai";
 
 export default function GuestListItem(props: {
   guest: Guest,
@@ -9,6 +11,7 @@ export default function GuestListItem(props: {
 }) {
   const [ITEM_EXPANDED, setItemExpanded] = useState(false);
   const [ITEM_EDITING, setItemEditing] = useState(false);
+  const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const dragRef = useRef<HTMLDivElement>(null);
   const canDragRef = useRef(true);
@@ -29,6 +32,16 @@ export default function GuestListItem(props: {
   useEffect(() => {
     canDragRef.current = !ITEM_EDITING; // Disable dragging when editing
   }, [ITEM_EDITING]);
+
+  useEffect(() => {
+    switch (SELECTED_LIST_FILTER) {
+      case (ListFilterTypeEnum.WAITLIST):
+        setItemExpanded(true);
+        break;
+      default:
+        setItemExpanded(false);
+    }
+  }, [SELECTED_LIST_FILTER]);
 
   drag(dragRef); // Attach drag behavior to the element
   dragPreview(dragRef); // Use the same element as the drag preview
