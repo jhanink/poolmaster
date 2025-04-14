@@ -3,7 +3,7 @@ import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, guestCheckoutAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, guestCheckoutAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
@@ -40,6 +40,7 @@ export default function GuestItem(props: {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setGuestCheckoutStarted] = useAtom(guestCheckoutAtom);
+  const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
@@ -150,7 +151,7 @@ export default function GuestItem(props: {
   const itemDetailHeaderContent = () => {
     return <>
       <div className="flex relative">
-        {!props.isAssigned && props.itemExpanded && <>
+        {!props.isAssigned && props.itemExpanded && !SELECTED_LIST_FILTER && <>
           <div className="flex-1 text-right mb-2 text-gray-500" onClick={onClickCloseExpanded}>
             <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-1 size-7 hover:stroke-white" />
           </div>
