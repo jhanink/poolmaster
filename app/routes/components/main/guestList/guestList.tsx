@@ -24,7 +24,7 @@ export default function GuestList() {
         <div className="flex-1">
           { !GUEST_FORM_OPEN && (
             <div className="flex-1 mx-2 mt-3 mb-5 text-center nowrap">
-              <button type="button" className={`${guestButtonStyles}`} onClick={onClickAddToGuestList}>
+              <button type="button" className={`flex items-center ${guestButtonStyles}`} onClick={onClickAddToGuestList}>
                 <ArrowRightIcon aria-hidden="true" className="mr-2 size-3" />
                 <span className="text-sm">Add Guest</span>
               </button>
