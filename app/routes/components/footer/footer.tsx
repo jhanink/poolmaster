@@ -20,7 +20,7 @@ export default function AppFooter() {
   return (
     <div className="flex mt-2 pt-2 mb-2 text-center text-nowrap text-sm border-t justify-center items-center
       border-gray-900">
-        {!MAIN_TAKEOVER?.adminScreen && !MAIN_TAKEOVER?.closeoutTable && (
+        {!MAIN_TAKEOVER && (
         <span className={`inline-block ${actionIconStyles}`}
           onClick={onClickSettings}>
           <CogIcon className="size-[20px] relative top-[-1px] hover:text-yellow-500 text-gray-500"></CogIcon>
