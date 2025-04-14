@@ -64,6 +64,7 @@ export const fragmentWelcomeMessage = () => {
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Table closeout with time-billing totals</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Wait List and Table List filters</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Player Names, phone number, and notes</span></li>
+          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Admin Console to manage tables and billing</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Works on Mobile and Desktop</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Realtime sync across devices and screens</span></li>
         </ul>
