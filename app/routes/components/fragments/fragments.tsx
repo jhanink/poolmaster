@@ -38,7 +38,7 @@ export const fragmentWelcomeMessage = () => {
         Welcome to Pool Master!
       </div>
       <div className="text-xl italic">
-        Setup your pool room info now.
+        Setup your pool room now.
       </div>
       <div className="mt-5 text-gray-200">
         After you save something below, this message will go away.
@@ -64,6 +64,8 @@ export const fragmentWelcomeMessage = () => {
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Table closeout with time-billing totals</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Wait List and Table List filters</span></li>
           <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Player Names, phone number, and notes</span></li>
+          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Works on Mobile and Desktop</span></li>
+          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Realtime sync across devices and screens</span></li>
         </ul>
       </div>
     </div>
