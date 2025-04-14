@@ -45,43 +45,23 @@ export default function GuestCheckout() {
   }
 
   const setupBillablePlayers = (hours: string, rate: string) => {
-    const mainPlayer = [
-      {
-        id: CHECKOUT_TABLE.guest.id,
-        name: CHECKOUT_TABLE.guest.name.toUpperCase(),
-        hours,
-        rate,
-        billable: true,
-      }
-    ];
-    const extraPlayers = [];
-    for (let i = 0; i < (CHECKOUT_TABLE.guest.partySize-1); i++) {
-      extraPlayers.push({
-        id: i + 2,
-        name: `Player ${i + 2}`,
+    const players = []
+    for (let i = 0; i < (CHECKOUT_TABLE.guest.partySize); i++) {
+      players.push({
+        id: i,
+        name: `Player ${i + 1}`,
         hours,
         rate,
         billable: true,
       });
     }
+    players[0].name = CHECKOUT_TABLE.guest.name.toUpperCase();
 
     CHECKOUT_TABLE.guest.extraPlayers.forEach((player, index) => {
-      if (index >= extraPlayers.length -1) {
-        return;
-      }
-      extraPlayers[index] = {
-        id: player.id + 1,
-        name: player.name.toUpperCase(),
-        hours,
-        rate,
-        billable: true,
-      };
+      const playersIndex = index + 1;
+      if ((playersIndex) > players.length - 1) return;
+      players[playersIndex].name = player.name.toUpperCase();
     });
-
-    const players = [
-      ...mainPlayer,
-      ...extraPlayers
-    ];
 
     setBillableData({players});
   }
