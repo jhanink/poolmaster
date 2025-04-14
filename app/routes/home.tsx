@@ -8,8 +8,8 @@ import { useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { appStateFilePath } from "~/config/AppConfig";
-import fs from 'fs/promises';
-import { type AppState } from "~/config/AppState";
+import fs from 'fs-extra';
+import { DefaultAppState, type AppState } from "~/config/AppState";
 import type { AppConfig } from '~/config/AppConfig';
 import config from '~/config/app-config.json';
 
@@ -21,6 +21,10 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export const loader: LoaderFunction = async () => {
+  const fileExists = await fs.pathExists(appStateFilePath);
+  if (!fileExists) {
+    await fs.writeFile(appStateFilePath, JSON.stringify(DefaultAppState));
+  }
   const fileData: string = await fs.readFile(appStateFilePath, 'utf8');
   const fileAppState: AppState = JSON.parse(fileData);
   return Response.json({

@@ -1,8 +1,6 @@
-import { type AppRuntime, LoaderDefault, LoaderFileStorage } from "~/config/AppRuntime";
 import type { AppState, Guest } from "~/config/AppState";
 
 export interface AppStorageInterface {
-  getLoaderAppRuntime: () => Response;
   getAppStateRemote: () => Promise<AppState>;
   setAppStateRemote: (newAppState: AppState) => Promise<AppState>;
   saveGuestRemote: (guest: Guest) => Promise<AppState>;
@@ -23,13 +21,6 @@ export const AppStorage: AppStorageInterface = {
   },
   toggleDarkModeRemote: async (data: boolean): Promise<AppState> => {
     return requestPOST(data, '/services/toggle-dark-mode');
-  },
-  getLoaderAppRuntime:  () => {
-    const loaderAppRuntime: AppRuntime = {
-      ...LoaderDefault,
-      ...LoaderFileStorage,
-    }
-    return Response.json(loaderAppRuntime);
   },
   getAppStateRemote: async (): Promise<AppState> => {
     return await requestGET('/services/storage');

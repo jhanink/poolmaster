@@ -29,7 +29,24 @@ export const DefaultAppState: AppState = {
   },
   guestList: [],
   reservations:[],
-  tables: []
+  tables: [
+    {
+      id: 0,
+      type: "Regulation",
+      number: 1,
+      name: "Table 1",
+      tableRate: "10.00",
+      isActive: true,
+    },
+    {
+      id: 1,
+      type: "Regulation",
+      number: 2,
+      name: "Table 2",
+      tableRate: "10.00",
+      isActive: true,
+    },
+  ]
 }
 
 export interface Account {

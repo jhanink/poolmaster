@@ -6,4 +6,4 @@
 /build/
 
 # App
-/fileStorage/app_state_file.json
+/fileStorage/app_state_file*
