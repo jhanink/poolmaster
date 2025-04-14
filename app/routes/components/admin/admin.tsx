@@ -117,16 +117,16 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="flex flex-col w-full h-full justify-center items-center text-center">
-      <div className="flex-1 w-full bg-black pb-10 relative">
-        <div className="STICKY sticky top-0 z-100 bg-black w-full">
+    <div className="flex flex-col justify-center items-center text-center bg-black">
+      <div className="pb-10 relative">
+        <div className="STICKY sticky top-0 bg-black">
           <h1 className="text-3xl font-bold text-purple-500 py-5">Admin Console</h1>
           <div>
             <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
           </div>
           <hr className="text-gray-900 my-5"/>
         </div>
-        <div className="SCROLLY">
+        <div className="SCROLLY text-center">
           <div className={`${SECTION}`}>
             <div className={`${HEADER}`}>
               Tables
