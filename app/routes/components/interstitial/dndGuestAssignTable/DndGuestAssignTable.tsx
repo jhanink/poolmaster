@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { appStateAtom, dndGuestToAssignTableAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { type TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
@@ -10,24 +10,26 @@ const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs bo
 export function DndGuestAssignTable() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
-  const [DND_GUEST, setDndGuestToAssignTable] = useAtom(dndGuestToAssignTableAtom);
+
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const tables = APP_STATE.tables;
 
   const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItemData) => {
     const tableId = table.id
-    const guestId = DND_GUEST?.id || 0;
+    const guestId = MAIN_TAKEOVER.dndGuest?.id || 0;
     const newState = await AppStorage.assignToTableRemote({tableId, guestId});
     setAppState(newState);
     reset();
   }
 
   const onClickCancelAssign = () => {
-    setDndGuestToAssignTable(undefined);
+    setMainTakeover(undefined);
+    setSelectedTable(undefined);
   };
 
   const onClickDeleteGuest = async () => {
-    const guestId = DND_GUEST?.id || 0;
+    const guestId = MAIN_TAKEOVER.dndGuest?.id || 0;
     const newState = await AppStorage.deleteGuestRemote(guestId);
     setAppState(newState);
     reset();
@@ -35,7 +37,7 @@ export function DndGuestAssignTable() {
 
   const reset = () => {
     setSelectedTable(undefined);
-    setDndGuestToAssignTable(undefined);
+    setMainTakeover(undefined);
   }
 
   return (
@@ -50,7 +52,7 @@ export function DndGuestAssignTable() {
         {!!Helpers.tablesAvailable(APP_STATE).length && <>
           <div className="text-xl text-gray-400 mt-10">
             Assign
-            <span className="uppercase text-red-500 mx-3">{DND_GUEST?.name}</span>
+            <span className="uppercase text-red-500 mx-3">{MAIN_TAKEOVER.dndGuest?.name}</span>
             to an open table
           </div>
           <div>

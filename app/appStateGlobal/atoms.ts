@@ -10,6 +10,14 @@ export enum ListFilterTypeEnum {
   NONE = ''
 }
 
+export type MainTakeover = {
+  adminScreen?: boolean,
+  closeoutTable?: TableItemData,
+  dndGuest?: Guest,
+}
+
+export const mainTakoverAtom = atom<MainTakeover | undefined>(undefined as MainTakeover);
+
 export const appStateAtom = atom<AppState>(DefaultAppState);
 export const appConfigAtom = atom<AppConfig>(appConfig);
 export const appReadyAtom = atom<boolean>(false);
@@ -17,6 +25,3 @@ export const guestFormOpenAtom = atom<boolean>(false);
 export const profileMenuOpenAtom = atom<boolean>(false);
 export const selectedTableAtom = atom<TableItemData | undefined>(undefined as TableItemData);
 export const selectedListFilterAtom = atom<ListFilterType>('');
-export const dndGuestToAssignTableAtom = atom<Guest | undefined>(undefined as Guest);
-export const guestCheckoutAtom = atom<TableItemData | undefined>(undefined as TableItemData);
-export const adminScreenAtom = atom<boolean>(false);

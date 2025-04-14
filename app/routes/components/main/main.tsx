@@ -2,24 +2,22 @@ import styles from "./mainStyles.module.css";
 import TableList from "./tableList/tableList";
 import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
-import { adminScreenAtom, dndGuestToAssignTableAtom, guestCheckoutAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { DndGuestAssignTable } from "../interstitial/dndGuestAssignTable/DndGuestAssignTable";
-import GuestCheckout from "../interstitial/guestCheckout/guestCheckout";
+import TableCloseout from "../interstitial/tableCloseout/tableCloseout";
 import Admin from "../admin/admin";
 
 export default function AppMain() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
-  const [DND_GUEST] = useAtom(dndGuestToAssignTableAtom);
-  const [GUEST_CHECKOUT_STARTED] = useAtom(guestCheckoutAtom);
-  const [ADMIN_SCREEN] = useAtom(adminScreenAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
   return (
     <div className={`${styles.mainContainer} grow`}>
-      {GUEST_CHECKOUT_STARTED && <GuestCheckout></GuestCheckout>}
-      {DND_GUEST && <DndGuestAssignTable></DndGuestAssignTable>}
-      {ADMIN_SCREEN && <Admin></Admin>}
+      {MAIN_TAKEOVER?.closeoutTable && <TableCloseout></TableCloseout>}
+      {MAIN_TAKEOVER?.dndGuest && <DndGuestAssignTable></DndGuestAssignTable>}
+      {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}
 
-      {!DND_GUEST && !GUEST_CHECKOUT_STARTED && !ADMIN_SCREEN &&
+      {!MAIN_TAKEOVER?.dndGuest && !MAIN_TAKEOVER?.closeoutTable && !MAIN_TAKEOVER?.adminScreen &&
         <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>
           {!(SELECTED_LIST_FILTER === "tablelist") && <>
             <GuestList></GuestList>

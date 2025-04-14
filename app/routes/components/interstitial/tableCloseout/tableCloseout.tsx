@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { appStateAtom, guestCheckoutAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, formFieldStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
@@ -17,10 +17,10 @@ type BillableData = {
   players: BillablePlayer[],
 }
 
-export default function GuestCheckout() {
+export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
-  const [CHECKOUT_TABLE, setGuestCheckoutStarted] = useAtom(guestCheckoutAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
 
@@ -40,13 +40,13 @@ export default function GuestCheckout() {
   }
 
   const onClickCancelCheckout = () => {
-    CHECKOUT_TABLE.guest.checkedOutAt = 0;
-    setGuestCheckoutStarted(undefined);
+    MAIN_TAKEOVER.closeoutTable.checkedOutAt = 0;
+    setMainTakeover(undefined);
   }
 
   const setupBillablePlayers = (hours: string, rate: string) => {
     const players = []
-    for (let i = 0; i < (CHECKOUT_TABLE.guest.partySize); i++) {
+    for (let i = 0; i < (MAIN_TAKEOVER.closeoutTable.guest.partySize); i++) {
       players.push({
         id: i,
         name: `Player ${i + 1}`,
@@ -55,9 +55,9 @@ export default function GuestCheckout() {
         billable: true,
       });
     }
-    players[0].name = CHECKOUT_TABLE.guest.name.toUpperCase();
+    players[0].name = MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase();
 
-    CHECKOUT_TABLE.guest.extraPlayers.forEach((player, index) => {
+    MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.forEach((player, index) => {
       const playersIndex = index + 1;
       if ((playersIndex) > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
@@ -107,8 +107,8 @@ export default function GuestCheckout() {
   }
 
   const onClickReset = () => {
-    const start = CHECKOUT_TABLE.guest.assignedAt;
-    const end = CHECKOUT_TABLE.guest.checkedOutAt;
+    const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
+    const end = MAIN_TAKEOVER.closeoutTable.guest.checkedOutAt;
     const hours = Helpers.timeElapsed(start, end);
     const rate = APP_STATE.billing.defaultBillingRate;
     setElapsedTime(hours);
@@ -118,10 +118,10 @@ export default function GuestCheckout() {
   }
 
   const onClickFinalConfirm = async () => {
-    const newAppState = await AppStorage.deleteGuestRemote(CHECKOUT_TABLE.guest.id);
+    const newAppState = await AppStorage.deleteGuestRemote(MAIN_TAKEOVER.closeoutTable.guest.id);
     setAppState(newAppState);
     setSelectedTable(undefined);
-    setGuestCheckoutStarted(undefined);
+    setMainTakeover(undefined);
   }
   useEffect(() => {
     onClickReset()
@@ -133,7 +133,7 @@ export default function GuestCheckout() {
       <div className="flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
-            Close Out <span className="text-green-500 text-3xl">{CHECKOUT_TABLE.name}</span>
+            Close Out <span className="text-green-500 text-3xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
           </div>
           <div className="inline-block text-right">
             <div className="TIME flex items-center text-base mb-2">
@@ -171,10 +171,15 @@ export default function GuestCheckout() {
           </div>
         </div>
 
-        <div className="text-2xl mb-5 text-gray-400 my-5">
+        <div className="text-2xl text-gray-400 mt-3">
           Total Bill: &nbsp;
           <span className="text-green-500 text-3xl">${playersTotal()}</span>
         </div>
+
+        <div className="my-7">
+          <button className={`inline-block ${actionButtonStyles}`} onClick={onClickCancelCheckout}>Cancel & Exit</button>
+        </div>
+
         <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
@@ -182,7 +187,7 @@ export default function GuestCheckout() {
                 <div className="inline-block text-gray-500 mr-3">
                   <input type="checkbox" checked={player.billable} onChange={(event) => {onChangePlayerChecked(player, event)}}></input>
                 </div>
-                <div className={`inline-block text-lg ${index > CHECKOUT_TABLE.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
+                <div className={`inline-block text-lg ${index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
                   {player.name}
                   {index === 0 && (
                     <div className="inline-block">&nbsp; (Main Player)</div>
@@ -220,16 +225,16 @@ export default function GuestCheckout() {
         </div>
 
         <div className="my-3 mb-20">
-          <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelCheckout}>Cancel</button>
+          <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelCheckout}>Cancel & Exit</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
-          <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out</button>
+          <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out {MAIN_TAKEOVER.closeoutTable.name}</button>
         </div>
       </div>
       <ModalConfirm
         show={SHOW_CONFIRM_CLOSEOUT}
-        dialogTitle={`CLOSE OUT ${CHECKOUT_TABLE.name}`}
+        dialogTitle={`CLOSE OUT ${MAIN_TAKEOVER.closeoutTable.name}`}
         dialogMessageFn={() => <div className="text-base">
-          <div className="mt-3 text-xl text-blue-500">{CHECKOUT_TABLE.guest.name.toUpperCase()}</div>
+          <div className="mt-3 text-xl text-blue-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
           <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
         </div>}
         onConfirm={onClickFinalConfirm}

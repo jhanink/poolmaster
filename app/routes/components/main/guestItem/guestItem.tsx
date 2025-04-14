@@ -3,7 +3,7 @@ import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, guestCheckoutAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
@@ -39,7 +39,7 @@ export default function GuestItem(props: {
 
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [, setGuestCheckoutStarted] = useAtom(guestCheckoutAtom);
+  const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
@@ -66,11 +66,11 @@ export default function GuestItem(props: {
     setShowConfirmDelete(prev => true);
   }
 
-  const onClickGuestCheckout = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickTableCloseout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     const table = APP_STATE.tables.find(_ => _.guest?.id === props.guest.id);
     table.guest.checkedOutAt = Date.now();
-    setGuestCheckoutStarted(table);
+    setMainTakeover({closeoutTable: table});
   }
 
   const OnClickEditItem = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -196,7 +196,7 @@ export default function GuestItem(props: {
           <div className="COLUMN flex-1 p-1 pb-2 min-w-7 text-right mr-2">
             <button className={`${actionButtonStyles}`} onClick={OnClickEditItem}>Edit </button>
             {props.isAssigned && (
-              <button className={`${actionButtonStyles}`} onClick={onClickGuestCheckout}>Close Out </button>
+              <button className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
             )}
             {!props.isAssigned && (
               <button className={`${actionButtonStyles}`} onClick={onClickDeleteItem}>Delete </button>

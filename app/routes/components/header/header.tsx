@@ -1,14 +1,14 @@
 import { useAtom } from "jotai";
 import {
   type ListFilterType,
-  adminScreenAtom,
-  appStateAtom, dndGuestToAssignTableAtom, guestCheckoutAtom,
-  guestFormOpenAtom, selectedListFilterAtom,
+  appStateAtom,
+  guestFormOpenAtom, mainTakoverAtom, selectedListFilterAtom,
   selectedTableAtom
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from 'react-dnd';
 import { type Guest } from "~/config/AppState";
+import GuestItem from "../main/guestItem/guestItem";
 
 const statusPillStyles = `mr-2`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -22,17 +22,15 @@ export const dndOverStyle = `blur-[2px] bg-white`;
 export default function AppHeader() {
   const [APP_STATE] = useAtom(appStateAtom);
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
-  const [DND_GUEST, setDndGuestToAssignTable] = useAtom(dndGuestToAssignTableAtom);
-  const [GUEST_CHECKOUT_STARTED] = useAtom(guestCheckoutAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [, setGuestFormOpen] = useAtom(guestFormOpenAtom);
-  const [ADMIN_SCREEN] = useAtom(adminScreenAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'GUEST_ITEM', // MUST match the 'type' from useDrag
     drop: (item: {guest: Guest}, monitor) => {
-        if(monitor.canDrop()){;
-          setDndGuestToAssignTable(item.guest);
+        if(monitor.canDrop()) {
+          setMainTakeover({dndGuest: item.guest});
           setSelectedTable(undefined);
           setSelectedListFilter('');
           setGuestFormOpen(false);
@@ -62,7 +60,7 @@ export default function AppHeader() {
         </div>
         {/* <HeaderProfile></HeaderProfile> */}
       </div>
-      {!ADMIN_SCREEN && !DND_GUEST && !GUEST_CHECKOUT_STARTED && <>
+      {!MAIN_TAKEOVER?.adminScreen && !(MAIN_TAKEOVER?.dndGuest) && !MAIN_TAKEOVER?.closeoutTable && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
             className={` text-xs
               ${dndTargetBaseStyle}

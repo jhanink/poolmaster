@@ -117,4 +117,5 @@ export interface TableItemData {
   subtype?: string, // TODO: remove this
   forDelete?: boolean,
   forAdd?: boolean,
+  checkedOutAt?: number,
 }

@@ -1,7 +1,7 @@
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { adminScreenAtom, appStateAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
@@ -15,14 +15,14 @@ const actionButtons = `bg-gray-900 ${actionButtonStyles}`
 
 export default function Admin() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [,setAdminScreen] = useAtom(adminScreenAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
   const onClickExit = (event: any) => {
-    setAdminScreen(false);
+    setMainTakeover(undefined);
   }
 
   const onClickResetTables = (event: any) => {
@@ -50,7 +50,7 @@ export default function Admin() {
 
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setAdminScreen(false);
+    setMainTakeover(undefined);
   }
 
   const onClickSaveAccount = (event: any) => {
@@ -60,7 +60,7 @@ export default function Admin() {
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setAdminScreen(false);
+    setMainTakeover(undefined);
   }
 
   const onClickSaveBilling = (event: any) => {
@@ -70,7 +70,7 @@ export default function Admin() {
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setAdminScreen(false);
+    setMainTakeover(undefined);
   }
 
   const onClickForDelete = (table: TableItemData) => {
