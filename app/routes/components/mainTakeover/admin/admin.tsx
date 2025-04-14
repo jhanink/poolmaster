@@ -5,7 +5,7 @@ import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
-import ModalConfirm from "../ui-components/modal/modalConfirm";
+import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const SECTION = `text-left`;
 const HEADER = `text-xl py-2 px-4 text-gray-200 bg-purple-900 mx-2 border border-gray-400 rounded-md`;

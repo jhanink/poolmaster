@@ -3,9 +3,9 @@ import TableList from "./tableList/tableList";
 import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
 import { mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { DndGuestAssignTable } from "../interstitial/dndGuestAssignTable/DndGuestAssignTable";
-import TableCloseout from "../interstitial/tableCloseout/tableCloseout";
-import Admin from "../admin/admin";
+import { DndGuestAssignTable } from "../mainTakeover/dndGuestAssignTable/DndGuestAssignTable";
+import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
+import Admin from "../mainTakeover/admin/admin";
 
 export default function AppMain() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
