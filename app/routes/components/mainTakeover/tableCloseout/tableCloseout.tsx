@@ -106,11 +106,12 @@ export default function TableCloseout() {
     return total.toFixed(2);
   }
 
+
   const onClickReset = () => {
     const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
     const end = MAIN_TAKEOVER.closeoutTable.guest.checkedOutAt;
     const hours = Helpers.timeElapsed(start, end);
-    const rate = APP_STATE.billing.defaultBillingRate;
+    const rate = MAIN_TAKEOVER.closeoutTable.tableRate;
     setElapsedTime(hours);
     setHoursData(`${hours.durationHoursDecimal}`);
     setRateData(rate);
@@ -144,7 +145,7 @@ export default function TableCloseout() {
               <div className="inline-block w-[90px]">
                 <input
                   type="text"
-                  className={`text-gray-500 w-[65px] ${formFieldStyles}`}
+                  className={`text-gray-500 w-[70px] ${formFieldStyles}`}
                   onChange={onChangeTableHours}
                   value={`${HOURS_DATA}`}
                 />
@@ -160,7 +161,7 @@ export default function TableCloseout() {
                 <div className="inline-block w-[90px]">
                   <input
                     type="text"
-                    className={`text-gray-500 w-[65px] ${formFieldStyles}`}
+                    className={`text-gray-500 w-[70px] ${formFieldStyles}`}
                     onChange={onChangeTableRate}
                     value={`${RATE_DATA}`}
                   />
