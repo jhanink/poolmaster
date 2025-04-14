@@ -139,8 +139,8 @@ export default function GuestItem(props: {
     </div>
     <div className="flex">
       <div className="COLUMN flex-1 p-1 pb-2 min-w-7 text-right mr-2">
-        <button className={`${actionButtonStyles}`} onClick={onClickAssignGuest}>
-          <ArrowRightIcon aria-hidden="true" className="mr-2 size-3" />
+        <button className={`flex items-center ${actionButtonStyles}`} onClick={onClickAssignGuest}>
+          <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
           Assign
         </button>
       </div>
