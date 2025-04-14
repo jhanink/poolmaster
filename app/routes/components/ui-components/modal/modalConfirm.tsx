@@ -36,9 +36,9 @@ export default function ModalConfirm(props: {
                     {props.dialogTitle}
                   </DialogTitle>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-200">
+                    <div className="text-sm text-gray-200">
                       {props.dialogMessageFn()}
-                    </p>
+                    </div>
                   </div>
                 </div>
                 <div className=" mt-5 text-center">

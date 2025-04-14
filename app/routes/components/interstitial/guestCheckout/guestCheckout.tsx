@@ -21,7 +21,7 @@ export default function GuestCheckout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [CHECKOUT_TABLE, setGuestCheckoutStarted] = useAtom(guestCheckoutAtom);
-  const [ELAPSED_TIME, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
+  const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
 
   // worksheet data
@@ -148,7 +148,8 @@ export default function GuestCheckout() {
   }, []);
 
   return (
-    <div className="border-white select-none mt-5">
+    // <div className="border-white select-none mt-5">
+      <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none mt-5">
       <div className="flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
@@ -191,7 +192,7 @@ export default function GuestCheckout() {
         </div>
 
         <div className="text-2xl mb-5 text-gray-400 my-5">
-          Grand Total: &nbsp;
+          Total Bill: &nbsp;
           <span className="text-green-500 text-3xl">${playersTotal()}</span>
         </div>
         <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5">
@@ -238,7 +239,7 @@ export default function GuestCheckout() {
           ))}
         </div>
 
-        <div className="my-3">
+        <div className="my-3 mb-20">
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelCheckout}>Cancel</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out</button>
@@ -247,10 +248,10 @@ export default function GuestCheckout() {
       <ModalConfirm
         show={SHOW_CONFIRM_CLOSEOUT}
         dialogTitle={`CLOSE OUT ${CHECKOUT_TABLE.name}`}
-        dialogMessageFn={() => <span className="text-base">
+        dialogMessageFn={() => <div className="text-base">
           <div className="mt-3 text-xl text-blue-500">{CHECKOUT_TABLE.guest.name.toUpperCase()}</div>
           <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
-        </span>}
+        </div>}
         onConfirm={onClickFinalConfirm}
         onCancel={() => {setShowConfirmCloseout(false)}}
       />
