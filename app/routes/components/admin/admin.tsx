@@ -2,21 +2,22 @@ import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { adminScreenAtom, appStateAtom } from "~/appStateGlobal/atoms";
-import type { Account, CheckoutSettings, TableItemData } from "~/config/AppState";
+import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 
 const SECTION = `text-left`;
-const HEADER = `text-xl p-1 text-gray-300 bg-gray-900 mx-2`;
-const CONTENT = `mx-2 mt-2 text-sm `;
-const ACTIONS = `mt-5 text-left`;
+const HEADER = `text-xl py-2 px-4 text-gray-200 bg-purple-900 mx-2 border border-gray-400 rounded-md`;
+const CONTENT = `p-5 text-sm `;
+const ACTIONS = `ml-5 text-left`;
+const actionButtons = `bg-gray-900 ${actionButtonStyles}`
 
 export default function Admin() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [,setAdminScreen] = useAtom(adminScreenAtom);
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
-  const [BILLING, setBilling] = useState({defaultBillingRate: ''} as CheckoutSettings);
+  const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
 
   const onClickExit = (event: any) => {
     setAdminScreen(false);
@@ -115,20 +116,21 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col w-full h-full justify-center items-center text-center">
-      <div className="flex-1 w-full h-full">
-          <h1 className="text-2xl font-bold mt-5">Admin Console</h1>
-          <div className="mt-5">
-            <button className={`${actionButtonStyles}`} onClick={onClickExit}>Exit Console</button>
+      <div className="flex-1 w-full h-full bg-black pb-10">
+          <div className="sticky top-0 bg-black">
+            <h1 className="text-3xl font-bold mt-6 text-purple-500">Admin Console</h1>
+            <div className="mt-5">
+              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Exit</button>
+            </div>
+            <hr className="text-gray-900 my-5"/>
           </div>
-
-          <hr className="text-gray-900 my-5"/>
 
           <div className={`${SECTION}`}>
             <h2 className={`${HEADER}`}>
-              Table Settings
-              <button className={actionButtonStyles} onClick={() => {onClickAddTables(1)}}>+ 1</button>
-              <button className={actionButtonStyles} onClick={() => {onClickAddTables(3)}}>+ 3</button>
-              <button className={actionButtonStyles} onClick={() => {onClickAddTables(10)}}>+ 10</button>
+              Tables
+              <button className={actionButtons} onClick={() => {onClickAddTables(1)}}>+1</button>
+              <button className={actionButtons} onClick={() => {onClickAddTables(3)}}>+3</button>
+              <button className={actionButtons} onClick={() => {onClickAddTables(10)}}>+10</button>
             </h2>
             <div className={`${CONTENT}`}>
               {TABLES.map((table: TableItemData, index: number) => (
@@ -202,7 +204,7 @@ export default function Admin() {
 
           <div className={`${SECTION}`}>
             <h2 className={`${HEADER}`}>
-              Account Settings
+              Account
             </h2>
             <div className={`${CONTENT}`}>
               <div>
@@ -231,7 +233,7 @@ export default function Admin() {
 
           <div className={`${SECTION}`}>
             <h2 className={`${HEADER}`}>
-              Billing Settings
+              Billing
             </h2>
             <div className={`${CONTENT}`}>
               <div>

@@ -21,16 +21,16 @@ export default function AppFooter() {
   return (
     <div className="flex mt-2 pt-2 mb-2 text-center text-nowrap text-sm border-t justify-center items-center
       border-gray-900">
-      <span className="text-gray-600">POOL</span>
-      <span className="text-sm">🎱</span>
-      <span className="text-red-500 mr-2">MASTER</span>
-      <span className="text-gray-600">2025</span>
-      {!ADMIN_SCREEN && !CHECKOUT_TABLE && (
-        <div className={`ml-3 inline-block ${actionIconStyles}`}
+        {!ADMIN_SCREEN && !CHECKOUT_TABLE && (
+        <div className={`inline-block ${actionIconStyles}`}
           onClick={onClickSettings}>
           <CogIcon></CogIcon>
         </div>
       )}
+      <span className="text-gray-600 ml-3">POOL</span>
+      <span className="text-sm">🎱</span>
+      <span className="text-red-500">MASTER</span>
+      <span className="text-gray-600 ml-3">2025</span>
     </div>
   )
 }

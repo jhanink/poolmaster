@@ -59,7 +59,7 @@ export default function TableListItem(props: {
           <div>
             {table.nickname || table.name}
             <div className="absolute top-2 right-0 hover:cursor-pointer">
-              {table.guest && ITEM_EXPANDED && <>
+              {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && <>
                 <div className="text-gray-500" onClick={onClickCloseExpanded}>
                   <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-3 size-7 hover:stroke-white" />
                 </div>
@@ -71,7 +71,7 @@ export default function TableListItem(props: {
         {table.guest && (
           <>
             {props.table.guest && (
-              <GuestItem guest={table.guest} index={0} isAssigned={true} itemExpanded={ITEM_EXPANDED} setItemExpanded={setItemExpanded} isEditForm={EDIT_FORM} setEditForm={setEditForm}></GuestItem>
+              <GuestItem guest={table.guest} index={0} isAssigned={true} itemExpanded={!!SELECTED_TABLE || ITEM_EXPANDED} setItemExpanded={setItemExpanded} isEditForm={EDIT_FORM} setEditForm={setEditForm}></GuestItem>
             )}
           </>
         )}

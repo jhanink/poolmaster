@@ -13,7 +13,7 @@ export const InitialTimeElapsed: TimeElapsed = {
   hours: 0,
   days: 0,
   durationMinutes: 0,
-  durationHoursDecimal: '0.0'
+  durationHoursDecimal: '0.00'
 };
 
 export const Helpers = {
@@ -36,7 +36,7 @@ export const Helpers = {
     const hours = Math.floor(duration.asHours());
     const days = Math.floor(duration.asDays());
     const minutes = durationMinutes % 60;
-    const durationHoursDecimal = `${Math.floor(duration.asHours() * 10) / 10}`;
+    const durationHoursDecimal = `${(Math.floor(duration.asHours() * 100) / 100).toFixed(2)}`;
     return {
       durationMinutes,
       durationHoursDecimal,

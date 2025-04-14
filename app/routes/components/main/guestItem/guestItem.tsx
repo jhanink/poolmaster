@@ -168,12 +168,15 @@ export default function GuestItem(props: {
             { guest.phoneNumber && (
               <div className="ROW"><span className={`${fieldLabel}`}>Phone: &nbsp;</span> {guest.phoneNumber} </div>
             )}
-            {guest.partySize > 1 && guest.extraPlayersString && (
+            {guest.partySize > 1 && (
               <div className="ROW">
-                <span className={`${fieldLabel}`}>+{guest.partySize-1} more: &nbsp; </span>
-                <span className="uppercase">
-                  {guest.extraPlayersString}
-                </span>
+                <span className={`${fieldLabel}`}>+{guest.partySize-1} more </span>
+                {!!guest.extraPlayersString && (
+                  <span className="uppercase">
+                    : &nbsp;
+                    {guest.extraPlayersString}
+                  </span>
+                )}
               </div>
             )}
             <div className="ROW">

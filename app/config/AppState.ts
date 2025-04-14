@@ -1,7 +1,7 @@
 export interface AppState {
   isDarkModeEnabled: boolean,
   account?: Account,
-  billing: CheckoutSettings,
+  billing: Billing,
   guestList: Guest[],
   reservations: Reservation[],
   tables: TableItemData[]
@@ -47,7 +47,7 @@ export interface Account {
   modifiedAt?: number,
 }
 
-export interface CheckoutSettings {
+export interface Billing {
   maxBillablePlayers: number,
   defaultBillingRate: string,
 }

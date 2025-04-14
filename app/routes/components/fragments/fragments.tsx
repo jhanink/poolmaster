@@ -5,14 +5,14 @@ export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-
 export const fragmentElapsedTime = (timeElapsed: TimeElapsed, isAssigned: boolean, style: string = durationSquareStyles) => {
   return (
     <>
-      {timeElapsed.hours < 1 && ( // Less than 1 hour
-        <div className={`${style} whitespace-nowrap text-gray-500`}>
-          {timeElapsed.minutes} <span className="ml-1 text-gray-300">min</span>
+      {timeElapsed.hours < 1 && ( // under 1 hour - show minutes
+        <div className={`whitespace-nowrap text-gray-500 ${style}`}>
+          {timeElapsed.minutes} &nbsp;<span className="text-gray-300">min</span>
         </div>
       )}
-      {timeElapsed.hours >= 1 && ( // Less than 1 hour
-        <div className={`${style} whitespace-nowrap text-gray-500`}>
-          {timeElapsed.durationHoursDecimal} <span className={`ml-1 ${isAssigned?'text-green-600':'text-blue-600'}`}>hrs</span>
+      {timeElapsed.hours >= 1 && ( // over 1 hour - display decimal hours
+        <div className={`whitespace-nowrap text-gray-500 ${style}`}>
+          {timeElapsed.durationHoursDecimal} &nbsp;<span className={`${isAssigned?'text-green-600':'text-blue-500'}`}>hrs</span>
         </div>
       )}
     </>
@@ -21,7 +21,7 @@ export const fragmentElapsedTime = (timeElapsed: TimeElapsed, isAssigned: boolea
 
 export const fragmentElapsedTimeFormatted = (hours: number, minutes: number, style: string = durationSquareStyles) => {
   return (
-    <div className={`${style} text-nowrap text-gray-400`}>
+    <div className={`text-nowrap text-gray-400 ${style}`}>
       {!!hours  && `${hours}`}
       {!!hours && (<span className="text-gray-600">h :&nbsp;</span>)}
       {minutes}
