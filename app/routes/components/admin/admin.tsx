@@ -5,6 +5,7 @@ import { adminScreenAtom, appStateAtom } from "~/appStateGlobal/atoms";
 import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
+import ModalConfirm from "../ui-components/modal/modalConfirm";
 
 const SECTION = `text-left`;
 const HEADER = `text-xl py-2 px-4 text-gray-200 bg-purple-900 mx-2 border border-gray-400 rounded-md`;
@@ -18,6 +19,7 @@ export default function Admin() {
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
+  const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
   const onClickExit = (event: any) => {
     setAdminScreen(false);
@@ -36,7 +38,7 @@ export default function Admin() {
     setBilling({...APP_STATE.billing});
   }
 
-  const onClickSaveTables = (event: any) => {
+  const onClickSaveTables = () => {
     const tables = TABLES
       .map((table: TableItemData) => ({...table, forAdd: false}))
       .filter((table: TableItemData) => !table.forDelete);
@@ -116,22 +118,22 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col w-full h-full justify-center items-center text-center">
-      <div className="flex-1 w-full h-full bg-black pb-10">
-          <div className="sticky top-0 bg-black">
-            <h1 className="text-3xl font-bold mt-6 text-purple-500">Admin Console</h1>
-            <div className="mt-5">
-              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Exit</button>
-            </div>
-            <hr className="text-gray-900 my-5"/>
+      <div className="flex-1 w-full bg-black pb-10 relative">
+        <div className="STICKY sticky top-0 z-100 bg-black w-full">
+          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin Console</h1>
+          <div>
+            <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
           </div>
-
+          <hr className="text-gray-900 my-5"/>
+        </div>
+        <div className="SCROLLY">
           <div className={`${SECTION}`}>
-            <h2 className={`${HEADER}`}>
+            <div className={`${HEADER}`}>
               Tables
               <button className={actionButtons} onClick={() => {onClickAddTables(1)}}>+1</button>
               <button className={actionButtons} onClick={() => {onClickAddTables(3)}}>+3</button>
               <button className={actionButtons} onClick={() => {onClickAddTables(10)}}>+10</button>
-            </h2>
+            </div>
             <div className={`${CONTENT}`}>
               {TABLES.map((table: TableItemData, index: number) => (
                 <div className="mb-3" key={table.id}>
@@ -196,7 +198,7 @@ export default function Admin() {
             </div>
             <div className={`${ACTIONS}`}>
               <button className={`${actionButtonStyles}`} onClick={onClickResetTables}>Reset</button>
-              <button className={`${actionButtonStyles}`} onClick={onClickSaveTables}>Save</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTables(true)} }>Save</button>
             </div>
           </div>
 
@@ -274,7 +276,19 @@ export default function Admin() {
               <button className={`${actionButtonStyles}`} onClick={onClickSaveBilling}>Save</button>
             </div>
           </div>
+        </div>
       </div>
+      <ModalConfirm
+        show={SHOW_CONFIRM_SAVE_TABLES}
+        dialogTitle={`SAVE TABLES`}
+        dialogMessageFn={() => (
+          <span className="text-base">
+            <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
+          </span>
+        )}
+        onConfirm={() => {onClickSaveTables()}}
+        onCancel={() => {setShowConfirmSaveTables(false)}}
+      />
     </div>
   );
 }

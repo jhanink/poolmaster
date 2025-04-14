@@ -241,7 +241,7 @@ export default function GuestCheckout() {
         <div className="my-3">
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelCheckout}>Cancel</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
-          <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Confirm Closeout</button>
+          <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out</button>
         </div>
       </div>
       <ModalConfirm
