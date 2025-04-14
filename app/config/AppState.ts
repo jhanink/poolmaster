@@ -1,14 +1,13 @@
 export interface AppState {
-  isDarkModeEnabled: boolean,
-  account?: Account,
+  account: Account,
   billing: Billing,
   guestList: Guest[],
-  reservations: Reservation[],
-  tables: TableItemData[]
+  tables: TableItemData[],
+  modifiedAt: number,
 }
 
 export const DefaultAppState: AppState = {
-  isDarkModeEnabled: false,
+  modifiedAt: 0,
   account: {
     id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
     sourceId: "4b1d0ae4aa52",
@@ -28,7 +27,6 @@ export const DefaultAppState: AppState = {
     defaultBillingRate: "10.00",
   },
   guestList: [],
-  reservations:[],
   tables: [
     {
       id: 0,

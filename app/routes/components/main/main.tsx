@@ -9,7 +9,7 @@ import Admin from "../mainTakeover/admin/admin";
 
 export default function AppMain() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
-  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [MAIN_TAKEOVER] = useAtom(mainTakoverAtom);
 
   return (
     <div className={`${styles.mainContainer} grow`}>

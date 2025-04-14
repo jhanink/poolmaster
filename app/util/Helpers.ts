@@ -26,9 +26,6 @@ export const Helpers = {
   percentAvailableTables: (appState: AppState) => {
     return Math.round(Helpers.tablesAvailable(appState).length / appState.tables.length * 100);
   },
-  reservations: (appState: AppState) => {
-    return appState.tables.filter(table => table.guest?.reservation);
-  },
   timeElapsed: (start: number, finish?: number): TimeElapsed => {
     const end = finish || Date.now();
     const durationMinutes = Math.floor((end - start) / (1000 * 60));

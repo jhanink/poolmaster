@@ -18,6 +18,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (request.method === 'POST') {
     try {
       const newAppState: AppState = await request.json();
+      newAppState.modifiedAt = Date.now();
       await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
       //console.log('storageService');

@@ -6,6 +6,7 @@ import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
+import { fragmentWelcomeMessage } from "../../fragments/fragments";
 
 const SECTION = `text-left`;
 const HEADER = `text-xl py-2 px-4 text-gray-200 bg-purple-900 mx-2 border border-gray-400 rounded-md`;
@@ -15,7 +16,7 @@ const actionButtons = `bg-gray-900 ${actionButtonStyles}`
 
 export default function Admin() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
@@ -50,7 +51,6 @@ export default function Admin() {
 
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setMainTakeover(undefined);
   }
 
   const onClickSaveAccount = (event: any) => {
@@ -60,7 +60,6 @@ export default function Admin() {
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setMainTakeover(undefined);
   }
 
   const onClickSaveBilling = (event: any) => {
@@ -70,7 +69,6 @@ export default function Admin() {
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setMainTakeover(undefined);
   }
 
   const onClickForDelete = (table: TableItemData) => {
@@ -119,11 +117,15 @@ export default function Admin() {
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black">
       <div className="pb-10 relative">
+      {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
         <div className="STICKY sticky top-0 bg-black">
           <h1 className="text-3xl font-bold text-purple-500 py-5">Admin Console</h1>
-          <div>
-            <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
-          </div>
+          {!!APP_STATE.modifiedAt && (
+            <div>
+              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
+            </div>
+          )}
+
           <hr className="text-gray-900 my-5"/>
         </div>
         <div className="SCROLLY text-center">

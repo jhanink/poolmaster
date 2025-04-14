@@ -21,10 +21,10 @@ export default function AppFooter() {
     <div className="flex mt-2 pt-2 mb-2 text-center text-nowrap text-sm border-t justify-center items-center
       border-gray-900">
         {!MAIN_TAKEOVER?.adminScreen && !MAIN_TAKEOVER?.closeoutTable && (
-        <div className={`inline-block ${actionIconStyles}`}
+        <span className={`inline-block ${actionIconStyles}`}
           onClick={onClickSettings}>
-          <CogIcon></CogIcon>
-        </div>
+          <CogIcon className="size-[20px] relative top-[-1px] hover:text-yellow-500 text-gray-500"></CogIcon>
+        </span>
       )}
       <span className="text-gray-600 ml-3">POOL</span>
       <span className="text-sm">🎱</span>

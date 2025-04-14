@@ -5,11 +5,12 @@ import AppFooter from "../footer/footer";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import styles from "./poolMasterStyles.module.css";
-import { appStateAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
@@ -72,6 +73,11 @@ export default function AppPoolMaster() {
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+
+    if (APP_STATE.modifiedAt === 0) {
+      setMainTakeover({adminScreen: true});
+    }
 
     // Cleanup function
     return () => {
