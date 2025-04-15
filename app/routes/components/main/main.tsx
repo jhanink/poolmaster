@@ -2,12 +2,14 @@ import styles from "./mainStyles.module.css";
 import TableList from "./tableList/tableList";
 import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
-import { mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { DndGuestAssignTable } from "../mainTakeover/dndGuestAssignTable/DndGuestAssignTable";
 import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
 import Admin from "../mainTakeover/admin/admin";
+import { Helpers } from "~/util/Helpers";
 
 export default function AppMain() {
+  const [APP_STATE] = useAtom(appStateAtom);
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
   const [MAIN_TAKEOVER] = useAtom(mainTakoverAtom);
 
@@ -23,7 +25,9 @@ export default function AppMain() {
             <GuestList></GuestList>
           </>}
           {!(SELECTED_LIST_FILTER === "waitlist") && <>
-            <TableList></TableList>
+            {!!Helpers.tablesAssigned(APP_STATE).length && (
+              <TableList></TableList>
+            )}
           </>}
         </div>
       }
