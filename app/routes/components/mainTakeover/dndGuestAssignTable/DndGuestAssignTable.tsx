@@ -51,12 +51,16 @@ export function DndGuestAssignTable() {
         </>}
         {!!Helpers.tablesAvailable(APP_STATE).length && <>
           <div className="text-xl text-gray-400 mt-10">
-            Assign
-            <span className="uppercase text-red-500 mx-3">{MAIN_TAKEOVER.dndGuest?.name}</span>
-            to an open table
+            <div>
+              Assign
+            </div>
+            <div className="uppercase text-red-500 mx-3 my-3">{MAIN_TAKEOVER.dndGuest?.name}</div>
+            <div>
+              Select one of the following open tables:
+            </div>
           </div>
           <div>
-            <div className="my-3 top-0 z-10">
+            <div className="my-3 inline-block">
               {
                 tables
                   .filter((table: TableItemData) => !table.guest)
@@ -75,9 +79,8 @@ export function DndGuestAssignTable() {
               }
             </div>
           </div>
-          <div className="my-3">
-            <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelAssign}>Cancel</button>
-            <button className={`${actionButtonStyles} mx-2`} onClick={onClickDeleteGuest}>Trash</button>
+          <div className="my-10">
+            <button className={`px-5 ${actionButtonStyles}`} onClick={onClickCancelAssign}>Cancel Assignment</button>
           </div>
         </>}
       </div>

@@ -73,9 +73,13 @@ export default function GuestItem(props: {
     setMainTakeover({closeoutTable: table});
   }
 
-  const OnClickEditItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickEditItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     props.setEditForm ? props.setEditForm(prev => true) : setEditItem(prev => true);
+  }
+
+  const onClickAssignItem = (guest: Guest) => {
+    setMainTakeover({dndGuest: guest});
   }
 
   const onClickCancelEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -119,33 +123,6 @@ export default function GuestItem(props: {
         {fragmentElapsedTime(TIME_ELAPSED, props.isAssigned)}
       </div>
     )
-  }
-
-  const assignTableContent = () => {
-    return Helpers.tablesAvailable(APP_STATE).length > 0 && <>
-    <div className="flex">
-      <div className="COLUMN text-left flex-1 text-gray-400 ml-7 mr-3 mt-5 my-3 text-base">
-        <div className="ml-1"> Assign to table:</div>
-        <select ref={tableAssignmentRef} className={`uppercase ${formFieldStylesFullWidth}`}>
-        {
-          Helpers.tablesAvailable(APP_STATE)
-            .sort((A: TableItemData, B: TableItemData) => A.number - B.number)
-            .map((table: TableItemData) =>
-              <option className={optionStyles} key={table.id} value={table.id}>{table.nickname || table.name}  &nbsp;-&nbsp;  {table.type}</option>
-            )
-        }
-        </select>
-      </div>
-    </div>
-    <div className="flex">
-      <div className="COLUMN flex-1 p-1 pb-2 min-w-7 text-right mr-2">
-        <button className={`flex items-center ${actionButtonStyles}`} onClick={onClickAssignGuest}>
-          <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
-          Assign
-        </button>
-      </div>
-    </div>
-  </>
   }
 
   const itemDetailHeaderContent = () => {
@@ -194,7 +171,10 @@ export default function GuestItem(props: {
         </div>
         <div className="flex">
           <div className="COLUMN flex-1 p-1 pb-2 min-w-7 text-right mr-2">
-            <button className={`${actionButtonStyles}`} onClick={OnClickEditItem}>Edit </button>
+            <button className={`${actionButtonStyles}`} onClick={onClickEditItem}>Edit </button>
+            <button className={`${actionButtonStyles}`} onClick={() => {onClickAssignItem(guest)}}>
+              Assign
+            </button>
             {props.isAssigned && (
               <button className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
             )}
@@ -203,7 +183,6 @@ export default function GuestItem(props: {
             )}
           </div>
         </div>
-        {assignTableContent()}
       </div>
     )
   }
