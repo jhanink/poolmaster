@@ -35,7 +35,7 @@ export const fragmentWelcomeMessage = () => {
   return (
     <div className="border m-3 p-5 w-full text-gray-500 text-sm">
       <div className="text-2xl mb-5 text-gray-100">
-        Welcome to Pool Master!
+        Welcome to Pool Hall Master!
       </div>
       <div className="text-xl italic">
         Setup your pool room now.

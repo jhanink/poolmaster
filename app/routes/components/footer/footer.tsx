@@ -27,7 +27,6 @@ export default function AppFooter() {
         </span>
       )}
       <span className="text-gray-600 ml-3">POOLHALL</span>
-      <span className="text-sm">🎱</span>
       <span className="text-red-500">MASTER</span>
       <span className="text-gray-600 ml-3">2025</span>
     </div>
