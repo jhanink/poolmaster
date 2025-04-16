@@ -62,6 +62,15 @@ export const Helpers = {
     if (averageWaitTimeMinutes > 60) {
       return `${Helpers.formatHoursDecimal(averageWaitTimeMinutes/60, 1)} hrs`
     }
-    return `${Math.round(averageWaitTimeMinutes)} mins`;
-  }
+    return `${Math.round(averageWaitTimeMinutes)} min`;
+  },
+  pluralizeTablesAssigned: (appState: AppState) => {
+    return `table${Helpers.tablesAssigned(appState).length > 1 ? 's' : ''}`
+  },
+  pluralizeTablesAvailable: (appState: AppState) => {
+    return `table${Helpers.tablesAvailable(appState).length > 1 ? 's': ''}`
+  },
+  pluralizeGuestsWaiting: (appState: AppState) => {
+    return `guest${appState.guestList.length > 1 ? 's' : ''}`;
+  },
 }

@@ -65,19 +65,19 @@ export default function AppHeader() {
             `}>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-              <span className={`whitespace-nowrap ${statusPillStyles}`}>
-                {APP_STATE.guestList.length} &nbsp; Guests Waiting
+              <span className={`${statusPillStyles} whitespace-nowrap capitalize`}>
+                {APP_STATE.guestList.length} {Helpers.pluralizeGuestsWaiting(APP_STATE)} Waiting
               </span>
             </div>
             <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
           </div>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
-              <span className={`${statusPillStyles}`}>
-                {Helpers.tablesAssigned(APP_STATE).length} &nbsp; Tables Assigned
+              <span className={`${statusPillStyles} capitalize`}>
+                {Helpers.tablesAssigned(APP_STATE).length} {Helpers.pluralizeTablesAssigned(APP_STATE)} Assigned
               </span>
             </div>
-            <div className="mt-2 text-gray-500"> &nbsp; {Helpers.tablesAvailable(APP_STATE).length} Open Tables</div>
+            <div className="mt-2 text-gray-500 capitalize"> &nbsp; {Helpers.tablesAvailable(APP_STATE).length} Open {Helpers.pluralizeTablesAvailable(APP_STATE)}</div>
           </div>
         </div>
       </>}
