@@ -1,6 +1,6 @@
 # Pool Hall Master
 
-A Management App for Pool Hall Operations.
+A Modern Management App for Pool Hall Operations.
 
 # System Notes
 
