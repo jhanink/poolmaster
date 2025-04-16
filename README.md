@@ -15,7 +15,7 @@ Full-stack React application with React Router v7 in Vite "framework" mode.
 # Screenshots
 
 ### Features
-<img width="726" alt="image" src="https://github.com/user-attachments/assets/1569b723-7042-4baa-82f8-656b30134f21" />
+<img width="736" alt="image" src="https://github.com/user-attachments/assets/8988a208-b8ea-40da-af6e-24a2b251b67c" />
 
 ### Wait List, Table List
 <img width="792" alt="image" src="https://github.com/user-attachments/assets/f665ea02-d075-46b4-a574-cd4467ac5ace" />
