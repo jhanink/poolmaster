@@ -1,5 +1,5 @@
 import type { TimeElapsed } from "~/util/Helpers";
-import { CogIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm whitespace-nowrap`;
 
@@ -33,9 +33,20 @@ export const fragmentElapsedTimeFormatted = (hours: number, minutes: number, sty
 
 export const fragmentAppName = (style = '') => {
   return (
-    <div className={`${style} inline-block`}>
-      <span className="text-gray-500">POOLHALL</span>
+    <div className={`${style} inline-block text-gray-600`}>
+      <span>POOLHALL</span>
       <span className="text-red-500">MASTER</span>
+    </div>
+  )
+}
+
+export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
+  return (
+    <div className="flex items-center justify-end CLOSE_BUTTON w-full pr-2 pt-2">
+      <div className="inline-block hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
+        <ArrowsPointingInIcon className="mr-3 inline-block size-5"></ArrowsPointingInIcon>
+        <span className="relative top-[1px] text-sm">EXIT</span>
+      </div>
     </div>
   )
 }

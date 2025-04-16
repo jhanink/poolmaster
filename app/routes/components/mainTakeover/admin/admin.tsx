@@ -6,7 +6,7 @@ import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
-import { fragmentWelcomeMessage, fragmentAppName } from "../../fragments/fragments";
+import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
 
 const SECTION = `text-left`;
 const HEADER = `text-2xl py-2 px-5 text-purple-500 mx-2 border border-gray-800 rounded-lg w-full`;
@@ -22,7 +22,7 @@ export default function Admin() {
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
-  const onClickExit = (event: any) => {
+  const onClickExit = () => {
     setMainTakeover(undefined);
   }
 
@@ -118,17 +118,12 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black">
-      <div className="pb-10 relative">
-      {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
+      {fragmentExitTakeover(onClickExit)}
+      <div className="pt-5 relative">
+        {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
         <div className="STICKY sticky top-0 bg-black">
-          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin {fragmentAppName('text-2xl ml-2')}</h1>
-          {!!APP_STATE.modifiedAt && (
-            <div>
-              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Exit &nbsp; Admin Tools</button>
-            </div>
-          )}
-
-          <hr className="text-gray-900 my-5"/>
+          <h1>{fragmentAppName('text-xl ml-2')}</h1>
+          <h1 className="text-3xl text-purple-500 pb-10 pt-5">Admin</h1>
         </div>
         <div className="SCROLLY text-center">
           <div className={`${SECTION}`}>

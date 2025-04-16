@@ -5,6 +5,7 @@ import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, formFieldStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
+import { fragmentExitTakeover } from "../../fragments/fragments";
 
 type BillablePlayer = {
   id: number,
@@ -129,8 +130,8 @@ export default function TableCloseout() {
   }, []);
 
   return (
-    // <div className="border-white select-none mt-5">
-      <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none mt-5">
+    <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none">
+      {fragmentExitTakeover(onClickCancelCheckout)}
       <div className="flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
@@ -222,7 +223,6 @@ export default function TableCloseout() {
         </div>
 
         <div className="my-3 mb-20">
-          <button className={`${actionButtonStyles} mx-2`} onClick={onClickCancelCheckout}>Cancel & Exit</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
           <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out {MAIN_TAKEOVER.closeoutTable.name}</button>
         </div>
