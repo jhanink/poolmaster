@@ -63,16 +63,21 @@ export default function AppHeader() {
               ${dndTargetBaseStyle}
               ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}
             `}>
-          <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-            <span className={`whitespace-nowrap ${statusPillStyles}`}>
-              {APP_STATE.guestList.length} &nbsp; Waiting
-            </span>
+          <div>
+            <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
+              <span className={`whitespace-nowrap ${statusPillStyles}`}>
+                {APP_STATE.guestList.length} &nbsp; Guests Waiting
+              </span>
+            </div>
+            <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)} mins</div>
           </div>
-          <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
-            <span className={`${statusPillStyles}`}>
-              {Helpers.tablesAssigned(APP_STATE).length} &nbsp; Assigned
-              <span className="text-gray-500"> &nbsp; ({Helpers.tablesAvailable(APP_STATE).length} open)</span>
-            </span>
+          <div>
+            <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
+              <span className={`${statusPillStyles}`}>
+                {Helpers.tablesAssigned(APP_STATE).length} &nbsp; Tables Assigned
+              </span>
+            </div>
+            <div className="mt-2 text-gray-500"> &nbsp; {Helpers.tablesAvailable(APP_STATE).length} Open Tables</div>
           </div>
         </div>
       </>}

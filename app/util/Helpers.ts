@@ -44,5 +44,14 @@ export const Helpers = {
   },
   timeElapsedGuest: (guest: Guest) => {
     return Helpers.timeElapsed(guest.createdAt, Date.now());
+  },
+  averageWaitTime: (appState: AppState) => {
+    const totalWaitTime = appState.guestList.reduce((sum, guest) => {
+      const timeElapsed = Helpers.timeElapsedGuest(guest);
+      sum += timeElapsed.durationMinutes;
+      return sum;
+    }, 0);
+    const averageWaitTime = Math.round(totalWaitTime / (appState.guestList.length || 1));
+    return averageWaitTime;
   }
 }

@@ -54,32 +54,30 @@ export function DndGuestAssignTable() {
             <div>
               Assign
             </div>
-            <div className="uppercase text-red-500 mx-3 my-3">{MAIN_TAKEOVER.dndGuest?.name}</div>
+            <div className="uppercase text-red-500 mx-3 my-2">{MAIN_TAKEOVER.dndGuest?.name}</div>
             <div>
-              Select one of the following open tables:
+              to one of the following open tables
             </div>
           </div>
-          <div>
-            <div className="my-3 inline-block">
-              {
-                tables
-                  .filter((table: TableItemData) => !table.guest)
-                  .sort((A: TableItemData, B: TableItemData) =>
-                    A.number - B.number
-                  )
-                  .map((table: TableItemData, index: number) =>
-                    <div className={`CHIP ${unassignedStyle}`}
-                      key={table.id}
-                      data-table-id={table.id}
-                      onClick={(event) => onClickTableChip(event, table)}
-                    >
-                      {table.nickname || table.name}
-                    </div>
-                  )
-              }
-            </div>
+          <div className="my-10 inline-block max-w-lg mx-auto">
+            {
+              tables
+                .filter((table: TableItemData) => !table.guest)
+                .sort((A: TableItemData, B: TableItemData) =>
+                  A.number - B.number
+                )
+                .map((table: TableItemData, index: number) =>
+                  <div className={`CHIP ${unassignedStyle}`}
+                    key={table.id}
+                    data-table-id={table.id}
+                    onClick={(event) => onClickTableChip(event, table)}
+                  >
+                    {table.nickname || table.name}
+                  </div>
+                )
+            }
           </div>
-          <div className="my-10">
+          <div className="">
             <button className={`px-5 ${actionButtonStyles}`} onClick={onClickCancelAssign}>Cancel Assignment</button>
           </div>
         </>}
