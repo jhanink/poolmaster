@@ -25,7 +25,7 @@ export default function AppMain() {
             <GuestList></GuestList>
           </>}
           {!(SELECTED_LIST_FILTER === "waitlist") && <>
-            {!!Helpers.tablesAssigned(APP_STATE).length && (
+            {(!!Helpers.tablesAssigned(APP_STATE).length || SELECTED_LIST_FILTER === "tablelist") && (
               <TableList></TableList>
             )}
           </>}

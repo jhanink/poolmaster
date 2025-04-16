@@ -51,6 +51,7 @@ export default function Admin() {
 
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
+    setTables(tables);
     setShowConfirmSaveTables(false);
   }
 

@@ -8,9 +8,8 @@ import {
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from 'react-dnd';
 import { type Guest } from "~/config/AppState";
-import GuestItem from "../main/guestItem/guestItem";
 
-const statusPillStyles = `mr-2`;
+const statusPillStyles = `mr-2 px-1 whitespace-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
 
 const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm select-none`;
@@ -37,8 +36,8 @@ export default function AppHeader() {
         }
     },
     collect: (monitor) => ({
-      isOver: !!monitor.isOver(), // Is an item being dragged over this target?
-      canDrop: !!monitor.canDrop(), // Can the item be dropped here? (Based on 'accept')
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
     }),
   }));
 
@@ -58,21 +57,22 @@ export default function AppHeader() {
         <div className="flex-1 my-1 text-nowrap text-base text-gray-400">
           {APP_STATE.account?.venue || 'Pool Master'}
         </div>
-        {/* <HeaderProfile></HeaderProfile> */}
       </div>
       {!MAIN_TAKEOVER?.adminScreen && !(MAIN_TAKEOVER?.dndGuest) && !MAIN_TAKEOVER?.closeoutTable && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
-            className={` text-xs
+            className={`
+              text-lg
               ${dndTargetBaseStyle}
               ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}
             `}>
           <span className={`${SELECTED_LIST_FILTER === 'waitlist' ? selectedFilterStyle : ''} py-1 px-2 mx-3 border border-gray-500 text-blue-500 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('waitlist')}>
-            <span className={`${statusPillStyles}`}>{APP_STATE.guestList.length}</span>
-            <span>WAITING</span>
+            <span className={`${statusPillStyles}`}>{APP_STATE.guestList.length} &nbsp; Waiting</span>
           </span>
           <span className={`${SELECTED_LIST_FILTER === 'tablelist' ? selectedFilterStyle : ''} py-1 px-2 mx-3 border border-gray-500 text-green-600 rounded-full hover:cursor-pointer`} onClick={(event) => onClickListFilter('tablelist')}>
-            <span className={`${statusPillStyles}`}>{Helpers.tablesAssigned(APP_STATE).length}</span>
-            <span>ACTIVE</span>
+            <span className={`${statusPillStyles}`}>
+              {Helpers.tablesAssigned(APP_STATE).length} &nbsp; Assigned
+              <span className="text-gray-500"> &nbsp; ({Helpers.tablesAvailable(APP_STATE).length} open)</span>
+            </span>
           </span>
         </div>
       </>}

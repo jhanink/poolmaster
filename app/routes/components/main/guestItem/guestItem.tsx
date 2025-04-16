@@ -173,7 +173,8 @@ export default function GuestItem(props: {
           <div className="COLUMN flex-1 p-1 pb-2 min-w-7 text-right mr-2">
             <button className={`${actionButtonStyles}`} onClick={onClickEditItem}>Edit </button>
             <button className={`${actionButtonStyles}`} onClick={() => {onClickAssignItem(guest)}}>
-              Assign
+              {props.isAssigned && 'Move'}
+              {!props.isAssigned && 'Assign'}
             </button>
             {props.isAssigned && (
               <button className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
