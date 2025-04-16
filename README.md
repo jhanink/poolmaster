@@ -1,4 +1,4 @@
-# Pool Master
+# Pool Hall Master
 
 A Management App for Pool Hall Operations.
 
