@@ -24,4 +24,4 @@ Full-stack React application with React Router v7 in Vite "framework" mode.
 <img width="776" alt="image" src="https://github.com/user-attachments/assets/73ed0fea-d5d6-496e-bb8e-89529b334d8b" />
 
 ### Admin
-<img width="736" alt="image" src="https://github.com/user-attachments/assets/09cec860-f208-4191-a972-7cea3a0d170d" />
+<img width="719" alt="image" src="https://github.com/user-attachments/assets/bb78c286-508c-4c64-8f72-cac3efa0c104" />
