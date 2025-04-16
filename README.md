@@ -20,6 +20,9 @@ Full-stack React application with React Router v7 in Vite "framework" mode.
 ### Wait List, Table List
 <img width="792" alt="image" src="https://github.com/user-attachments/assets/f665ea02-d075-46b4-a574-cd4467ac5ace" />
 
+### Table Close Out
+<img width="776" alt="image" src="https://github.com/user-attachments/assets/73ed0fea-d5d6-496e-bb8e-89529b334d8b" />
+
 ### Admin
 
 <img width="805" alt="image" src="https://github.com/user-attachments/assets/9d55a57e-8eaf-4ad9-b547-a29b77a7ef3b" />
