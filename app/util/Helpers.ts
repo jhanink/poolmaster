@@ -65,12 +65,12 @@ export const Helpers = {
     return `${Math.round(averageWaitTimeMinutes)} min`;
   },
   pluralizeTablesAssigned: (appState: AppState) => {
-    return `table${Helpers.tablesAssigned(appState).length > 1 ? 's' : ''}`
+    return `table${Helpers.tablesAssigned(appState).length === 1 ? '' : 's'}`
   },
   pluralizeTablesAvailable: (appState: AppState) => {
-    return `table${Helpers.tablesAvailable(appState).length > 1 ? 's': ''}`
+    return `table${Helpers.tablesAvailable(appState).length === 1 ? '': 's'}`
   },
   pluralizeGuestsWaiting: (appState: AppState) => {
-    return `guest${appState.guestList.length > 1 ? 's' : ''}`;
+    return `guest${appState.guestList.length === 1 ? '' : 's'}`;
   },
 }
