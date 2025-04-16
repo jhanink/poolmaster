@@ -31,11 +31,31 @@ export const fragmentElapsedTimeFormatted = (hours: number, minutes: number, sty
   )
 }
 
-export const fragmentWelcomeMessage = () => {
+export const fragmentAppName = (style = '') => {
   return (
-    <div className="border m-3 p-5 w-full text-gray-500 text-sm">
+    <div className={`${style} inline-block`}>
+      <span className="text-gray-500">POOLHALL</span>
+      <span className="text-red-500">MASTER</span>
+    </div>
+  )
+}
+
+export const fragmentWelcomeMessage = () => {
+  const messages = [
+    'Guest Wait List with elapsed time',
+    'Drag-N-Drop for table assignment',
+    'Table closeout with time-billing totals',
+    'Wait List and Table List filters',
+    'Player Names, phone number, and notes',
+    'Admin Console to manage tables and billing',
+    'Works on Mobile and Desktop',
+    'Realtime sync across devices and screens'
+  ];
+  return (
+    <div className="border m-3 p-10 w-full text-gray-500 text-sm border rounded-xl border-gray-700">
       <div className="text-2xl mb-5 text-gray-100">
-        Welcome to Pool Hall Master!
+        Welcome to
+        {fragmentAppName('text-xl ml-2')}
       </div>
       <div className="text-xl italic">
         Setup your pool room now.
@@ -57,16 +77,10 @@ export const fragmentWelcomeMessage = () => {
         <div className="text-xl mb-3 italic">
           Here are a few notable features:
         </div>
-        <ul className="mt-5 text-gray-100 text-base">
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Guest Wait List with elapsed time</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Drag-N-Drop for table assignment</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Active Table List with elapsed time</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Table closeout with time-billing totals</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Wait List and Table List filters</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Player Names, phone number, and notes</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Admin Console to manage tables and billing</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Works on Mobile and Desktop</span></li>
-          <li><span className="text-gray-500 mr-1"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>Realtime sync across devices and screens</span></li>
+        <ul className="pl-10 mt-5 text-gray-100 text-base text-left">
+          {messages.map((message) => (
+            <li><span className="text-gray-500 mr-3"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>{message}</span></li>
+          ))}
         </ul>
       </div>
     </div>

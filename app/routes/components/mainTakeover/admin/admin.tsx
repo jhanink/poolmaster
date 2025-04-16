@@ -6,7 +6,7 @@ import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
-import { fragmentWelcomeMessage } from "../../fragments/fragments";
+import { fragmentWelcomeMessage, fragmentAppName } from "../../fragments/fragments";
 
 const SECTION = `text-left`;
 const HEADER = `text-2xl py-2 px-5 text-purple-500 mx-2 border border-gray-800 rounded-lg w-full`;
@@ -121,10 +121,10 @@ export default function Admin() {
       <div className="pb-10 relative">
       {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
         <div className="STICKY sticky top-0 bg-black">
-          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin <span className="text-gray-700">Pool Hall Master</span></h1>
+          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin {fragmentAppName('text-2xl ml-2')}</h1>
           {!!APP_STATE.modifiedAt && (
             <div>
-              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
+              <button className={`${actionButtonStyles}`} onClick={onClickExit}>Exit &nbsp; Admin Tools</button>
             </div>
           )}
 
