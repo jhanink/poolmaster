@@ -35,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className={`${APP_STATE.isDarkModeEnabled ? 'dark' : ''} bg-black touch-none`}>
+      <body className={`bg-black touch-none`}>
         {children}
         <ScrollRestoration />
         <Scripts />

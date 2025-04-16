@@ -134,7 +134,7 @@ export default function TableCloseout() {
       <div className="flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
-            Close Out <span className="text-green-500 text-3xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
+            Close Out <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
           </div>
           <div className="inline-block text-right">
             <div className="TIME flex items-center text-base mb-2">
@@ -172,23 +172,19 @@ export default function TableCloseout() {
           </div>
         </div>
 
-        <div className="text-2xl text-gray-400 mt-3">
+        <div className="text-2xl text-gray-400 my-10">
           Total Bill: &nbsp;
-          <span className="text-green-500 text-3xl">${playersTotal()}</span>
+          <span className="text-green-500 text-2xl">${playersTotal()}</span>
         </div>
 
-        <div className="my-7">
-          <button className={`inline-block ${actionButtonStyles}`} onClick={onClickCancelCheckout}>Cancel & Exit</button>
-        </div>
-
-        <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5">
+        <div className="WORKSHEET text-left border border-gray-800 p-5 px-20 mx-5 my-10">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
               <div>
                 <div className="inline-block text-gray-500 mr-3">
                   <input type="checkbox" checked={player.billable} onChange={(event) => {onChangePlayerChecked(player, event)}}></input>
                 </div>
-                <div className={`inline-block text-lg ${index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
+                <div className={`inline-block text-base ${index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
                   {player.name}
                   {index === 0 && (
                     <div className="inline-block">&nbsp; (Main Player)</div>

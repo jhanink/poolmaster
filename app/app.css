@@ -8,7 +8,7 @@
 html,
 body {
   height: 100%;
-  @apply bg-gray-950;
+  @apply bg-black;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;

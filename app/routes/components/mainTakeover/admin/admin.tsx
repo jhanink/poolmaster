@@ -9,10 +9,10 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentWelcomeMessage } from "../../fragments/fragments";
 
 const SECTION = `text-left`;
-const HEADER = `text-xl py-2 px-4 text-gray-200 bg-purple-900 mx-2 border border-gray-400 rounded-md`;
+const HEADER = `text-2xl py-2 px-5 text-purple-500 mx-2 border border-gray-800 rounded-lg w-full`;
 const CONTENT = `p-5 text-sm `;
-const ACTIONS = `ml-5 text-left`;
-const actionButtons = `bg-gray-900 ${actionButtonStyles}`
+const ACTIONS = `text-left`;
+const actionButtons = `${actionButtonStyles} !py-0`
 
 export default function Admin() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -121,7 +121,7 @@ export default function Admin() {
       <div className="pb-10 relative">
       {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
         <div className="STICKY sticky top-0 bg-black">
-          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin Console</h1>
+          <h1 className="text-3xl font-bold text-purple-500 py-5">Admin <span className="text-gray-700">Pool Hall Master</span></h1>
           {!!APP_STATE.modifiedAt && (
             <div>
               <button className={`${actionButtonStyles}`} onClick={onClickExit}>Close Admin Tools</button>
@@ -133,7 +133,7 @@ export default function Admin() {
         <div className="SCROLLY text-center">
           <div className={`${SECTION}`}>
             <div className={`${HEADER}`}>
-              Tables
+              <span className="pr-5">Tables</span>
               <button className={actionButtons} onClick={() => {onClickAddTables(1)}}>+1</button>
               <button className={actionButtons} onClick={() => {onClickAddTables(3)}}>+3</button>
               <button className={actionButtons} onClick={() => {onClickAddTables(10)}}>+10</button>
@@ -175,7 +175,7 @@ export default function Admin() {
                       </select>
                     </div>
                   </div>
-                  <div className="ml-10 mt-1 flex items-center">
+                  <div className="ml-4 mt-1 flex items-center">
                     <div className="inline-block text-gray-400 mr-2">
                       Hourly Rate:
                     </div>
