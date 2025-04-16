@@ -69,7 +69,7 @@ export const fragmentWelcomeMessage = () => {
         {fragmentAppName('text-xl ml-2')}
       </div>
       <div className="text-xl italic">
-        Setup your pool room now.
+        Setup your pool room now
       </div>
       <div className="mt-5 text-gray-200">
         After you save something below, this message will go away.
@@ -86,7 +86,7 @@ export const fragmentWelcomeMessage = () => {
           We hope you enjoy Pool Master
         </div>
         <div className="text-xl mb-3 italic">
-          Here are a few notable features:
+          Here are a few notable features
         </div>
         <ul className="pl-10 mt-5 text-gray-100 text-base text-left">
           {messages.map((message) => (

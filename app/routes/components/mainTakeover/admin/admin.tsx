@@ -118,12 +118,18 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black">
-      {fragmentExitTakeover(onClickExit)}
+      {!!APP_STATE.modifiedAt && (
+        fragmentExitTakeover(onClickExit)
+      )}
       <div className="pt-5 relative">
-        {!APP_STATE.modifiedAt && ( fragmentWelcomeMessage() )}
+        {!APP_STATE.modifiedAt && (
+          fragmentWelcomeMessage()
+        )}
         <div className="STICKY sticky top-0 bg-black">
+        {!!APP_STATE.modifiedAt && (
           <h1>{fragmentAppName('text-xl ml-2')}</h1>
-          <h1 className="text-3xl text-purple-500 pb-10 pt-5">Admin</h1>
+        )}
+          <h1 className="text-3xl text-purple-500 pb-10 pt-3">Admin</h1>
         </div>
         <div className="SCROLLY text-center">
           <div className={`${SECTION}`}>
