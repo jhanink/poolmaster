@@ -4,6 +4,7 @@ import {type AppState, type Guest} from "~/config/AppState";
 export type TimeElapsed = {
   durationMinutes: number;
   durationHoursDecimal: string;
+  hoursExact: number;
   minutes: number;
   hours: number;
   days: number;
@@ -12,6 +13,7 @@ export const InitialTimeElapsed: TimeElapsed = {
   minutes: 0,
   hours: 0,
   days: 0,
+  hoursExact: 0,
   durationMinutes: 0,
   durationHoursDecimal: '0.00'
 };
@@ -33,14 +35,19 @@ export const Helpers = {
     const hours = Math.floor(duration.asHours());
     const days = Math.floor(duration.asDays());
     const minutes = durationMinutes % 60;
-    const durationHoursDecimal = `${(Math.floor(duration.asHours() * 100) / 100).toFixed(2)}`;
+    const hoursExact = duration.asHours();
+    const durationHoursDecimal = Helpers.formatHoursDecimal(hoursExact);
     return {
       durationMinutes,
       durationHoursDecimal,
+      hoursExact,
       minutes: minutes >= 0 ? minutes : 0,
       hours,
       days,
     }
+  },
+  formatHoursDecimal: (hoursExact: number, decimals: number = 2) => {
+    return `${(Math.floor(hoursExact * 100) / 100).toFixed(decimals)}`;
   },
   timeElapsedGuest: (guest: Guest) => {
     return Helpers.timeElapsed(guest.createdAt, Date.now());
@@ -51,7 +58,10 @@ export const Helpers = {
       sum += timeElapsed.durationMinutes;
       return sum;
     }, 0);
-    const averageWaitTime = Math.round(totalWaitTime / (appState.guestList.length || 1));
-    return averageWaitTime;
+    const averageWaitTimeMinutes = totalWaitTime / (appState.guestList.length || 1);
+    if (averageWaitTimeMinutes > 60) {
+      return `${Helpers.formatHoursDecimal(averageWaitTimeMinutes/60, 1)} hrs`
+    }
+    return `${Math.round(averageWaitTimeMinutes)} mins`;
   }
 }

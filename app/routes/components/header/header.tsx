@@ -9,9 +9,9 @@ import { Helpers } from "~/util/Helpers";
 import { useDrop } from 'react-dnd';
 import { type Guest } from "~/config/AppState";
 
-const statusPillStyles = `mx-2 px-1 whitespace-nowrap`;
+const statusPillStyles = `mx-1 px-1 whitespace-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
-const filterStyle = `inline-block py-1 px-2 mx-3 border border-gray-500 rounded-full hover:cursor-pointer`;
+const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-500 rounded-full hover:cursor-pointer`;
 const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm select-none`;
 const dndActiveStyle = `bg-green-300 invert`;
 const dndOverStyle = `blur-[2px] bg-white`;
@@ -69,7 +69,7 @@ export default function AppHeader() {
                 {APP_STATE.guestList.length} &nbsp; Guests Waiting
               </span>
             </div>
-            <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)} mins</div>
+            <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
           </div>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
