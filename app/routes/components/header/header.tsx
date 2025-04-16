@@ -77,7 +77,7 @@ export default function AppHeader() {
                 {Helpers.tablesAssigned(APP_STATE).length} &nbsp; {Helpers.pluralizeTablesAssigned(APP_STATE)} Assigned
               </span>
             </div>
-            <div className="mt-2 text-gray-500 capitalize"> &nbsp; {Helpers.tablesAvailable(APP_STATE).length} Open {Helpers.pluralizeTablesAvailable(APP_STATE)}</div>
+            <div className="mt-2 text-gray-500 capitalize"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
           </div>
         </div>
       </>}
