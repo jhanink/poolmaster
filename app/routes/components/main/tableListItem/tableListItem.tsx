@@ -6,7 +6,7 @@ import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 
-const cardStyle = `${styles.itemCard} select-none p-2 text-gray-700 border border-gray-800 rounded-xl`;
+const cardStyle = `${styles.itemCard} select-none py-2 text-gray-700 border border-gray-800 rounded-xl`;
 const guestUnassigned =`${cardStyle} text-gray-700`;
 const guestAssigned = `${cardStyle} border-green-800 text-green-700`;
 
@@ -45,14 +45,6 @@ export default function TableListItem(props: {
       setSelectedTable(undefined as TableItemData);
     }
 
-    const onClickEditTable = (event: React.MouseEvent<HTMLDivElement>) => {
-
-    }
-
-    const onClickDeleteTable = (event: React.MouseEvent<HTMLDivElement>) => {
-
-    }
-
     return (
       <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
@@ -69,11 +61,18 @@ export default function TableListItem(props: {
           <div className="text-gray-700">{table.type}</div>
         </div>
         {table.guest && (
-          <>
+          <div className="ml-3">
             {props.table.guest && (
-              <GuestItem guest={table.guest} index={0} isAssigned={true} itemExpanded={!!SELECTED_TABLE || ITEM_EXPANDED} setItemExpanded={setItemExpanded} isEditForm={EDIT_FORM} setEditForm={setEditForm}></GuestItem>
+              <GuestItem guest={table.guest}
+                index={0}
+                isAssigned={true}
+                itemExpanded={!!SELECTED_TABLE || ITEM_EXPANDED}
+                setItemExpanded={setItemExpanded}
+                isEditForm={EDIT_FORM}
+                setEditForm={setEditForm}>
+              </GuestItem>
             )}
-          </>
+          </div>
         )}
       </div>
     );

@@ -5,25 +5,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
-import { type TableItemData, type Guest } from "~/config/AppState"
+import { type Guest } from "~/config/AppState"
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import GuestForm from '../guestForm/guestForm';
-import { formFieldStylesFullWidth } from '~/util/GlobalStylesUtil';
-import { ArrowRightIcon, ArrowsPointingInIcon } from '@heroicons/react/24/outline';
+import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
 import { fragmentElapsedTime } from '../../fragments/fragments';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-/**
- * A GuestItem on the GuestList moves to a TableItem on the TableList.
- * GuestItem depends on parent container to satisfy the state interface
- *   - GuestList -> GuestListItem (IS a wrapped Guest) -> GuestItem
- *   - TableList -> TableListItem (HAS an associated Guest) -> GuestItem
- */
 export default function GuestItem(props: {
   guest: Guest,
   index: number,
@@ -139,10 +132,10 @@ export default function GuestItem(props: {
   }
 
   const itemDetailBodyContent = () => {
-    return !(ITEM_EDIT || props.isEditForm) && ( // Expanded State: item Detail
+    return !(ITEM_EDIT || props.isEditForm) && (
       <div className="text-sm">
         <div className="flex">
-          <div className="COLUMN text-left flex-1 text-gray-300 ml-7 my-3">
+          <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
             { guest.phoneNumber && (
               <div className="ROW"><span className={`${fieldLabel}`}>Phone: &nbsp;</span> {guest.phoneNumber} </div>
             )}
@@ -190,8 +183,8 @@ export default function GuestItem(props: {
 
   const itemDetailGuestEditForm = () => {
     return (
-      (ITEM_EDIT || props.isEditForm) && ( // Expanded: Item Edit
-        <div className="mx-5">
+      (ITEM_EDIT || props.isEditForm) && (
+        <div className={`${!props.isAssigned && 'mx-5'}`}>
           <GuestForm guest={props.guest} onEditCloseCallback={onClickCancelEdit}></GuestForm>
         </div>
       )
@@ -199,13 +192,13 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
-    return ( // Collapsed: Item row
+    return (
       <div className="flex text-sm">
-        <div className="flex-grow-0 text-left min-w-7">
-          {!props.isAssigned && (
+        {!props.isAssigned && (
+          <div className="flex-grow-0 text-left min-w-7">
             <span className="text-gray-600">{props.index + 1}. </span>
-          )}
-        </div>
+          </div>
+        )}
         <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} flex-grow uppercase text-left text-blue-500 truncate`}>
           {guest.name}
           {!props.isAssigned && (guest.partySize > 1) && (
@@ -228,7 +221,7 @@ export default function GuestItem(props: {
     updateClock();
     const intervalId = setInterval(updateClock, 1000 * 30);
 
-    return () => clearInterval(intervalId); // Cleanup on unmount/re-render
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -237,7 +230,7 @@ export default function GuestItem(props: {
 
   return (
     <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
-      { props.itemExpanded && ( // Expanded State
+      { props.itemExpanded && (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}

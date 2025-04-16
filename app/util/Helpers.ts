@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {type AppState} from "~/config/AppState";
+import {type AppState, type Guest} from "~/config/AppState";
 
 export type TimeElapsed = {
   durationMinutes: number;
@@ -41,5 +41,8 @@ export const Helpers = {
       hours,
       days,
     }
+  },
+  timeElapsedGuest: (guest: Guest) => {
+    return Helpers.timeElapsed(guest.createdAt, Date.now());
   }
 }
