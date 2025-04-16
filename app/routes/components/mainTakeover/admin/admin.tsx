@@ -117,7 +117,7 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center text-center bg-black">
+    <div className="flex flex-col justify-center items-center text-center">
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}
@@ -125,13 +125,13 @@ export default function Admin() {
         {!APP_STATE.modifiedAt && (
           fragmentWelcomeMessage()
         )}
-        <div className="STICKY sticky top-0 bg-black">
-        {!!APP_STATE.modifiedAt && (
-          <h1>{fragmentAppName('text-xl ml-2')}</h1>
-        )}
+        <div>
+          {!!APP_STATE.modifiedAt && (
+            <h1>{fragmentAppName('text-xl ml-2')}</h1>
+          )}
           <h1 className="text-3xl text-purple-500 pb-10 pt-3">Admin</h1>
         </div>
-        <div className="SCROLLY text-center">
+        <div className="SCROLLY text-center mb-20">
           <div className={`${SECTION}`}>
             <div className={`${HEADER}`}>
               <span className="pr-5">Tables</span>
