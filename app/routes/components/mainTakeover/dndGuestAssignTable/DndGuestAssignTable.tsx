@@ -48,11 +48,11 @@ export function DndGuestAssignTable() {
           {!!Helpers.tablesAvailable(APP_STATE).length && <>
             <div className="text-xl text-gray-400 mt-5">
               <div>
-                {!!MAIN_TAKEOVER?.guest?.isAssigned && (
-                  Move
+                {!!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
+                  <span>MOVE</span>
                 )}
-                {!MAIN_TAKEOVER?.guest?.isAssigned && (
-                  Assign
+                {!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
+                  <span>ASSIGN</span>
                 )}
               </div>
               <div className="uppercase text-red-500 mx-3 my-2 whitespace-nowrap">
