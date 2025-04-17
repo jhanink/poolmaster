@@ -12,7 +12,6 @@ const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs bo
 export function DndGuestAssignTable() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
-
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const tables = APP_STATE.tables;
@@ -49,7 +48,12 @@ export function DndGuestAssignTable() {
           {!!Helpers.tablesAvailable(APP_STATE).length && <>
             <div className="text-xl text-gray-400 mt-5">
               <div>
-                Assign
+                {!!MAIN_TAKEOVER?.guest?.isAssigned && (
+                  Move
+                )}
+                {!MAIN_TAKEOVER?.guest?.isAssigned && (
+                  Assign
+                )}
               </div>
               <div className="uppercase text-red-500 mx-3 my-2 whitespace-nowrap">
                 <span className="text-gray-700 mr-3">Guest</span>
