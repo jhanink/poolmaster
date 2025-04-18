@@ -1,5 +1,5 @@
+import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, formFieldStyles } from "~/util/GlobalStylesUtil";
@@ -29,6 +29,8 @@ export default function TableCloseout() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
+
+  const TopRef = useRef<HTMLDivElement>(null);
 
   const onChangeTableHours = (event: React.ChangeEvent<HTMLInputElement>) => {
     const hours = event.target.value
@@ -126,11 +128,12 @@ export default function TableCloseout() {
     setMainTakeover(undefined);
   }
   useEffect(() => {
-    onClickReset()
+    onClickReset();
+    TopRef.current && TopRef.current.scrollIntoView();
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none">
+    <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none" ref={TopRef}>
       {fragmentExitTakeover(onClickCancelCheckout)}
       <div className="flex-1 text-center">
         <div className="text-gray-400 mt-5">

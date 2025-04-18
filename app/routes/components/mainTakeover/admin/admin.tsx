@@ -1,6 +1,6 @@
+import { useEffect, useState, useRef } from "react";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import type { Account, Billing, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
@@ -21,6 +21,8 @@ export default function Admin() {
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
+
+  const TopRef = useRef<HTMLDivElement>(null);
 
   const onClickExit = () => {
     setMainTakeover(undefined);
@@ -114,10 +116,11 @@ export default function Admin() {
     onClickResetTables({} as any);
     onClickResetAccount({} as any);
     onClickResetBilling({} as any);
+    TopRef.current && TopRef.current.scrollIntoView();
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center text-center">
+    <div className="flex flex-col justify-center items-center text-center" ref={TopRef}>
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}

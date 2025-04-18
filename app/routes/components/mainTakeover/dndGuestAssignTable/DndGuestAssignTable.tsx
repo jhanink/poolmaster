@@ -1,4 +1,4 @@
-import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { type TableItemData } from "~/config/AppState";
@@ -14,6 +14,7 @@ export function DndGuestAssignTable() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
+  const TopRef = useRef<HTMLDivElement>(null);
   const tables = APP_STATE.tables;
 
   const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItemData) => {
@@ -34,8 +35,12 @@ export function DndGuestAssignTable() {
     setMainTakeover(undefined);
   }
 
+  useEffect(() => {
+    TopRef.current && TopRef.current.scrollIntoView();
+  },)
+
   return (
-    <div className="select-none flex-1 text-center relative items-center">
+    <div className="select-none flex-1 text-center relative items-center" ref={TopRef}>
       {fragmentExitTakeover(onClickCancelAssign)}
       <div className="inline-block">
         <div className="CONTENT px-20">
