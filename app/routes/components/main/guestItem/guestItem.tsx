@@ -201,7 +201,7 @@ export default function GuestItem(props: {
         )}
         <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} flex-grow uppercase text-left text-blue-500 truncate`}>
           {guest.name}
-          {!props.isAssigned && (guest.partySize > 1) && (
+          {!props.isAssigned && !props.itemExpanded && (guest.partySize > 1) && (
             <span className="text-gray-400 normal-case whitespace-nowrap">&nbsp; &nbsp; +{guest.partySize -1 } more</span>
           )}
         </div>

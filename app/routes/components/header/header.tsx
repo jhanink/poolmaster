@@ -65,19 +65,19 @@ export default function AppHeader() {
             `}>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-              <span className={`${statusPillStyles} whitespace-nowrap capitalize`}>
-                {APP_STATE.guestList.length} &nbsp; {Helpers.pluralizeGuestsWaiting(APP_STATE)} Waiting
+              <span className={`${statusPillStyles} whitespace-nowrap`}>
+                {APP_STATE.guestList.length} <span className="ml-1 capitalize">{Helpers.pluralizeGuestsWaiting(APP_STATE)} In Line</span>
               </span>
             </div>
             <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
           </div>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
-              <span className={`${statusPillStyles} capitalize`}>
-                {Helpers.tablesAssigned(APP_STATE).length} &nbsp; {Helpers.pluralizeTablesAssigned(APP_STATE)} Assigned
+              <span className={`${statusPillStyles}`}>
+                {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">{Helpers.pluralizeTablesAssigned(APP_STATE)} Used - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
               </span>
             </div>
-            <div className="mt-2 text-gray-500 capitalize"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
+            <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
           </div>
         </div>
       </>}

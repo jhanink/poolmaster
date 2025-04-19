@@ -36,7 +36,7 @@ export const Helpers = {
     const days = Math.floor(duration.asDays());
     const minutes = durationMinutes % 60;
     const hoursExact = duration.asHours();
-    const durationHoursDecimal = Helpers.formatHoursDecimal(hoursExact);
+    const durationHoursDecimal = Helpers.formatHoursDecimal(hoursExact, 1);
     return {
       durationMinutes,
       durationHoursDecimal,
@@ -47,7 +47,8 @@ export const Helpers = {
     }
   },
   formatHoursDecimal: (hoursExact: number, decimals: number = 2) => {
-    return `${(Math.floor(hoursExact * 100) / 100).toFixed(decimals)}`;
+    const precision = 10*decimals;
+    return `${(Math.round(hoursExact * precision) / precision).toFixed(decimals)}`;
   },
   timeElapsedGuest: (guest: Guest) => {
     return Helpers.timeElapsed(guest.createdAt, Date.now());
@@ -63,6 +64,9 @@ export const Helpers = {
       return `${Helpers.formatHoursDecimal(averageWaitTimeMinutes/60, 1)} hrs`
     }
     return `${Math.round(averageWaitTimeMinutes)} min`;
+  },
+  percentTablesAssigned: (appState: AppState) => {
+    return Math.round(Helpers.tablesAssigned(appState).length / appState.tables.length * 100);
   },
   pluralizeTablesAssigned: (appState: AppState) => {
     return `table${Helpers.tablesAssigned(appState).length === 1 ? '' : 's'}`
