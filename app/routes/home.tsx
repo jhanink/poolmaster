@@ -15,7 +15,7 @@ import config from '~/config/app-config.json';
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Pool Master" },
+    { title: "Pool Hall Master" },
     { name: "description", content: "Pool Hall Management" },
   ];
 }
