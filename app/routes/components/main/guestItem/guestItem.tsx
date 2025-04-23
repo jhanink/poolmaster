@@ -98,7 +98,7 @@ export default function GuestItem(props: {
 
   const itemDetailBodyContent = () => {
     return !(ITEM_EDIT || props.isEditForm) && (
-      <div className="text-sm">
+      <div className="text-sm motion-preset-bounce">
         <div className="flex">
           <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
             { guest.phoneNumber && (

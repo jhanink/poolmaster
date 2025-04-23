@@ -264,9 +264,11 @@ export default function GuestForm(props: {
         <button onClick={onClickSaveItem} className={actionButtonStyles}>
           Save
         </button>
-        <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
-          Delete
-        </button>
+        {!GUEST_FORM_OPEN && (
+          <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
+            Delete
+          </button>
+        )}
       </div>
     </fetcher.Form>
     <ModalConfirm
