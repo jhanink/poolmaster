@@ -6,6 +6,8 @@ export interface AppState {
   modifiedAt: number,
 }
 
+export const DefaultTableType = 'Regulation';
+
 export const DefaultAppState: AppState = {
   modifiedAt: 0,
   account: {
@@ -30,7 +32,7 @@ export const DefaultAppState: AppState = {
   tables: [
     {
       id: 0,
-      type: "Regulation",
+      type: DefaultTableType,
       number: 1,
       name: "Table 1",
       tableRate: "10.00",
@@ -38,7 +40,7 @@ export const DefaultAppState: AppState = {
     },
     {
       id: 1,
-      type: "Regulation",
+      type: DefaultTableType,
       number: 2,
       name: "Table 2",
       tableRate: "10.00",
@@ -75,7 +77,6 @@ export interface Guest {
   createdAt: number,
   modifiedAt?: number,
   assignedAt: number,
-  checkedOutAt: number,
   closedOutAt: number,
   partySize: number,
   extraPlayersString?: string,
@@ -91,7 +92,6 @@ export const DefaultGuestData: Guest = {
   tableType: "Regulation",
   createdAt: 0,
   assignedAt : 0,
-  checkedOutAt: 0,
   closedOutAt: 0,
   partySize: 1,
   notes: "",
@@ -115,5 +115,5 @@ export interface TableItemData {
   subtype?: string, // TODO: remove this
   forDelete?: boolean,
   forAdd?: boolean,
-  checkedOutAt?: number,
+  closedOutAt?: number,
 }

@@ -19,7 +19,7 @@ type BillableData = {
 }
 
 export default function TableCloseout() {
-  const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
@@ -43,7 +43,7 @@ export default function TableCloseout() {
   }
 
   const onClickCancelCheckout = () => {
-    MAIN_TAKEOVER.closeoutTable.checkedOutAt = 0;
+    MAIN_TAKEOVER.closeoutTable.closedOutAt = 0;
     setMainTakeover(undefined);
   }
 
@@ -112,7 +112,7 @@ export default function TableCloseout() {
 
   const onClickReset = () => {
     const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
-    const end = MAIN_TAKEOVER.closeoutTable.guest.checkedOutAt;
+    const end = MAIN_TAKEOVER.closeoutTable.guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
     const rate = MAIN_TAKEOVER.closeoutTable.tableRate;
     setElapsedTime(hours);

@@ -52,7 +52,7 @@ export default function GuestItem(props: {
   const onClickTableCloseout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     const table = APP_STATE.tables.find(_ => _.guest?.id === props.guest.id);
-    table.guest.checkedOutAt = Date.now();
+    table.guest.closedOutAt = Date.now();
     setMainTakeover({closeoutTable: table});
   }
 

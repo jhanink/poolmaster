@@ -23,7 +23,7 @@ export default function GuestForm(props: {
   const fetcher = useFetcher();
 
   // global state
-  const [, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [GUEST_FORM_OPEN, setGuestListFormOpen] = useAtom(guestFormOpenAtom);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
 
@@ -277,7 +277,7 @@ export default function GuestForm(props: {
         dialogMessageFn={() => <span className="text-sm">
           Remove
           <span className="text-red-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
-          {props.guest.assignedAt ? 'from Table Assignment' : 'from the Wait List?'}
+          {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}` : 'from the Wait List?'}
         </span>}
         onConfirm={onClickConfirmDelete}
         onCancel={onClickCancelDelete}
