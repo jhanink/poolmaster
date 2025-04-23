@@ -3,12 +3,10 @@ import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
-import { AppStorage } from "~/util/AppStorage";
+import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { type Guest } from "~/config/AppState"
-import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
@@ -30,16 +28,13 @@ export default function GuestItem(props: {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
   const fieldLabel=`text-gray-500`;
 
-  const [, setSelectedTable] = useAtom(selectedTableAtom);
-  const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
-  const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
 
   const guest = props.guest;
-  const tableAssignmentRef = useRef<HTMLSelectElement>(null);
 
   const itemClicked = (event: React.MouseEvent<HTMLDivElement>) => {
     // table list
@@ -52,11 +47,6 @@ export default function GuestItem(props: {
     if (!props.isAssigned && !props.itemExpanded) {
       props.setItemExpanded(prev => true);
     }
-  }
-
-  const onClickDeleteItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    setShowConfirmDelete(prev => true);
   }
 
   const onClickTableCloseout = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -78,31 +68,6 @@ export default function GuestItem(props: {
   const onClickCancelEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     props.setEditForm ? props.setEditForm(prev => false) : setEditItem(prev => false);
-  }
-
-  const onClickAssignGuest = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    const tableId = tableAssignmentRef.current && Number(tableAssignmentRef.current.value);
-    if (!tableId) return;
-    const guestId = props.guest.id;
-
-    const newState = await AppStorage.assignToTableRemote({tableId, guestId});
-    setAppState(newState);
-    if (props.isAssigned) {
-      props.setItemExpanded(prev => !props.itemExpanded);
-    }
-    setSelectedTable(undefined);
-  }
-
-  const onClickConfirmDelete = async () => {
-    const appState = await AppStorage.deleteGuestRemote(props.guest.id);
-    setAppState(appState);
-    setShowConfirmDelete(prev => false);
-    props.setItemExpanded(prev => false);
-  }
-
-  const onClickCancelDelete = () => {
-    setShowConfirmDelete(prev => false);
   }
 
   const onClickCloseExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -172,9 +137,6 @@ export default function GuestItem(props: {
             {props.isAssigned && (
               <button className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
             )}
-            {!props.isAssigned && (
-              <button className={`${actionButtonStyles}`} onClick={onClickDeleteItem}>Delete </button>
-            )}
           </div>
         </div>
       </div>
@@ -238,15 +200,6 @@ export default function GuestItem(props: {
         </div>
       )}
       {!props.itemExpanded && itemCollapsedRowContent()}
-      <ModalConfirm
-        show={SHOW_CONFIRM_DELETE}
-        dialogTitle={`CONFIRM DELETE`}
-        dialogMessageFn={() => <span className="text-sm">
-          Delete <span className="text-red-500 font-bold">{guest.name.toUpperCase()}</span> from Wait List?
-        </span>}
-        onConfirm={onClickConfirmDelete}
-        onCancel={onClickCancelDelete}
-      />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import styles from "./guestFormStyles.module.css";
 import { formFieldStylesFullWidth } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { useFetcher } from 'react-router';
+import ModalConfirm from '../../ui-components/modal/modalConfirm';
 
 const formColumnStyles = `COLUMN flex m-1`;
 const fieldStyles = `flex-1`;
@@ -24,6 +25,7 @@ export default function GuestForm(props: {
   // global state
   const [, setAppState] = useAtom(appStateAtom);
   const [GUEST_FORM_OPEN, setGuestListFormOpen] = useAtom(guestFormOpenAtom);
+  const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
 
   // local state
   const [FORM_FIELDS, setFormFields] = useState({
@@ -75,6 +77,23 @@ export default function GuestForm(props: {
     }
     await saveGuest(guest);
     cleanupForm(event);
+  }
+
+  const onClickDeleteItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setShowConfirmDelete(prev => true);
+  }
+
+  const onClickConfirmDelete = async () => {
+    const appState = await AppStorage.deleteGuestRemote(props.guest.id);
+    setAppState(appState);
+    setShowConfirmDelete(prev => false);
+    //props.setItemExpanded(prev => false);
+  }
+
+  const onClickCancelDelete = () => {
+    setShowConfirmDelete(prev => false);
   }
 
   const onClickCancel = (event: any) => {
@@ -245,7 +264,19 @@ export default function GuestForm(props: {
         <button onClick={onClickSaveItem} className={actionButtonStyles}>
           Save
         </button>
+        <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
+          Delete
+        </button>
       </div>
     </fetcher.Form>
+    <ModalConfirm
+        show={SHOW_CONFIRM_DELETE}
+        dialogTitle={`CONFIRM DELETE`}
+        dialogMessageFn={() => <span className="text-sm">
+          Delete <span className="text-red-500 font-bold">{props.guest.name.toUpperCase()}</span> from Wait List?
+        </span>}
+        onConfirm={onClickConfirmDelete}
+        onCancel={onClickCancelDelete}
+      />
   </>)
 }
