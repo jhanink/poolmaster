@@ -277,7 +277,7 @@ export default function GuestForm(props: {
         dialogMessageFn={() => <span className="text-sm">
           Remove
           <span className="text-red-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
-          {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}` : 'from the Wait List?'}
+          {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}?` : 'from the Wait List?'}
         </span>}
         onConfirm={onClickConfirmDelete}
         onCancel={onClickCancelDelete}
