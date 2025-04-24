@@ -42,8 +42,8 @@ export function DndGuestAssignTable() {
   return (
     <div className="select-none flex-1 text-center relative items-center" ref={TopRef}>
       {fragmentExitTakeover(onClickCancelAssign)}
-      <div className="inline-block">
-        <div className="CONTENT px-20">
+      <div>
+        <div className="CONTENT mx-5">
           {!Helpers.tablesAvailable(APP_STATE).length && <>
             <div className="text-gray-500 text-sm mt-3 p-3 uppercase">
               No open tables available
@@ -51,24 +51,24 @@ export function DndGuestAssignTable() {
             <button className={`${actionButtonStyles}`} onClick={onClickCancelAssign}>Exit</button>
           </>}
           {!!Helpers.tablesAvailable(APP_STATE).length && <>
-            <div className="text-xl text-gray-400 mt-5">
-              <div>
+            <div className="text-2xl mt-5">
+              <div className="text-gray-300 uppercase">
                 {!!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
-                  <span>MOVE</span>
+                  <span>Move</span>
                 )}
                 {!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
-                  <span>ASSIGN</span>
+                  <span>Assign</span>
                 )}
+                <span className="ml-2">Guest</span>
               </div>
-              <div className="uppercase text-red-500 mx-3 my-2 whitespace-nowrap">
-                <span className="text-gray-700 mr-3">Guest</span>
+              <div className="uppercase text-red-500 mx-3 my-5 whitespace-nowrap">
                 {MAIN_TAKEOVER.dndGuest?.name}
               </div>
-              <div>
+              <div className="text-gray-400 text-base">
                 to one of the following open tables
               </div>
             </div>
-            <div className="mt-10 inline-block max-w-lg mx-auto">
+            <div className="mt-5 inline-block max-w-lg mx-auto">
               {
                 tables
                   .filter((table: TableItemData) => !table.guest)

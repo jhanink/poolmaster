@@ -135,7 +135,7 @@ export default function TableCloseout() {
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none" ref={TopRef}>
       {fragmentExitTakeover(onClickCancelCheckout)}
-      <div className="flex-1 text-center">
+      <div className="CONTENT flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
             Close Out <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>

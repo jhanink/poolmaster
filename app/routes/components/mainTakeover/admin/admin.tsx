@@ -124,17 +124,17 @@ export default function Admin() {
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}
-      <div className="pt-5 relative">
+      <div className="CONTENT pt-5 relative">
         {!APP_STATE.modifiedAt && (
           fragmentWelcomeMessage()
         )}
         <div>
           {!!APP_STATE.modifiedAt && (
-            <h1>{fragmentAppName('text-xl ml-2')}</h1>
+            <h1>{fragmentAppName('text-2xl ml-2')}</h1>
           )}
-          <h1 className="text-3xl text-purple-500 pb-10 pt-3">Admin</h1>
+          <h1 className="text-2xl text-gray-300 pb-10 pt-3">Admin Console</h1>
         </div>
-        <div className="SCROLLY text-center mb-20">
+        <div className="text-center mb-20">
           <div className={`${SECTION}`}>
             <div className={`${HEADER}`}>
               <span className="pr-5">Tables</span>
