@@ -14,7 +14,7 @@ const CONTENT = `p-5 text-sm `;
 const ACTIONS = `text-left`;
 const actionButtons = `${actionButtonStyles} !py-0`
 
-export default function Admin() {
+export default function AdminTakeover() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [TABLES, setTables] = useState([] as TableItemData[]);

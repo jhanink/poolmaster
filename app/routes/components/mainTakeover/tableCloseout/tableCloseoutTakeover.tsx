@@ -18,14 +18,13 @@ type BillableData = {
   players: BillablePlayer[],
 }
 
-export default function TableCloseout() {
+export default function TableCloseoutTakeover() {
   const [, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
 
-  // worksheet data
   const [HOURS_DATA, setHoursData] = useState('');
   const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
@@ -108,7 +107,6 @@ export default function TableCloseout() {
     })
     return total.toFixed(2);
   }
-
 
   const onClickReset = () => {
     const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;

@@ -9,7 +9,7 @@ import { fragmentExitTakeover } from "../../fragments/fragments";
 
 const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-700 text-gray-600 font-bold hover:cursor-pointer`;
 
-export function DndGuestAssignTable() {
+export default function AssignTableTakeover() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -18,8 +18,10 @@ export function DndGuestAssignTable() {
   const tables = APP_STATE.tables;
 
   const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItemData) => {
+    event.stopPropagation();
+    event.preventDefault();
     const tableId = table.id
-    const guestId = MAIN_TAKEOVER.dndGuest?.id || 0;
+    const guestId = MAIN_TAKEOVER.assignTable?.id || 0;
     const newState = await AppStorage.assignToTableRemote({tableId, guestId});
     setAppState(newState);
     reset();
@@ -53,16 +55,16 @@ export function DndGuestAssignTable() {
           {!!Helpers.tablesAvailable(APP_STATE).length && <>
             <div className="text-2xl mt-5">
               <div className="text-gray-300 uppercase">
-                {!!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
+                {!!MAIN_TAKEOVER?.assignTable?.assignedAt && (
                   <span>Move</span>
                 )}
-                {!MAIN_TAKEOVER?.dndGuest?.assignedAt && (
+                {!MAIN_TAKEOVER?.assignTable?.assignedAt && (
                   <span>Assign</span>
                 )}
                 <span className="ml-2">Guest</span>
               </div>
               <div className="uppercase text-red-500 mx-3 my-5 whitespace-nowrap">
-                {MAIN_TAKEOVER.dndGuest?.name}
+                {MAIN_TAKEOVER.assignTable?.name}
               </div>
               <div className="text-gray-400 text-base">
                 to one of the following open tables
@@ -75,7 +77,7 @@ export function DndGuestAssignTable() {
                   .sort((A: TableItemData, B: TableItemData) =>
                     A.number - B.number
                   )
-                  .map((table: TableItemData, index: number) =>
+                  .map((table: TableItemData) =>
                     <div className={`CHIP ${unassignedStyle}`}
                       key={table.id}
                       data-table-id={table.id}

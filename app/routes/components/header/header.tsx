@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import {
   type ListFilterType,
   appStateAtom,
-  guestFormOpenAtom, mainTakoverAtom, selectedListFilterAtom,
+  mainTakoverAtom, selectedListFilterAtom,
   selectedTableAtom
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
@@ -21,16 +21,14 @@ export default function AppHeader() {
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
-  const [, setGuestFormOpen] = useAtom(guestFormOpenAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: 'GUEST_ITEM', // MUST match the 'type' from useDrag
     drop: (item: {guest: Guest}, monitor) => {
         if(monitor.canDrop()) {
-          setMainTakeover({dndGuest: item.guest});
+          setMainTakeover({assignTable: item.guest});
           setSelectedTable(undefined);
           setSelectedListFilter('');
-          setGuestFormOpen(false);
         }
     },
     collect: (monitor) => ({
@@ -44,7 +42,6 @@ export default function AppHeader() {
       setSelectedListFilter('');
     } else {
       setSelectedListFilter(type);
-      setGuestFormOpen(false);
     }
     setSelectedTable(undefined);
   }
@@ -56,7 +53,7 @@ export default function AppHeader() {
           {APP_STATE.account?.venue || 'Pool Master'}
         </div>
       </div>
-      {!MAIN_TAKEOVER?.adminScreen && !(MAIN_TAKEOVER?.dndGuest) && !MAIN_TAKEOVER?.closeoutTable && <>
+      {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
             className={`
               text-lg

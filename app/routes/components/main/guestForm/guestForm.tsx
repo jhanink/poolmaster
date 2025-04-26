@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DefaultGuestData, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
-import { appStateAtom, guestFormOpenAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import styles from "./guestFormStyles.module.css";
 import { formFieldStylesFullWidth } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
@@ -24,7 +24,8 @@ export default function GuestForm(props: {
 
   // global state
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [GUEST_FORM_OPEN, setGuestListFormOpen] = useAtom(guestFormOpenAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
 
   // local state
@@ -89,7 +90,7 @@ export default function GuestForm(props: {
     const appState = await AppStorage.deleteGuestRemote(props.guest.id);
     setAppState(appState);
     setShowConfirmDelete(prev => false);
-    //props.setItemExpanded(prev => false);
+    cleanupForm();
   }
 
   const onClickCancelDelete = () => {
@@ -101,12 +102,12 @@ export default function GuestForm(props: {
     cleanupForm(event);
   }
 
-  const cleanupForm = (event: any) => {
-    if (!props.guest.id) {
-      setGuestListFormOpen(false);
-    } else {
+  const cleanupForm = (event?: any) => {
+    if (props.guest.id) {
       props.onEditCloseCallback && props.onEditCloseCallback(event);
     }
+    setSelectedTable(undefined);
+    setMainTakeover(undefined);
   }
 
   const onChangeField = (event: React.ChangeEvent<any>) => {
@@ -143,7 +144,7 @@ export default function GuestForm(props: {
     const nameInputField = nameToAddField.current;
     if (!nameInputField) return;
     nameInputField.focus();
-  }, [GUEST_FORM_OPEN]);
+  }, []);
 
   return ( <>
     <fetcher.Form method="POST" className={`bg-transparent`} onClick={onClickForm}>
@@ -264,7 +265,7 @@ export default function GuestForm(props: {
         <button onClick={onClickSaveItem} className={actionButtonStyles}>
           Save
         </button>
-        {!GUEST_FORM_OPEN && (
+        {!MAIN_TAKEOVER?.addGuest && (
           <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
             Delete
           </button>

@@ -3,44 +3,34 @@ import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestListStyles.module.css";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { appStateAtom, guestFormOpenAtom } from "~/appStateGlobal/atoms";
-import { DefaultGuestData, type Guest } from "~/config/AppState";
-import GuestForm from "../guestForm/guestForm";
+import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
+import { type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 
 const guestButtonStyles = `text-gray-500 border-gray-800 ${actionButtonStyles} hover:ring-1`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
-  const [GUEST_FORM_OPEN, setGuestFormOpen] = useAtom(guestFormOpenAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
-  const onClickAddToGuestList = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setGuestFormOpen(!GUEST_FORM_OPEN);
+  const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMainTakeover({addGuest: true});
   }
 
   return (
     <div className={`${styles.guestListContainer} text-center mx-auto flex-1 max-w-xl select-none mb-10`}>
       <div className="flex m-1">
         <div className="flex-1">
-          { !GUEST_FORM_OPEN && (
+          { !MAIN_TAKEOVER?.addGuest && (
             <div className="flex-1 mx-2 mt-3 mb-5 text-center nowrap">
-              <button type="button" className={`flex items-center ${guestButtonStyles}`} onClick={onClickAddToGuestList}>
+              <button type="button" className={`flex items-center ${guestButtonStyles}`} onClick={onClickAddGuestForm}>
                 <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
                 <span className="text-sm">Add Guest</span>
               </button>
             </div>
           )}
-          { GUEST_FORM_OPEN && (
-            <div className="mb-10 border border-yellow-500 border-solid opacity-[.9] rounded-xl p-5">
-              <div className="text-lg text-yellow-500 uppercase">
-                Add Guest
-              </div>
-              <GuestForm guest={DefaultGuestData}></GuestForm>
-            </div>
-          )}
         </div>
       </div>
-
       <div className={`${mainStyles.column} justify-center`}>
         {
           APP_STATE.guestList
@@ -52,7 +42,6 @@ export default function GuestList() {
             )
         }
       </div>
-
       <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
     </div>
   )

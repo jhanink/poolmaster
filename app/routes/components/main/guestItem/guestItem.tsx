@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
@@ -62,11 +62,11 @@ export default function GuestItem(props: {
   }
 
   const onClickAssignItem = (guest: Guest) => {
-    setMainTakeover({dndGuest: guest});
+    setMainTakeover({assignTable: guest});
   }
 
   const onClickCancelEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+    event && event.stopPropagation();
     props.setEditForm ? props.setEditForm(prev => false) : setEditItem(prev => false);
   }
 
