@@ -31,8 +31,8 @@ export default function GuestList() {
             </div>
           )}
           { GUEST_FORM_OPEN && (
-            <div className="mb-10 border border-yellow-500 border-inset rounded-xl p-5">
-              <div className="text-xl text-yellow-500 uppercase">
+            <div className="mb-10 border border-yellow-500 border-solid opacity-[.9] rounded-xl p-5">
+              <div className="text-lg text-yellow-500 uppercase">
                 Add Guest
               </div>
               <GuestForm guest={DefaultGuestData}></GuestForm>
