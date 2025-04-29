@@ -7,6 +7,7 @@ export interface AppState {
 }
 
 export const DefaultTableType = 'Regulation';
+export const GuestItemTypeKey = 'GUEST_ITEM';
 
 export const DefaultAppState: AppState = {
   modifiedAt: 0,

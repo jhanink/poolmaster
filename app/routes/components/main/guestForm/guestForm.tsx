@@ -25,7 +25,7 @@ export default function GuestForm(props: {
   // global state
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
-  const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
+  const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
 
   // local state
@@ -143,7 +143,6 @@ export default function GuestForm(props: {
     if (props.guest.id) return;
     const nameInputField = nameToAddField.current;
     if (!nameInputField) return;
-    nameInputField.focus();
   }, []);
 
   return ( <>

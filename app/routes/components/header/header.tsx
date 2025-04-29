@@ -6,8 +6,8 @@ import {
   selectedTableAtom
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
-import { useDrop } from 'react-dnd';
-import { type Guest } from "~/config/AppState";
+import { useDrop } from "react-dnd";
+import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 
 const statusPillStyles = `mx-1 px-1 whitespace-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -23,7 +23,7 @@ export default function AppHeader() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: 'GUEST_ITEM', // MUST match the 'type' from useDrag
+    accept: GuestItemTypeKey, // MUST match the 'type' from useDrag
     drop: (item: {guest: Guest}, monitor) => {
         if(monitor.canDrop()) {
           setMainTakeover({assignTable: item.guest});

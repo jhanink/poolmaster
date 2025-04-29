@@ -1,5 +1,5 @@
 import GuestItem from "../guestItem/guestItem";
-import { type Guest } from "~/config/AppState";
+import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-dnd';
 import { ListFilterTypeEnum, selectedListFilterAtom } from "~/appStateGlobal/atoms";
@@ -17,7 +17,7 @@ export default function GuestListItem(props: {
   const canDragRef = useRef(true);
 
   const [draggable, drag, dragPreview] = useDrag(() => ({
-    type: 'GUEST_ITEM', // A unique string to identify the type of draggable item.  IMPORTANT!
+    type: GuestItemTypeKey, // A unique string to identify the type of draggable item.  IMPORTANT!
     item: { guest: props.guest }, // Data you want to associate with the dragged item.
     canDrag: () => canDragRef.current, // Whether the item is draggable
     collect: (monitor) => ({
