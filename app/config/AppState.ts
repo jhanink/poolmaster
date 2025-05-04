@@ -81,9 +81,18 @@ export interface Guest {
   closedOutAt: number,
   partySize: number,
   extraPlayersString?: string,
-  extraPlayers?: {id: number, name: string, assignedAt: number, timeStoppedAt?: number}[],
+  extraPlayers?: ExtraPlayer[],
   notes: string,
   reservation?: Reservation,
+}
+
+export interface ExtraPlayer {
+  id: number,
+  name: string,
+  forDelete?: boolean,
+  forAdd?: boolean,
+  assignedAt: number,
+  timeStoppedAt?: number,
 }
 
 export const DefaultGuestData: Guest = {

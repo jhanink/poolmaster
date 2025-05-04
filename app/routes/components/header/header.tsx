@@ -66,7 +66,7 @@ export default function AppHeader() {
                 {APP_STATE.guestList.length} <span className="ml-1 capitalize">{Helpers.pluralizeGuestsWaiting(APP_STATE)} In Line</span>
               </span>
             </div>
-            <div className="mt-2 text-gray-500">Avg Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
+            <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
           </div>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
