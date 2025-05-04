@@ -64,7 +64,7 @@ export default function GuestForm(props: {
 
     const extraPlayers = FORM_FIELDS.extraPlayers
       .map((player: ExtraPlayer) => ({...player, forAdd: false}))
-      .filter((player: ExtraPlayer) => !player.forDelete);
+      .filter((player: ExtraPlayer) => !player.forDelete && player.name.trim().length);
 
     setFormFields(prev => ({
       ...prev,
