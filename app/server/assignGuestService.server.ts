@@ -12,7 +12,6 @@ export const action: ActionFunction = async ({ request }) => {
     const newAppState = handleAssignment(fileAppState, requestData);
     await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-    //console.log('assignGuestService')
     webSocketManager.broadcast({...newAppState});
 
     return Response.json(newAppState);
@@ -26,14 +25,23 @@ const handleAssignment = (fileAppState: AppState, requestData: {tableId: number,
   const guestList = fileAppState.guestList;
   const tables = fileAppState.tables;
 
-  // if moving from wait list to a table, remove from table and record assignment time
+  // Assignment:
+  // - Set guest assignment time
+  // - Set extra players assignment time
   const newGuestList = guestList.filter((guest: Guest) => guest.id !== requestData.guestId);
-  const guest = guestList.find((guest) => guest.id === requestData.guestId)
+  const guest = guestList.find((guest) => guest.id === requestData.guestId);
+  const NOW = Date.now();
   if (guest) {
-    guest.assignedAt = Date.now();
+    guest.assignedAt = NOW;
+    guest.extraPlayers = guest.extraPlayers.map((extraPlayer) => {
+      return {
+        ...extraPlayer,
+        assignedAt: NOW,
+      };
+    });
   }
 
-  // if re-assigning, remove from current table and then assign to new table
+  // Re-Assignment:
   const currentTable = tables.find(table => table.guest?.id === requestData.guestId);
   const newTable = tables.find(table => table.id === requestData.tableId);
 
