@@ -24,31 +24,25 @@ export const action: ActionFunction = async ({ request }) => {
 const handleAssignment = (fileAppState: AppState, requestData: {tableId: number, guestId: number}): AppState => {
   const guestList = fileAppState.guestList;
   const tables = fileAppState.tables;
-
-  // Assignment:
-  const newGuestList = guestList.filter((guest: Guest) => guest.id !== requestData.guestId);
-  const guest = guestList.find((guest) => guest.id === requestData.guestId);
   const NOW = Date.now();
-  if (guest) {
-    guest.assignedAt = NOW;
-    guest.extraPlayers = guest.extraPlayers.map((extraPlayer) => {
+
+  const newGuestList = guestList.filter((guest: Guest) => guest.id !== requestData.guestId);
+  const newGuest = guestList.find((guest) => guest.id === requestData.guestId);
+  const fromTable = tables.find(table => table.guest?.id === requestData.guestId);
+  const toTable = tables.find(table => table.id === requestData.tableId);
+
+  if (newGuest) {
+    toTable.guest = newGuest;
+    newGuest.assignedAt = NOW;
+    newGuest.extraPlayers = newGuest.extraPlayers.map((extraPlayer) => {
       return {
         ...extraPlayer,
         assignedAt: NOW,
       };
     });
-  }
-
-  // Re-Assignment:
-  const currentTable = tables.find(table => table.guest?.id === requestData.guestId);
-  const newTable = tables.find(table => table.id === requestData.tableId);
-
-  if (newTable) {
-    newTable.guest = currentTable ? currentTable.guest : guest;
-  }
-
-  if (currentTable) {
-    currentTable.guest = undefined;
+  } else {
+    toTable.guest = fromTable.guest;
+    fromTable.guest = undefined;
   }
 
   return {
