@@ -1,5 +1,6 @@
 import type { TimeElapsed } from "~/util/Helpers";
 import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import type { ExtraPlayer } from "~/config/AppState";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm whitespace-nowrap`;
 
@@ -63,7 +64,7 @@ export const fragmentWelcomeMessage = () => {
     'Realtime sync across devices and screens'
   ];
   return (
-    <div className="border m-3 p-10 w-full text-gray-500 text-sm border rounded-xl border-gray-700">
+    <div className="border m-3 p-10 w-full text-gray-500 text-sm rounded-xl border-gray-700">
       <div className="text-2xl mb-5 text-gray-100">
         Welcome to
         {fragmentAppName('text-xl ml-2')}
@@ -96,4 +97,13 @@ export const fragmentWelcomeMessage = () => {
       </div>
     </div>
   )
+}
+
+export const fragmentExtraPlayersString = (players: ExtraPlayer[]) => {
+  if (players.length) {
+    return (
+      <span className="uppercase">: &nbsp; {players.map(_ => _.name).join(', ')}</span>
+    )
+  }
+  return <></>
 }

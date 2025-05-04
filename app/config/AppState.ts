@@ -80,7 +80,6 @@ export interface Guest {
   assignedAt: number,
   closedOutAt: number,
   partySize: number,
-  extraPlayersString?: string,
   extraPlayers?: ExtraPlayer[],
   notes: string,
   reservation?: Reservation,

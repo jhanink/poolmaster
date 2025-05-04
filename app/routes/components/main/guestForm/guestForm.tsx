@@ -36,7 +36,6 @@ export default function GuestForm(props: {
     name: props.guest.name || "",
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
-    extraPlayersString: props.guest.extraPlayersString || "",
     extraPlayers: props.guest.extraPlayers || [],
     tableType: props.guest.tableType || "Regulation",
     notes: props.guest.notes || "",
@@ -44,7 +43,6 @@ export default function GuestForm(props: {
 
   const nameToAddField = useRef<HTMLInputElement>(null);
   const partySizeField = useRef<HTMLSelectElement>(null);
-  const extraPlayersField = useRef<HTMLInputElement>(null);
   const tableTypeField = useRef<HTMLSelectElement>(null);
   const notesField = useRef<HTMLTextAreaElement>(null);
   const phoneInputRef = useMask({
@@ -64,19 +62,17 @@ export default function GuestForm(props: {
 
     if (!FORM_FIELDS.name.trim().length) return;
 
-    const extraPlayersMap = FORM_FIELDS.extraPlayersString?.split(',').map((v) => v.trim()).filter((v) => v.length);
-    const extraPlayersString = extraPlayersMap?.join(', ');
-    const extraPlayers = [...FORM_FIELDS.extraPlayers];
+    const extraPlayers = FORM_FIELDS.extraPlayers
+      .map((player: ExtraPlayer) => ({...player, forAdd: false}))
+      .filter((player: ExtraPlayer) => !player.forDelete);
 
     setFormFields(prev => ({
       ...prev,
       extraPlayers,
-      extraPlayersString,
     }));
 
     const guest: Guest = {
       ...FORM_FIELDS,
-      extraPlayersString,
       extraPlayers,
     }
     await saveGuest(guest);
@@ -213,7 +209,6 @@ export default function GuestForm(props: {
 
     nameToAddField.current && (nameToAddField.current.value = props.guest.name);
     partySizeField.current && (partySizeField.current.value = `${props.guest.partySize}`);
-    extraPlayersField.current && (extraPlayersField.current.value = props.guest.extraPlayersString || '');
     tableTypeField.current && (tableTypeField.current.value = props.guest.tableType);
     notesField.current && (notesField.current.value = props.guest.notes);
     phoneInputRef.current && (phoneInputRef.current.value = props.guest.phoneNumber || '');

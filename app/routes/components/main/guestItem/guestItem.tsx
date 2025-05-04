@@ -10,7 +10,7 @@ import { type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentElapsedTime } from '../../fragments/fragments';
+import { fragmentElapsedTime, fragmentExtraPlayersString } from '../../fragments/fragments';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -107,12 +107,7 @@ export default function GuestItem(props: {
             {guest.partySize > 1 && (
               <div className="ROW">
                 <span className={`${fieldLabel}`}>+{guest.partySize-1} more </span>
-                {!!guest.extraPlayersString && (
-                  <span className="uppercase">
-                    : &nbsp;
-                    {guest.extraPlayersString}
-                  </span>
-                )}
+                {fragmentExtraPlayersString(guest.extraPlayers)}
               </div>
             )}
             <div className="ROW">
