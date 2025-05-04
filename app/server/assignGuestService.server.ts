@@ -26,8 +26,6 @@ const handleAssignment = (fileAppState: AppState, requestData: {tableId: number,
   const tables = fileAppState.tables;
 
   // Assignment:
-  // - Set guest assignment time
-  // - Set extra players assignment time
   const newGuestList = guestList.filter((guest: Guest) => guest.id !== requestData.guestId);
   const guest = guestList.find((guest) => guest.id === requestData.guestId);
   const NOW = Date.now();
