@@ -18,6 +18,7 @@
     "maxBillablePlayers": 5,
     "defaultBillingRate": "10.00"
   },
+  "billingSchedules": [],
   "guestList": [],
   "tables": [
     {

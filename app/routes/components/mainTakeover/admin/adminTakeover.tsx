@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
-import type { Account, Billing, TableItemData } from "~/config/AppState";
+import type { Account, Billing, BillingSchedule, TableItemData } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
@@ -20,9 +20,11 @@ export default function AdminTakeover() {
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
   const [BILLING, setBilling] = useState({defaultBillingRate: ''} as Billing);
+  const [SCHEDULES, setSchedules] = useState([] as BillingSchedule[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
+  const [SHOW_CONFIRM_SAVE_SCHEDULES, setShowConfirmSaveSchedules] = useState(false);
 
-  const TopRef = useRef<HTMLDivElement>(null);
+  const PageTopRef = useRef<HTMLDivElement>(null);
 
   const onClickExit = () => {
     setMainTakeover(undefined);
@@ -31,6 +33,11 @@ export default function AdminTakeover() {
   const onClickResetTables = (event: any) => {
     const tables = APP_STATE.tables.map((table: TableItemData ) => ({...table}));
     setTables(tables);
+  }
+
+  const onClickResetSchedules = (event: any) => {
+    const schedules = APP_STATE.billingSchedules.map((schedule: BillingSchedule) => ({...schedule}));
+    setSchedules(schedules);
   }
 
   const onClickResetAccount = (event: any) => {
@@ -75,7 +82,23 @@ export default function AdminTakeover() {
     setAppState(newState);
   }
 
-  const onClickForDelete = (table: TableItemData) => {
+  const onClickSaveSchedules = () => {
+    const billingSchedules = SCHEDULES
+      .map((schedule: BillingSchedule) => ({...schedule, forAdd: false}))
+      .filter((schedule: BillingSchedule) => !schedule.forDelete);
+
+    const newState = {
+      ...APP_STATE,
+      billingSchedules,
+    }
+
+    AppStorage.setAppStateRemote(newState);
+    setAppState(newState);
+    setSchedules(billingSchedules);
+    setShowConfirmSaveSchedules(false);
+  }
+
+  const onClickForDeleteTable = (table: TableItemData) => {
     if (table.forAdd) {
       TABLES.splice(TABLES.indexOf(table), 1);
       setTables([...TABLES]);
@@ -96,6 +119,23 @@ export default function AdminTakeover() {
     setTables(tables);
   }
 
+  const onClickForDeleteSchedule = (schedule: BillingSchedule) => {
+    if (schedule.forAdd) {
+      SCHEDULES.splice(SCHEDULES.indexOf(schedule), 1);
+      setSchedules([...SCHEDULES]);
+      return;
+    }
+    schedule.forDelete = !schedule.forDelete;
+    setSchedules([...SCHEDULES]);
+  }
+
+  const onClickAddSchedule = () => {
+    const schedules = [...SCHEDULES];
+    const newSchedule = generateNewSchedule();
+    schedules.push(newSchedule);
+    setSchedules(schedules);
+  }
+
   const generateNewTable = (index: number = 1) => {
     const id = Date.now() + index;
     const number = TABLES.length + index;
@@ -112,15 +152,43 @@ export default function AdminTakeover() {
     return newTable;
   }
 
+  const generateNewSchedule = (index: number = 1) => {
+    const id = Date.now() + index;
+    const number = SCHEDULES.length + index;
+    const newSchedule: BillingSchedule = {
+      id,
+      name: `Schedule ${number}`,
+      weekdayRate: "",
+      weekendRate: "",
+      holidayRate: "",
+      startTime: "",
+      endTime: "",
+      chargeRule: undefined,
+      chargeEachPlayer: false,
+      chargeByHour: false,
+      chargeFlatRate: false,
+      maxPlayersForRate: 0,
+      rateAfterMaxPlayers: "",
+      hoursMinimum: 0,
+      forDelete: false,
+      forAdd: true,
+    }
+    return newSchedule;
+  }
+
   useEffect(() => {
     onClickResetTables({} as any);
     onClickResetAccount({} as any);
     onClickResetBilling({} as any);
-    TopRef.current && TopRef.current.scrollIntoView();
+    onClickResetSchedules({} as any);
+  }, []);
+
+  useEffect(() => {
+    PageTopRef.current && PageTopRef.current.scrollIntoView();
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center text-center" ref={TopRef}>
+    <div className="flex flex-col justify-center items-center text-center" ref={PageTopRef}>
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}
@@ -147,7 +215,7 @@ export default function AdminTakeover() {
                 <div className="mb-3" key={table.id}>
                   <div className={`flex items-center`}>
                     <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-                    onClick={(event) => {onClickForDelete(table)}}>
+                    onClick={(event) => {onClickForDeleteTable(table)}}>
                       <TrashIcon></TrashIcon>
                     </div>
                     <div className={`whitespace-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
@@ -202,7 +270,8 @@ export default function AdminTakeover() {
                       <span className="uppercase">{table.guest.name}</span> is on {table.name}
                     </div>
                   )}
-                </div>))}
+                </div>
+              ))}
             </div>
             <div className={`${ACTIONS}`}>
               <button className={`${actionButtonStyles}`} onClick={onClickResetTables}>Reset</button>
@@ -284,6 +353,44 @@ export default function AdminTakeover() {
               <button className={`${actionButtonStyles}`} onClick={onClickSaveBilling}>Save</button>
             </div>
           </div>
+
+          <hr className="text-gray-900 my-5"/>
+
+          <div className={`${SECTION}`}>
+            <h2 className={`${HEADER}`}>
+              <span className="pr-5">Billing Schedules</span>
+              <button className={actionButtons} onClick={onClickAddSchedule}>+1</button>
+            </h2>
+            <div className={`${CONTENT}`}>
+            {SCHEDULES.map((schedule: BillingSchedule, index: number) => (
+                <div className="mb-3" key={schedule.id}>
+                  <div className={`flex items-center`}>
+                    <div className={`mr-2 ${!!schedule.forDelete && 'text-red-500 hover:text-red-800'} ${!!schedule.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                    onClick={(event) => {onClickForDeleteSchedule(schedule)}}>
+                      <TrashIcon></TrashIcon>
+                    </div>
+                    <div className={`whitespace-nowrap ${!!schedule.forDelete && 'text-red-500'} ${!!schedule.forAdd && 'text-green-500'}`}>
+                      {index+1} <input
+                        className={`w-[150px] ${!!schedule.forDelete && 'text-red-500'} ${!!schedule.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                        value={schedule.name}
+                        placeholder="Schedule name..."
+                        maxLength={30}
+                        onChange={(event) => {
+                          schedule.name = event.target.value;
+                          setSchedules([...SCHEDULES]);
+                        }}
+                        />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className={`${ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetSchedules}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveSchedules(true)} }>Save</button>
+            </div>
+          </div>
+
         </div>
       </div>
       <ModalConfirm
@@ -296,6 +403,17 @@ export default function AdminTakeover() {
         )}
         onConfirm={() => {onClickSaveTables()}}
         onCancel={() => {setShowConfirmSaveTables(false)}}
+      />
+      <ModalConfirm
+        show={SHOW_CONFIRM_SAVE_SCHEDULES}
+        dialogTitle={`SAVE SCHEDULES`}
+        dialogMessageFn={() => (
+          <span className="text-base">
+            <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
+          </span>
+        )}
+        onConfirm={() => {onClickSaveSchedules()}}
+        onCancel={() => {setShowConfirmSaveSchedules(false)}}
       />
     </div>
   );

@@ -1,6 +1,7 @@
 export interface AppState {
   account: Account,
   billing: Billing,
+  billingSchedules: BillingSchedule[],
   guestList: Guest[],
   tables: TableItemData[],
   modifiedAt: number,
@@ -29,6 +30,7 @@ export const DefaultAppState: AppState = {
     maxBillablePlayers: 5,
     defaultBillingRate: "10.00",
   },
+  billingSchedules:[],
   guestList: [],
   tables: [
     {
@@ -165,4 +167,8 @@ export interface BillingSchedule {
   maxPlayersForRate: number,
   rateAfterMaxPlayers: string,
   hoursMinimum: number,
+  forDelete: boolean,
+  forAdd: boolean,
+  createdAt?: number,
+  modifiedAt?: number,
 }
