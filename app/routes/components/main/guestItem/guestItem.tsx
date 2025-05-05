@@ -11,6 +11,7 @@ import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
 import { fragmentElapsedTime, fragmentExtraPlayersString } from '../../fragments/fragments';
+import { AppStorage } from '~/util/AppStorage';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -53,6 +54,7 @@ export default function GuestItem(props: {
     event.stopPropagation();
     const table = APP_STATE.tables.find(_ => _.guest?.id === props.guest.id);
     table.guest.closedOutAt = Date.now();
+    await AppStorage.saveGuestRemote(table.guest);
     setMainTakeover({closeoutTable: table});
   }
 

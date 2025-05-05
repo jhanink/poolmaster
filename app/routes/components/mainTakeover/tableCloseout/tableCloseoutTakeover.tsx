@@ -42,13 +42,16 @@ export default function TableCloseoutTakeover() {
   }
 
   const onClickCancelCheckout = () => {
-    MAIN_TAKEOVER.closeoutTable.closedOutAt = 0;
+    MAIN_TAKEOVER.closeoutTable.guest.closedOutAt = 0;
     setMainTakeover(undefined);
   }
 
   const setupBillablePlayers = (hours: string, rate: string) => {
+    const table = MAIN_TAKEOVER.closeoutTable;
+    const guest = table.guest;
+    const PLAYERS_COUNT = Math.max(guest.partySize, guest.extraPlayers.length + 1);
     const players = []
-    for (let i = 0; i < (MAIN_TAKEOVER.closeoutTable.guest.partySize); i++) {
+    for (let i = 0; i < (PLAYERS_COUNT); i++) {
       players.push({
         id: i,
         name: `Player ${i + 1}`,
@@ -57,12 +60,14 @@ export default function TableCloseoutTakeover() {
         billable: true,
       });
     }
-    players[0].name = MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase();
+    players[0].name = guest.name.toUpperCase();
 
-    MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.forEach((player, index) => {
+    guest.extraPlayers.forEach((player, index) => {
       const playersIndex = index + 1;
       if ((playersIndex) > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
+      const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
+      players[playersIndex].hours = `${time.durationHoursDecimal3}`;
     });
 
     setBillableData({players});
@@ -108,15 +113,21 @@ export default function TableCloseoutTakeover() {
     return total.toFixed(2);
   }
 
+  const playerAssignedAtDisplay = (player: BillablePlayer, index: number) => {
+    const guest = MAIN_TAKEOVER.closeoutTable.guest;
+    const assignedAt = !index ? guest.assignedAt : guest.extraPlayers[index - 1].assignedAt;
+    return new Date(assignedAt).toLocaleString();
+  }
+
   const onClickReset = () => {
     const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
     const end = MAIN_TAKEOVER.closeoutTable.guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
     const rate = MAIN_TAKEOVER.closeoutTable.tableRate;
     setElapsedTime(hours);
-    setHoursData(`${hours.durationHoursDecimal}`);
+    setHoursData(`${hours.durationHoursDecimal3}`);
     setRateData(rate);
-    setupBillablePlayers(hours.durationHoursDecimal, rate);
+    setupBillablePlayers(hours.durationHoursDecimal3, rate);
   }
 
   const onClickFinalConfirm = async () => {
@@ -125,6 +136,7 @@ export default function TableCloseoutTakeover() {
     setSelectedTable(undefined);
     setMainTakeover(undefined);
   }
+
   useEffect(() => {
     onClickReset();
     TopRef.current && TopRef.current.scrollIntoView();
@@ -179,7 +191,7 @@ export default function TableCloseoutTakeover() {
           <span className="text-green-500 text-2xl">${playersTotal()}</span>
         </div>
 
-        <div className="WORKSHEET text-left border border-gray-800 p-5 px-20 mx-5 my-10">
+        <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 my-10">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
               <div>
@@ -192,6 +204,9 @@ export default function TableCloseoutTakeover() {
                     <div className="inline-block">&nbsp; (Main Player)</div>
                   )}
                 </div>
+              </div>
+              <div className="text-sm text-gray-500 ml-7">
+                {playerAssignedAtDisplay(player, index)}
               </div>
               <div className="text-sm ml-7 mt-2">
                 <div className="inline-block w-[90px]">

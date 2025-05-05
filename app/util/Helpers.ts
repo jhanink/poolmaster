@@ -4,6 +4,8 @@ import {type AppState, type Guest} from "~/config/AppState";
 export type TimeElapsed = {
   durationMinutes: number;
   durationHoursDecimal: string;
+  durationHoursDecimal2: string;
+  durationHoursDecimal3: string;
   hoursExact: number;
   minutes: number;
   hours: number;
@@ -15,7 +17,9 @@ export const InitialTimeElapsed: TimeElapsed = {
   days: 0,
   hoursExact: 0,
   durationMinutes: 0,
-  durationHoursDecimal: '0.00'
+  durationHoursDecimal: '0.00',
+  durationHoursDecimal2: '0.00',
+  durationHoursDecimal3: '0.000',
 };
 
 export const Helpers = {
@@ -30,16 +34,20 @@ export const Helpers = {
   },
   timeElapsed: (start: number, finish?: number): TimeElapsed => {
     const end = finish || Date.now();
-    const durationMinutes = Math.floor((end - start) / (1000 * 60));
-    const duration = dayjs.duration({ minutes: durationMinutes });
+    const duration = dayjs.duration({milliseconds: end - start});
+    const durationMinutes = Math.floor(duration.asMinutes());
     const hours = Math.floor(duration.asHours());
     const days = Math.floor(duration.asDays());
     const minutes = durationMinutes % 60;
     const hoursExact = duration.asHours();
     const durationHoursDecimal = Helpers.formatHoursDecimal(hoursExact, 1);
+    const durationHoursDecimal2 = Helpers.formatHoursDecimal(hoursExact, 2);
+    const durationHoursDecimal3 = Helpers.formatHoursDecimal(hoursExact, 3);
     return {
       durationMinutes,
       durationHoursDecimal,
+      durationHoursDecimal2,
+      durationHoursDecimal3,
       hoursExact,
       minutes: minutes >= 0 ? minutes : 0,
       hours,
@@ -47,8 +55,8 @@ export const Helpers = {
     }
   },
   formatHoursDecimal: (hoursExact: number, decimals: number = 2) => {
-    const precision = 10*decimals;
-    return `${(Math.round(hoursExact * precision) / precision).toFixed(decimals)}`;
+    hoursExact.toFixed(decimals);
+    return `${hoursExact.toFixed(decimals)}`;
   },
   timeElapsedGuest: (guest: Guest) => {
     return Helpers.timeElapsed(guest.createdAt, Date.now());
