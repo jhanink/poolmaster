@@ -157,6 +157,7 @@ export default function AdminTakeover() {
     const number = SCHEDULES.length + index;
     const newSchedule: BillingSchedule = {
       id,
+      orderBy: number,
       name: `Schedule ${number}`,
       weekdayRate: "",
       weekendRate: "",
@@ -172,6 +173,7 @@ export default function AdminTakeover() {
       hoursMinimum: 0,
       forDelete: false,
       forAdd: true,
+      isDefault: false,
     }
     return newSchedule;
   }
