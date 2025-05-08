@@ -129,49 +129,25 @@ export interface TableItemData {
   closedOutAt?: number,
 }
 
-export interface ChargeRule {
-  name: string,
-  code: string,
-}
-export const ChargeRules = {
-  PLAYER: {
-    name: 'Per Player',
-    code: 'PLAYER'
-  },
-  TABLE: {
-    name: 'Per Table',
-    code: 'TABLE'
-  },
-  FLAT: {
-    name: 'Flat Rate',
-    code: 'FLAT'
-  },
-  SPECIAL: {
-    name: 'Special Rate',
-    code: 'SPECIAL'
-  },
-}
-
 export interface BillingSchedule {
   id: number,
   name: string,
+  hourlyRate: number,
   weekdayRate?: string,
   weekendRate?: string,
   holidayRate?: string,
   startTime?: string,
   endTime?: string,
-  chargeRule: ChargeRule,
-  chargeEachPlayer: boolean,
-  chargeByHour: boolean,
-  chargeFlatRate: boolean,
-  maxPlayersForRate: number,
-  rateAfterMaxPlayers: string,
-  hoursMinimum: number,
+  isChargeEachPlayer: boolean,
+  isChargeByNumberOfPlayers?: boolean,
+  chargeEachPlayerRules?: ChargeEachPlayerRules,
+  minimumChargeHours: number,
+  isActive: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
-  orderBy?: number,
-  createdAt?: number,
-  modifiedAt?: number,
-  isActive?: boolean,
-  isDefault?: boolean,
+}
+
+export interface ChargeEachPlayerRules {
+  maxNumberOfPlayersAtFullRate: number,
+  overMaxPlayerRate: number,
 }

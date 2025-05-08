@@ -2,10 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
+import { type BillingSchedule } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -19,7 +20,7 @@ type BillableData = {
 }
 
 export default function TableCloseoutTakeover() {
-  const [, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
@@ -28,6 +29,7 @@ export default function TableCloseoutTakeover() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
+  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<BillingSchedule>({} as BillingSchedule);
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -113,7 +115,7 @@ export default function TableCloseoutTakeover() {
     return total.toFixed(2);
   }
 
-  const playerAssignedAtDisplay = (player: BillablePlayer, index: number) => {
+  const playerAssignedAt = (player: BillablePlayer, index: number) => {
     const guest = MAIN_TAKEOVER.closeoutTable.guest;
     const assignedAt = !index ? guest.assignedAt : guest.extraPlayers[index - 1].assignedAt;
     return new Date(assignedAt).toLocaleString();
@@ -148,7 +150,7 @@ export default function TableCloseoutTakeover() {
       <div className="CONTENT flex-1 text-center">
         <div className="text-gray-400 mt-5">
           <div className="text-2xl mb-3">
-            Close Out <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
+            <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
           </div>
           <div className="inline-block text-right">
             <div className="TIME flex items-center text-base mb-2">
@@ -186,12 +188,24 @@ export default function TableCloseoutTakeover() {
           </div>
         </div>
 
-        <div className="text-2xl text-gray-400 my-10">
-          Total Bill: &nbsp;
-          <span className="text-green-500 text-2xl">${playersTotal()}</span>
+        <div>
+          <div className="mt-2">
+            <select
+              onChange={(event) => {
+                const selectedSchedule = APP_STATE.billingSchedules.find((schedule) => schedule.id === Number(event.target.value));
+                setSelectedSchedule(selectedSchedule);
+              }}
+              value={SELECTED_SCHEDULE.id}
+              className={`${formFieldStyles}`}
+            >
+              {APP_STATE.billingSchedules.map((schedule) => (
+                <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 my-10">
+        <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 mt-5">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
               <div>
@@ -206,7 +220,7 @@ export default function TableCloseoutTakeover() {
                 </div>
               </div>
               <div className="text-sm text-gray-500 ml-7">
-                {playerAssignedAtDisplay(player, index)}
+                {playerAssignedAt(player, index)}
               </div>
               <div className="text-sm ml-7 mt-2">
                 <div className="inline-block w-[90px]">
@@ -236,6 +250,11 @@ export default function TableCloseoutTakeover() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="text-2xl text-gray-400 my-3">
+          Total Bill: &nbsp;
+          <span className="text-green-500 text-2xl">${playersTotal()}</span>
         </div>
 
         <div className="my-3 mb-20">
