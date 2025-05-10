@@ -27,7 +27,7 @@ export default function AdminBilling() {
     onClickResetBilling({} as any);
   }, []);
 
-  return (
+  return (<>
     <div className={`${ADMIN_SECTION}`}>
       <h2 className={`${ADMIN_HEADER}`}>
         Billing
@@ -35,18 +35,18 @@ export default function AdminBilling() {
       <div className={`${ADMIN_CONTENT}`}>
         <div>
           <span className="text-gray-400 mr-2">
-            Max Billable Players:
+            Selected Schedule:
           </span>
           <select
             onChange={(event) => {
-              BILLING.maxBillablePlayers = Number(event.target.value);
+              BILLING.selectedScheduleId = Number(event.target.value);
               setBilling({...BILLING})
             }}
-            value={BILLING.maxBillablePlayers}
+            value={BILLING.selectedScheduleId}
             className={`${formFieldStyles}`}
           >
-            {[1,2,3,4,5].map((size) => (
-              <option key={size} className={optionStyles} value={size}>{size}</option>
+            {APP_STATE.billingSchedules.map((schedule) => (
+              <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
             ))}
           </select>
         </div>
@@ -71,5 +71,5 @@ export default function AdminBilling() {
         <button className={`${actionButtonStyles}`} onClick={onClickSaveBilling}>Save</button>
       </div>
     </div>
-  )
+  </>)
 }

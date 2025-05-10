@@ -78,15 +78,15 @@ export default function AdminSectionTables() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER}`}>
-        <span className="pr-5">Tables</span>
-        <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(1)}}>+1</button>
-        <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(3)}}>+3</button>
-        <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(10)}}>+10</button>
+      <div className={`flex items-center ${ADMIN_HEADER}`}>
+        <div className="pr-5">Tables</div>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(1)}}>+1</button>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(3)}}>+3</button>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(10)}}>+10</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItemData, index: number) => (
-          <div className="mb-3" key={table.id}>
+          <div className="mb-3 border border-gray-800 rounded-lg p-5" key={table.id}>
             <div className={`flex items-center`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteTable(table)}}>

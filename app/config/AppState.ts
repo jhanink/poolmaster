@@ -2,6 +2,7 @@ export interface AppState {
   account: Account,
   billing: Billing,
   billingSchedules: BillingSchedule[],
+  currentScheduleId: number,
   guestList: Guest[],
   tables: TableItemData[],
   modifiedAt: number,
@@ -9,6 +10,23 @@ export interface AppState {
 
 export const DefaultTableType = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
+
+export const DefaultBillingSchedule: BillingSchedule = {
+  id: 999999999,
+  name: `Default Billing Schedule`,
+  tableRateRules: {
+    isOneHourMinimum: false,
+    hourlyRate: 0,
+    isChargePerPlayer: false,
+  } as TableRateRules,
+  playerRateRules: {
+    playerLimit: 0,
+    overLimitRate: 0,
+  } as PlayerRateRules,
+  isActive: true,
+  forDelete: false,
+  forAdd: true,
+}
 
 export const DefaultAppState: AppState = {
   modifiedAt: 0,
@@ -27,10 +45,10 @@ export const DefaultAppState: AppState = {
     modifiedAt: 0
   },
   billing: {
-    maxBillablePlayers: 5,
     defaultBillingRate: "10.00",
   },
-  billingSchedules: [],
+  billingSchedules: [DefaultBillingSchedule],
+  currentScheduleId: 999999999,
   guestList: [],
   tables: [
     {
@@ -68,7 +86,7 @@ export interface Account {
 }
 
 export interface Billing {
-  maxBillablePlayers: number,
+  selectedScheduleId?: number,
   defaultBillingRate: string,
 }
 
@@ -132,22 +150,20 @@ export interface TableItemData {
 export interface BillingSchedule {
   id: number,
   name: string,
-  hourlyRate: number,
-  weekdayRate?: string,
-  weekendRate?: string,
-  holidayRate?: string,
-  startTime?: string,
-  endTime?: string,
-  isChargeEachPlayer: boolean,
-  isChargeByNumberOfPlayers?: boolean,
-  chargeEachPlayerRules?: ChargeEachPlayerRules,
-  minimumChargeHours: number,
+  tableRateRules: TableRateRules,
+  playerRateRules?: PlayerRateRules,
   isActive: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
 }
 
-export interface ChargeEachPlayerRules {
-  maxNumberOfPlayersAtFullRate: number,
-  overMaxPlayerRate: number,
+export interface PlayerRateRules {
+  playerLimit: number,
+  overLimitRate: number,
+}
+
+export interface TableRateRules {
+  isOneHourMinimum: boolean,
+  hourlyRate: number,
+  isChargePerPlayer: boolean,
 }

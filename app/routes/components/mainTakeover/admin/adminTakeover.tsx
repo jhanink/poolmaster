@@ -1,8 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
-import type { Account, Billing } from "~/config/AppState";
-import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
 import AdminSectionTables from "./adminSectionTables";
@@ -11,13 +9,13 @@ import AdminBilling from "./adminBilling";
 import AdminBillingSchedules from "./adminBillingSchedules";
 
 export const ADMIN_SECTION = `text-left`;
-export const ADMIN_HEADER = `text-2xl py-2 px-5 text-purple-500 mx-2 border border-gray-800 rounded-lg w-full`;
-export const ADMIN_CONTENT = `p-5 text-sm `;
+export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg w-full`;
+export const ADMIN_CONTENT = `text-sm `;
 export const ADMIN_ACTIONS = `text-left`;
-export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0`
+export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`
 
 export default function AdminTakeover() {
-  const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const PageTopRef = useRef<HTMLDivElement>(null);
@@ -53,7 +51,6 @@ export default function AdminTakeover() {
           <AdminBilling/>
           <hr className="text-gray-900 my-5"/>
           <AdminBillingSchedules/>
-
         </div>
       </div>
     </div>
