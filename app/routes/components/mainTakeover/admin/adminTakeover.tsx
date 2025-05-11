@@ -5,8 +5,9 @@ import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
 import AdminSectionTables from "./adminSectionTables";
 import AdminSectionAccount from "./adminSectionAccount";
-import AdminBilling from "./adminBilling";
-import AdminBillingSchedules from "./adminBillingSchedules";
+import AdminSectionBilling from "./adminSectionBilling";
+import AdminSectionRateSchedules from "./adminSectionRateSchedules";
+import AdminSectionTableTypes from "./adminSectionTableTypes";
 
 export const ADMIN_SECTION = `text-left`;
 export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg w-full`;
@@ -44,13 +45,15 @@ export default function AdminTakeover() {
           <h1 className="text-2xl text-gray-300 pb-10 pt-3">Admin Console</h1>
         </div>
         <div className="text-center mb-20">
-          <AdminSectionTables/>
-          <hr className="text-gray-900 my-5"/>
           <AdminSectionAccount/>
           <hr className="text-gray-900 my-5"/>
-          <AdminBilling/>
+          <AdminSectionTableTypes/>
           <hr className="text-gray-900 my-5"/>
-          <AdminBillingSchedules/>
+          <AdminSectionTables/>
+          {/* <hr className="text-gray-900 my-5"/>
+          <AdminSectionBilling/> */}
+          <hr className="text-gray-900 my-5"/>
+          <AdminSectionRateSchedules/>
         </div>
       </div>
     </div>

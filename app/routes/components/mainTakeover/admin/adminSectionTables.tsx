@@ -1,7 +1,7 @@
-import type { TableItemData } from "~/config/AppState"
+import { DEFAULT_RATE_SCHEDULE_ID, DefaultTableTypeData, type TableItemData } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./adminTakeover"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { actionButtonStyles, actionIconStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil"
+import { actionButtonStyles, actionIconStyles, formFieldStyles, formInputStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
@@ -9,7 +9,6 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 
 export default function AdminSectionTables() {
-
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLES, setTables] = useState([] as TableItemData[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
@@ -63,8 +62,9 @@ export default function AdminSectionTables() {
       id,
       number,
       name: `Table ${number}`,
-      type: 'Regulation',
+      type: DefaultTableTypeData.id,
       tableRate: `${APP_STATE.billing.defaultBillingRate}`,
+      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
       isActive: true,
       forDelete: false,
       forAdd: true,
@@ -78,7 +78,7 @@ export default function AdminSectionTables() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`flex items-center ${ADMIN_HEADER}`}>
+      <div className={`${ROW} ${ADMIN_HEADER}`}>
         <div className="pr-5">Tables</div>
           <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(1)}}>+1</button>
           <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(3)}}>+3</button>
@@ -86,15 +86,16 @@ export default function AdminSectionTables() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItemData, index: number) => (
-          <div className="mb-3 border border-gray-800 rounded-lg p-5" key={table.id}>
-            <div className={`flex items-center`}>
+          <div className={`${ITEM}`} key={table.id}>
+            <div className={`whitespace-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteTable(table)}}>
                 <TrashIcon></TrashIcon>
               </div>
-              <div className={`whitespace-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
-                {index+1} <input
-                  className={`w-[150px] ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'} ${formFieldStyles}`}
+              <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
+                {index+1}
+                <input
+                  className={`ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
                   value={table.name}
                   placeholder="Table name..."
                   maxLength={30}
@@ -104,30 +105,32 @@ export default function AdminSectionTables() {
                   }}
                   />
               </div>
-              <div className={`flex-1 ml-2`}>
-                <select
-                  name="tableType"
-                  onChange={(event) =>{
-                    table.type = event.target.value;
-                    setTables([...TABLES]);
-                  }}
-                  value={table.type}
-                  className={`uppercase bg-transparent pb-3
-                  ${formFieldStyles}`}
-                >
-                  <option className={optionStyles} value="Regulation">Regulation</option>
-                  <option className={optionStyles} value="Bar">Bar Table</option>
-                  <option className={optionStyles} value="Pro">Pro Table</option>
-                </select>
-              </div>
             </div>
-            <div className="ml-4 mt-1 flex items-center">
-              <div className="inline-block text-gray-400 mr-2">
-                Hourly Rate:
+            <div className={`${ROW}`}>
+              <div className="text-gray-400 mr-2">
+                Type:
               </div>
-              <div className="inline-block">
+              <select
+                name="tableType"
+                onChange={(event) =>{
+                  table.type = Number(event.target.value);
+                  setTables([...TABLES]);
+                }}
+                value={table.type}
+                className={`grow ${formSelectStyles} bg-transparent pb-3`}
+              >
+                {APP_STATE.tableTypes.map((type) => (
+                  <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                ))}
+              </select>
+            </div>
+            {/* <div className={`${ROW}`}>
+              <div className="text-gray-400 mr-2">
+                Rate:
+              </div>
+              <div>
                 <input
-                  className={`w-[90px] ${formFieldStyles}`}
+                  className={`${formInputStyles}`}
                   value={table.tableRate}
                   placeholder="Rate..."
                   maxLength={6}
@@ -137,7 +140,24 @@ export default function AdminSectionTables() {
                   }}
                 />
               </div>
-            </div>
+            </div> */}
+            <div className={`${ROW}`}>
+              <div className="text-gray-400 mr-2">
+                Rate:
+              </div>
+              <select
+                onChange={(event) => {
+                  table.rateScheduleId = Number(event.target.value);
+                  setTables([...TABLES]);
+                }}
+                value={table.rateScheduleId}
+                className={`grow ${formSelectStyles}`}
+              >
+                {APP_STATE.rateSchedules.map((schedule) => (
+                  <option key={schedule.id} className={optionStyles} value={table.rateScheduleId}>{schedule.name}</option>
+                ))}
+              </select>
+          </div>
             {!!table.forDelete && table.guest && (
               <div className="text-red-500 mt-2 mb-4 text-sm italic ml-10">
                 <ArrowRightIcon className="inline-block w-4 h-4 mr-1"></ArrowRightIcon>

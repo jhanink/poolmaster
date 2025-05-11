@@ -1,73 +1,17 @@
+export const DefaultTableTypeName = 'Regulation';
+export const GuestItemTypeKey = 'GUEST_ITEM';
+export const DEFAULT_RATE_SCHEDULE_ID = 999999999;
+export const DEFAULT_TABLE_TYPE_ID = 999999999;;
+
 export interface AppState {
   account: Account,
   billing: Billing,
-  billingSchedules: BillingSchedule[],
+  tableTypes: TableType[],
+  rateSchedules: RateSchedule[],
   currentScheduleId: number,
   guestList: Guest[],
   tables: TableItemData[],
   modifiedAt: number,
-}
-
-export const DefaultTableType = 'Regulation';
-export const GuestItemTypeKey = 'GUEST_ITEM';
-
-export const DefaultBillingSchedule: BillingSchedule = {
-  id: 999999999,
-  name: `Default Billing Schedule`,
-  tableRateRules: {
-    isOneHourMinimum: false,
-    hourlyRate: 0,
-    isChargePerPlayer: false,
-  } as TableRateRules,
-  playerRateRules: {
-    playerLimit: 0,
-    overLimitRate: 0,
-  } as PlayerRateRules,
-  isActive: true,
-  forDelete: false,
-  forAdd: true,
-}
-
-export const DefaultAppState: AppState = {
-  modifiedAt: 0,
-  account: {
-    id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
-    sourceId: "4b1d0ae4aa52",
-    name: "Shane Van Boening",
-    avatar: "https://avatars.githubusercontent.com/u/1000000?v=4",
-    initials: "SVB",
-    email: "",
-    phone: "",
-    address: "",
-    venue: "South Dakota Billiards",
-    password: "password",
-    createdAt: 0,
-    modifiedAt: 0
-  },
-  billing: {
-    defaultBillingRate: "10.00",
-  },
-  billingSchedules: [DefaultBillingSchedule],
-  currentScheduleId: 999999999,
-  guestList: [],
-  tables: [
-    {
-      id: 0,
-      type: DefaultTableType,
-      number: 1,
-      name: "Table 1",
-      tableRate: "10.00",
-      isActive: true,
-    },
-    {
-      id: 1,
-      type: DefaultTableType,
-      number: 2,
-      name: "Table 2",
-      tableRate: "10.00",
-      isActive: true,
-    },
-  ]
 }
 
 export interface Account {
@@ -114,40 +58,36 @@ export interface ExtraPlayer {
   timeStoppedAt?: number,
 }
 
-export const DefaultGuestData: Guest = {
-  id: 0,
-  name: "",
-  phoneNumber: "",
-  tableType: "Regulation",
-  createdAt: 0,
-  assignedAt : 0,
-  closedOutAt: 0,
-  partySize: 1,
-  notes: "",
-}
-
 export interface Reservation {
   date: number,
 }
 
+export interface TableType {
+  id: number,
+  name: string,
+  isActive: boolean,
+  forDelete?: boolean,
+  forAdd?: boolean,
+}
+
 export interface TableItemData {
   id: number,
-  type: string,
+  type: number,
   number: number,
   name: string,
   tableRate: string,
-  createdAt?: number,
-  modifiedAt?: number,
+  rateScheduleId: number,
   isActive: boolean,
   nickname?: string,
   guest?: Guest,
-  subtype?: string, // TODO: remove this
   forDelete?: boolean,
   forAdd?: boolean,
   closedOutAt?: number,
+  createdAt?: number,
+  modifiedAt?: number,
 }
 
-export interface BillingSchedule {
+export interface RateSchedule {
   id: number,
   name: string,
   tableRateRules: TableRateRules,
@@ -159,11 +99,105 @@ export interface BillingSchedule {
 
 export interface PlayerRateRules {
   playerLimit: number,
-  overLimitRate: number,
+  afterLimitRate: string,
 }
 
 export interface TableRateRules {
   isOneHourMinimum: boolean,
-  hourlyRate: number,
+  hourlyRate: string,
   isChargePerPlayer: boolean,
+}
+
+export const DefaultRateSchedule: RateSchedule = {
+  id: DEFAULT_RATE_SCHEDULE_ID,
+  name: `Default Rate Schedule`,
+  tableRateRules: {
+    isOneHourMinimum: false,
+    hourlyRate: "10.00",
+    isChargePerPlayer: false,
+  } as TableRateRules,
+  playerRateRules: {
+    playerLimit: 0,
+    afterLimitRate: "10.00",
+  } as PlayerRateRules,
+  isActive: true,
+  forDelete: false,
+  forAdd: true,
+}
+
+export const DefaultTableTypeData: TableType = {
+  id: DEFAULT_TABLE_TYPE_ID,
+  name: DefaultTableTypeName,
+  isActive: true,
+  forDelete: false,
+  forAdd: true,
+}
+
+export const DefaultTableItemData: TableItemData = {
+  id: 0,
+  type: DefaultTableTypeData.id,
+  number: 1,
+  name: "Table 1",
+  tableRate: "10.00",
+  rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+  isActive: true,
+  forDelete: false,
+  forAdd: true,
+}
+
+export const DefaultAppState: AppState = {
+  modifiedAt: 0,
+  account: {
+    id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
+    sourceId: "4b1d0ae4aa52",
+    name: "Shane Van Boening",
+    avatar: "https://avatars.githubusercontent.com/u/1000000?v=4",
+    initials: "SVB",
+    email: "",
+    phone: "",
+    address: "",
+    venue: "South Dakota Billiards",
+    password: "password",
+    createdAt: 0,
+    modifiedAt: 0
+  },
+  billing: {
+    defaultBillingRate: "10.00",
+  },
+  tableTypes: [DefaultTableTypeData],
+  rateSchedules: [DefaultRateSchedule],
+  currentScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+  guestList: [],
+  tables: [
+    {
+      id: 0,
+      type: DefaultTableTypeData.id,
+      number: 1,
+      name: "Table 1",
+      tableRate: "10.00",
+      isActive: true,
+      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+    },
+    {
+      id: 1,
+      type: DefaultTableTypeData.id,
+      number: 2,
+      name: "Table 2",
+      tableRate: "10.00",
+      isActive: true,
+      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+    },
+  ]
+}
+
+export const DefaultGuestData: Guest = {
+  id: 0,
+  name: "",
+  phoneNumber: "",
+  tableType: "Regulation",
+  createdAt: 0,
+  assignedAt : 0,
+  closedOutAt: 0,
+  partySize: 1,
+  notes: "",
 }

@@ -6,7 +6,7 @@ import { actionButtonStyles, formFieldStyles, optionStyles } from "~/util/Global
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
-import { type BillingSchedule } from "~/config/AppState";
+import { type RateSchedule } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -29,7 +29,7 @@ export default function TableCloseoutTakeover() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
-  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<BillingSchedule>({} as BillingSchedule);
+  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<RateSchedule>({} as RateSchedule);
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -192,19 +192,19 @@ export default function TableCloseoutTakeover() {
           <div className="mt-2">
             <select
               onChange={(event) => {
-                const selectedSchedule = APP_STATE.billingSchedules.find((schedule) => schedule.id === Number(event.target.value));
+                const selectedSchedule = APP_STATE.rateSchedules.find((schedule) => schedule.id === Number(event.target.value));
                 setSelectedSchedule(selectedSchedule);
               }}
               value={SELECTED_SCHEDULE.id}
               className={`${formFieldStyles}`}
             >
-              {APP_STATE.billingSchedules.map((schedule) => (
+              {APP_STATE.rateSchedules.map((schedule) => (
                 <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
               ))}
             </select>
           </div>
         </div>
-
+r
         <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 mt-5">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
