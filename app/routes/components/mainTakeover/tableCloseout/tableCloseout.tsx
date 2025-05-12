@@ -213,8 +213,8 @@ export default function TableCloseout() {
         </div>
 
         <div className="WORKSHEET text-left p-5 mx-5 mt-2">
-          {BILLABLE_DATA.players?.map((player, index) => (<>
-            <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`} key={player.id}>
+          {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
+            <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
               <div>
                 <div className="inline-block text-gray-500 mr-3">
                   <input
@@ -271,12 +271,11 @@ export default function TableCloseout() {
               </div>
             </div>
             {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
-            <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
-              Regular rate player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
-            </div>
+              <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
+                Regular rate player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
+              </div>
             </>)}
-
-          </>))}
+          </div>))}
         </div>
 
         <div className="text-xl text-gray-400 mb-5">
