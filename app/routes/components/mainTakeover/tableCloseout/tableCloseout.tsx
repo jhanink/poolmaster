@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles, optionStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
@@ -39,10 +39,20 @@ export default function TableCloseout() {
 
   const setupBillablePlayers = (hours: string) => {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
-    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+    const tableTypeId = table.tableTypeId;
+    const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
+
+    // Initially set tableRate to the tableType's rate
+    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
+
+    // If the table config ignores tableType rate, use table-specific rate
+    if (table.ignoreTableTypeRate) {
+      tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+    }
+
     if (!tableRate) {
       tableRate = APP_STATE.tableRates[0];
-      table.tableRateId = tableRate.id;
+      //table.tableRateId = tableRate.id;
     }
     setSelectedRate(tableRate);
     const rate = tableRate.tableRateRules.hourlyRate;
@@ -166,7 +176,7 @@ export default function TableCloseout() {
             <select
               onChange={onChangeTableRate}
               value={SELECTED_RATE.id}
-              className={`${formFieldStyles}`}
+              className={`${formSelectStyles}`}
             >
               {APP_STATE.tableRates
                 .filter((rate) => rate.isActive)
