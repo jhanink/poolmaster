@@ -3,10 +3,10 @@ import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
-import AdminSectionTables from "./adminSectionTables";
-import AdminSectionAccount from "./adminSectionAccount";
-import AdminSectionTableRates from "./adminSectionTableRates";
-import AdminSectionTableTypes from "./adminSectionTableTypes";
+import AdminTables from "./adminTables";
+import AdminAccount from "./adminAccount";
+import AdminTableRates from "./adminTableRates";
+import AdminTableTypes from "./adminTableTypes";
 
 export const ADMIN_SECTION = `text-left`;
 export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg w-full`;
@@ -44,13 +44,13 @@ export default function Admin() {
           <h1 className="text-2xl text-gray-300 pb-10 pt-3">Admin Console</h1>
         </div>
         <div className="text-center mb-20">
-          <AdminSectionAccount/>
+          <AdminAccount/>
           <hr className="text-gray-900 my-5"/>
-          <AdminSectionTableTypes/>
+          <AdminTableTypes/>
           <hr className="text-gray-900 my-5"/>
-          <AdminSectionTableRates/>
+          <AdminTableRates/>
           <hr className="text-gray-900 my-5"/>
-          <AdminSectionTables/>
+          <AdminTables/>
         </div>
       </div>
     </div>

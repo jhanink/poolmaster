@@ -8,7 +8,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms"
 import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 
-export default function AdminSectionTables() {
+export default function AdminTables() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLES, setTables] = useState([] as TableItem[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);

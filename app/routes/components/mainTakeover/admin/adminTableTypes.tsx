@@ -17,7 +17,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms"
 import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 
-export default function AdminSectionTableTypes() {
+export default function AdminTableTypes() {
 
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLE_TYPES, setTableTypes] = useState([] as TableType[]);

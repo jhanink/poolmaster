@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
-export default function AdminSectionAccount() {
+export default function AdminAccount() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
 
