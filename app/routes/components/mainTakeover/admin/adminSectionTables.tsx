@@ -1,7 +1,7 @@
 import { DEFAULT_TABLE_RATE_ID, DefaultTableTypeData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./adminTakeover"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { actionButtonStyles, actionIconStyles, formInputStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
+import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
@@ -85,7 +85,7 @@ export default function AdminSectionTables() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
-          <div className={`${ITEM}`} key={table.id}>
+          <div className={`${table.isActive? '!border-green-500':''} ${ITEM}`} key={table.id}>
             <div className={`whitespace-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteTable(table)}}>
@@ -94,7 +94,7 @@ export default function AdminSectionTables() {
               <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
-                  className={`ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
+                  className={`text-green-700 uppercase ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
                   placeholder="Table name..."
                   maxLength={30}
                   onChange={(event) => {
@@ -104,6 +104,20 @@ export default function AdminSectionTables() {
                   value={table.name}
                   />
               </div>
+            </div>
+            <div className={`${ROW}`}>
+              <div className={`${formLabelLeftStyles}`}>
+                Active:
+              </div>
+              <input
+                type="checkbox"
+                className={`ml-2 size-4`}
+                checked={table.isActive}
+                onChange={(event) => {
+                  table.isActive = !table.isActive;
+                  setTables([...TABLES]);
+                }}
+              />
             </div>
             <div className={`${ROW}`}>
               <div className="text-gray-400 mr-2">
@@ -139,9 +153,9 @@ export default function AdminSectionTables() {
                 className={`grow ${formSelectStyles}`}
               >
                 {APP_STATE.tableRates
-                  .filter((schedule) => schedule.isActive)
-                  .map((schedule) => (
-                    <option key={schedule.id} className={optionStyles} value={table.tableRateId}>{schedule.name}</option>
+                  .filter((tableRate) => tableRate.isActive)
+                  .map((tableRate) => (
+                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
                   ))
                 }
               </select>

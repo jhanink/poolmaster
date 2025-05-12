@@ -15,7 +15,9 @@ export default function AssignTableTakeover() {
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const TopRef = useRef<HTMLDivElement>(null);
-  const tables = APP_STATE.tables;
+  const tables = APP_STATE.tables.filter((table: TableItem) => {
+    return table.isActive;
+  });
 
   const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
     event.stopPropagation();

@@ -63,6 +63,7 @@ export interface Reservation {
 export interface TableType {
   id: number,
   name: string,
+  tableRateId: number,
   isActive: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
@@ -125,6 +126,7 @@ export const DefaultTableRateData: TableRate = {
 export const DefaultTableTypeData: TableType = {
   id: DEFAULT_TABLE_TYPE_ID,
   name: DefaultTableTypeName,
+  tableRateId: DEFAULT_TABLE_RATE_ID,
   isActive: true,
   forDelete: false,
   forAdd: true,

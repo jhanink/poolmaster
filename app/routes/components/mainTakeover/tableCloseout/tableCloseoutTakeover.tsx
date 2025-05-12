@@ -39,8 +39,13 @@ export default function TableCloseoutTakeover() {
 
   const setupBillablePlayers = (hours: string) => {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
-    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === table.tableRateId);
-    const rate = selectedRate.tableRateRules.hourlyRate;
+    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+    if (!tableRate) {
+      tableRate = APP_STATE.tableRates[0];
+      table.tableRateId = tableRate.id;
+    }
+    setSelectedRate(tableRate);
+    const rate = tableRate.tableRateRules.hourlyRate;
     const guest = table.guest;
     const PLAYERS_COUNT = Math.max(guest.partySize, guest.extraPlayers.length + 1);
     const players = []
@@ -68,7 +73,6 @@ export default function TableCloseoutTakeover() {
 
   const onChangeTableRate = (event) => {
     const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
-    if (!selectedRate) return;
     setSelectedRate(selectedRate);
     const players = BILLABLE_DATA.players.map((player) => {
       player.rate = selectedRate.tableRateRules.hourlyRate;

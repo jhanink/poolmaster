@@ -23,14 +23,14 @@ export const InitialTimeElapsed: TimeElapsed = {
 };
 
 export const Helpers = {
+  tables: (appState: AppState) => {
+    return appState.tables.filter(table => table.isActive);
+  },
   tablesAvailable: (appState: AppState) => {
     return appState.tables.filter(table => table.isActive && !table.guest);
   },
   tablesAssigned: (appState: AppState) => {
     return appState.tables.filter(table => table.isActive && table.guest);
-  },
-  percentAvailableTables: (appState: AppState) => {
-    return Math.round(Helpers.tablesAvailable(appState).length / appState.tables.length * 100);
   },
   getTableType: (appState: AppState, tableTypeId: number) => {
     const match = appState.tableTypes.find(tableType => {
@@ -83,7 +83,10 @@ export const Helpers = {
     return `${Math.round(averageWaitTimeMinutes)} min`;
   },
   percentTablesAssigned: (appState: AppState) => {
-    return Math.round(Helpers.tablesAssigned(appState).length / appState.tables.length * 100);
+    return Math.round(Helpers.tablesAssigned(appState).length / Helpers.tables(appState).length * 100);
+  },
+  percentTablesAvailable: (appState: AppState) => {
+    return Math.round(Helpers.tablesAvailable(appState).length / Helpers.tables(appState).length * 100);
   },
   pluralizeTablesAssigned: (appState: AppState) => {
     return `table${Helpers.tablesAssigned(appState).length === 1 ? '' : 's'}`

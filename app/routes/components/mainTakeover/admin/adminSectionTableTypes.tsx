@@ -87,7 +87,7 @@ export default function AdminSectionTableTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
-          <div className={`${ITEM}`} key={tableType.id}>
+          <div className={`${tableType.isActive? '!border-pink-500':''} ${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
               {(tableType.id !== DefaultTableTypeData.id) && (
                 <div
