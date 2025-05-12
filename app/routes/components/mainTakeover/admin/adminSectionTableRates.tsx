@@ -24,103 +24,106 @@ export default function AdminSectionTableRates() {
   const [SHOW_CONFIRM_SAVE_TABLE_RATES, setShowConfirmSaveTableRates] = useState(false);
   const [TABLE_RATES, setTableRates] = useState([DefaultTableRateData] as TableRate[]);
 
-  const onClickSaveSchedules = () => {
-    const rateSchedules = TABLE_RATES
-      .map((schedule: TableRate) => ({...schedule, forAdd: false}))
-      .filter((schedule: TableRate) => !schedule.forDelete);
+  const onClickSaveTableRates = () => {
+    const tableRates = TABLE_RATES
+      .map((tableRate: TableRate) => ({...tableRate, forAdd: false}))
+      .filter((tableRate: TableRate) => !tableRate.forDelete);
 
     const newState = {
       ...APP_STATE,
-      rateSchedules: rateSchedules,
+      tableRates,
     }
 
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setTableRates(rateSchedules);
+    setTableRates(tableRates);
     setShowConfirmSaveTableRates(false);
   }
 
-  const generateNewSchedule = (index: number = 1) => {
+  const generateNewTableRate = (index: number = 1) => {
     const id = Date.now() + index;
     const number = TABLE_RATES.length + index;
-    const newSchedule: TableRate = {
+    const newTableRate: TableRate = {
       ...DefaultTableRateData,
       id,
       name: `Rate ${number}`,
     }
-    return newSchedule;
+    return newTableRate;
   }
 
-  const onClickResetSchedules = (event: any) => {
+  const onClickResetTableRates = (event: any) => {
     if (!APP_STATE.tableRates.length) return;
-    const schedules = APP_STATE.tableRates.map((schedule: TableRate) => ({...schedule}));
-    setTableRates(schedules);
+    const tableRates = APP_STATE.tableRates.map((tableRate: TableRate) => ({...tableRate}));
+    setTableRates(tableRates);
   }
 
-  const onClickForDeleteSchedule = (schedule: TableRate) => {
-    if (schedule.forAdd) {
-      TABLE_RATES.splice(TABLE_RATES.indexOf(schedule), 1);
+  const onClickForDeleteTableRate = (tableRate: TableRate) => {
+    if (tableRate.forAdd) {
+      TABLE_RATES.splice(TABLE_RATES.indexOf(tableRate), 1);
       setTableRates([...TABLE_RATES]);
       return;
     }
-    schedule.forDelete = !schedule.forDelete;
+    tableRate.forDelete = !tableRate.forDelete;
     setTableRates([...TABLE_RATES]);
   }
 
-  const onClickAddSchedule = () => {
-    const schedules = [...TABLE_RATES];
-    const newSchedule = generateNewSchedule();
-    schedules.push(newSchedule);
-    setTableRates(schedules);
+  const onClickAddTableRate = () => {
+    const tableRates = [...TABLE_RATES];
+    const newTableRate = generateNewTableRate();
+    tableRates.push(newTableRate);
+    setTableRates(tableRates);
   }
 
   useEffect(() => {
-    onClickResetSchedules({} as any);
+    onClickResetTableRates({} as any);
   }, []);
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
       <div className={`flex items-center ${ADMIN_HEADER}`}>
         <div className="pr-5">Table Rates</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddSchedule}>+1</button>
+        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddTableRate}>+1</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-      {TABLE_RATES.map((schedule: TableRate, index: number) => (
-          <div className={`${ITEM}`} key={schedule.id}>
+      {TABLE_RATES.map((tableRate: TableRate, index: number) => (
+          <div className={`${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
-              {(schedule.id !== DefaultTableRateData.id) && (
+              {(tableRate.id !== DefaultTableRateData.id) && (
                 <div
-                  className={`mr-2 ${!!schedule.forDelete && 'text-red-500 hover:text-red-800'} ${!!schedule.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-                  onClick={(event) => {onClickForDeleteSchedule(schedule)}}>
+                  className={`mr-2 ${!!tableRate.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableRate.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  onClick={(event) => {onClickForDeleteTableRate(tableRate)}}>
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              {(schedule.id === DefaultTableRateData.id) && (
+              {(tableRate.id === DefaultTableRateData.id) && (
                 "DEFAULT"
               )}
-              {(schedule.id !== DefaultTableRateData.id) && (
+              {(tableRate.id !== DefaultTableRateData.id) && (
                 <span>{index+1}</span>
               )}
-              <div className={`whitespace-nowrap  ${!!schedule.forDelete && 'text-red-500'} ${!!schedule.forAdd && 'text-green-500'}`}>
+              <div className={`whitespace-nowrap  ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
-                  className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!schedule.forDelete && 'text-red-500'} ${!!schedule.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   onChange={(event) => {
-                    schedule.name = event.target.value.trim();
+                    tableRate.name = event.target.value;
                     setTableRates([...TABLE_RATES]);
                   }}
-                  value={schedule.name}
+                  value={tableRate.name}
                   maxLength={55}
                 />
               </div>
             </div>
-            {(schedule.id !== DefaultTableRateData.id) && (
+            {(tableRate.id !== DefaultTableRateData.id) && (
               <div className={`${ROW} ml-4 mt-1`}>
                 <div className={`${formLabelLeftStyles}`}>
                   Active:
                 </div>
-                <input type="checkbox" className={`ml-2 size-4`} checked={schedule.isActive}
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={tableRate.isActive}
                   onChange={(event) => {
-                    schedule.isActive = !schedule.isActive;
+                    tableRate.isActive = !tableRate.isActive;
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -133,11 +136,11 @@ export default function AdminSectionTableRates() {
               <div className="inline-block">
                 <input
                   className={`${formInputStylesSmall}`}
-                  value={schedule.tableRateRules.hourlyRate}
+                  value={tableRate.tableRateRules.hourlyRate}
                   placeholder="Rate..."
                   maxLength={6}
                   onChange={(event) => {
-                    schedule.tableRateRules.hourlyRate = event.target.value.trim();
+                    tableRate.tableRateRules.hourlyRate = event.target.value.trim();
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -147,9 +150,12 @@ export default function AdminSectionTableRates() {
               <div className={`${formLabelLeftStyles}`}>
                 1 hour minimum?
               </div>
-              <input type="checkbox" className="ml-2 size-4" checked={schedule.tableRateRules.isOneHourMinimum}
+              <input
+                type="checkbox"
+                className="ml-2 size-4"
+                checked={tableRate.tableRateRules.isOneHourMinimum}
                 onChange={(event) => {
-                  schedule.tableRateRules.isOneHourMinimum = !schedule.tableRateRules.isOneHourMinimum;
+                  tableRate.tableRateRules.isOneHourMinimum = !tableRate.tableRateRules.isOneHourMinimum;
                   setTableRates([...TABLE_RATES]);
                 }}
               />
@@ -158,27 +164,30 @@ export default function AdminSectionTableRates() {
               <div className={`${formLabelLeftStyles}`}>
                 Per player?
               </div>
-              <input type="checkbox" className="ml-2 size-4" checked={schedule.tableRateRules.isChargePerPlayer}
+              <input
+                type="checkbox"
+                className="ml-2 size-4"
+                checked={tableRate.tableRateRules.isChargePerPlayer}
                 onChange={(event) => {
-                  schedule.tableRateRules.isChargePerPlayer = !schedule.tableRateRules.isChargePerPlayer;
+                  tableRate.tableRateRules.isChargePerPlayer = !tableRate.tableRateRules.isChargePerPlayer;
                   setTableRates([...TABLE_RATES]);
                 }}
               />
             </div>
-            {schedule.tableRateRules.isChargePerPlayer && (<>
+            {tableRate.tableRateRules.isChargePerPlayer && (<>
               <div className={`${ROW} ml-8 mt-1`}>
                 <div className={`${formLabelLeftStyles}`}>
                   Player Limit:
                 </div>
                 <input
                   type="number"
-                  value={schedule.playerRateRules.playerLimit}
+                  value={tableRate.playerRateRules.playerLimit}
                   maxLength={2}
                   min={0}
                   max={99}
                   className={`${formInputStylesExtraSmall}`}
                   onChange={(event) => {
-                    schedule.playerRateRules.playerLimit = Number(event.target.value.trim());
+                    tableRate.playerRateRules.playerLimit = Number(event.target.value.trim());
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -188,12 +197,12 @@ export default function AdminSectionTableRates() {
                   Rate after limit:
                 </div>
                 <input
-                  value={schedule.playerRateRules.afterLimitRate}
+                  value={tableRate.playerRateRules.afterLimitRate}
                   maxLength={6}
                   className={`${formInputStylesSmall}`}
                   placeholder="Rate..."
                   onChange={(event) => {
-                    schedule.playerRateRules.afterLimitRate = event.target.value.trim();
+                    tableRate.playerRateRules.afterLimitRate = event.target.value.trim();
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -203,19 +212,19 @@ export default function AdminSectionTableRates() {
         ))}
       </div>
       <div className={`${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetSchedules}>Reset</button>
+        <button className={`${actionButtonStyles}`} onClick={onClickResetTableRates}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTableRates(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm
       show={SHOW_CONFIRM_SAVE_TABLE_RATES}
-      dialogTitle={`SAVE SCHEDULES`}
+      dialogTitle={`SAVE TABLE RATES`}
       dialogMessageFn={() => (
         <span className="text-base">
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSaveSchedules()}}
+      onConfirm={() => {onClickSaveTableRates()}}
       onCancel={() => {setShowConfirmSaveTableRates(false)}}
     />
   </>)

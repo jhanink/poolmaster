@@ -40,9 +40,9 @@ export default function AdminSectionAccount() {
           className={`${formInputStyles} w-full ${formFieldStyles}`}
           value={ACCOUNT.venue}
           placeholder="Account name..."
-          maxLength={50}
+          maxLength={70}
           onChange={(event) => {
-            ACCOUNT.venue = event.target.value.trim();
+            ACCOUNT.venue = event.target.value;
             setAccount({...ACCOUNT});
           }}
         />

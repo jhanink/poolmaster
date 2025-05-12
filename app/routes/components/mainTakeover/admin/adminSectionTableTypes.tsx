@@ -86,43 +86,46 @@ export default function AdminSectionTableTypes() {
         <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-      {TABLE_TYPES.map((types: TableType, index: number) => (
-          <div className={`${ITEM}`} key={types.id}>
+      {TABLE_TYPES.map((tableType: TableType, index: number) => (
+          <div className={`${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
-              {(types.id !== DefaultTableTypeData.id) && (
+              {(tableType.id !== DefaultTableTypeData.id) && (
                 <div
-                  className={`mr-2 ${!!types.forDelete && 'text-red-500 hover:text-red-800'} ${!!types.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-                  onClick={(event) => {onClickForDeleteItem(types)}}>
+                  className={`mr-2 ${!!tableType.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  onClick={(event) => {onClickForDeleteItem(tableType)}}>
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`whitespace-nowrap  ${!!types.forDelete && 'text-red-500'} ${!!types.forAdd && 'text-green-500'}`}>
-                {types.id === DefaultTableTypeData.id && (
+              <div className={`whitespace-nowrap  ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
+                {tableType.id === DefaultTableTypeData.id && (
                   "DEFAULT"
                 )}
-                {types.id !== DefaultTableTypeData.id && (
+                {tableType.id !== DefaultTableTypeData.id && (
                   <span>{index+1}</span>
                 )}
                 <input
-                  className={`${formInputStyles} w-full ${INPUT_FIELD} ${!!types.forDelete && 'text-red-500'} ${!!types.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`${formInputStyles} w-full ${INPUT_FIELD} ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   placeholder="Table Type..."
+                  maxLength={55}
                   onChange={(event) => {
-                    types.name = event.target.value.trim();
+                    tableType.name = event.target.value;
                     setTableTypes([...TABLE_TYPES]);
                   }}
-                  value={types.name}
-                  maxLength={55}
+                  value={tableType.name}
                 />
               </div>
             </div>
-            {(types.id !== DefaultTableTypeData.id) && (
+            {(tableType.id !== DefaultTableTypeData.id) && (
               <div className={`${ROW} ml-4 mt-1`}>
                 <div className={`${formLabelLeftStyles}`}>
                   Active:
                 </div>
-                <input type="checkbox" className={`ml-2 size-4`} checked={types.isActive}
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={tableType.isActive}
                   onChange={(event) => {
-                    types.isActive = !types.isActive;
+                    tableType.isActive = !tableType.isActive;
                     setTableTypes([...TABLE_TYPES]);
                   }}
                 />

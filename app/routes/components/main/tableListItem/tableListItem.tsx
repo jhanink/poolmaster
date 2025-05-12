@@ -42,6 +42,7 @@ export default function TableListItem(props: {
     }
 
     const onClickCloseExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
+      if (SELECTED_LIST_FILTER === ListFilterTypeEnum.TABLELIST) return;
       setItemExpanded(prev => false);
       setEditForm(prev => false);
       setSelectedTable(undefined as TableItem);
@@ -50,17 +51,17 @@ export default function TableListItem(props: {
     return (
       <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
-          <div>
+          <div  onClick={onClickCloseExpanded}>
             {table.nickname || table.name}
             <div className="absolute top-2 right-0 hover:cursor-pointer">
               {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && <>
-                <div className="text-gray-500" onClick={onClickCloseExpanded}>
+                <div className="text-gray-500">
                   <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-3 size-7 hover:stroke-white" />
                 </div>
               </>}
             </div>
+            <div className="text-gray-700">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
           </div>
-          <div className="text-gray-700">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
         </div>
         {table.guest && (
           <div className="ml-3">

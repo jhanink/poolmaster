@@ -95,13 +95,13 @@ export default function AdminSectionTables() {
                 {index+1}
                 <input
                   className={`ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
-                  value={table.name}
                   placeholder="Table name..."
                   maxLength={30}
                   onChange={(event) => {
-                    table.name = event.target.value.trim();
+                    table.name = event.target.value;
                     setTables([...TABLES]);
                   }}
+                  value={table.name}
                   />
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function AdminSectionTables() {
               <select
                 name="tableType"
                 onChange={(event) =>{
-                  table.tableTypeId = Number(event.target.value.trim());
+                  table.tableTypeId = Number(event.target.value);
                   setTables([...TABLES]);
                 }}
                 value={table.tableTypeId}
@@ -132,7 +132,7 @@ export default function AdminSectionTables() {
               </div>
               <select
                 onChange={(event) => {
-                  table.tableRateId = Number(event.target.value.trim());
+                  table.tableRateId = Number(event.target.value);
                   setTables([...TABLES]);
                 }}
                 value={table.tableRateId}

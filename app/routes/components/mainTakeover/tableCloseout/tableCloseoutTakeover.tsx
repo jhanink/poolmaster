@@ -32,11 +32,6 @@ export default function TableCloseoutTakeover() {
 
   const TopRef = useRef<HTMLDivElement>(null);
 
-  const onChangeTableHours = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const hours = event.target.value.trim()
-    setHoursData(hours);
-  }
-
   const onClickCancelCheckout = () => {
     MAIN_TAKEOVER.closeoutTable.guest.closedOutAt = 0;
     setMainTakeover(undefined);
@@ -80,16 +75,6 @@ export default function TableCloseoutTakeover() {
     BILLABLE_DATA.players.forEach((player) => {
       player.hours = hours;
     })
-    setBillableData({...BILLABLE_DATA});
-  }
-
-  const onChangePlayerRate = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
-    player.rate = event.target.value.trim();
-    setBillableData({...BILLABLE_DATA});
-  }
-
-  const onChangePlayerHours = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
-    player.hours = event.target.value.trim();
     setBillableData({...BILLABLE_DATA});
   }
 
@@ -152,7 +137,11 @@ export default function TableCloseoutTakeover() {
                 <input
                   type="text"
                   className={`text-gray-500 w-[70px] ${formFieldStyles}`}
-                  onChange={onChangeTableHours}
+                  maxLength={6}
+                  onChange={(event) => {
+                    const hours = event.target.value.trim()
+                    setHoursData(hours);
+                  }}
                   value={`${HOURS_DATA}`}
                 />
                 </div>
@@ -166,7 +155,7 @@ export default function TableCloseoutTakeover() {
           <div className="mt-2">
             <select
               onChange={(event) => {
-                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value.trim()));
+                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
                 setSelectedRate(selectedRate);
               }}
               value={SELECTED_RATE.id}
@@ -184,7 +173,14 @@ export default function TableCloseoutTakeover() {
             <div className="PLAYER mb-4" key={player.id}>
               <div>
                 <div className="inline-block text-gray-500 mr-3">
-                  <input type="checkbox" checked={player.billable} onChange={(event) => {onChangePlayerChecked(player, event)}}></input>
+                  <input
+                    type="checkbox"
+                    checked={player.billable}
+                    onChange={(event) => {
+                      player.billable = event.target.checked;
+                      setBillableData({...BILLABLE_DATA});
+                    }}
+                  />
                 </div>
                 <div className={`inline-block text-base ${index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
                   {player.name}
@@ -202,16 +198,23 @@ export default function TableCloseoutTakeover() {
                   <input
                   type="text"
                     className={`w-[75px] ${formFieldStyles}`}
-                    onChange={(event) => {onChangePlayerHours(player, event)}}
+                    onChange={(event) => {
+                      player.hours = event.target.value;
+                      setBillableData({...BILLABLE_DATA});
+                    }}
                     value={`${player.hours}`}
                   />
                 </div>
                 <div className="inline-block w-[90px]">
                   <div className="text-xs text-gray-500">RATE</div>
                   <input
-                  type="text"
+                    type="text"
                     className={`w-[75px] ${formFieldStyles}`}
-                    onChange={(event) => onChangePlayerRate(player, event)}
+                    maxLength={6}
+                    onChange={(event) => {
+                      player.rate = event.target.value;
+                      setBillableData({...BILLABLE_DATA});
+                    }}
                     value={`${player.rate}`}
                   />
                 </div>

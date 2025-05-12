@@ -105,15 +105,6 @@ export default function GuestForm(props: {
     setMainTakeover(undefined);
   }
 
-  const onChangeField = (event: React.ChangeEvent<any>) => {
-    const fieldName = event.target.name
-    const value = event.target.value.trim();
-    setFormFields(prev => ({
-      ...prev,
-      [fieldName]: value,
-    }));
-  }
-
   const onClickForm = (event: any) => {
     event.stopPropagation();
   }
@@ -174,7 +165,7 @@ export default function GuestForm(props: {
                         required
                         value={player.name}
                         onChange={(event) => {
-                          player.name = event.target.value.trim();
+                          player.name = event.target.value;
                           const newExtraPlayers = FORM_FIELDS.extraPlayers.map((_, i) => i === index ? player : _);
                           setFormFields(prev => ({
                             ...prev,
@@ -219,7 +210,7 @@ export default function GuestForm(props: {
               required
               name="name"
               onChange={(event) => {
-                FORM_FIELDS.name = event.target.value.trim();
+                FORM_FIELDS.name = event.target.value;
                 setFormFields({...FORM_FIELDS})
                }}
                value={FORM_FIELDS.name}
@@ -239,7 +230,7 @@ export default function GuestForm(props: {
               ref={phoneInputRef}
               name="phoneNumber"
               onChange={(event) => {
-                FORM_FIELDS.phoneNumber = event.target.value.trim().trim();
+                FORM_FIELDS.phoneNumber = event.target.value;
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.phoneNumber}
@@ -259,7 +250,10 @@ export default function GuestForm(props: {
               <div className={`flex-1 flex-grow text-nowrap`}>
                 <select
                   name="partySize"
-                  onChange={onChangeField}
+                  onChange={(event) => {
+                    FORM_FIELDS.partySize = Number(event.target.value);
+                    setFormFields({...FORM_FIELDS})
+                  }}
                   value={FORM_FIELDS.partySize}
                   className={`${formSelectStyles} pb-3 ${formFieldStylesFullWidth}`}
                 >
@@ -284,7 +278,7 @@ export default function GuestForm(props: {
             <select
               name="tableType"
               onChange={(event) => {
-                FORM_FIELDS.tableTypeId = Number(event.target.value.trim());
+                FORM_FIELDS.tableTypeId = Number(event.target.value);
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.tableTypeId}
@@ -309,7 +303,7 @@ export default function GuestForm(props: {
             <textarea
               name="notes"
               onChange={(event) =>{
-                FORM_FIELDS.notes = event.target.value.trim();
+                FORM_FIELDS.notes = event.target.value;
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.notes}
