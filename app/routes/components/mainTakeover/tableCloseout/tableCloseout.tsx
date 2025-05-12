@@ -25,7 +25,6 @@ export default function TableCloseout() {
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
-
   const [HOURS_DATA, setHoursData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>({} as TableRate);
@@ -208,9 +207,14 @@ export default function TableCloseout() {
           </div>
         </div>
 
-        <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 mt-5">
-          {BILLABLE_DATA.players?.map((player, index) => (
-            <div className="PLAYER mb-4" key={player.id}>
+        <div className="text-xl text-gray-400 mt-4">
+          Bill Total: &nbsp;
+          <span className="text-green-500 text-xl">${playersTotal()}</span>
+        </div>
+
+        <div className="WORKSHEET text-left p-5 mx-5 mt-2">
+          {BILLABLE_DATA.players?.map((player, index) => (<>
+            <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-yellow-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`} key={player.id}>
               <div>
                 <div className="inline-block text-gray-500 mr-3">
                   <input
@@ -222,7 +226,7 @@ export default function TableCloseout() {
                     }}
                   />
                 </div>
-                <div className={`inline-block text-base ${index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length ? 'text-gray-300 italic' : 'text-blue-400'}`}>
+                <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
                   {player.name}
                   {index === 0 && (
                     <div className="inline-block">&nbsp; (Main Player)</div>
@@ -266,12 +270,18 @@ export default function TableCloseout() {
                 </div>
               </div>
             </div>
-          ))}
+            {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
+            <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
+              Regular rate player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
+            </div>
+            </>)}
+
+          </>))}
         </div>
 
-        <div className="text-2xl text-gray-400 my-3">
-          Total Bill: &nbsp;
-          <span className="text-green-500 text-2xl">${playersTotal()}</span>
+        <div className="text-xl text-gray-400 mb-5">
+          Bill Total: &nbsp;
+          <span className="text-green-500 text-xl">${playersTotal()}</span>
         </div>
 
         <div className="my-3 mb-20">
