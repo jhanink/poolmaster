@@ -142,25 +142,41 @@ export default function AdminTables() {
               </select>
             </div>
             <div className={`${ROW}`}>
-              <div className="text-gray-400 mr-2">
-                Rate:
+              <div className={`${formLabelLeftStyles}`}>
+                Ignore Table Type Rate:
               </div>
-              <select
+              <input
+                type="checkbox"
+                className={`ml-2 size-4`}
+                checked={table.ignoreTableTypeRate}
                 onChange={(event) => {
-                  table.tableRateId = Number(event.target.value);
+                  table.ignoreTableTypeRate = !table.ignoreTableTypeRate;
                   setTables([...TABLES]);
                 }}
-                value={table.tableRateId}
-                className={`grow ${formSelectStyles}`}
-              >
-                {APP_STATE.tableRates
-                  .filter((tableRate) => tableRate.isActive)
-                  .map((tableRate) => (
-                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
-                  ))
-                }
-              </select>
+              />
             </div>
+            {table.ignoreTableTypeRate && (
+              <div className={`ml-8 ${ROW}`}>
+                <div className="text-gray-400 mr-2">
+                  Rate:
+                </div>
+                <select
+                  onChange={(event) => {
+                    table.tableRateId = Number(event.target.value);
+                    setTables([...TABLES]);
+                  }}
+                  value={table.tableRateId}
+                  className={`grow ${formSelectStyles}`}
+                >
+                  {APP_STATE.tableRates
+                    .filter((tableRate) => tableRate.isActive)
+                    .map((tableRate) => (
+                      <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            )}
             {!!table.forDelete && table.guest && (
               <div className="text-red-500 mt-2 mb-4 text-sm italic ml-10">
                 <ArrowRightIcon className="inline-block w-4 h-4 mr-1"></ArrowRightIcon>
