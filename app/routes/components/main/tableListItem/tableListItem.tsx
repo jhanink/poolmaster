@@ -4,7 +4,8 @@ import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
 import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { Helpers } from "~/util/Helpers";
 
 const cardStyle = `${styles.itemCard} select-none py-2 text-gray-700 border border-gray-800 rounded-xl`;
 const guestUnassigned =`${cardStyle} text-gray-700`;
@@ -15,6 +16,7 @@ export default function TableListItem(props: {
     index: number,
     tableRef: React.RefObject<HTMLDivElement | null>,
   }) {
+    const [APP_STATE] = useAtom(appStateAtom);
     const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
     const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);
@@ -58,7 +60,7 @@ export default function TableListItem(props: {
               </>}
             </div>
           </div>
-          <div className="text-gray-700">{table.type}</div>
+          <div className="text-gray-700">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
         </div>
         {table.guest && (
           <div className="ml-3">

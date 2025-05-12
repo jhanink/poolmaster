@@ -27,20 +27,14 @@ export default function TableCloseoutTakeover() {
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
 
   const [HOURS_DATA, setHoursData] = useState('');
-  const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
-  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<TableRate>({} as TableRate);
+  const [SELECTED_RATE, setSelectedRate] = useState<TableRate>({} as TableRate);
 
   const TopRef = useRef<HTMLDivElement>(null);
 
   const onChangeTableHours = (event: React.ChangeEvent<HTMLInputElement>) => {
     const hours = event.target.value
     setHoursData(hours);
-  }
-
-  const onChangeTableRate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const rate = event.target.value
-    setRateData(rate);
   }
 
   const onClickCancelCheckout = () => {
@@ -125,11 +119,8 @@ export default function TableCloseoutTakeover() {
     const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
     const end = MAIN_TAKEOVER.closeoutTable.guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
-    const rate = MAIN_TAKEOVER.closeoutTable.tableRate;
     setElapsedTime(hours);
     setHoursData(`${hours.durationHoursDecimal3}`);
-    setRateData(rate);
-    setupBillablePlayers(hours.durationHoursDecimal3, rate);
   }
 
   const onClickFinalConfirm = async () => {
@@ -169,22 +160,6 @@ export default function TableCloseoutTakeover() {
                 <span className={actionButtonStyles} onClick={() => {useTableHours(HOURS_DATA)}}>use</span>
               </div>
             </div>
-            <div className="RATE flex items-center text-base">
-              <div className="w-[50px]">
-                Rate
-              </div>
-              <div className="inline-block">
-                <div className="inline-block w-[90px]">
-                  <input
-                    type="text"
-                    className={`text-gray-500 w-[70px] ${formFieldStyles}`}
-                    onChange={onChangeTableRate}
-                    value={`${RATE_DATA}`}
-                  />
-                </div>
-                <span className={actionButtonStyles} onClick={() => {useTableRate(RATE_DATA)}}>use</span>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -192,14 +167,14 @@ export default function TableCloseoutTakeover() {
           <div className="mt-2">
             <select
               onChange={(event) => {
-                const selectedSchedule = APP_STATE.rateSchedules.find((schedule) => schedule.id === Number(event.target.value));
-                setSelectedSchedule(selectedSchedule);
+                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
+                setSelectedRate(selectedRate);
               }}
-              value={SELECTED_SCHEDULE.id}
+              value={SELECTED_RATE.id}
               className={`${formFieldStyles}`}
             >
-              {APP_STATE.rateSchedules.map((schedule) => (
-                <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
+              {APP_STATE.tableRates.map((rate) => (
+                <option key={rate.id} className={optionStyles} value={rate.id}>{rate.name}</option>
               ))}
             </select>
           </div>

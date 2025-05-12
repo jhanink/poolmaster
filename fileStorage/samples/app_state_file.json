@@ -14,38 +14,40 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
-  "billing": {
-    "maxBillablePlayers": 5,
-    "defaultBillingRate": "10.00"
-  },
-  "rateSchedules": [],
+  "tableRates": [],
+  "tableTypes": [
+    {
+      "id": 999999999,
+      "name": "Regulation",
+      "isActive": true,
+      "forDelete": false,
+      "forAdd": false
+    }
+  ],
   "guestList": [],
   "tables": [
     {
       "id": 1,
       "number": 1,
       "name": "Table 1",
-      "type": "Regulation",
-      "tableRate": "10.00",
-      "subtype": "9ft",
+      "tableTypeId": 999999999,
+      "tableRateId": 999999999,
       "isActive": true
     },
     {
       "id": 2,
       "number": 2,
       "name": "Table 2",
-      "type": "Bar",
-      "tableRate": "10.00",
-      "subtype": "7ft",
+      "tableTypeId": 999999999,
+      "tableRateId": 999999999,
       "isActive": true
     },
     {
       "id": 3,
       "number": 3,
       "name": "Table 3",
-      "type": "Bar",
-      "tableRate": "10.00",
-      "subtype": "7ft",
+      "tableTypeId": 999999999,
+      "tableRateId": 999999999,
       "isActive": true
     }
   ]

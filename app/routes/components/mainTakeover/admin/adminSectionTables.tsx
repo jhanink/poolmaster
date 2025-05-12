@@ -62,9 +62,8 @@ export default function AdminSectionTables() {
       id,
       number,
       name: `Table ${number}`,
-      type: DefaultTableTypeData.id,
-      tableRate: `${APP_STATE.billing.defaultBillingRate}`,
-      rateScheduleId: DEFAULT_TABLE_RATE_ID,
+      tableTypeId: DefaultTableTypeData.id,
+      tableRateId: DEFAULT_TABLE_RATE_ID,
       isActive: true,
       forDelete: false,
       forAdd: true,
@@ -113,10 +112,10 @@ export default function AdminSectionTables() {
               <select
                 name="tableType"
                 onChange={(event) =>{
-                  table.type = Number(event.target.value);
+                  table.tableTypeId = Number(event.target.value);
                   setTables([...TABLES]);
                 }}
-                value={table.type}
+                value={table.tableTypeId}
                 className={`grow ${formSelectStyles} bg-transparent pb-3`}
               >
                 {APP_STATE.tableTypes
@@ -133,20 +132,20 @@ export default function AdminSectionTables() {
               </div>
               <select
                 onChange={(event) => {
-                  table.rateScheduleId = Number(event.target.value);
+                  table.tableRateId = Number(event.target.value);
                   setTables([...TABLES]);
                 }}
-                value={table.rateScheduleId}
+                value={table.tableRateId}
                 className={`grow ${formSelectStyles}`}
               >
-                {APP_STATE.rateSchedules
+                {APP_STATE.tableRates
                   .filter((schedule) => schedule.isActive)
                   .map((schedule) => (
-                    <option key={schedule.id} className={optionStyles} value={table.rateScheduleId}>{schedule.name}</option>
+                    <option key={schedule.id} className={optionStyles} value={table.tableRateId}>{schedule.name}</option>
                   ))
                 }
               </select>
-          </div>
+            </div>
             {!!table.forDelete && table.guest && (
               <div className="text-red-500 mt-2 mb-4 text-sm italic ml-10">
                 <ArrowRightIcon className="inline-block w-4 h-4 mr-1"></ArrowRightIcon>

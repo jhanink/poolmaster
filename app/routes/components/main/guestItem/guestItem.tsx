@@ -114,7 +114,7 @@ export default function GuestItem(props: {
             )}
             <div className="ROW">
               <span className={`${fieldLabel}`}>Type: &nbsp; </span>
-              {guest.tableType}
+              {Helpers.getTableType(APP_STATE, guest.tableTypeId).name}
             </div>
             { guest.notes && (
               <div className="ROW">

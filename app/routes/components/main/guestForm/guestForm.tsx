@@ -1,6 +1,6 @@
 
 import { useMask } from '@react-input/mask';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
@@ -37,14 +37,10 @@ export default function GuestForm(props: {
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
-    tableType: props.guest.tableType || "Regulation",
+    tableTypeId: props.guest.tableTypeId || 999999999,
     notes: props.guest.notes || "",
   });
 
-  const nameToAddField = useRef<HTMLInputElement>(null);
-  const partySizeField = useRef<HTMLSelectElement>(null);
-  const tableTypeField = useRef<HTMLSelectElement>(null);
-  const notesField = useRef<HTMLTextAreaElement>(null);
   const phoneInputRef = useMask({
     mask: '(___) ___-____',
     replacement: { _: /\d/ },
@@ -157,7 +153,7 @@ export default function GuestForm(props: {
   const fragmentExtraPlayersTable = () => {
     return (
       <>
-        <div className={`${partySizeField.current?.value === '1' ? 'hidden' : ''}`}>
+        <div className={`${FORM_FIELDS.partySize === 1 ? 'hidden' : ''}`}>
           <div className={formColumnStyles}>
             <div className={`${labelStyles} mb-2`}>
               Extra Player Names
@@ -206,18 +202,7 @@ export default function GuestForm(props: {
       ...prev,
       ...props.guest,
     }));
-
-    nameToAddField.current && (nameToAddField.current.value = props.guest.name);
-    partySizeField.current && (partySizeField.current.value = `${props.guest.partySize}`);
-    tableTypeField.current && (tableTypeField.current.value = props.guest.tableType);
-    notesField.current && (notesField.current.value = props.guest.notes);
     phoneInputRef.current && (phoneInputRef.current.value = props.guest.phoneNumber || '');
-  }, []);
-
-  useEffect(() => {
-    if (props.guest.id) return;
-    const nameInputField = nameToAddField.current;
-    if (!nameInputField) return;
   }, []);
 
   return ( <>
@@ -230,10 +215,14 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles} onDragStart={(event) => {event.preventDefault();event.stopPropagation();}}>
           <div className={`${fieldStyles} flex-grow text-nowrap`}>
-            <input ref={nameToAddField}
+            <input
               required
               name="name"
-              onChange={onChangeField}
+              onChange={(event) => {
+                FORM_FIELDS.name = event.target.value;
+                setFormFields({...FORM_FIELDS})
+               }}
+               value={FORM_FIELDS.name}
               className={`${formFieldStylesFullWidth}`}
               placeholder="Enter Guest Name..."
               maxLength={40}/>
@@ -246,9 +235,13 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
-            <input ref={phoneInputRef}
+            <input
               name="phoneNumber"
-              onChange={onChangeField}
+              onChange={(event) => {
+                FORM_FIELDS.phoneNumber = event.target.value;
+                setFormFields({...FORM_FIELDS})
+              }}
+              value={FORM_FIELDS.phoneNumber}
               className={`${formFieldStylesFullWidth}`}
               placeholder="Add Phone Number..."
             />
@@ -263,10 +256,10 @@ export default function GuestForm(props: {
             </div>
             <div className={`ROW ${formColumnStyles}`}>
               <div className={`flex-1 flex-grow text-nowrap`}>
-                <select ref={partySizeField}
+                <select
                   name="partySize"
                   onChange={onChangeField}
-                  defaultValue="1"
+                  value={FORM_FIELDS.partySize}
                   className={`pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {partySizeArray.map((size) => (
@@ -277,7 +270,7 @@ export default function GuestForm(props: {
             </div>
           </div>
         </div>
-        <div className={`${partySizeField.current?.value === '1' ? 'hidden' : ''}`}>
+        <div className={`${FORM_FIELDS.partySize === 1 ? 'hidden' : ''}`}>
           {fragmentExtraPlayersTable()}
         </div>
         <div className={formColumnStyles}>
@@ -287,16 +280,22 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
-            <select ref={tableTypeField}
+            <select
               name="tableType"
-              onChange={onChangeField}
-              defaultValue="Regulation"
+              onChange={(event) => {
+                FORM_FIELDS.tableTypeId = Number(event.target.value);
+                setFormFields({...FORM_FIELDS})
+              }}
+              value={FORM_FIELDS.tableTypeId}
               className={`uppercase bg-transparent pb-3
               ${formFieldStylesFullWidth}`}
             >
-              <option className={optionStyles} value="Regulation">Regulation</option>
-              <option className={optionStyles} value="Bar">Bar Table</option>
-              <option className={optionStyles} value="Pro">Pro Table</option>
+              {APP_STATE.tableTypes
+                .filter((type) => type.isActive)
+                .map((type) => (
+                  <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                ))
+              }
             </select>
           </div>
         </div>
@@ -307,9 +306,13 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
-            <textarea ref={notesField}
+            <textarea
               name="notes"
-              onChange={onChangeField}
+              onChange={(event) =>{
+                FORM_FIELDS.notes = event.target.value;
+                setFormFields({...FORM_FIELDS})
+              }}
+              value={FORM_FIELDS.notes}
               className={`${styles.noScrollbar} text-left resize-none h-24 ${formFieldStylesFullWidth}`}
               maxLength={500}
               placeholder="Add Notes...">

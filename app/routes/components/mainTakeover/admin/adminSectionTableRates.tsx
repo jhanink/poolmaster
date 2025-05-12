@@ -52,8 +52,8 @@ export default function AdminSectionTableRates() {
   }
 
   const onClickResetSchedules = (event: any) => {
-    if (!APP_STATE.rateSchedules.length) return;
-    const schedules = APP_STATE.rateSchedules.map((schedule: TableRate) => ({...schedule}));
+    if (!APP_STATE.tableRates.length) return;
+    const schedules = APP_STATE.tableRates.map((schedule: TableRate) => ({...schedule}));
     setTableRates(schedules);
   }
 

@@ -5,10 +5,8 @@ export const DEFAULT_TABLE_TYPE_ID = 999999999;;
 
 export interface AppState {
   account: Account,
-  billing: Billing,
   tableTypes: TableType[],
-  rateSchedules: TableRate[],
-  currentScheduleId: number,
+  tableRates: TableRate[],
   guestList: Guest[],
   tables: TableItem[],
   modifiedAt: number,
@@ -38,7 +36,7 @@ export interface Guest {
   id: number,
   name: string,
   phoneNumber: string,
-  tableType: string,
+  tableTypeId: number,
   createdAt: number,
   modifiedAt?: number,
   assignedAt: number,
@@ -72,11 +70,10 @@ export interface TableType {
 
 export interface TableItem {
   id: number,
-  type: number,
   number: number,
   name: string,
-  tableRate: string,
-  rateScheduleId: number,
+  tableTypeId: number,
+  tableRateId: number,
   isActive: boolean,
   nickname?: string,
   guest?: Guest,
@@ -135,11 +132,10 @@ export const DefaultTableTypeData: TableType = {
 
 export const DefaultTableItemData: TableItem = {
   id: 0,
-  type: DefaultTableTypeData.id,
+  tableTypeId: DefaultTableTypeData.id,
   number: 1,
   name: "Table 1",
-  tableRate: "10.00",
-  rateScheduleId: DEFAULT_TABLE_RATE_ID,
+  tableRateId: DEFAULT_TABLE_RATE_ID,
   isActive: true,
   forDelete: false,
   forAdd: true,
@@ -161,31 +157,25 @@ export const DefaultAppState: AppState = {
     createdAt: 0,
     modifiedAt: 0
   },
-  billing: {
-    defaultBillingRate: "10.00",
-  },
   tableTypes: [DefaultTableTypeData],
-  rateSchedules: [DefaultTableRateData],
-  currentScheduleId: DEFAULT_TABLE_RATE_ID,
+  tableRates: [DefaultTableRateData],
   guestList: [],
   tables: [
     {
       id: 0,
-      type: DefaultTableTypeData.id,
       number: 1,
       name: "Table 1",
-      tableRate: "10.00",
       isActive: true,
-      rateScheduleId: DEFAULT_TABLE_RATE_ID,
+      tableTypeId: DefaultTableTypeData.id,
+      tableRateId: DEFAULT_TABLE_RATE_ID,
     },
     {
       id: 1,
-      type: DefaultTableTypeData.id,
+      tableTypeId: DefaultTableTypeData.id,
       number: 2,
       name: "Table 2",
-      tableRate: "10.00",
       isActive: true,
-      rateScheduleId: DEFAULT_TABLE_RATE_ID,
+      tableRateId: DEFAULT_TABLE_RATE_ID,
     },
   ]
 }
@@ -194,7 +184,7 @@ export const DefaultGuestData: Guest = {
   id: 0,
   name: "",
   phoneNumber: "",
-  tableType: "Regulation",
+  tableTypeId: 999999999,
   createdAt: 0,
   assignedAt : 0,
   closedOutAt: 0,

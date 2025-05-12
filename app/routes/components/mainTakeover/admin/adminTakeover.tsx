@@ -5,7 +5,6 @@ import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
 import AdminSectionTables from "./adminSectionTables";
 import AdminSectionAccount from "./adminSectionAccount";
-import AdminSectionBilling from "./adminSectionBilling";
 import AdminSectionTableRates from "./adminSectionTableRates";
 import AdminSectionTableTypes from "./adminSectionTableTypes";
 

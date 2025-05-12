@@ -32,6 +32,15 @@ export const Helpers = {
   percentAvailableTables: (appState: AppState) => {
     return Math.round(Helpers.tablesAvailable(appState).length / appState.tables.length * 100);
   },
+  getTableType: (appState: AppState, tableTypeId: number) => {
+    const match = appState.tableTypes.find(tableType => {
+      return tableType.id === tableTypeId;
+    });
+    if (!match) {
+      return appState.tableTypes[0];
+    }
+    return match;
+  },
   timeElapsed: (start: number, finish?: number): TimeElapsed => {
     const end = finish || Date.now();
     const duration = dayjs.duration({milliseconds: end - start});
