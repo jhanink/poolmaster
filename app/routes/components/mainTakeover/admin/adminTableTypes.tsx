@@ -7,8 +7,10 @@ import {
   formFieldStyles,
   formInputStyles,
   formLabelLeftStyles,
+  formSelectStyles,
   INPUT_FIELD,
   ITEM,
+  optionStyles,
   ROW
 } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
@@ -96,7 +98,7 @@ export default function AdminTableTypes() {
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`whitespace-nowrap  ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
+              <div className={`whitespace-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
                 {tableType.id === DefaultTableTypeData.id && (
                   "DEFAULT"
                 )}
@@ -104,7 +106,7 @@ export default function AdminTableTypes() {
                   <span>{index+1}</span>
                 )}
                 <input
-                  className={`${formInputStyles} w-full ${INPUT_FIELD} ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`w-full ${formInputStyles} ${INPUT_FIELD} ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   placeholder="Table Type..."
                   maxLength={55}
                   onChange={(event) => {
@@ -114,6 +116,26 @@ export default function AdminTableTypes() {
                   value={tableType.name}
                 />
               </div>
+            </div>
+            <div className={`${ROW}`}>
+              <div className="text-gray-400 mr-2">
+                Rate:
+              </div>
+              <select
+                onChange={(event) => {
+                  tableType.tableRateId = Number(event.target.value);
+                  setTableTypes([...TABLE_TYPES]);
+                }}
+                value={tableType.tableRateId}
+                className={`grow ${formSelectStyles}`}
+              >
+                {APP_STATE.tableRates
+                  .filter((tableRate) => tableRate.isActive)
+                  .map((tableRate) => (
+                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                  ))
+                }
+              </select>
             </div>
             {(tableType.id !== DefaultTableTypeData.id) && (
               <div className={`${ROW} ml-4 mt-1`}>

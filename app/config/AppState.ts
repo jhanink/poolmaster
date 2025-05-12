@@ -71,7 +71,6 @@ export interface TableItem {
   tableTypeId: number,
   tableRateId: number,
   isActive: boolean,
-  nickname?: string,
   guest?: Guest,
   forDelete?: boolean,
   forAdd?: boolean,

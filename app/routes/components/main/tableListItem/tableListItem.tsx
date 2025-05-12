@@ -52,7 +52,7 @@ export default function TableListItem(props: {
       <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
-            {table.nickname || table.name}
+            {table.name}
             <div className="absolute top-2 right-0 hover:cursor-pointer">
               {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && <>
                 <div className="text-gray-500">

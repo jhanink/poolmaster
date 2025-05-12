@@ -58,7 +58,7 @@ export default function TableList() {
                   data-table-id={table.id}
                   onClick={(event) => onClickTableChip(event, table)}
                 >
-                  {table.nickname || table.name}
+                  {table.name}
                 </div>
               )
           }
