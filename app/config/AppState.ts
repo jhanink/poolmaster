@@ -27,11 +27,6 @@ export interface Account {
   modifiedAt?: number,
 }
 
-export interface Billing {
-  selectedScheduleId?: number,
-  defaultBillingRate: string,
-}
-
 export interface Guest {
   id: number,
   name: string,

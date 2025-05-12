@@ -56,12 +56,12 @@ export const fragmentWelcomeMessage = () => {
   const messages = [
     'Guest Wait List with elapsed time',
     'Drag-N-Drop for table assignment',
-    'Table closeout with time-billing totals',
-    'Wait List and Table List filters',
-    'Player Names, phone number, and notes',
-    'Admin Console to manage tables and billing',
-    'Works on Mobile and Desktop',
-    'Realtime sync across devices and screens'
+    'Table closeout with automatic rate calculator',
+    'Wait List and Table List stats and filters',
+    'Guest details name, phone number, and notes',
+    'Admin management for tables, table types, and rates',
+    'Works on desktop and mobile devices',
+    'Realtime sync for all connected screens',
   ];
   return (
     <div className="border m-3 p-10 w-full text-gray-500 text-sm rounded-xl border-gray-700">
