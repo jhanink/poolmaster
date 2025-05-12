@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 import type { AppConfig }  from "~/config/AppConfig";
-import  { DefaultAppState, type AppState, type Guest, type TableItemData } from "~/config/AppState";
+import  { DefaultAppState, type AppState, type Guest, type TableItem } from "~/config/AppState";
 import appConfig from "~/config/app-config.json";
 
 export type ListFilterType = "waitlist" | "tablelist" | '';
@@ -12,7 +12,7 @@ export enum ListFilterTypeEnum {
 
 export type MainTakeover = {
   adminScreen?: boolean,
-  closeoutTable?: TableItemData,
+  closeoutTable?: TableItem,
   assignTable?: Guest,
   addGuest?: boolean,
 }
@@ -23,5 +23,5 @@ export const appStateAtom = atom<AppState>(DefaultAppState);
 export const appConfigAtom = atom<AppConfig>(appConfig);
 export const appReadyAtom = atom<boolean>(false);
 export const profileMenuOpenAtom = atom<boolean>(false);
-export const selectedTableAtom = atom<TableItemData | undefined>(undefined as TableItemData);
+export const selectedTableAtom = atom<TableItem | undefined>(undefined as TableItem);
 export const selectedListFilterAtom = atom<ListFilterType>('');

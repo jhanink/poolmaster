@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
-import { type TableItemData } from "~/config/AppState";
+import { type TableItem } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { Helpers } from "~/util/Helpers";
@@ -17,7 +17,7 @@ export default function AssignTableTakeover() {
   const TopRef = useRef<HTMLDivElement>(null);
   const tables = APP_STATE.tables;
 
-  const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItemData) => {
+  const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
     event.stopPropagation();
     event.preventDefault();
     const tableId = table.id
@@ -73,11 +73,11 @@ export default function AssignTableTakeover() {
             <div className="mt-5 inline-block max-w-lg mx-auto">
               {
                 tables
-                  .filter((table: TableItemData) => !table.guest)
-                  .sort((A: TableItemData, B: TableItemData) =>
+                  .filter((table: TableItem) => !table.guest)
+                  .sort((A: TableItem, B: TableItem) =>
                     A.number - B.number
                   )
-                  .map((table: TableItemData) =>
+                  .map((table: TableItem) =>
                     <div className={`CHIP ${unassignedStyle}`}
                       key={table.id}
                       data-table-id={table.id}

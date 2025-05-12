@@ -1,7 +1,7 @@
 import type { ActionFunction } from  'react-router';
 import fs from 'fs/promises';
 
-import type { AppState, Guest, TableItemData} from '~/config/AppState';
+import type { AppState, Guest, TableItem} from '~/config/AppState';
 import { webSocketManager } from "./websocketManager";
 import { appStateFilePath } from '~/config/AppConfig';
 
@@ -24,7 +24,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 const mergeToGuestList = (fileAppState: AppState, guest: Guest): AppState => {
   const guestList: Guest[] = [...fileAppState.guestList];
-  const tables: TableItemData[] = [...fileAppState.tables];
+  const tables: TableItem[] = [...fileAppState.tables];
   const NOW = Date.now();
   if (!guest.id) {
     guestList.push({
@@ -38,7 +38,7 @@ const mergeToGuestList = (fileAppState: AppState, guest: Guest): AppState => {
       const itemIndex = guestList.findIndex((item: Guest) => item.id === guest.id);
       guestList[itemIndex] = guest;
     } else{
-      const itemIndex = tables.findIndex((item: TableItemData) => item.guest?.id === guest.id);
+      const itemIndex = tables.findIndex((item: TableItem) => item.guest?.id === guest.id);
       tables[itemIndex].guest = guest;
       guest.extraPlayers.forEach((player) => {
         if (!player.assignedAt) {

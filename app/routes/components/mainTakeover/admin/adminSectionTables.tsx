@@ -1,7 +1,7 @@
-import { DEFAULT_RATE_SCHEDULE_ID, DefaultTableTypeData, type TableItemData } from "~/config/AppState"
+import { DEFAULT_TABLE_RATE_ID, DefaultTableTypeData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./adminTakeover"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { actionButtonStyles, actionIconStyles, formFieldStyles, formInputStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
+import { actionButtonStyles, actionIconStyles, formInputStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
@@ -10,18 +10,18 @@ import { AppStorage } from "~/util/AppStorage"
 
 export default function AdminSectionTables() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [TABLES, setTables] = useState([] as TableItemData[]);
+  const [TABLES, setTables] = useState([] as TableItem[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
   const onClickResetTables = (event: any) => {
-    const tables = APP_STATE.tables.map((table: TableItemData ) => ({...table}));
+    const tables = APP_STATE.tables.map((table: TableItem ) => ({...table}));
     setTables(tables);
   }
 
   const onClickSaveTables = () => {
     const tables = TABLES
-      .map((table: TableItemData) => ({...table, forAdd: false}))
-      .filter((table: TableItemData) => !table.forDelete);
+      .map((table: TableItem) => ({...table, forAdd: false}))
+      .filter((table: TableItem) => !table.forDelete);
 
     const newState = {
       ...APP_STATE,
@@ -34,7 +34,7 @@ export default function AdminSectionTables() {
     setShowConfirmSaveTables(false);
   }
 
-  const onClickForDeleteTable = (table: TableItemData) => {
+  const onClickForDeleteTable = (table: TableItem) => {
     if (table.forAdd) {
       TABLES.splice(TABLES.indexOf(table), 1);
       setTables([...TABLES]);
@@ -58,13 +58,13 @@ export default function AdminSectionTables() {
   const generateNewTable = (index: number = 1) => {
     const id = Date.now() + index;
     const number = TABLES.length + index;
-    const newTable: TableItemData = {
+    const newTable: TableItem = {
       id,
       number,
       name: `Table ${number}`,
       type: DefaultTableTypeData.id,
       tableRate: `${APP_STATE.billing.defaultBillingRate}`,
-      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+      rateScheduleId: DEFAULT_TABLE_RATE_ID,
       isActive: true,
       forDelete: false,
       forAdd: true,
@@ -85,7 +85,7 @@ export default function AdminSectionTables() {
           <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(10)}}>+10</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-        {TABLES.map((table: TableItemData, index: number) => (
+        {TABLES.map((table: TableItem, index: number) => (
           <div className={`${ITEM}`} key={table.id}>
             <div className={`whitespace-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
@@ -119,28 +119,14 @@ export default function AdminSectionTables() {
                 value={table.type}
                 className={`grow ${formSelectStyles} bg-transparent pb-3`}
               >
-                {APP_STATE.tableTypes.map((type) => (
-                  <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
-                ))}
+                {APP_STATE.tableTypes
+                  .filter((type) => type.isActive)
+                  .map((type) => (
+                    <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                  ))
+                }
               </select>
             </div>
-            {/* <div className={`${ROW}`}>
-              <div className="text-gray-400 mr-2">
-                Rate:
-              </div>
-              <div>
-                <input
-                  className={`${formInputStyles}`}
-                  value={table.tableRate}
-                  placeholder="Rate..."
-                  maxLength={6}
-                  onChange={(event) => {
-                    table.tableRate = event.target.value;
-                    setTables([...TABLES]);
-                  }}
-                />
-              </div>
-            </div> */}
             <div className={`${ROW}`}>
               <div className="text-gray-400 mr-2">
                 Rate:
@@ -153,9 +139,12 @@ export default function AdminSectionTables() {
                 value={table.rateScheduleId}
                 className={`grow ${formSelectStyles}`}
               >
-                {APP_STATE.rateSchedules.map((schedule) => (
-                  <option key={schedule.id} className={optionStyles} value={table.rateScheduleId}>{schedule.name}</option>
-                ))}
+                {APP_STATE.rateSchedules
+                  .filter((schedule) => schedule.isActive)
+                  .map((schedule) => (
+                    <option key={schedule.id} className={optionStyles} value={table.rateScheduleId}>{schedule.name}</option>
+                  ))
+                }
               </select>
           </div>
             {!!table.forDelete && table.guest && (

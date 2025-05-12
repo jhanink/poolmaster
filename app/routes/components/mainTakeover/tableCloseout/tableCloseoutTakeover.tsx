@@ -6,7 +6,7 @@ import { actionButtonStyles, formFieldStyles, optionStyles } from "~/util/Global
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
-import { type RateSchedule } from "~/config/AppState";
+import { type TableRate } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -29,7 +29,7 @@ export default function TableCloseoutTakeover() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [RATE_DATA, setRateData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
-  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<RateSchedule>({} as RateSchedule);
+  const [SELECTED_SCHEDULE, setSelectedSchedule] = useState<TableRate>({} as TableRate);
 
   const TopRef = useRef<HTMLDivElement>(null);
 

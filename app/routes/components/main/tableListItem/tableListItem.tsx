@@ -1,4 +1,4 @@
-import { type TableItemData } from "~/config/AppState";
+import { type TableItem } from "~/config/AppState";
 import styles from "./tableListItemStyles.module.css";
 import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ const guestUnassigned =`${cardStyle} text-gray-700`;
 const guestAssigned = `${cardStyle} border-green-800 text-green-700`;
 
 export default function TableListItem(props: {
-    table: TableItemData,
+    table: TableItem,
     index: number,
     tableRef: React.RefObject<HTMLDivElement | null>,
   }) {
@@ -42,7 +42,7 @@ export default function TableListItem(props: {
     const onClickCloseExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
       setItemExpanded(prev => false);
       setEditForm(prev => false);
-      setSelectedTable(undefined as TableItemData);
+      setSelectedTable(undefined as TableItem);
     }
 
     return (

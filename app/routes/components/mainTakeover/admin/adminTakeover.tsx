@@ -6,7 +6,7 @@ import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from ".
 import AdminSectionTables from "./adminSectionTables";
 import AdminSectionAccount from "./adminSectionAccount";
 import AdminSectionBilling from "./adminSectionBilling";
-import AdminSectionRateSchedules from "./adminSectionRateSchedules";
+import AdminSectionTableRates from "./adminSectionTableRates";
 import AdminSectionTableTypes from "./adminSectionTableTypes";
 
 export const ADMIN_SECTION = `text-left`;
@@ -49,11 +49,9 @@ export default function AdminTakeover() {
           <hr className="text-gray-900 my-5"/>
           <AdminSectionTableTypes/>
           <hr className="text-gray-900 my-5"/>
-          <AdminSectionTables/>
-          {/* <hr className="text-gray-900 my-5"/>
-          <AdminSectionBilling/> */}
+          <AdminSectionTableRates/>
           <hr className="text-gray-900 my-5"/>
-          <AdminSectionRateSchedules/>
+          <AdminSectionTables/>
         </div>
       </div>
     </div>

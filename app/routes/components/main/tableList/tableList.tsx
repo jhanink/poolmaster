@@ -1,6 +1,6 @@
 import styles from "./tableListStyles.module.css";
 import mainStyles from '../mainStyles.module.css'
-import { type TableItemData } from "~/config/AppState";
+import { type TableItem } from "~/config/AppState";
 import TableListItem from "../tableListItem/tableListItem";
 import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -22,7 +22,7 @@ export default function TableList() {
   const tables = APP_STATE.tables;
   const miniMapRef = useRef<HTMLDivElement>(null);
 
-  const onClickTableChip = (event: React.MouseEvent<HTMLDivElement>, table: TableItemData) => {
+  const onClickTableChip = (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
     if (!table.guest) {
       event.preventDefault();
       event.stopPropagation();
@@ -47,10 +47,10 @@ export default function TableList() {
         <div className="my-2 mt-3 mb-5 top-0 z-10" ref={miniMapRef}>
           {
             tables
-              .sort((A: TableItemData, B: TableItemData) =>
+              .sort((A: TableItem, B: TableItem) =>
                 A.number - B.number
               )
-              .map((table: TableItemData, index: number) =>
+              .map((table: TableItem, index: number) =>
                 <div className={`CHIP ${table.guest ? chipAssigned : chipUnassigned} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
                   key={table.id}
                   data-table-id={table.id}
@@ -64,7 +64,7 @@ export default function TableList() {
         <div>
           {tables
           .filter((table) => table.guest)
-          .sort((A: TableItemData, B: TableItemData) =>
+          .sort((A: TableItem, B: TableItem) =>
             A.number - B.number
           )
           .map((table, index) => (

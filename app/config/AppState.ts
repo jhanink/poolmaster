@@ -1,16 +1,16 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
-export const DEFAULT_RATE_SCHEDULE_ID = 999999999;
+export const DEFAULT_TABLE_RATE_ID = 999999999;
 export const DEFAULT_TABLE_TYPE_ID = 999999999;;
 
 export interface AppState {
   account: Account,
   billing: Billing,
   tableTypes: TableType[],
-  rateSchedules: RateSchedule[],
+  rateSchedules: TableRate[],
   currentScheduleId: number,
   guestList: Guest[],
-  tables: TableItemData[],
+  tables: TableItem[],
   modifiedAt: number,
 }
 
@@ -70,7 +70,7 @@ export interface TableType {
   forAdd?: boolean,
 }
 
-export interface TableItemData {
+export interface TableItem {
   id: number,
   type: number,
   number: number,
@@ -87,7 +87,7 @@ export interface TableItemData {
   modifiedAt?: number,
 }
 
-export interface RateSchedule {
+export interface TableRate {
   id: number,
   name: string,
   tableRateRules: TableRateRules,
@@ -108,8 +108,8 @@ export interface TableRateRules {
   isChargePerPlayer: boolean,
 }
 
-export const DefaultRateSchedule: RateSchedule = {
-  id: DEFAULT_RATE_SCHEDULE_ID,
+export const DefaultTableRateData: TableRate = {
+  id: DEFAULT_TABLE_RATE_ID,
   name: `Default Rate Schedule`,
   tableRateRules: {
     isOneHourMinimum: false,
@@ -133,13 +133,13 @@ export const DefaultTableTypeData: TableType = {
   forAdd: true,
 }
 
-export const DefaultTableItemData: TableItemData = {
+export const DefaultTableItemData: TableItem = {
   id: 0,
   type: DefaultTableTypeData.id,
   number: 1,
   name: "Table 1",
   tableRate: "10.00",
-  rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+  rateScheduleId: DEFAULT_TABLE_RATE_ID,
   isActive: true,
   forDelete: false,
   forAdd: true,
@@ -165,8 +165,8 @@ export const DefaultAppState: AppState = {
     defaultBillingRate: "10.00",
   },
   tableTypes: [DefaultTableTypeData],
-  rateSchedules: [DefaultRateSchedule],
-  currentScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+  rateSchedules: [DefaultTableRateData],
+  currentScheduleId: DEFAULT_TABLE_RATE_ID,
   guestList: [],
   tables: [
     {
@@ -176,7 +176,7 @@ export const DefaultAppState: AppState = {
       name: "Table 1",
       tableRate: "10.00",
       isActive: true,
-      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+      rateScheduleId: DEFAULT_TABLE_RATE_ID,
     },
     {
       id: 1,
@@ -185,7 +185,7 @@ export const DefaultAppState: AppState = {
       name: "Table 2",
       tableRate: "10.00",
       isActive: true,
-      rateScheduleId: DEFAULT_RATE_SCHEDULE_ID,
+      rateScheduleId: DEFAULT_TABLE_RATE_ID,
     },
   ]
 }
