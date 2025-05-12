@@ -177,7 +177,7 @@ export default function AdminTableRates() {
             {tableRate.tableRateRules.isChargePerPlayer && (<>
               <div className={`${ROW} ml-8 mt-1`}>
                 <div className={`${formLabelLeftStyles}`}>
-                  Player Limit:
+                  Player limit:
                 </div>
                 <input
                   type="number"
