@@ -95,7 +95,6 @@ export default function TableCloseoutTakeover() {
 
   const onChangePlayerChecked = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
     player.billable = event.target.checked;
-    console.log(player)
     setBillableData({...BILLABLE_DATA});
   }
 
@@ -179,7 +178,7 @@ export default function TableCloseoutTakeover() {
             </select>
           </div>
         </div>
-r
+
         <div className="WORKSHEET text-left border border-gray-800 p-5 mx-5 mt-5">
           {BILLABLE_DATA.players?.map((player, index) => (
             <div className="PLAYER mb-4" key={player.id}>
