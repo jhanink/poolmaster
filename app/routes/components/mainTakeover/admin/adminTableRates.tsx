@@ -86,7 +86,7 @@ export default function AdminTableRates() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
-          <div className={`${tableRate.isActive? 'border-yellow-500': ''} ${ITEM}`} key={tableRate.id}>
+          <div className={`${tableRate.isActive? 'border-yellow-500': '!border-gray-500 border-dashed'} ${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
               {(tableRate.id !== DefaultTableRateData.id) && (
                 <div
@@ -114,9 +114,9 @@ export default function AdminTableRates() {
               </div>
             </div>
             {(tableRate.id !== DefaultTableRateData.id) && (
-              <div className={`${ROW} ml-4 mt-1`}>
-                <div className={`${formLabelLeftStyles}`}>
-                  Active:
+              <div className={`${ROW} mt-1`}>
+                <div className={`${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
+                  ENABLED:
                 </div>
                 <input
                   type="checkbox"
@@ -129,7 +129,7 @@ export default function AdminTableRates() {
                 />
               </div>
             )}
-            <div className={`${ROW} ml-4 mt-1`}>
+            <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles}`}>
                 Base Rate:
               </div>
@@ -146,7 +146,7 @@ export default function AdminTableRates() {
                 />
               </div>
             </div>
-            <div className={`${ROW} ml-4 mt-1`}>
+            <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles}`}>
                 1 hour minimum?
               </div>
@@ -160,7 +160,7 @@ export default function AdminTableRates() {
                 }}
               />
             </div>
-            <div className={`${ROW} ml-4 mt-1`}>
+            <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles}`}>
                 Per player?
               </div>

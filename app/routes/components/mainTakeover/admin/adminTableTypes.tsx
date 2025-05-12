@@ -89,7 +89,7 @@ export default function AdminTableTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
-          <div className={`${tableType.isActive? '!border-pink-500':''} ${ITEM}`} key={tableType.id}>
+          <div className={`${tableType.isActive? '!border-blue-500':'!border-gray-500 border-dashed'} ${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
               {(tableType.id !== DefaultTableTypeData.id) && (
                 <div
@@ -138,9 +138,9 @@ export default function AdminTableTypes() {
               </select>
             </div>
             {(tableType.id !== DefaultTableTypeData.id) && (
-              <div className={`${ROW} ml-4 mt-1`}>
-                <div className={`${formLabelLeftStyles}`}>
-                  Active:
+              <div className={`${ROW} mt-1`}>
+                <div className={`${formLabelLeftStyles} ${tableType.isActive? 'text-blue-500':''}`}>
+                  ENABLED:
                 </div>
                 <input
                   type="checkbox"

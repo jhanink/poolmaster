@@ -86,7 +86,7 @@ export default function AdminTables() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
-          <div className={`${table.isActive? '!border-green-500':''} ${ITEM}`} key={table.id}>
+          <div className={`${table.isActive? '!border-green-500':'!border-gray-500 border-dashed'} ${ITEM}`} key={table.id}>
             <div className={`whitespace-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteTable(table)}}>
@@ -95,7 +95,7 @@ export default function AdminTables() {
               <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
-                  className={`text-green-700 uppercase ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
+                  className={`uppercase ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
                   placeholder="Table name..."
                   maxLength={30}
                   onChange={(event) => {
@@ -107,8 +107,8 @@ export default function AdminTables() {
               </div>
             </div>
             <div className={`${ROW}`}>
-              <div className={`${formLabelLeftStyles}`}>
-                Active:
+              <div className={`${formLabelLeftStyles} ${table.isActive? 'text-green-500':''}`}>
+                ENABLED:
               </div>
               <input
                 type="checkbox"
