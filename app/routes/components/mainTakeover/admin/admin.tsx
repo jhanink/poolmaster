@@ -46,9 +46,9 @@ export default function Admin() {
         <div className="text-center mb-20">
           <AdminAccount/>
           <hr className="text-gray-900 my-5"/>
-          <AdminTableTypes/>
-          <hr className="text-gray-900 my-5"/>
           <AdminTableRates/>
+          <hr className="text-gray-900 my-5"/>
+          <AdminTableTypes/>
           <hr className="text-gray-900 my-5"/>
           <AdminTables/>
         </div>
