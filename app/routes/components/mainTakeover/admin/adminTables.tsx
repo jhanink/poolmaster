@@ -64,6 +64,7 @@ export default function AdminTables() {
       name: `Table ${number}`,
       tableTypeId: DefaultTableTypeData.id,
       tableRateId: DEFAULT_TABLE_RATE_ID,
+      ignoreTableTypeRate: false,
       isActive: true,
       forDelete: false,
       forAdd: true,

@@ -33,6 +33,7 @@
       "name": "Table 1",
       "tableTypeId": 999999999,
       "tableRateId": 999999999,
+      "ignoreTableType": false,
       "isActive": true
     },
     {
@@ -41,6 +42,7 @@
       "name": "Table 2",
       "tableTypeId": 999999999,
       "tableRateId": 999999999,
+      "ignoreTableType": false,
       "isActive": true
     },
     {
@@ -49,6 +51,7 @@
       "name": "Table 3",
       "tableTypeId": 999999999,
       "tableRateId": 999999999,
+      "ignoreTableType": false,
       "isActive": true
     }
   ]
