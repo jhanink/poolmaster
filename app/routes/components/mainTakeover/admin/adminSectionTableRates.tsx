@@ -1,5 +1,5 @@
 import { DefaultTableRateData, type TableRate } from "~/config/AppState";
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./adminTakeover";
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
   actionButtonStyles,

@@ -4,11 +4,10 @@ import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
 import { Helpers } from "~/util/Helpers";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import AssignTableTakeover from "../mainTakeover/assignTable/assignTableTakeover";
-import TableCloseoutTakeover from "../mainTakeover/tableCloseout/tableCloseoutTakeover";
-import AdminTakeover from "../mainTakeover/admin/adminTakeover";
-
-import AddGuestTakeover from "../mainTakeover/addGuest/addGuestTakeover";
+import AssignTable from "../mainTakeover/assignTable/assignTable";
+import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
+import Admin from "../mainTakeover/admin/admin";
+import AddGuest from "../mainTakeover/addGuest/addGuest";
 
 export default function AppMain() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -17,10 +16,10 @@ export default function AppMain() {
 
   return (
     <div className={`${styles.mainContainer} grow`}>
-      {MAIN_TAKEOVER?.closeoutTable && <TableCloseoutTakeover></TableCloseoutTakeover>}
-      {MAIN_TAKEOVER?.assignTable && <AssignTableTakeover></AssignTableTakeover>}
-      {MAIN_TAKEOVER?.adminScreen && <AdminTakeover></AdminTakeover>}
-      {MAIN_TAKEOVER?.addGuest && <AddGuestTakeover></AddGuestTakeover>}
+      {MAIN_TAKEOVER?.closeoutTable && <TableCloseout></TableCloseout>}
+      {MAIN_TAKEOVER?.assignTable && <AssignTable></AssignTable>}
+      {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}
+      {MAIN_TAKEOVER?.addGuest && <AddGuest></AddGuest>}
 
       {!MAIN_TAKEOVER &&
         <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>
