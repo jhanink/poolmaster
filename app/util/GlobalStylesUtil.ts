@@ -1,4 +1,3 @@
-
 export const buttonRingRed = `hover:ring-red-600`;
 export const buttonRingBlue = `hover:ring-blue-600`;
 export const buttonRingGreen = `hover:ring-green-600`;

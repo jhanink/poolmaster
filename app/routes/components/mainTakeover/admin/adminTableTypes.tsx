@@ -117,6 +117,22 @@ export default function AdminTableTypes() {
                 />
               </div>
             </div>
+            {(tableType.id !== DefaultTableTypeData.id) && (
+              <div className={`${ROW} mt-1`}>
+                <div className={`${formLabelLeftStyles} ${tableType.isActive? '!text-blue-500':''}`}>
+                  ENABLED:
+                </div>
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={tableType.isActive}
+                  onChange={(event) => {
+                    tableType.isActive = !tableType.isActive;
+                    setTableTypes([...TABLE_TYPES]);
+                  }}
+                />
+              </div>
+            )}
             <div className={`${ROW}`}>
               <div className="text-gray-400 mr-2">
                 Rate:
@@ -137,26 +153,10 @@ export default function AdminTableTypes() {
                 }
               </select>
             </div>
-            {(tableType.id !== DefaultTableTypeData.id) && (
-              <div className={`${ROW} mt-1`}>
-                <div className={`${formLabelLeftStyles} ${tableType.isActive? 'text-blue-500':''}`}>
-                  ENABLED:
-                </div>
-                <input
-                  type="checkbox"
-                  className={`ml-2 size-4`}
-                  checked={tableType.isActive}
-                  onChange={(event) => {
-                    tableType.isActive = !tableType.isActive;
-                    setTableTypes([...TABLE_TYPES]);
-                  }}
-                />
-              </div>
-            )}
           </div>
         ))}
       </div>
-      <div className={`${ADMIN_ACTIONS}`}>
+      <div className={`!text-right ${ADMIN_ACTIONS}`}>
         <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>

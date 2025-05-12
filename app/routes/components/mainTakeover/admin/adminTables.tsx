@@ -186,7 +186,7 @@ export default function AdminTables() {
           </div>
         ))}
       </div>
-      <div className={`${ADMIN_ACTIONS}`}>
+      <div className={`!text-right ${ADMIN_ACTIONS}`}>
         <button className={`${actionButtonStyles}`} onClick={onClickResetTables}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTables(true)} }>Save</button>
       </div>

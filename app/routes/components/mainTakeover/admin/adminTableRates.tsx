@@ -211,7 +211,7 @@ export default function AdminTableRates() {
           </div>
         ))}
       </div>
-      <div className={`${ADMIN_ACTIONS}`}>
+      <div className={`!text-right ${ADMIN_ACTIONS}`}>
         <button className={`${actionButtonStyles}`} onClick={onClickResetTableRates}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTableRates(true)} }>Save</button>
       </div>

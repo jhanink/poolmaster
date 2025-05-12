@@ -47,7 +47,7 @@ export default function AdminAccount() {
           }}
         />
       </div>
-      <div className={`${ADMIN_ACTIONS}`}>
+      <div className={`!text-right ${ADMIN_ACTIONS}`}>
         <button className={`${actionButtonStyles}`} onClick={onClickResetAccount}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={onClickSaveAccount}>Save</button>
       </div>
