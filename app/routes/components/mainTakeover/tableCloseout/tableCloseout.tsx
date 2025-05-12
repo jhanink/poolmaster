@@ -56,7 +56,6 @@ export default function TableCloseout() {
     }
 
     const tableRateRules = tableRate.tableRateRules;
-
     const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
 
     setSelectedRate(tableRate);
@@ -115,7 +114,7 @@ export default function TableCloseout() {
 
   const playerAssignedAt = (player: BillablePlayer, index: number) => {
     const guest = MAIN_TAKEOVER.closeoutTable.guest;
-    const assignedAt = !index ? guest.assignedAt : guest.extraPlayers[index - 1].assignedAt;
+    const assignedAt = !index ? guest.assignedAt : ((guest.extraPlayers[index - 1]?.assignedAt) || guest.assignedAt);
     return new Date(assignedAt).toLocaleString();
   }
 
