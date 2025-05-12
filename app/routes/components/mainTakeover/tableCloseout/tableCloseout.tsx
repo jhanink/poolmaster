@@ -37,7 +37,8 @@ export default function TableCloseout() {
     setMainTakeover(undefined);
   }
 
-  const setupBillablePlayers = (hours: string) => {
+  const setupBillablePlayers = (time: TimeElapsed) => {
+
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const tableTypeId = table.tableTypeId;
     const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
@@ -52,8 +53,12 @@ export default function TableCloseout() {
 
     if (!tableRate) {
       tableRate = APP_STATE.tableRates[0];
-      //table.tableRateId = tableRate.id;
     }
+
+    const tableRateRules = tableRate.tableRateRules;
+
+    const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+
     setSelectedRate(tableRate);
     const rate = tableRate.tableRateRules.hourlyRate;
     const guest = table.guest;
@@ -75,7 +80,7 @@ export default function TableCloseout() {
       if ((playersIndex) > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
       const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
-      players[playersIndex].hours = `${time.durationHoursDecimal3}`;
+      players[playersIndex].hours = time.hoursExact < 1? `1.000` : `${time.durationHoursDecimal3}`;
     });
 
     setBillableData({players});
@@ -124,7 +129,7 @@ export default function TableCloseout() {
     setElapsedTime(hours);
     setHoursData(`${hours.durationHoursDecimal3}`);
     setSelectedRate(selectedRate);
-    setupBillablePlayers(hours.durationHoursDecimal3);
+    setupBillablePlayers(hours);
   }
 
   const onClickFinalConfirm = async () => {

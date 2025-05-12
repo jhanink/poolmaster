@@ -90,8 +90,8 @@ export const fragmentWelcomeMessage = () => {
           Here are a few notable features
         </div>
         <ul className="pl-10 mt-5 text-gray-100 text-base text-left">
-          {messages.map((message) => (
-            <li><span className="text-gray-500 mr-3"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>{message}</span></li>
+          {messages.map((message, index) => (
+            <li key={index}><span className="text-gray-500 mr-3"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>{message}</span></li>
           ))}
         </ul>
       </div>

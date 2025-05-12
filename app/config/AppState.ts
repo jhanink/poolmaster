@@ -105,7 +105,7 @@ export const DefaultTableRateData: TableRate = {
   id: DEFAULT_TABLE_RATE_ID,
   name: `Default Rate Schedule`,
   tableRateRules: {
-    isOneHourMinimum: false,
+    isOneHourMinimum: true,
     hourlyRate: "10.00",
     isChargePerPlayer: false,
   } as TableRateRules,
@@ -155,8 +155,18 @@ export const DefaultAppState: AppState = {
     createdAt: 0,
     modifiedAt: 0
   },
-  tableTypes: [DefaultTableTypeData],
-  tableRates: [DefaultTableRateData],
+  tableTypes: [
+    {
+      ...DefaultTableTypeData,
+      forAdd: false,
+    }
+  ],
+  tableRates: [
+    {
+      ...DefaultTableRateData,
+      forAdd: false,
+    }
+  ],
   guestList: [],
   tables: [
     {

@@ -20,7 +20,6 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 
 export default function AdminTableTypes() {
-
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLE_TYPES, setTableTypes] = useState([] as TableType[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -48,7 +47,6 @@ export default function AdminTableTypes() {
 
   const generateNewItem = (index: number = 1) => {
     const id = Date.now() + index;
-    const number = TABLE_TYPES.length + index;
     const newItem: TableType = {
       ...DefaultTableTypeData,
       id,

@@ -21,8 +21,8 @@ import { AppStorage } from "~/util/AppStorage";
 
 export default function AdminTableRates() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [TABLE_RATES, setTableRates] = useState([] as TableRate[]);
   const [SHOW_CONFIRM_SAVE_TABLE_RATES, setShowConfirmSaveTableRates] = useState(false);
-  const [TABLE_RATES, setTableRates] = useState([DefaultTableRateData] as TableRate[]);
 
   const onClickSaveTableRates = () => {
     const tableRates = TABLE_RATES

@@ -10,7 +10,7 @@ import { AppStorage } from "~/util/AppStorage";
 
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
