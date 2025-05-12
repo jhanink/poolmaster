@@ -99,7 +99,7 @@ export default function AdminSectionTables() {
                   placeholder="Table name..."
                   maxLength={30}
                   onChange={(event) => {
-                    table.name = event.target.value;
+                    table.name = event.target.value.trim();
                     setTables([...TABLES]);
                   }}
                   />
@@ -112,7 +112,7 @@ export default function AdminSectionTables() {
               <select
                 name="tableType"
                 onChange={(event) =>{
-                  table.tableTypeId = Number(event.target.value);
+                  table.tableTypeId = Number(event.target.value.trim());
                   setTables([...TABLES]);
                 }}
                 value={table.tableTypeId}
@@ -132,7 +132,7 @@ export default function AdminSectionTables() {
               </div>
               <select
                 onChange={(event) => {
-                  table.tableRateId = Number(event.target.value);
+                  table.tableRateId = Number(event.target.value.trim());
                   setTables([...TABLES]);
                 }}
                 value={table.tableRateId}

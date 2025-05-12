@@ -33,7 +33,7 @@ export default function TableCloseoutTakeover() {
   const TopRef = useRef<HTMLDivElement>(null);
 
   const onChangeTableHours = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const hours = event.target.value
+    const hours = event.target.value.trim()
     setHoursData(hours);
   }
 
@@ -84,12 +84,12 @@ export default function TableCloseoutTakeover() {
   }
 
   const onChangePlayerRate = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
-    player.rate = event.target.value;
+    player.rate = event.target.value.trim();
     setBillableData({...BILLABLE_DATA});
   }
 
   const onChangePlayerHours = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
-    player.hours = event.target.value;
+    player.hours = event.target.value.trim();
     setBillableData({...BILLABLE_DATA});
   }
 
@@ -166,7 +166,7 @@ export default function TableCloseoutTakeover() {
           <div className="mt-2">
             <select
               onChange={(event) => {
-                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
+                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value.trim()));
                 setSelectedRate(selectedRate);
               }}
               value={SELECTED_RATE.id}

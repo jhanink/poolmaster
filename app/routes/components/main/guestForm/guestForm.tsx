@@ -174,7 +174,7 @@ export default function GuestForm(props: {
                         required
                         value={player.name}
                         onChange={(event) => {
-                          player.name = event.target.value;
+                          player.name = event.target.value.trim();
                           const newExtraPlayers = FORM_FIELDS.extraPlayers.map((_, i) => i === index ? player : _);
                           setFormFields(prev => ({
                             ...prev,
@@ -219,7 +219,7 @@ export default function GuestForm(props: {
               required
               name="name"
               onChange={(event) => {
-                FORM_FIELDS.name = event.target.value;
+                FORM_FIELDS.name = event.target.value.trim();
                 setFormFields({...FORM_FIELDS})
                }}
                value={FORM_FIELDS.name}
@@ -236,9 +236,10 @@ export default function GuestForm(props: {
         <div className={formColumnStyles}>
           <div className={fieldStyles}>
             <input
+              ref={phoneInputRef}
               name="phoneNumber"
               onChange={(event) => {
-                FORM_FIELDS.phoneNumber = event.target.value;
+                FORM_FIELDS.phoneNumber = event.target.value.trim().trim();
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.phoneNumber}
@@ -283,7 +284,7 @@ export default function GuestForm(props: {
             <select
               name="tableType"
               onChange={(event) => {
-                FORM_FIELDS.tableTypeId = Number(event.target.value);
+                FORM_FIELDS.tableTypeId = Number(event.target.value.trim());
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.tableTypeId}
@@ -309,7 +310,7 @@ export default function GuestForm(props: {
             <textarea
               name="notes"
               onChange={(event) =>{
-                FORM_FIELDS.notes = event.target.value;
+                FORM_FIELDS.notes = event.target.value.trim();
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.notes}

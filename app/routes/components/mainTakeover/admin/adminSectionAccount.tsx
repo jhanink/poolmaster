@@ -42,7 +42,7 @@ export default function AdminSectionAccount() {
           placeholder="Account name..."
           maxLength={50}
           onChange={(event) => {
-            ACCOUNT.venue = event.target.value;
+            ACCOUNT.venue = event.target.value.trim();
             setAccount({...ACCOUNT});
           }}
         />

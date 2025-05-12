@@ -105,7 +105,7 @@ export default function AdminSectionTableRates() {
                 <input
                   className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!schedule.forDelete && 'text-red-500'} ${!!schedule.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   onChange={(event) => {
-                    schedule.name = event.target.value;
+                    schedule.name = event.target.value.trim();
                     setTableRates([...TABLE_RATES]);
                   }}
                   value={schedule.name}
@@ -137,7 +137,7 @@ export default function AdminSectionTableRates() {
                   placeholder="Rate..."
                   maxLength={6}
                   onChange={(event) => {
-                    schedule.tableRateRules.hourlyRate = event.target.value;
+                    schedule.tableRateRules.hourlyRate = event.target.value.trim();
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -178,7 +178,7 @@ export default function AdminSectionTableRates() {
                   max={99}
                   className={`${formInputStylesExtraSmall}`}
                   onChange={(event) => {
-                    schedule.playerRateRules.playerLimit = Number(event.target.value);
+                    schedule.playerRateRules.playerLimit = Number(event.target.value.trim());
                     setTableRates([...TABLE_RATES]);
                   }}
                 />
@@ -193,7 +193,7 @@ export default function AdminSectionTableRates() {
                   className={`${formInputStylesSmall}`}
                   placeholder="Rate..."
                   onChange={(event) => {
-                    schedule.playerRateRules.afterLimitRate = event.target.value;
+                    schedule.playerRateRules.afterLimitRate = event.target.value.trim();
                     setTableRates([...TABLE_RATES]);
                   }}
                 />

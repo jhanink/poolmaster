@@ -107,7 +107,7 @@ export default function AdminSectionTableTypes() {
                   className={`${formInputStyles} w-full ${INPUT_FIELD} ${!!types.forDelete && 'text-red-500'} ${!!types.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   placeholder="Table Type..."
                   onChange={(event) => {
-                    types.name = event.target.value;
+                    types.name = event.target.value.trim();
                     setTableTypes([...TABLE_TYPES]);
                   }}
                   value={types.name}
