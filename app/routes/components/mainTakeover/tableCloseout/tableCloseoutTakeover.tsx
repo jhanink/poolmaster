@@ -6,7 +6,7 @@ import { actionButtonStyles, formFieldStyles, optionStyles } from "~/util/Global
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
-import { type TableRate } from "~/config/AppState";
+import { type TableItem, type TableRate } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -37,8 +37,10 @@ export default function TableCloseoutTakeover() {
     setMainTakeover(undefined);
   }
 
-  const setupBillablePlayers = (hours: string, rate: string) => {
-    const table = MAIN_TAKEOVER.closeoutTable;
+  const setupBillablePlayers = (hours: string) => {
+    const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === table.tableRateId);
+    const rate = selectedRate.tableRateRules.hourlyRate;
     const guest = table.guest;
     const PLAYERS_COUNT = Math.max(guest.partySize, guest.extraPlayers.length + 1);
     const players = []
@@ -64,22 +66,21 @@ export default function TableCloseoutTakeover() {
     setBillableData({players});
   }
 
-  const useTableRate = (rate: string) => {
-    BILLABLE_DATA.players.forEach((player) => {
-      player.rate = rate;
-    })
-    setBillableData({...BILLABLE_DATA});
+  const onChangeTableRate = (event) => {
+    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
+    if (!selectedRate) return;
+    setSelectedRate(selectedRate);
+    const players = BILLABLE_DATA.players.map((player) => {
+      player.rate = selectedRate.tableRateRules.hourlyRate;
+      return player;
+    });
+    setBillableData({...BILLABLE_DATA, players});
   }
 
   const useTableHours = (hours: string) => {
     BILLABLE_DATA.players.forEach((player) => {
       player.hours = hours;
     })
-    setBillableData({...BILLABLE_DATA});
-  }
-
-  const onChangePlayerChecked = (player: BillablePlayer, event: React.ChangeEvent<HTMLInputElement>) => {
-    player.billable = event.target.checked;
     setBillableData({...BILLABLE_DATA});
   }
 
@@ -100,11 +101,16 @@ export default function TableCloseoutTakeover() {
   }
 
   const onClickReset = () => {
-    const start = MAIN_TAKEOVER.closeoutTable.guest.assignedAt;
-    const end = MAIN_TAKEOVER.closeoutTable.guest.closedOutAt;
+    const table = MAIN_TAKEOVER.closeoutTable;
+    const guest = table.guest;
+    const start = guest.assignedAt;
+    const end = guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
+    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => table.tableRateId);
     setElapsedTime(hours);
     setHoursData(`${hours.durationHoursDecimal3}`);
+    setSelectedRate(selectedRate);
+    setupBillablePlayers(hours.durationHoursDecimal3);
   }
 
   const onClickFinalConfirm = async () => {
@@ -154,14 +160,13 @@ export default function TableCloseoutTakeover() {
         <div>
           <div className="mt-2">
             <select
-              onChange={(event) => {
-                const selectedRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
-                setSelectedRate(selectedRate);
-              }}
+              onChange={onChangeTableRate}
               value={SELECTED_RATE.id}
               className={`${formFieldStyles}`}
             >
-              {APP_STATE.tableRates.map((rate) => (
+              {APP_STATE.tableRates
+                .filter((rate) => rate.isActive)
+                .map((rate) => (
                 <option key={rate.id} className={optionStyles} value={rate.id}>{rate.name}</option>
               ))}
             </select>
