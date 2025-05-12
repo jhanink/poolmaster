@@ -86,7 +86,7 @@ export default function AdminTableRates() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
-          <div className={`${tableRate.isActive? 'border-yellow-500': '!border-gray-500 border-dashed'} ${ITEM}`} key={tableRate.id}>
+          <div className={`${tableRate.isActive? 'border-yellow-500': '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
               {(tableRate.id !== DefaultTableRateData.id) && (
                 <div

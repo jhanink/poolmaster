@@ -87,7 +87,7 @@ export default function AdminTableTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
-          <div className={`${tableType.isActive? '!border-blue-500':'!border-gray-500 border-dashed'} ${ITEM}`} key={tableType.id}>
+          <div className={`${tableType.isActive? '!border-blue-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
               {(tableType.id !== DefaultTableTypeData.id) && (
                 <div
