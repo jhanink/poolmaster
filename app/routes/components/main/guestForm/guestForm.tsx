@@ -6,7 +6,7 @@ import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import styles from "./guestFormStyles.module.css";
-import { actionIconStyles, formFieldStylesFullWidth } from "~/util/GlobalStylesUtil";
+import { actionIconStyles, formFieldStylesFullWidth, formSelectStyles } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { useFetcher } from 'react-router';
 import ModalConfirm from '../../ui-components/modal/modalConfirm';
@@ -261,7 +261,7 @@ export default function GuestForm(props: {
                   name="partySize"
                   onChange={onChangeField}
                   value={FORM_FIELDS.partySize}
-                  className={`pb-3 ${formFieldStylesFullWidth}`}
+                  className={`${formSelectStyles} pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {partySizeArray.map((size) => (
                     <option key={size} className={optionStyles} value={size}>{size}</option>
@@ -288,8 +288,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.tableTypeId}
-              className={`uppercase bg-transparent pb-3
-              ${formFieldStylesFullWidth}`}
+              className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
             >
               {APP_STATE.tableTypes
                 .filter((type) => type.isActive)
