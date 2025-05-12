@@ -6,7 +6,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles } f
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
-import { type TableItem, type TableRate } from "~/config/AppState";
+import { type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -37,38 +37,34 @@ export default function TableCloseout() {
     setMainTakeover(undefined);
   }
 
-  const setupBillablePlayers = (time: TimeElapsed) => {
+  const setupBillablePlayers = () => {
+    if (!SELECTED_RATE.id) return;
 
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
-    const tableTypeId = table.tableTypeId;
-    const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
 
-    // Initially set tableRate to the tableType's rate
-    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
+    const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
+    const playerRateRules: PlayerRateRules = SELECTED_RATE.playerRateRules;
 
-    // If the table config ignores tableType rate, use table-specific rate
-    if (table.ignoreTableTypeRate) {
-      tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
-    }
-
-    if (!tableRate) {
-      tableRate = APP_STATE.tableRates[0];
-    }
-
-    const tableRateRules = tableRate.tableRateRules;
+    const guest: Guest = table.guest;
+    const start = guest.assignedAt;
+    const end = guest.closedOutAt;
+    const time: TimeElapsed = Helpers.timeElapsed(start, end);
     const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+    const rate = tableRateRules.hourlyRate;
+    const isChargePerPlayer = tableRateRules.isChargePerPlayer;
+    const playerLimit = playerRateRules.playerLimit;
+    const afterLimitRate = playerRateRules.afterLimitRate;
 
-    setSelectedRate(tableRate);
-    const rate = tableRate.tableRateRules.hourlyRate;
-    const guest = table.guest;
-    const PLAYERS_COUNT = Math.max(guest.partySize, guest.extraPlayers.length + 1);
-    const players = []
+    const PLAYERS_COUNT = isChargePerPlayer ? Math.max(guest.partySize, guest.extraPlayers.length + 1) : 1;
+    const players: BillablePlayer[] = [];
+
     for (let i = 0; i < (PLAYERS_COUNT); i++) {
+      const playerRate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : rate;
       players.push({
         id: i,
         name: `Player ${i + 1}`,
         hours,
-        rate,
+        rate: playerRate,
         billable: true,
       });
     }
@@ -88,7 +84,7 @@ export default function TableCloseout() {
   const onChangeTableRate = (event) => {
     const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
     setSelectedRate(selectedRate);
-    const players = BILLABLE_DATA.players.map((player) => {
+    const players: BillablePlayer[] = BILLABLE_DATA.players.map((player) => {
       player.rate = selectedRate.tableRateRules.hourlyRate;
       return player;
     });
@@ -113,22 +109,39 @@ export default function TableCloseout() {
   }
 
   const playerAssignedAt = (player: BillablePlayer, index: number) => {
-    const guest = MAIN_TAKEOVER.closeoutTable.guest;
+    const guest: Guest = MAIN_TAKEOVER.closeoutTable.guest;
     const assignedAt = !index ? guest.assignedAt : ((guest.extraPlayers[index - 1]?.assignedAt) || guest.assignedAt);
     return new Date(assignedAt).toLocaleString();
   }
 
   const onClickReset = () => {
-    const table = MAIN_TAKEOVER.closeoutTable;
-    const guest = table.guest;
+    const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const guest: Guest = table.guest;
     const start = guest.assignedAt;
     const end = guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
-    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => table.tableRateId);
     setElapsedTime(hours);
     setHoursData(`${hours.durationHoursDecimal3}`);
-    setSelectedRate(selectedRate);
-    setupBillablePlayers(hours);
+    resetTableRate();
+  }
+
+  const resetTableRate = () => {
+    const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const tableTypeId = table.tableTypeId;
+    const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
+
+    // Initially set tableRate to the tableType's rate
+    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
+
+    // If the table config ignores tableType rate, use table-specific rate
+    if (table.ignoreTableTypeRate) {
+      tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+    }
+
+    if (!tableRate) {
+      tableRate = APP_STATE.tableRates[0];
+    }
+    setSelectedRate(tableRate);
   }
 
   const onClickFinalConfirm = async () => {
@@ -137,6 +150,10 @@ export default function TableCloseout() {
     setSelectedTable(undefined);
     setMainTakeover(undefined);
   }
+
+  useEffect(() => {
+    setupBillablePlayers();
+  }, [SELECTED_RATE]);
 
   useEffect(() => {
     onClickReset();
