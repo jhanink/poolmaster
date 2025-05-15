@@ -1,12 +1,15 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_TABLE_RATE_ID = 999999999;
-export const DEFAULT_TABLE_TYPE_ID = 999999999;;
+export const DEFAULT_TABLE_TYPE_ID = 999999999;
+export const DEFAULT_USAGE_TYPE_ID = 999999999;
+
 
 export interface AppState {
   account: Account,
   tableTypes: TableType[],
   tableRates: TableRate[],
+  usageTypes: UsageType[],
   guestList: Guest[],
   tables: TableItem[],
   modifiedAt: number,
@@ -39,7 +42,7 @@ export interface Guest {
   partySize: number,
   extraPlayers?: ExtraPlayer[],
   notes: string,
-  reservation?: Reservation,
+  usageTypeId?: number,
 }
 
 export interface ExtraPlayer {
@@ -101,6 +104,16 @@ export interface TableRateRules {
   isChargePerPlayer: boolean,
 }
 
+export interface UsageType {
+  id: number,
+  name: string,
+  isActive: boolean,
+  icon: string,
+  usageRate: string,
+  forDelete?: boolean,
+  forAdd?: boolean,
+}
+
 export const DefaultTableRateData: TableRate = {
   id: DEFAULT_TABLE_RATE_ID,
   name: `Default Rate Schedule`,
@@ -123,6 +136,16 @@ export const DefaultTableTypeData: TableType = {
   name: DefaultTableTypeName,
   tableRateId: DEFAULT_TABLE_RATE_ID,
   isActive: true,
+  forDelete: false,
+  forAdd: true,
+}
+
+export const DefaultUsageTypeData: UsageType = {
+  id: DEFAULT_USAGE_TYPE_ID,
+  name: "Normal Use",
+  isActive: true,
+  icon: "",
+  usageRate: "10.00",
   forDelete: false,
   forAdd: true,
 }
@@ -164,6 +187,12 @@ export const DefaultAppState: AppState = {
   tableRates: [
     {
       ...DefaultTableRateData,
+      forAdd: false,
+    }
+  ],
+  usageTypes: [
+    {
+      ...DefaultUsageTypeData,
       forAdd: false,
     }
   ],
