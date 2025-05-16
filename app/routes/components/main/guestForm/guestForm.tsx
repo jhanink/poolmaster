@@ -1,7 +1,7 @@
 
 import { useMask } from '@react-input/mask';
 import React, { useEffect, useState } from "react";
-import { DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
+import { DEFAULT_TABLE_TYPE_ID, DEFAULT_USAGE_TYPE_ID, DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -37,7 +37,8 @@ export default function GuestForm(props: {
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
-    tableTypeId: props.guest.tableTypeId || 999999999,
+    tableTypeId: props.guest.tableTypeId || DEFAULT_TABLE_TYPE_ID,
+    usageTypeId: props.guest.usageTypeId || DEFAULT_USAGE_TYPE_ID,
     notes: props.guest.notes || "",
   });
 
@@ -285,6 +286,31 @@ export default function GuestForm(props: {
               className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
             >
               {APP_STATE.tableTypes
+                .filter((type) => type.isActive)
+                .map((type) => (
+                  <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                ))
+              }
+            </select>
+          </div>
+        </div>
+        <div className={formColumnStyles}>
+          <div className={`${labelStyles} ml-1 mt-1`}>
+            Usage Type
+          </div>
+        </div>
+        <div className={formColumnStyles}>
+          <div className={fieldStyles}>
+            <select
+              name="usageType"
+              onChange={(event) => {
+                FORM_FIELDS.usageTypeId = Number(event.target.value);
+                setFormFields({...FORM_FIELDS})
+              }}
+              value={FORM_FIELDS.usageTypeId}
+              className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
+            >
+              {APP_STATE.usageTypes
                 .filter((type) => type.isActive)
                 .map((type) => (
                   <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
