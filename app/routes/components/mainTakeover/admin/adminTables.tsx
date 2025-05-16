@@ -13,12 +13,12 @@ export default function AdminTables() {
   const [TABLES, setTables] = useState([] as TableItem[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
-  const onClickResetTables = (event: any) => {
+  const onClickResetForm = (event: any) => {
     const tables = APP_STATE.tables.map((table: TableItem ) => ({...table}));
     setTables(tables);
   }
 
-  const onClickSaveTables = () => {
+  const onClickSave = () => {
     const tables = TABLES
       .map((table: TableItem) => ({...table, forAdd: false}))
       .filter((table: TableItem) => !table.forDelete);
@@ -34,7 +34,7 @@ export default function AdminTables() {
     setShowConfirmSaveTables(false);
   }
 
-  const onClickForDeleteTable = (table: TableItem) => {
+  const onClickForDeleteItem = (table: TableItem) => {
     if (table.forAdd) {
       TABLES.splice(TABLES.indexOf(table), 1);
       setTables([...TABLES]);
@@ -44,18 +44,18 @@ export default function AdminTables() {
     setTables([...TABLES]);
   }
 
-  const onClickAddTables = (num: 1 | 3 | 10) => {
+  const onClickAddItem = (num: 1 | 3 | 10) => {
     const nums = [1,2,3,4,5,6,7,8,9,10];
     const tnums = nums.slice(0,num);
     const tables = [...TABLES];
     tnums.forEach((index) => {
-      const newTable = generateNewTable(index);
+      const newTable = generateNewItem(index);
       tables.push(newTable);
     })
     setTables(tables);
   }
 
-  const generateNewTable = (index: number = 1) => {
+  const generateNewItem = (index: number = 1) => {
     const id = Date.now() + index;
     const number = TABLES.length + index;
     const newTable: TableItem = {
@@ -73,23 +73,23 @@ export default function AdminTables() {
   }
 
   useEffect(() => {
-    onClickResetTables({} as any);
+    onClickResetForm({} as any);
   }, []);
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
       <div className={`${ROW} ${ADMIN_HEADER}`}>
         <div className="pr-5">Tables</div>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(1)}}>+1</button>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(3)}}>+3</button>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddTables(10)}}>+10</button>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
+          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(10)}}>+10</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
           <div className={`${table.isActive? '!border-green-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
             <div className={`whitespace-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-              onClick={(event) => {onClickForDeleteTable(table)}}>
+              onClick={(event) => {onClickForDeleteItem(table)}}>
                 <TrashIcon></TrashIcon>
               </div>
               <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
@@ -187,7 +187,7 @@ export default function AdminTables() {
         ))}
       </div>
       <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetTables}>Reset</button>
+        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTables(true)} }>Save</button>
       </div>
     </div>
@@ -199,7 +199,7 @@ export default function AdminTables() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSaveTables()}}
+      onConfirm={() => {onClickSave()}}
       onCancel={() => {setShowConfirmSaveTables(false)}}
     />
   </>)

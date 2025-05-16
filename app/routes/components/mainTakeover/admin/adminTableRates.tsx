@@ -24,7 +24,13 @@ export default function AdminTableRates() {
   const [TABLE_RATES, setTableRates] = useState([] as TableRate[]);
   const [SHOW_CONFIRM_SAVE_TABLE_RATES, setShowConfirmSaveTableRates] = useState(false);
 
-  const onClickSaveTableRates = () => {
+  const onClickResetForm = (event: any) => {
+    if (!APP_STATE.tableRates.length) return;
+    const tableRates = APP_STATE.tableRates.map((tableRate: TableRate) => ({...tableRate}));
+    setTableRates(tableRates);
+  }
+
+  const onClickSaveItem = () => {
     const tableRates = TABLE_RATES
       .map((tableRate: TableRate) => ({...tableRate, forAdd: false}))
       .filter((tableRate: TableRate) => !tableRate.forDelete);
@@ -40,7 +46,7 @@ export default function AdminTableRates() {
     setShowConfirmSaveTableRates(false);
   }
 
-  const generateNewTableRate = (index: number = 1) => {
+  const generateNewItem = (index: number = 1) => {
     const id = Date.now() + index;
     const number = TABLE_RATES.length + index;
     const newTableRate: TableRate = {
@@ -51,13 +57,7 @@ export default function AdminTableRates() {
     return newTableRate;
   }
 
-  const onClickResetTableRates = (event: any) => {
-    if (!APP_STATE.tableRates.length) return;
-    const tableRates = APP_STATE.tableRates.map((tableRate: TableRate) => ({...tableRate}));
-    setTableRates(tableRates);
-  }
-
-  const onClickForDeleteTableRate = (tableRate: TableRate) => {
+  const onClickForDeleteItem = (tableRate: TableRate) => {
     if (tableRate.forAdd) {
       TABLE_RATES.splice(TABLE_RATES.indexOf(tableRate), 1);
       setTableRates([...TABLE_RATES]);
@@ -67,22 +67,22 @@ export default function AdminTableRates() {
     setTableRates([...TABLE_RATES]);
   }
 
-  const onClickAddTableRate = () => {
+  const onClickAddItem = () => {
     const tableRates = [...TABLE_RATES];
-    const newTableRate = generateNewTableRate();
+    const newTableRate = generateNewItem();
     tableRates.push(newTableRate);
     setTableRates(tableRates);
   }
 
   useEffect(() => {
-    onClickResetTableRates({} as any);
+    onClickResetForm({} as any);
   }, []);
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
       <div className={`flex items-center ${ADMIN_HEADER}`}>
         <div className="pr-5">Table Rates</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddTableRate}>+1</button>
+        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
@@ -91,7 +91,7 @@ export default function AdminTableRates() {
               {(tableRate.id !== DefaultTableRateData.id) && (
                 <div
                   className={`mr-2 ${!!tableRate.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableRate.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-                  onClick={(event) => {onClickForDeleteTableRate(tableRate)}}>
+                  onClick={(event) => {onClickForDeleteItem(tableRate)}}>
                   <TrashIcon></TrashIcon>
                 </div>
               )}
@@ -212,7 +212,7 @@ export default function AdminTableRates() {
         ))}
       </div>
       <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetTableRates}>Reset</button>
+        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
         <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTableRates(true)} }>Save</button>
       </div>
     </div>
@@ -224,7 +224,7 @@ export default function AdminTableRates() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSaveTableRates()}}
+      onConfirm={() => {onClickSaveItem()}}
       onCancel={() => {setShowConfirmSaveTableRates(false)}}
     />
   </>)

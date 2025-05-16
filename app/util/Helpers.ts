@@ -41,6 +41,15 @@ export const Helpers = {
     }
     return match;
   },
+  getUsageType: (appState: AppState, usageTypeId: number) => {
+    const match = appState.usageTypes.find(usageType => {
+      return usageType.id === usageTypeId;
+    });
+    if (!match) {
+      return appState.usageTypes[0];
+    }
+    return match;
+  },
   timeElapsed: (start: number, finish?: number): TimeElapsed => {
     const end = finish || Date.now();
     const duration = dayjs.duration({milliseconds: end - start});

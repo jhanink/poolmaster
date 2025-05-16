@@ -30,7 +30,7 @@ export default function AdminUsageTypes() {
     setUsageTypes(types);
   }
 
-  const onClickSaveTableTypes = () => {
+  const onClickSave = () => {
     const types = USAGE_TYPES
       .map((type: UsageType) => ({...type, forAdd: false}))
       .filter((type: UsageType) => !type.forDelete);
@@ -51,6 +51,7 @@ export default function AdminUsageTypes() {
     const newItem: UsageType = {
       ...DefaultUsageTypeData,
       id,
+      name: `Usage ${index}`,
       isActive: true,
       forDelete: false,
       forAdd: true,
@@ -69,10 +70,10 @@ export default function AdminUsageTypes() {
   }
 
   const onClickAddItem = () => {
-    const tableTypes = [...USAGE_TYPES];
-    const newItem = generateNewItem();
-    tableTypes.push(newItem);
-    setUsageTypes(tableTypes);
+    const usageTypes = [...USAGE_TYPES];
+    const newItem = generateNewItem(USAGE_TYPES.length + 1);
+    usageTypes.push(newItem);
+    setUsageTypes(usageTypes);
   }
 
   useEffect(() => {
@@ -105,7 +106,7 @@ export default function AdminUsageTypes() {
                 )}
                 <input
                   className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'} ${formFieldStyles}`}
-                  placeholder="Table Type..."
+                  placeholder="Name..."
                   maxLength={55}
                   onChange={(event) => {
                     usageType.name = event.target.value;
@@ -162,7 +163,7 @@ export default function AdminUsageTypes() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSaveTableTypes()}}
+      onConfirm={() => {onClickSave()}}
       onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)

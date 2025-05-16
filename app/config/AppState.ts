@@ -142,7 +142,7 @@ export const DefaultTableTypeData: TableType = {
 
 export const DefaultUsageTypeData: UsageType = {
   id: DEFAULT_USAGE_TYPE_ID,
-  name: "Normal Use",
+  name: "Regular",
   isActive: true,
   icon: "",
   usageRate: "10.00",
@@ -160,6 +160,18 @@ export const DefaultTableItemData: TableItem = {
   isActive: true,
   forDelete: false,
   forAdd: true,
+}
+
+export const DefaultGuestData: Guest = {
+  id: 0,
+  name: "",
+  phoneNumber: "",
+  tableTypeId: 999999999,
+  createdAt: 0,
+  assignedAt : 0,
+  closedOutAt: 0,
+  partySize: 1,
+  notes: "",
 }
 
 export const DefaultAppState: AppState = {
@@ -217,16 +229,4 @@ export const DefaultAppState: AppState = {
       tableRateId: DEFAULT_TABLE_RATE_ID,
     },
   ]
-}
-
-export const DefaultGuestData: Guest = {
-  id: 0,
-  name: "",
-  phoneNumber: "",
-  tableTypeId: 999999999,
-  createdAt: 0,
-  assignedAt : 0,
-  closedOutAt: 0,
-  partySize: 1,
-  notes: "",
 }

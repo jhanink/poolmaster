@@ -29,7 +29,7 @@ export default function AdminTableTypes() {
     setTableTypes(types);
   }
 
-  const onClickSaveTableTypes = () => {
+  const onClickSave = () => {
     const types = TABLE_TYPES
       .map((type: TableType) => ({...type, forAdd: false}))
       .filter((type: TableType) => !type.forDelete);
@@ -167,7 +167,7 @@ export default function AdminTableTypes() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSaveTableTypes()}}
+      onConfirm={() => {onClickSave()}}
       onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)
