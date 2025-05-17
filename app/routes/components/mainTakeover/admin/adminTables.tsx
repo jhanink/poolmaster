@@ -1,4 +1,4 @@
-import { DEFAULT_TABLE_RATE_ID, DefaultTableTypeData, type TableItem } from "~/config/AppState"
+import { DEFAULT_ID, DefaultTableTypeData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
@@ -63,7 +63,7 @@ export default function AdminTables() {
       number,
       name: `Table ${number}`,
       tableTypeId: DefaultTableTypeData.id,
-      tableRateId: DEFAULT_TABLE_RATE_ID,
+      tableRateId: DEFAULT_ID,
       ignoreTableTypeRate: false,
       isActive: true,
       forDelete: false,

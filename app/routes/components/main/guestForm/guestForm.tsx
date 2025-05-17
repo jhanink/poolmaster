@@ -1,7 +1,7 @@
 
 import { useMask } from '@react-input/mask';
 import React, { useEffect, useState } from "react";
-import { DEFAULT_TABLE_TYPE_ID, DEFAULT_USAGE_TYPE_ID, DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
+import { DEFAULT_ID, DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -37,8 +37,8 @@ export default function GuestForm(props: {
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
-    tableTypeId: props.guest.tableTypeId || DEFAULT_TABLE_TYPE_ID,
-    usageTypeId: props.guest.usageTypeId || DEFAULT_USAGE_TYPE_ID,
+    tableTypeId: props.guest.tableTypeId || DEFAULT_ID,
+    usageTypeId: props.guest.usageTypeId || DEFAULT_ID,
     notes: props.guest.notes || "",
   });
 

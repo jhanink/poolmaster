@@ -87,7 +87,7 @@ export default function AdminUsageTypes() {
         <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-      {USAGE_TYPES.map((usageType: UsageType, index: number) => (
+        {USAGE_TYPES.map((usageType: UsageType, index: number) => (
           <div className={`${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DefaultUsageTypeData.id) && (
@@ -147,6 +147,54 @@ export default function AdminUsageTypes() {
                   }}
                 />
             </div>
+            {!usageType.useIcon && (
+              <div className={`${ROW}`}>
+                <div className="text-gray-400 mr-2">
+                  Text Color:
+                </div>
+                <input
+                  value={usageType.textColor}
+                  maxLength={6}
+                  className={`${formInputStylesSmall}`}
+                  placeholder="Pick Color..."
+                  onChange={(event) => {
+                    usageType.textColor = event.target.value.trim();
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                />
+              </div>
+            )}
+            <div className={`${ROW} mt-1`}>
+              <div className={`${formLabelLeftStyles} ${usageType.useIcon? '!text-blue-500':''}`}>
+                Use Icon:
+              </div>
+              <input
+                type="checkbox"
+                className={`ml-2 size-4`}
+                checked={usageType.useIcon}
+                onChange={(event) => {
+                  usageType.useIcon = !usageType.useIcon;
+                  setUsageTypes([...USAGE_TYPES]);
+                }}
+              />
+            </div>
+            {usageType.useIcon && (
+              <div className={`${ROW}`}>
+                <div className="text-gray-400 mr-2">
+                  Icon:
+                </div>
+                <input
+                  value={usageType.icon}
+                  maxLength={6}
+                  className={`${formInputStylesSmall}`}
+                  placeholder="Pick Icon..."
+                  onChange={(event) => {
+                    usageType.icon = event.target.value.trim();
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

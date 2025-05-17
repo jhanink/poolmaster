@@ -1,9 +1,6 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
-export const DEFAULT_TABLE_RATE_ID = 999999999;
-export const DEFAULT_TABLE_TYPE_ID = 999999999;
-export const DEFAULT_USAGE_TYPE_ID = 999999999;
-
+export const DEFAULT_ID = 999999999;
 
 export interface AppState {
   account: Account,
@@ -108,14 +105,16 @@ export interface UsageType {
   id: number,
   name: string,
   isActive: boolean,
-  icon: string,
   usageRate: string,
+  useIcon: boolean,
+  icon: string,
+  textColor: string,
   forDelete?: boolean,
   forAdd?: boolean,
 }
 
 export const DefaultTableRateData: TableRate = {
-  id: DEFAULT_TABLE_RATE_ID,
+  id: DEFAULT_ID,
   name: `Default Rate Schedule`,
   tableRateRules: {
     isOneHourMinimum: true,
@@ -132,20 +131,22 @@ export const DefaultTableRateData: TableRate = {
 }
 
 export const DefaultTableTypeData: TableType = {
-  id: DEFAULT_TABLE_TYPE_ID,
+  id: DEFAULT_ID,
   name: DefaultTableTypeName,
-  tableRateId: DEFAULT_TABLE_RATE_ID,
+  tableRateId: DEFAULT_ID,
   isActive: true,
   forDelete: false,
   forAdd: true,
 }
 
 export const DefaultUsageTypeData: UsageType = {
-  id: DEFAULT_USAGE_TYPE_ID,
+  id: DEFAULT_ID,
   name: "Regular",
   isActive: true,
-  icon: "",
   usageRate: "10.00",
+  useIcon: false,
+  icon: "",
+  textColor: "",
   forDelete: false,
   forAdd: true,
 }
@@ -155,7 +156,7 @@ export const DefaultTableItemData: TableItem = {
   tableTypeId: DefaultTableTypeData.id,
   number: 1,
   name: "Table 1",
-  tableRateId: DEFAULT_TABLE_RATE_ID,
+  tableRateId: DEFAULT_ID,
   ignoreTableTypeRate: false,
   isActive: true,
   forDelete: false,
@@ -166,7 +167,7 @@ export const DefaultGuestData: Guest = {
   id: 0,
   name: "",
   phoneNumber: "",
-  tableTypeId: 999999999,
+  tableTypeId: DEFAULT_ID,
   createdAt: 0,
   assignedAt : 0,
   closedOutAt: 0,
@@ -217,7 +218,7 @@ export const DefaultAppState: AppState = {
       ignoreTableTypeRate: false,
       isActive: true,
       tableTypeId: DefaultTableTypeData.id,
-      tableRateId: DEFAULT_TABLE_RATE_ID,
+      tableRateId: DEFAULT_ID,
     },
     {
       id: 1,
@@ -226,7 +227,7 @@ export const DefaultAppState: AppState = {
       ignoreTableTypeRate: false,
       name: "Table 2",
       isActive: true,
-      tableRateId: DEFAULT_TABLE_RATE_ID,
+      tableRateId: DEFAULT_ID,
     },
   ]
 }
