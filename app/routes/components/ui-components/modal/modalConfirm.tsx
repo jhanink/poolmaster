@@ -16,8 +16,7 @@ export default function ModalConfirm(props: {
 
   const [open] = useState(true);
 
-  return (
-    <>
+  return (<>
     {props.show && (
     <Dialog open={open} onClose={props.onCancel} className="relative z-10">
       <DialogBackdrop transition className={`${dialogBackdropStyles}`}/>
@@ -56,6 +55,5 @@ export default function ModalConfirm(props: {
       </div>
     </Dialog>
     )}
-    </>
-  )
+  </>)
 }

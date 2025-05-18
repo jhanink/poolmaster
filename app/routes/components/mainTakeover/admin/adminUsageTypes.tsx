@@ -1,6 +1,19 @@
-import { DefaultUsageTypeData, type UsageType } from "~/config/AppState"
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
+import { useEffect, useState } from "react"
+import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
+import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { appStateAtom } from "~/appStateGlobal/atoms"
+import { AppStorage } from "~/util/AppStorage"
+import { DefaultUsageTypeData, type UsageType } from "~/config/AppState"
+import ModalConfirm from "../../ui-components/modal/modalConfirm"
+
+import {
+  ADMIN_ACTION_BUTTONS,
+  ADMIN_ACTIONS,
+  ADMIN_CONTENT,
+  ADMIN_HEADER,
+  ADMIN_SECTION
+} from "./admin"
 import {
   actionButtonStyles,
   actionIconStyles,
@@ -8,17 +21,10 @@ import {
   formInputStyles,
   formInputStylesSmall,
   formLabelLeftStyles,
-  formSelectStyles,
   INPUT_FIELD,
   ITEM,
-  optionStyles,
   ROW
 } from "~/util/GlobalStylesUtil"
-import ModalConfirm from "../../ui-components/modal/modalConfirm"
-import { useAtom } from "jotai"
-import { appStateAtom } from "~/appStateGlobal/atoms"
-import { useEffect, useState } from "react"
-import { AppStorage } from "~/util/AppStorage"
 
 export default function AdminUsageTypes() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -30,9 +36,9 @@ export default function AdminUsageTypes() {
     setUsageTypes(types);
   }
 
-  const onClickSave = () => {
+  const onClickSave = async () => {
     const types = USAGE_TYPES
-      .map((type: UsageType) => ({...type, forAdd: false}))
+      .map((type: UsageType) => ({...type, forAdd: false, showPicker: false}))
       .filter((type: UsageType) => !type.forDelete);
 
     const newState = {
@@ -88,7 +94,7 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
+          <div className={`!min-w-[375px] ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DefaultUsageTypeData.id) && (
                 <div
@@ -156,7 +162,7 @@ export default function AdminUsageTypes() {
                   value={usageType.textColor}
                   maxLength={6}
                   className={`${formInputStylesSmall}`}
-                  placeholder="Pick Color..."
+                  placeholder=""
                   onChange={(event) => {
                     usageType.textColor = event.target.value.trim();
                     setUsageTypes([...USAGE_TYPES]);
@@ -178,23 +184,50 @@ export default function AdminUsageTypes() {
                 }}
               />
             </div>
-            {usageType.useIcon && (
+            {usageType.useIcon && (<>
               <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
                   Icon:
                 </div>
                 <input
+                  readOnly={true}
                   value={usageType.icon}
-                  maxLength={6}
+                  maxLength={1}
                   className={`${formInputStylesSmall}`}
-                  placeholder="Pick Icon..."
+                  placeholder=""
                   onChange={(event) => {
                     usageType.icon = event.target.value.trim();
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
               </div>
-            )}
+              <div className={`${ROW}`}>
+                <div className={`hover:underline hover:cursor-pointer`}
+                  onClick={() => {
+                    usageType.showPicker = !usageType.showPicker;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}>
+                    Icon Picker
+                </div>
+                <div className={`ml-2 hover:underline hover:cursor-pointer`}
+                  onClick={() => {
+                    usageType.icon = "";
+                    usageType.showPicker = false;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}>
+                    <span>Clear Icon</span>
+                </div>
+              </div>
+              <div className="ROW mt-2">
+                {usageType.showPicker && (<>
+                  <EmojiPicker onEmojiClick={(emojiData: EmojiClickData) => {
+                    usageType.icon = emojiData.emoji;
+                    usageType.showPicker = false;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}></EmojiPicker>
+                </>)}
+              </div>
+            </>)}
           </div>
         ))}
       </div>

@@ -109,6 +109,7 @@ export interface UsageType {
   useIcon: boolean,
   icon: string,
   textColor: string,
+  showPicker?: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
 }
