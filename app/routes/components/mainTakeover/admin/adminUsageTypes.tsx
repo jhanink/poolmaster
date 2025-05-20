@@ -97,7 +97,7 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!min-w-[375px] ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
+          <div className={`!min-w-[380px] ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DefaultUsageTypeData.id) && (
                 <div
@@ -201,7 +201,12 @@ export default function AdminUsageTypes() {
               </div>
               {usageType.showIconPicker && (<>
                 <div className={`ROW mt-2 ${usageType.showIconPicker ? 'visible' : 'invisible h-0'}`}>
-                  <Picker data={data} onEmojiSelect={(emojiData) => {
+                  <Picker data={data}
+                    onClickOutside={() => {
+                      usageType.showIconPicker = false;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                    onEmojiSelect={(emojiData) => {
                     usageType.icon = emojiData.native;
                     usageType.showIconPicker = false;
                     setUsageTypes([...USAGE_TYPES]);
