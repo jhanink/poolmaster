@@ -3,11 +3,13 @@ import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import { HexColorPicker } from "react-colorful";
+import ColorPicker, { Color } from '@rc-component/color-picker'
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
 import { DefaultUsageTypeData, type UsageType } from "~/config/AppState"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
+
+import '@rc-component/color-picker/assets/index.css'
 
 import {
   ADMIN_ACTION_BUTTONS,
@@ -33,6 +35,7 @@ export default function AdminUsageTypes() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [USAGE_TYPES, setUsageTypes] = useState([] as UsageType[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
+  const [TEXT_COLOR, setTextColor] = useState(new Color('#ff0000'));
 
   const onClickResetForm = (event: any) => {
     const types = APP_STATE.usageTypes.map((type: UsageType ) => ({...type}));
@@ -41,7 +44,15 @@ export default function AdminUsageTypes() {
 
   const onClickSave = async () => {
     const types = USAGE_TYPES
-      .map((type: UsageType) => ({...type, forAdd: false, showIconPicker: false, showColorPicker: false}))
+      .map((type: UsageType) => {
+        const value = {...type, forAdd: false, showIconPicker: false, showColorPicker: false};
+        if (type.useIcon) {
+          value.textColor = '';
+        } else {
+          value.icon = '';
+        }
+        return value;
+      })
       .filter((type: UsageType) => !type.forDelete);
 
     const newState = {
@@ -114,7 +125,13 @@ export default function AdminUsageTypes() {
                   <span>{index+1}</span>
                 )}
                 <input
-                  className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`
+                    ${formInputStyles}
+                    ${INPUT_FIELD}
+                    w-[250px] text-sm
+                    ${formFieldStyles}
+                  `}
+                  style={(!usageType.useIcon && !!usageType.textColor) ? {color: usageType.textColor} : {}}
                   placeholder="Name..."
                   maxLength={55}
                   onChange={(event) => {
@@ -127,7 +144,7 @@ export default function AdminUsageTypes() {
             </div>
             {(usageType.id !== DefaultUsageTypeData.id) && (
               <div className={`${ROW} mt-1`}>
-                <div className={`${formLabelLeftStyles} ${usageType.isActive? '!text-blue-500':''}`}>
+                <div className={`${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -157,7 +174,7 @@ export default function AdminUsageTypes() {
                 />
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`${formLabelLeftStyles} ${usageType.useIcon? '!text-blue-500':''}`}>
+              <div className={`${formLabelLeftStyles}`}>
                 Use Icon:
               </div>
               <input
@@ -200,12 +217,8 @@ export default function AdminUsageTypes() {
                 </div>
               </div>
               {usageType.showIconPicker && (<>
-                <div className={`ROW mt-2 ${usageType.showIconPicker ? 'visible' : 'invisible h-0'}`}>
+                <div className={`ROW mt-2`}>
                   <Picker data={data}
-                    onClickOutside={() => {
-                      usageType.showIconPicker = false;
-                      setUsageTypes([...USAGE_TYPES]);
-                    }}
                     onEmojiSelect={(emojiData) => {
                     usageType.icon = emojiData.native;
                     usageType.showIconPicker = false;
@@ -220,9 +233,10 @@ export default function AdminUsageTypes() {
                   Text Color:
                 </div>
                 <input
+                  readOnly={true}
                   value={usageType.textColor}
                   maxLength={7}
-                  className={`${formInputStylesSmall}`}
+                  className={`${formInputStylesSmall} uppercase`}
                   placeholder=""
                   onChange={(event) => {
                     usageType.textColor = event.target.value.trim();
@@ -230,6 +244,7 @@ export default function AdminUsageTypes() {
                   }}
                   onClick={() => {
                     usageType.showColorPicker = !usageType.showColorPicker;
+                    setTextColor(new Color(usageType.textColor || TEXT_COLOR));
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
@@ -242,6 +257,19 @@ export default function AdminUsageTypes() {
                     <span>Clear</span>
                 </div>
               </div>
+              {usageType.showColorPicker && (<>
+                <div className={`ROW mt-2`}>
+                  <ColorPicker value={TEXT_COLOR}
+                    disabledAlpha={true}
+                    onChange={
+                      (color: Color) => {
+                        setTextColor(color);
+                        usageType.textColor = color.toHexString();
+                        setUsageTypes([...USAGE_TYPES]);
+                      }
+                    }></ColorPicker>
+                </div>
+              </>)}
             </>)}
           </div>
         ))}
