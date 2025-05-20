@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
-import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
 import { HexColorPicker } from "react-colorful";
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
@@ -26,6 +27,7 @@ import {
   ITEM,
   ROW
 } from "~/util/GlobalStylesUtil"
+
 
 export default function AdminUsageTypes() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -188,7 +190,7 @@ export default function AdminUsageTypes() {
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
-                <div className={`ml-2 hover:underline hover:cursor-pointer`}
+                <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
                   onClick={() => {
                     usageType.icon = "";
                     usageType.showIconPicker = false;
@@ -198,23 +200,23 @@ export default function AdminUsageTypes() {
                 </div>
               </div>
               {usageType.showIconPicker && (<>
-                <div className="ROW mt-2">
-                  <EmojiPicker onEmojiClick={(emojiData: EmojiClickData) => {
-                    usageType.icon = emojiData.emoji;
+                <div className={`ROW mt-2 ${usageType.showIconPicker ? 'visible' : 'invisible h-0'}`}>
+                  <Picker data={data} onEmojiSelect={(emojiData) => {
+                    usageType.icon = emojiData.native;
                     usageType.showIconPicker = false;
                     setUsageTypes([...USAGE_TYPES]);
-                  }}></EmojiPicker>
+                  }}></Picker>
                 </div>
               </>)}
             </>)}
-            {!usageType.useIcon && (
+            {!usageType.useIcon && (<>
               <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
                   Text Color:
                 </div>
                 <input
                   value={usageType.textColor}
-                  maxLength={6}
+                  maxLength={7}
                   className={`${formInputStylesSmall}`}
                   placeholder=""
                   onChange={(event) => {
@@ -226,8 +228,16 @@ export default function AdminUsageTypes() {
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
+                <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
+                  onClick={() => {
+                    usageType.textColor = "";
+                    usageType.showColorPicker = false;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}>
+                    <span>Clear</span>
+                </div>
               </div>
-            )}
+            </>)}
           </div>
         ))}
       </div>
