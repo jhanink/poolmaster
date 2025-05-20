@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import EmojiPicker, { type EmojiClickData } from "emoji-picker-react";
+import { HexColorPicker } from "react-colorful";
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
 import { DefaultUsageTypeData, type UsageType } from "~/config/AppState"
@@ -38,7 +39,7 @@ export default function AdminUsageTypes() {
 
   const onClickSave = async () => {
     const types = USAGE_TYPES
-      .map((type: UsageType) => ({...type, forAdd: false, showPicker: false}))
+      .map((type: UsageType) => ({...type, forAdd: false, showIconPicker: false, showColorPicker: false}))
       .filter((type: UsageType) => !type.forDelete);
 
     const newState = {
@@ -153,23 +154,6 @@ export default function AdminUsageTypes() {
                   }}
                 />
             </div>
-            {!usageType.useIcon && (
-              <div className={`${ROW}`}>
-                <div className="text-gray-400 mr-2">
-                  Text Color:
-                </div>
-                <input
-                  value={usageType.textColor}
-                  maxLength={6}
-                  className={`${formInputStylesSmall}`}
-                  placeholder=""
-                  onChange={(event) => {
-                    usageType.textColor = event.target.value.trim();
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}
-                />
-              </div>
-            )}
             <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles} ${usageType.useIcon? '!text-blue-500':''}`}>
                 Use Icon:
@@ -199,35 +183,51 @@ export default function AdminUsageTypes() {
                     usageType.icon = event.target.value.trim();
                     setUsageTypes([...USAGE_TYPES]);
                   }}
-                />
-              </div>
-              <div className={`${ROW}`}>
-                <div className={`hover:underline hover:cursor-pointer`}
                   onClick={() => {
-                    usageType.showPicker = !usageType.showPicker;
+                    usageType.showIconPicker = !usageType.showIconPicker;
                     setUsageTypes([...USAGE_TYPES]);
-                  }}>
-                    Icon Picker
-                </div>
+                  }}
+                />
                 <div className={`ml-2 hover:underline hover:cursor-pointer`}
                   onClick={() => {
                     usageType.icon = "";
-                    usageType.showPicker = false;
+                    usageType.showIconPicker = false;
                     setUsageTypes([...USAGE_TYPES]);
                   }}>
-                    <span>Clear Icon</span>
+                    <span>Clear</span>
                 </div>
               </div>
-              <div className="ROW mt-2">
-                {usageType.showPicker && (<>
+              {usageType.showIconPicker && (<>
+                <div className="ROW mt-2">
                   <EmojiPicker onEmojiClick={(emojiData: EmojiClickData) => {
                     usageType.icon = emojiData.emoji;
-                    usageType.showPicker = false;
+                    usageType.showIconPicker = false;
                     setUsageTypes([...USAGE_TYPES]);
                   }}></EmojiPicker>
-                </>)}
-              </div>
+                </div>
+              </>)}
             </>)}
+            {!usageType.useIcon && (
+              <div className={`${ROW}`}>
+                <div className="text-gray-400 mr-2">
+                  Text Color:
+                </div>
+                <input
+                  value={usageType.textColor}
+                  maxLength={6}
+                  className={`${formInputStylesSmall}`}
+                  placeholder=""
+                  onChange={(event) => {
+                    usageType.textColor = event.target.value.trim();
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                  onClick={() => {
+                    usageType.showColorPicker = !usageType.showColorPicker;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                />
+              </div>
+            )}
           </div>
         ))}
       </div>

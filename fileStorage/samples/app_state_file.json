@@ -25,6 +25,21 @@
       "forAdd": false
     }
   ],
+  "usageTypes": [
+    {
+      "id": 999999999,
+      "name": "REGULAR",
+      "usageRate": "10",
+      "useIcon": false,
+      "icon": "",
+      "textColor": "",
+      "isActive": true,
+      "forDelete": false,
+      "forAdd": false,
+      "showIconPicker": false,
+      "showColorPicker": false
+    }
+  ],
   "guestList": [],
   "tables": [
     {
