@@ -25,8 +25,10 @@ import {
   formInputStyles,
   formInputStylesSmall,
   formLabelLeftStyles,
+  formSelectStyles,
   INPUT_FIELD,
   ITEM,
+  optionStyles,
   ROW
 } from "~/util/GlobalStylesUtil"
 
@@ -158,6 +160,26 @@ export default function AdminUsageTypes() {
                 />
               </div>
             )}
+            <div className={`${ROW}`}>
+              <div className="text-gray-400 mr-2">
+                Rate:
+              </div>
+              <select
+                onChange={(event) => {
+                  usageType.tableRateId = Number(event.target.value);
+                  setUsageTypes([...USAGE_TYPES]);
+                }}
+                value={usageType.tableRateId}
+                className={`grow ${formSelectStyles}`}
+              >
+                {APP_STATE.tableRates
+                  .filter((tableRate) => tableRate.isActive)
+                  .map((tableRate) => (
+                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                  ))
+                }
+              </select>
+            </div>
             <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles}`}>
                 Use Icon:

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
@@ -129,10 +129,8 @@ export default function TableCloseout() {
     const tableTypeId = table.tableTypeId;
     const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
 
-    // Initially set tableRate to the tableType's rate
     let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
 
-    // If the table config ignores tableType rate, use table-specific rate
     if (table.ignoreTableTypeRate) {
       tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
     }
@@ -148,6 +146,27 @@ export default function TableCloseout() {
     setAppState(newAppState);
     setSelectedTable(undefined);
     setMainTakeover(undefined);
+  }
+
+  const fragmentUsageType = () => {
+    const guest = MAIN_TAKEOVER.closeoutTable.guest;
+    const usageType = APP_STATE.usageTypes.find(_ => _.id === guest.usageTypeId);
+    const icon = (usageType && !!usageType.useIcon && usageType.icon);
+    const textColor = (usageType && !usageType.useIcon && usageType.textColor);
+    return (<>
+      <div className="mt-5">
+        {!!icon && (
+          <div className={`text-3xl ${usageTypeIndicatorStyles}`}>
+            {icon}
+          </div>
+        )}
+        {!!textColor && (
+          <div className={`uppercase text-xl !px-10 ${usageTypeIndicatorStyles}`} style={{color: textColor}}>
+            {usageType.name}
+          </div>
+        )}
+      </div>
+    </>)
   }
 
   useEffect(() => {
@@ -206,6 +225,8 @@ export default function TableCloseout() {
             </select>
           </div>
         </div>
+
+        {fragmentUsageType()}
 
         <div className="text-xl text-gray-400 mt-4">
           Bill Total: &nbsp;

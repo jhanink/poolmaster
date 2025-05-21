@@ -25,3 +25,4 @@ export const actionIconStyles = `size-5 text-gray-600 hover:cursor-pointer hover
 export const ITEM = `mb-3 border border-gray-800 rounded-lg p-3`;
 export const ROW = `flex items-center`;
 export const INPUT_FIELD = `ml-2 w-[150px]`;
+export const usageTypeIndicatorStyles = `text-nowrap inline-block py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
