@@ -145,31 +145,36 @@ export default function GuestItem(props: {
     const usageType = APP_STATE.usageTypes.find(_ => _.id === guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const textColor = (usageType && !usageType.useIcon && usageType.textColor);
-    return !(ITEM_EDIT || props.isEditForm) &&  (
-      <div className={`${statusBarStyles}`}>
+    const showPartySize = props.guest.partySize > 1;
+    const isLargePartySize = props.guest.partySize >= APP_STATE.statusBar.largePartySize;
+    const isEdit = ITEM_EDIT || props.isEditForm;
 
-        {(props.guest.partySize > 1) && (
+    return !isEdit && (showPartySize || icon || textColor) &&  (<>
+      <div className={`${statusBarStyles} ${props.itemExpanded ? 'border-t border-gray-900 pt-2 mt-2' : ''}`}
+          onClick={(event) => {event.stopPropagation(); event.preventDefault();}}
+      >
+        {(showPartySize) && (
           <div className="inline-block ">
-          <div className={`text-nowrap text-sm ${props.guest.partySize >= APP_STATE.statusBar.largePartySize ? `!bg-pink-700 !text-gray-100 !px-10 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
+          <div className={`text-nowrap text-sm ${isLargePartySize ? `!bg-pink-700 !text-gray-100 !px-5 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
             Party of {props.guest.partySize}
           </div>
           </div>
         )}
 
         <div className="w-full text-right">
-        {!!icon && (
-          <div className={`text-base ${statusBarElementStyles}`}>
-            {icon}
-          </div>
-        )}
-        {!!textColor && (
-          <div className={`uppercase text-sm ${statusBarElementStyles}`} style={{color: textColor}}>
-            {usageType.name}
-          </div>
-        )}
+          {!!icon && (
+            <div className={`text-base ${statusBarElementStyles}`}>
+              {icon}
+            </div>
+          )}
+          {!!textColor && (
+            <div className={`uppercase text-sm ${statusBarElementStyles}`} style={{color: textColor}}>
+              {usageType.name}
+            </div>
+          )}
+        </div>
       </div>
-      </div>
-    )
+    </>)
   }
 
   const itemDetailGuestEditForm = () => {
