@@ -144,6 +144,26 @@ export default function GuestItem(props: {
     )
   }
 
+  const itemStatusBar = () => {
+    const usageType = APP_STATE.usageTypes.find(_ => _.id === guest.usageTypeId);
+    const icon = (usageType && !!usageType.useIcon && usageType.icon);
+    const textColor = (usageType && !usageType.useIcon && usageType.textColor);
+    return !(ITEM_EDIT || props.isEditForm) &&  (
+      <div className={`flex items-center justify-center space-x-2 text-lg`}>
+        {!!icon && (
+          <div>
+            {icon}
+          </div>
+        )}
+        {!!textColor && (
+          <div className={`uppercase text-lg`} style={{color: textColor}}>
+            {usageType.name}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const itemDetailGuestEditForm = () => {
     return (
       (ITEM_EDIT || props.isEditForm) && (
@@ -192,7 +212,7 @@ export default function GuestItem(props: {
   }, [ITEM_EDIT]);
 
   return (
-    <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
+    <div className={`${styles.itemCard} ${itemCardStyles} ${!props.isAssigned && props.guest.partySize > 4 ? 'border-none !ring-2 !ring-yellow-500': ''}`} onClick={itemClicked}>
       { props.itemExpanded && (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
@@ -201,6 +221,7 @@ export default function GuestItem(props: {
         </div>
       )}
       {!props.itemExpanded && itemCollapsedRowContent()}
+      {itemStatusBar()}
     </div>
   )
 }
