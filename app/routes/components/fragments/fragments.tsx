@@ -98,12 +98,3 @@ export const fragmentWelcomeMessage = () => {
     </div>
   )
 }
-
-export const fragmentExtraPlayersString = (players: ExtraPlayer[]) => {
-  if (players.length) {
-    return (
-      <span className="uppercase">: &nbsp; {players.map(_ => _.name).join(', ')}</span>
-    )
-  }
-  return <></>
-}

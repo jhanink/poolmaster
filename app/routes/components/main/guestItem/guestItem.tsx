@@ -10,7 +10,7 @@ import { type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentElapsedTime, fragmentExtraPlayersString } from '../../fragments/fragments';
+import { fragmentElapsedTime } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
 
 dayjs.extend(duration);
