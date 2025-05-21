@@ -301,7 +301,7 @@ export default function TableCloseout() {
             </div>
             {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
               <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
-                Regular rate player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
+                Base Rate Player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
               </div>
             </>)}
           </div>))}
