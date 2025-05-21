@@ -17,7 +17,7 @@ export default function HeaderProfile() {
       <div className={`${PROFILE_MENU_OPEN ? '' : 'hidden'} drop-shadow-xl divide-y divide-gray-200`}>
         <Dialog open={PROFILE_MENU_OPEN} onClose={()=>{}}>
           <DialogBackdrop transition className={`${dialogBackdropStyles}`} onClick={toggleProfileMenu}/>
-          <div className="absolute top-3 right-3 z-50 motion-preset-slide-down motion-duration-500">
+          <div className="absolute top-3 right-3 z-50">
             <ProfileMenu toggle={toggleProfileMenu}/>
           </div>
         </Dialog>

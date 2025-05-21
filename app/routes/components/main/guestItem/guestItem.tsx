@@ -30,7 +30,7 @@ export default function GuestItem(props: {
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
-  const fieldLabel=`text-gray-500`;
+  const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
 
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -103,23 +103,26 @@ export default function GuestItem(props: {
 
   const itemDetailBodyContent = () => {
     return !(ITEM_EDIT || props.isEditForm) && (
-      <div className="text-sm motion-preset-bounce">
+      <div className="text-sm">
         <div className="flex">
           <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
             { guest.phoneNumber && (
-              <div className="ROW"><span className={`${fieldLabel}`}>Phone: &nbsp;</span> {guest.phoneNumber} </div>
+              <div className="ROW">
+              <span className={`${fieldLabel}`}>Phone:</span>
+              {guest.phoneNumber}
+              </div>
             )}
             <div className="ROW">
-              <span className={`${fieldLabel}`}>Type: &nbsp; </span>
+              <span className={`${fieldLabel}`}>Type:</span>
               {Helpers.getTableType(APP_STATE, guest.tableTypeId).name}
             </div>
             <div className="ROW">
-              <span className={`${fieldLabel}`}>Use: &nbsp; </span>
+              <span className={`${fieldLabel}`}>Use:</span>
               {Helpers.getUsageType(APP_STATE, guest.usageTypeId).name}
             </div>
             { guest.notes && (
               <div className="ROW">
-                <span className={`${fieldLabel}`}>Notes: &nbsp;</span>
+                <span className={`${fieldLabel}`}>Notes:</span>
                 {guest.notes}
               </div>
             )}
