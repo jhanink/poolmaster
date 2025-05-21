@@ -1,3 +1,5 @@
+import { ID_1, ID_2, ID_3, ID_4, ID_5 } from "~/config/AppState";
+
 export const buttonRingRed = `hover:ring-red-600`;
 export const buttonRingBlue = `hover:ring-blue-600`;
 export const buttonRingGreen = `hover:ring-green-600`;
@@ -28,3 +30,33 @@ export const INPUT_FIELD = `ml-2 w-[150px]`;
 export const usageTypeIndicatorStyles = `text-nowrap inline-block py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
 export const largePartyStyle1 = `!bg-gray-300 !text-black !px-5 font-semibold ${usageTypeIndicatorStyles}`;
 export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 !px-5 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 !px-5 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 !px-5 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 !px-5 ${usageTypeIndicatorStyles}`;
+export const largePartyStylesOptions = [
+  {
+    id: ID_1,
+    name: 'Style 1 (White)',
+    style: largePartyStyle1,
+  },
+  {
+    id: ID_2,
+    name: 'Style 2 (Red)',
+    style: largePartyStyle2,
+  },
+  {
+    id: ID_3,
+    name: 'Style 3 (Emerald)',
+    style: largePartyStyle3,
+  },
+  {
+    id: ID_4,
+    name: 'Style 4 (Amber)',
+    style: largePartyStyle4,
+  },
+  {
+    id: ID_5,
+    name: 'Style 5 (Violet)',
+    style: largePartyStyle5,
+  }
+];
