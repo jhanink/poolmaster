@@ -158,21 +158,6 @@ export default function AdminUsageTypes() {
                 />
               </div>
             )}
-            <div className={`${ROW}`}>
-              <div className="text-gray-400 mr-2">
-                Usage Rate:
-              </div>
-              <input
-                  value={usageType.usageRate}
-                  maxLength={6}
-                  className={`${formInputStylesSmall}`}
-                  placeholder="Rate..."
-                  onChange={(event) => {
-                    usageType.usageRate = event.target.value.trim();
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}
-                />
-            </div>
             <div className={`${ROW} mt-1`}>
               <div className={`${formLabelLeftStyles}`}>
                 Use Icon:

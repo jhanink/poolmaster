@@ -154,10 +154,10 @@ export default function GuestItem(props: {
           onClick={(event) => {event.stopPropagation(); event.preventDefault();}}
       >
         {(showPartySize) && (
-          <div className="inline-block ">
-          <div className={`text-nowrap text-sm ${isLargePartySize ? `!bg-pink-700 !text-gray-100 !px-5 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
-            Party of {props.guest.partySize}
-          </div>
+          <div className="inline-block">
+            <div className={`text-nowrap text-sm ${isLargePartySize ? `!bg-pink-700 !text-gray-100 !px-5 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
+              Party of {props.guest.partySize}
+            </div>
           </div>
         )}
 
