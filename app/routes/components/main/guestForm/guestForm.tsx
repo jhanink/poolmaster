@@ -143,48 +143,47 @@ export default function GuestForm(props: {
   }
 
   const fragmentExtraPlayersTable = () => {
-    return (
-      <>
-        <div className={`${FORM_FIELDS.partySize === 1 ? 'hidden' : ''}`}>
-          <div className={formColumnStyles}>
-            <div className={`${labelStyles} mb-2`}>
-              Extra Player Names
-             <button className={`${actionButtons}`} onClick={() => {onClickAddExtraPlayer()}}>+1</button>
-            </div>
-          </div>
-          <div className={formColumnStyles}>
-            <div className={`${fieldStyles} flex-grow text-nowrap`}>
-              {FORM_FIELDS.extraPlayers.map((player, index) => (
-                <div key={index} className={`flex items-center justify-between ${styles.extraPlayerRow}`}>
-                  <div className="PLAYER_ROW">
-                    <div className={`inline-block mr-2 relative top-1 ${!!player.forDelete && 'text-red-500 hover:text-red-800'} ${!!player.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-                      onClick={() => {onClickForDelete(player)}}>
-                      <TrashIcon></TrashIcon>
-                    </div>
-                    <div className="inline-block text-sm text-gray-400 ml-1">
-                      <input
-                        required
-                        value={player.name}
-                        onChange={(event) => {
-                          player.name = event.target.value;
-                          const newExtraPlayers = FORM_FIELDS.extraPlayers.map((_, i) => i === index ? player : _);
-                          setFormFields(prev => ({
-                            ...prev,
-                            extraPlayers: newExtraPlayers,
-                          }));
-                        }}
-                        className={`${formFieldStylesFullWidth}`}
-                        placeholder="Enter Player Name..."
-                        maxLength={200}/>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+    return (<>
+      {FORM_FIELDS.partySize > 1 && (<>
+        <div className={formColumnStyles}>
+          <div className={`${labelStyles} mb-2`}>
+            Extra Player Names
+            <button className={`${actionButtons}`} onClick={() => {onClickAddExtraPlayer()}}>+1</button>
           </div>
         </div>
-      </>
-    )
+        <div className={formColumnStyles}>
+          <div className={`${fieldStyles} flex-grow text-nowrap`}>
+            {FORM_FIELDS.extraPlayers.map((player, index) => (
+              <div key={index} className={`flex items-center justify-between ${styles.extraPlayerRow}`}>
+                <div className="PLAYER_ROW">
+                  <div className={`inline-block mr-2 relative top-1 ${!!player.forDelete && 'text-red-500 hover:text-red-800'} ${!!player.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                    onClick={() => {onClickForDelete(player)}}>
+                    <TrashIcon></TrashIcon>
+                  </div>
+                  <div className="inline-block text-sm text-gray-400 ml-1">
+                    <input
+                      name="extraPlayerName"
+                      required
+                      value={player.name}
+                      onChange={(event) => {
+                        player.name = event.target.value;
+                        const newExtraPlayers = FORM_FIELDS.extraPlayers.map((_, i) => i === index ? player : _);
+                        setFormFields(prev => ({
+                          ...prev,
+                          extraPlayers: newExtraPlayers,
+                        }));
+                      }}
+                      className={`${formFieldStylesFullWidth}`}
+                      placeholder="Enter Player Name..."
+                      maxLength={200}/>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </>)}
+    </>)
   }
 
   useEffect(() => {
