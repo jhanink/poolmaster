@@ -1,6 +1,10 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_ID = 999999999;
+export const MAX_PARTY_SIZE = 20;
+export const MIN_LARGE_PARTY_SIZE = 3;
+export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
+export const LARGE_PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE - (MIN_LARGE_PARTY_SIZE - 1) }, (_, i) => i + MIN_LARGE_PARTY_SIZE);
 
 export interface AppState {
   account: Account,
@@ -10,6 +14,11 @@ export interface AppState {
   guestList: Guest[],
   tables: TableItem[],
   modifiedAt: number,
+  statusBar: StatusBar,
+}
+
+export interface StatusBar {
+  largePartySize: number,
 }
 
 export interface Account {
@@ -32,14 +41,14 @@ export interface Guest {
   name: string,
   phoneNumber: string,
   tableTypeId: number,
-  createdAt: number,
-  modifiedAt?: number,
   assignedAt: number,
   closedOutAt: number,
   partySize: number,
   extraPlayers?: ExtraPlayer[],
   notes: string,
   usageTypeId?: number,
+  createdAt: number,
+  modifiedAt?: number,
 }
 
 export interface ExtraPlayer {
@@ -115,6 +124,10 @@ export interface UsageType {
   forAdd?: boolean,
 }
 
+export const DefaultStatusBar: StatusBar = {
+  largePartySize: 20,
+}
+
 export const DefaultTableRateData: TableRate = {
   id: DEFAULT_ID,
   name: `Default Rate Schedule`,
@@ -177,10 +190,8 @@ export const DefaultGuestData: Guest = {
   notes: "",
 }
 
-export const DefaultAppState: AppState = {
-  modifiedAt: 0,
-  account: {
-    id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
+export const DefaultAccountData: Account = {
+  id: "bfe2158d-7d95-470c-a92c-4b1d0ae4aa52",
     sourceId: "4b1d0ae4aa52",
     name: "Shane Van Boening",
     avatar: "https://avatars.githubusercontent.com/u/1000000?v=4",
@@ -192,6 +203,12 @@ export const DefaultAppState: AppState = {
     password: "password",
     createdAt: 0,
     modifiedAt: 0
+}
+
+export const DefaultAppState: AppState = {
+  modifiedAt: 0,
+  account: {
+    ...DefaultAccountData
   },
   tableTypes: [
     {
@@ -214,22 +231,25 @@ export const DefaultAppState: AppState = {
   guestList: [],
   tables: [
     {
-      id: 0,
+      id: 1,
       number: 1,
       name: "Table 1",
-      ignoreTableTypeRate: false,
       isActive: true,
       tableTypeId: DefaultTableTypeData.id,
+      ignoreTableTypeRate: false,
       tableRateId: DEFAULT_ID,
     },
     {
-      id: 1,
-      tableTypeId: DefaultTableTypeData.id,
+      id: 2,
       number: 2,
-      ignoreTableTypeRate: false,
       name: "Table 2",
       isActive: true,
+      tableTypeId: DefaultTableTypeData.id,
+      ignoreTableTypeRate: false,
       tableRateId: DEFAULT_ID,
     },
-  ]
+  ],
+  statusBar: {
+    ...DefaultStatusBar,
+  }
 }

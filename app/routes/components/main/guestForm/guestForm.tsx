@@ -1,7 +1,7 @@
 
 import { useMask } from '@react-input/mask';
 import React, { useEffect, useState } from "react";
-import { DEFAULT_ID, DefaultGuestData, type ExtraPlayer, type Guest } from "~/config/AppState";
+import { DEFAULT_ID, DefaultGuestData, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -15,8 +15,8 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 const formColumnStyles = `COLUMN flex m-1`;
 const fieldStyles = `flex-1`;
 const labelStyles = `text-sm text-gray-400 ml-1 top-2 relative`;
-const partySizeArray = Array.from({length: 20}, (_, i) => i + 1);
-const actionButtons = `${actionButtonStyles} !py-0`
+const partySizeArray = [...PARTY_SIZE_ARRAY];
+const actionButtons = `${actionButtonStyles} !py-0`;
 
 export default function GuestForm(props: {
   guest: Guest,

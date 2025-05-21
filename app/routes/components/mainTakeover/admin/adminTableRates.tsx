@@ -22,9 +22,9 @@ import { AppStorage } from "~/util/AppStorage";
 export default function AdminTableRates() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLE_RATES, setTableRates] = useState([] as TableRate[]);
-  const [SHOW_CONFIRM_SAVE_TABLE_RATES, setShowConfirmSaveTableRates] = useState(false);
+  const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
-  const onClickResetForm = (event: any) => {
+  const onClickResetForm = () => {
     if (!APP_STATE.tableRates.length) return;
     const tableRates = APP_STATE.tableRates.map((tableRate: TableRate) => ({...tableRate}));
     setTableRates(tableRates);
@@ -43,7 +43,7 @@ export default function AdminTableRates() {
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
     setTableRates(tableRates);
-    setShowConfirmSaveTableRates(false);
+    setShowConfirmSave(false);
   }
 
   const generateNewItem = (index: number = 1) => {
@@ -75,7 +75,7 @@ export default function AdminTableRates() {
   }
 
   useEffect(() => {
-    onClickResetForm({} as any);
+    onClickResetForm();
   }, []);
 
   return (<>
@@ -213,11 +213,11 @@ export default function AdminTableRates() {
       </div>
       <div className={`!text-right ${ADMIN_ACTIONS}`}>
         <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTableRates(true)} }>Save</button>
+        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm
-      show={SHOW_CONFIRM_SAVE_TABLE_RATES}
+      show={SHOW_CONFIRM_SAVE}
       dialogTitle={`SAVE TABLE RATES`}
       dialogMessageFn={() => (
         <span className="text-base">
@@ -225,7 +225,7 @@ export default function AdminTableRates() {
         </span>
       )}
       onConfirm={() => {onClickSaveItem()}}
-      onCancel={() => {setShowConfirmSaveTableRates(false)}}
+      onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)
 }

@@ -16,6 +16,9 @@ import { AppStorage } from '~/util/AppStorage';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
+const statusBarStyles = `flex items-center justify-left space-x-2 mt-3`;
+const statusBarElementStyles = `py-1 px-5 bg-gray-800 border border-transparent rounded-full`;
+
 export default function GuestItem(props: {
   guest: Guest,
   index: number,
@@ -106,12 +109,6 @@ export default function GuestItem(props: {
             { guest.phoneNumber && (
               <div className="ROW"><span className={`${fieldLabel}`}>Phone: &nbsp;</span> {guest.phoneNumber} </div>
             )}
-            {guest.partySize > 1 && (
-              <div className="ROW">
-                <span className={`${fieldLabel}`}>+{guest.partySize-1} more </span>
-                {fragmentExtraPlayersString(guest.extraPlayers)}
-              </div>
-            )}
             <div className="ROW">
               <span className={`${fieldLabel}`}>Type: &nbsp; </span>
               {Helpers.getTableType(APP_STATE, guest.tableTypeId).name}
@@ -149,14 +146,19 @@ export default function GuestItem(props: {
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const textColor = (usageType && !usageType.useIcon && usageType.textColor);
     return !(ITEM_EDIT || props.isEditForm) &&  (
-      <div className={`flex items-center justify-center space-x-2 text-lg`}>
+      <div className={`${statusBarStyles}`}>
+        {(props.guest.partySize > 1) && (
+          <div className={`text-sm ${props.guest.partySize >= APP_STATE.statusBar.largePartySize ? `!bg-pink-700 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
+            Party of {props.guest.partySize}
+          </div>
+        )}
         {!!icon && (
-          <div>
+          <div className={`text-base ${statusBarElementStyles}`}>
             {icon}
           </div>
         )}
         {!!textColor && (
-          <div className={`uppercase text-lg`} style={{color: textColor}}>
+          <div className={`uppercase text-sm ${statusBarElementStyles}`} style={{color: textColor}}>
             {usageType.name}
           </div>
         )}
@@ -184,9 +186,6 @@ export default function GuestItem(props: {
         )}
         <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} flex-grow uppercase text-left text-blue-500 truncate`}>
           {guest.name}
-          {!props.isAssigned && !props.itemExpanded && (guest.partySize > 1) && (
-            <span className="text-gray-400 normal-case whitespace-nowrap">&nbsp; &nbsp; +{guest.partySize -1 } more</span>
-          )}
         </div>
         {renderItemDuration()}
       </div>
@@ -212,7 +211,7 @@ export default function GuestItem(props: {
   }, [ITEM_EDIT]);
 
   return (
-    <div className={`${styles.itemCard} ${itemCardStyles} ${!props.isAssigned && props.guest.partySize > 4 ? 'border-none !ring-2 !ring-yellow-500': ''}`} onClick={itemClicked}>
+    <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
       { props.itemExpanded && (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}

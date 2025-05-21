@@ -8,6 +8,7 @@ import AdminAccount from "./adminAccount";
 import AdminTableRates from "./adminTableRates";
 import AdminTableTypes from "./adminTableTypes";
 import AdminUsageTypes from "./adminUsageTypes";
+import AdminStatusBar from "./adminStatusBar";
 
 export const ADMIN_SECTION = `text-left`;
 export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg w-full`;
@@ -46,6 +47,8 @@ export default function Admin() {
         </div>
         <div className="text-center mb-20">
           <AdminAccount/>
+          <hr className="text-gray-900 my-5"/>
+          <AdminStatusBar/>
           <hr className="text-gray-900 my-5"/>
           <AdminUsageTypes/>
           <hr className="text-gray-900 my-5"/>

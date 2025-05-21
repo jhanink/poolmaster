@@ -37,12 +37,12 @@ export default function AdminUsageTypes() {
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
   const [TEXT_COLOR, setTextColor] = useState(new Color('#ff0000'));
 
-  const onClickResetForm = (event: any) => {
+  const onClickResetForm = () => {
     const types = APP_STATE.usageTypes.map((type: UsageType ) => ({...type}));
     setUsageTypes(types);
   }
 
-  const onClickSave = async () => {
+  const onClickSaveItem = async () => {
     const types = USAGE_TYPES
       .map((type: UsageType) => {
         const value = {...type, forAdd: false, showIconPicker: false, showColorPicker: false};
@@ -97,7 +97,7 @@ export default function AdminUsageTypes() {
   }
 
   useEffect(() => {
-    onClickResetForm({} as any);
+    onClickResetForm();
   }, []);
 
   return (<>
@@ -287,7 +287,7 @@ export default function AdminUsageTypes() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSave()}}
+      onConfirm={() => {onClickSaveItem()}}
       onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)

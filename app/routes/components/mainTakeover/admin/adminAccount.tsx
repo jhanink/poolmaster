@@ -1,30 +1,33 @@
 import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
-import type { Account } from "~/config/AppState";
+import { DefaultAccountData, type Account} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
+import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 export default function AdminAccount() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [ACCOUNT, setAccount] = useState({venue: ''} as Account);
+  const [ACCOUNT, setAccount] = useState(DefaultAccountData);
+  const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
-  const onClickResetAccount = (event: any) => {
+  const onClickResetForm = () => {
     setAccount({...APP_STATE.account});
   }
 
-  const onClickSaveAccount = (event: any) => {
+  const onClickSaveItem = () => {
     const newState = {
       ...APP_STATE,
       account: ACCOUNT,
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
+    setShowConfirmSave(false);
   }
 
   useEffect(() => {
-    onClickResetAccount({} as any);
+    onClickResetForm();
   }, []);
 
   return (<>
@@ -48,9 +51,20 @@ export default function AdminAccount() {
         />
       </div>
       <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetAccount}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={onClickSaveAccount}>Save</button>
+        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
+    <ModalConfirm
+      show={SHOW_CONFIRM_SAVE}
+      dialogTitle={`SAVE ACCOUNT`}
+      dialogMessageFn={() => (
+        <span className="text-base">
+          <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
+        </span>
+      )}
+      onConfirm={() => {onClickSaveItem()}}
+      onCancel={() => {setShowConfirmSave(false)}}
+    />
   </>)
 }

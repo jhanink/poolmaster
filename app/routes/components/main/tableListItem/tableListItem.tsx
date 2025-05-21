@@ -49,7 +49,7 @@ export default function TableListItem(props: {
     }
 
     return (
-      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} ${props.table.guest.partySize > 4 ? 'border-none !ring-2 !ring-yellow-500': ''} hover:cursor-pointer relative`} onClick={onClickTable}>
+      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
             {table.name}

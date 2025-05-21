@@ -13,12 +13,12 @@ export default function AdminTables() {
   const [TABLES, setTables] = useState([] as TableItem[]);
   const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
 
-  const onClickResetForm = (event: any) => {
+  const onClickResetForm = () => {
     const tables = APP_STATE.tables.map((table: TableItem ) => ({...table}));
     setTables(tables);
   }
 
-  const onClickSave = () => {
+  const onClickSaveItem = () => {
     const tables = TABLES
       .map((table: TableItem) => ({...table, forAdd: false}))
       .filter((table: TableItem) => !table.forDelete);
@@ -73,7 +73,7 @@ export default function AdminTables() {
   }
 
   useEffect(() => {
-    onClickResetForm({} as any);
+    onClickResetForm();
   }, []);
 
   return (<>
@@ -199,7 +199,7 @@ export default function AdminTables() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSave()}}
+      onConfirm={() => {onClickSaveItem()}}
       onCancel={() => {setShowConfirmSaveTables(false)}}
     />
   </>)

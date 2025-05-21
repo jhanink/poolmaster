@@ -24,12 +24,12 @@ export default function AdminTableTypes() {
   const [TABLE_TYPES, setTableTypes] = useState([] as TableType[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
-  const onClickResetForm = (event: any) => {
+  const onClickResetForm = () => {
     const types = APP_STATE.tableTypes.map((type: TableType ) => ({...type}));
     setTableTypes(types);
   }
 
-  const onClickSave = () => {
+  const onClickSaveItem = () => {
     const types = TABLE_TYPES
       .map((type: TableType) => ({...type, forAdd: false}))
       .filter((type: TableType) => !type.forDelete);
@@ -76,7 +76,7 @@ export default function AdminTableTypes() {
   }
 
   useEffect(() => {
-    onClickResetForm({} as any);
+    onClickResetForm();
   }, []);
 
   return (<>
@@ -167,7 +167,7 @@ export default function AdminTableTypes() {
           <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
         </span>
       )}
-      onConfirm={() => {onClickSave()}}
+      onConfirm={() => {onClickSaveItem()}}
       onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)
