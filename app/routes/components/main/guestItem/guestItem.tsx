@@ -152,7 +152,12 @@ export default function GuestItem(props: {
 
     return !isEdit && (showPartySize || icon || textColor) &&  (<>
       <div className={`${statusBarStyles} ${props.itemExpanded ? 'border-t border-gray-900 pt-2 mt-2' : ''}`}
-          onClick={(event) => {event.stopPropagation(); event.preventDefault();}}
+          onClick={(event) => {
+            if (SELECTED_LIST_FILTER) return;
+            props.setItemExpanded(prev => !prev);
+            event.stopPropagation();
+            event.preventDefault();
+          }}
       >
         {(showPartySize) && (
           <div className="inline-block">
