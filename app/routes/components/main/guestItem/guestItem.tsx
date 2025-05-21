@@ -16,9 +16,6 @@ import { AppStorage } from '~/util/AppStorage';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-const statusBarStyles = `flex items-center justify-left space-x-2 mt-3`;
-const statusBarElementStyles = `py-1 px-5 bg-gray-800 border border-transparent rounded-full`;
-
 export default function GuestItem(props: {
   guest: Guest,
   index: number,
@@ -31,6 +28,8 @@ export default function GuestItem(props: {
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
+  const statusBarStyles = `flex items-center justify-left space-x-2 ${props.itemExpanded ? '': 'mt-3'}`;
+  const statusBarElementStyles = `py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
 
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -41,14 +40,12 @@ export default function GuestItem(props: {
   const guest = props.guest;
 
   const itemClicked = (event: React.MouseEvent<HTMLDivElement>) => {
-    // table list
-    if (props.isAssigned && props.itemExpanded) {
+    if (props.isAssigned && props.itemExpanded) {  // table list
       event.stopPropagation();
       return;
     }
 
-    // guest list
-    if (!props.isAssigned && !props.itemExpanded) {
+    if (!props.isAssigned && !props.itemExpanded) {  // guest list
       props.setItemExpanded(prev => true);
     }
   }
