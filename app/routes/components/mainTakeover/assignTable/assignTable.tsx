@@ -65,7 +65,7 @@ export default function AssignTable() {
                 )}
                 <span className="ml-2">Guest</span>
               </div>
-              <div className="uppercase text-red-500 mx-3 my-5 whitespace-nowrap">
+              <div className="uppercase text-red-500 mx-3 my-5 text-nowrap">
                 {MAIN_TAKEOVER.assignTable?.name}
               </div>
               <div className="text-gray-400 text-base">

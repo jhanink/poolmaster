@@ -9,7 +9,7 @@ import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 
-const statusPillStyles = `mx-1 px-1 whitespace-nowrap`;
+const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
 const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-500 rounded-full hover:cursor-pointer`;
 const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm select-none`;
@@ -62,7 +62,7 @@ export default function AppHeader() {
             `}>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-              <span className={`${statusPillStyles} whitespace-nowrap`}>
+              <span className={`${statusPillStyles} text-nowrap`}>
                 {APP_STATE.guestList.length} <span className="ml-1 capitalize">{Helpers.pluralizeGuestsWaiting(APP_STATE)} In Line</span>
               </span>
             </div>

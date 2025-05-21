@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 
-const cardStyle = `${styles.itemCard} select-none py-2 text-gray-700 border border-gray-800 rounded-xl`;
+const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-800 rounded-xl`;
 const guestUnassigned =`${cardStyle} text-gray-700`;
 const guestAssigned = `${cardStyle} border-green-800 text-green-700`;
 
@@ -64,7 +64,7 @@ export default function TableListItem(props: {
           </div>
         </div>
         {table.guest && (
-          <div className="ml-3">
+          <div className="ml-1">
             {props.table.guest && (
               <GuestItem guest={table.guest}
                 index={0}

@@ -117,7 +117,7 @@ export default function AdminUsageTypes() {
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`whitespace-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
                 {usageType.id === DefaultUsageTypeData.id && (
                   "DEFAULT"
                 )}

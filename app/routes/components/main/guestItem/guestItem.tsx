@@ -28,8 +28,8 @@ export default function GuestItem(props: {
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
-  const statusBarStyles = `flex items-center justify-left space-x-2 ${props.itemExpanded ? '': 'mt-3'}`;
-  const statusBarElementStyles = `py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
+  const statusBarStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-3'}`;
+  const statusBarElementStyles = `text-nowrap inline-block py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
 
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -147,11 +147,16 @@ export default function GuestItem(props: {
     const textColor = (usageType && !usageType.useIcon && usageType.textColor);
     return !(ITEM_EDIT || props.isEditForm) &&  (
       <div className={`${statusBarStyles}`}>
+
         {(props.guest.partySize > 1) && (
-          <div className={`text-sm ${props.guest.partySize >= APP_STATE.statusBar.largePartySize ? `!bg-pink-700 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
+          <div className="inline-block ">
+          <div className={`text-nowrap text-sm ${props.guest.partySize >= APP_STATE.statusBar.largePartySize ? `!bg-pink-700 !text-gray-100 !px-10 ${statusBarElementStyles}`: '!bg-transparent !text-gray-400'}`}>
             Party of {props.guest.partySize}
           </div>
+          </div>
         )}
+
+        <div className="w-full text-right">
         {!!icon && (
           <div className={`text-base ${statusBarElementStyles}`}>
             {icon}
@@ -162,6 +167,7 @@ export default function GuestItem(props: {
             {usageType.name}
           </div>
         )}
+      </div>
       </div>
     )
   }

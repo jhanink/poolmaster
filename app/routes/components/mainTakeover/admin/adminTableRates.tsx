@@ -101,7 +101,7 @@ export default function AdminTableRates() {
               {(tableRate.id !== DefaultTableRateData.id) && (
                 <span>{index+1}</span>
               )}
-              <div className={`whitespace-nowrap  ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap  ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   onChange={(event) => {

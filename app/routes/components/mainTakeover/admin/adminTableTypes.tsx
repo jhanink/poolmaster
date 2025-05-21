@@ -96,7 +96,7 @@ export default function AdminTableTypes() {
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`whitespace-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
                 {tableType.id === DefaultTableTypeData.id && (
                   "DEFAULT"
                 )}

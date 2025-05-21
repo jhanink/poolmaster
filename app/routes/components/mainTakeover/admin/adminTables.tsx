@@ -87,7 +87,7 @@ export default function AdminTables() {
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
           <div className={`${table.isActive? '!border-green-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
-            <div className={`whitespace-nowrap ${ROW}`}>
+            <div className={`text-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteItem(table)}}>
                 <TrashIcon></TrashIcon>

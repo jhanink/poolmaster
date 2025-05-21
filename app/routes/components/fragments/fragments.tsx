@@ -2,18 +2,18 @@ import type { TimeElapsed } from "~/util/Helpers";
 import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import type { ExtraPlayer } from "~/config/AppState";
 
-export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm whitespace-nowrap`;
+export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
 
 export const fragmentElapsedTime = (timeElapsed: TimeElapsed, isAssigned: boolean, style: string = durationSquareStyles) => {
   return (
     <>
       {timeElapsed.hours < 1 && ( // under 1 hour - show minutes
-        <div className={`whitespace-nowrap text-gray-500 ${style}`}>
+        <div className={`text-nowrap text-gray-500 ${style}`}>
           {timeElapsed.minutes} &nbsp;<span className="text-gray-300">min</span>
         </div>
       )}
       {timeElapsed.hours >= 1 && ( // over 1 hour - display decimal hours
-        <div className={`whitespace-nowrap text-gray-500 ${style}`}>
+        <div className={`text-nowrap text-gray-500 ${style}`}>
           {timeElapsed.durationHoursDecimal} &nbsp;<span className={`${isAssigned?'text-green-600':'text-blue-500'}`}>hrs</span>
         </div>
       )}

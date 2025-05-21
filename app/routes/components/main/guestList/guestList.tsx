@@ -22,7 +22,7 @@ export default function GuestList() {
       <div className="flex m-1">
         <div className="flex-1">
           { !MAIN_TAKEOVER?.addGuest && (
-            <div className="flex-1 mx-2 mt-3 mb-5 text-center nowrap">
+            <div className="flex-1 mx-2 mt-3 mb-5 text-center text-nowrap">
               <button type="button" className={`flex items-center ${guestButtonStyles}`} onClick={onClickAddGuestForm}>
                 <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
                 <span className="text-sm">Add Guest</span>
