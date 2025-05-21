@@ -4,9 +4,9 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { actionButtonStyles, largePartyStyle1, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, largePartyStyle1, largePartyStyle2, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
-import { type Guest } from "~/config/AppState"
+import { ID_1, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
@@ -141,12 +141,14 @@ export default function GuestItem(props: {
   }
 
   const itemStatusBar = () => {
+    const statusBar = APP_STATE.statusBar;
     const usageType = APP_STATE.usageTypes.find(_ => _.id === guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const textColor = (usageType && !usageType.useIcon && usageType.textColor);
     const showPartySize = props.guest.partySize > 1;
-    const isLargePartySize = props.guest.partySize >= APP_STATE.statusBar.largePartySize;
+    const isLargePartySize = props.guest.partySize >= statusBar.largePartySize;
     const isEdit = ITEM_EDIT || props.isEditForm;
+    const largePartyStyle = statusBar.largePartyStyle === ID_1 ? largePartyStyle1 : largePartyStyle2;
 
     return !isEdit && (showPartySize || icon || textColor) &&  (<>
       <div className={`${statusBarStyles} ${props.itemExpanded ? 'border-t border-gray-900 pt-2 mt-2' : ''}`}
@@ -154,7 +156,7 @@ export default function GuestItem(props: {
       >
         {(showPartySize) && (
           <div className="inline-block">
-            <div className={`text-nowrap text-sm ${isLargePartySize ? `${largePartyStyle1}`: '!bg-transparent !text-gray-400'}`}>
+            <div className={`text-nowrap text-sm ${isLargePartySize ? `${largePartyStyle}`: '!bg-transparent !text-gray-400'}`}>
               Party of {props.guest.partySize}
             </div>
           </div>

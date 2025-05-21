@@ -1,6 +1,8 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_ID = 999999999;
+export const ID_1 = 1;
+export const ID_2 = 2;
 export const MAX_PARTY_SIZE = 20;
 export const MIN_LARGE_PARTY_SIZE = 3;
 export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
@@ -19,6 +21,7 @@ export interface AppState {
 
 export interface StatusBar {
   largePartySize: number,
+  largePartyStyle: number,
 }
 
 export interface Account {
@@ -126,6 +129,7 @@ export interface UsageType {
 
 export const DefaultStatusBar: StatusBar = {
   largePartySize: 20,
+  largePartyStyle: ID_1,
 }
 
 export const DefaultTableRateData: TableRate = {
