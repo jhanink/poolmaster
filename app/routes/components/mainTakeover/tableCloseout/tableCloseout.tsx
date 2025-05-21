@@ -6,7 +6,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, us
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover } from "../../fragments/fragments";
-import { type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -126,6 +126,7 @@ export default function TableCloseout() {
 
   const resetTableRate = () => {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const guest = table.guest;
     const tableTypeId = table.tableTypeId;
     const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
 
@@ -133,6 +134,13 @@ export default function TableCloseout() {
 
     if (table.ignoreTableTypeRate) {
       tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+    }
+
+    if (guest.usageTypeId !== DEFAULT_ID) {
+      const usageType = APP_STATE.usageTypes.find((type) => type.id === guest.usageTypeId);
+      if (usageType) {
+        tableRate = APP_STATE.tableRates.find((rate) => (rate.id === usageType.tableRateId) && rate.isActive);
+      }
     }
 
     if (!tableRate) {
@@ -215,12 +223,12 @@ export default function TableCloseout() {
             <select
               onChange={onChangeTableRate}
               value={SELECTED_RATE.id}
-              className={`${formSelectStyles}`}
+              className={`${formSelectStyles} text-center`}
             >
               {APP_STATE.tableRates
                 .filter((rate) => rate.isActive)
                 .map((rate) => (
-                <option key={rate.id} className={optionStyles} value={rate.id}>{rate.name}</option>
+                <option key={rate.id} className={`${optionStyles} text-center`} value={rate.id}>{rate.name}</option>
               ))}
             </select>
           </div>

@@ -60,15 +60,15 @@ export default function AdminStatusBar() {
       </div>
     </div>
     <ModalConfirm
-          show={SHOW_CONFIRM_SAVE}
-          dialogTitle={`SAVE STATUS BAR`}
-          dialogMessageFn={() => (
-            <span className="text-base">
-              <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
-            </span>
-          )}
-          onConfirm={() => {onClickSaveItem()}}
-          onCancel={() => {setShowConfirmSave(false)}}
-        />
+      show={SHOW_CONFIRM_SAVE}
+      dialogTitle={`SAVE STATUS BAR`}
+      dialogMessageFn={() => (
+        <span className="text-base">
+          <div className="mt-3 text-xl text-gray-200">Are you sure?</div>
+        </span>
+      )}
+      onConfirm={() => {onClickSaveItem()}}
+      onCancel={() => {setShowConfirmSave(false)}}
+    />
   </>)
 }

@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { actionButtonStyles, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, largePartyStyle1, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
@@ -154,7 +154,7 @@ export default function GuestItem(props: {
       >
         {(showPartySize) && (
           <div className="inline-block">
-            <div className={`text-nowrap text-sm ${isLargePartySize ? `!bg-pink-700 !text-gray-100 !px-5 ${usageTypeIndicatorStyles}`: '!bg-transparent !text-gray-400'}`}>
+            <div className={`text-nowrap text-sm ${isLargePartySize ? `${largePartyStyle1}`: '!bg-transparent !text-gray-400'}`}>
               Party of {props.guest.partySize}
             </div>
           </div>

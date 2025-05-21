@@ -144,7 +144,7 @@ export default function AdminUsageTypes() {
                 />
               </div>
             </div>
-            {(usageType.id !== DefaultUsageTypeData.id) && (
+            {(usageType.id !== DefaultUsageTypeData.id) && (<>
               <div className={`${ROW} mt-1`}>
                 <div className={`${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
@@ -159,123 +159,123 @@ export default function AdminUsageTypes() {
                   }}
                 />
               </div>
-            )}
-            <div className={`${ROW}`}>
-              <div className="text-gray-400 mr-2">
-                Rate:
-              </div>
-              <select
-                onChange={(event) => {
-                  usageType.tableRateId = Number(event.target.value);
-                  setUsageTypes([...USAGE_TYPES]);
-                }}
-                value={usageType.tableRateId}
-                className={`grow ${formSelectStyles}`}
-              >
-                {APP_STATE.tableRates
-                  .filter((tableRate) => tableRate.isActive)
-                  .map((tableRate) => (
-                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
-                  ))
-                }
-              </select>
-            </div>
-            <div className={`${ROW} mt-1`}>
-              <div className={`${formLabelLeftStyles}`}>
-                Use Icon:
-              </div>
-              <input
-                type="checkbox"
-                className={`ml-2 size-4`}
-                checked={usageType.useIcon}
-                onChange={(event) => {
-                  usageType.useIcon = !usageType.useIcon;
-                  setUsageTypes([...USAGE_TYPES]);
-                }}
-              />
-            </div>
-            {usageType.useIcon && (<>
               <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
-                  Icon:
+                  Rate:
                 </div>
-                <input
-                  readOnly={true}
-                  value={usageType.icon}
-                  maxLength={1}
-                  className={`${formInputStylesSmall}`}
-                  placeholder=""
+                <select
                   onChange={(event) => {
-                    usageType.icon = event.target.value.trim();
+                    usageType.tableRateId = Number(event.target.value);
                     setUsageTypes([...USAGE_TYPES]);
                   }}
-                  onClick={() => {
-                    usageType.showIconPicker = !usageType.showIconPicker;
+                  value={usageType.tableRateId}
+                  className={`grow ${formSelectStyles}`}
+                >
+                  {APP_STATE.tableRates
+                    .filter((tableRate) => tableRate.isActive)
+                    .map((tableRate) => (
+                      <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                    ))
+                  }
+                </select>
+              </div>
+              <div className={`${ROW} mt-1`}>
+                <div className={`${formLabelLeftStyles}`}>
+                  Use Icon:
+                </div>
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={usageType.useIcon}
+                  onChange={(event) => {
+                    usageType.useIcon = !usageType.useIcon;
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
-                <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
-                  onClick={() => {
-                    usageType.icon = "";
-                    usageType.showIconPicker = false;
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}>
-                    <span>Clear</span>
-                </div>
               </div>
-              {usageType.showIconPicker && (<>
-                <div className={`ROW mt-2`}>
-                  <Picker data={data}
-                    onEmojiSelect={(emojiData) => {
-                    usageType.icon = emojiData.native;
-                    usageType.showIconPicker = false;
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}></Picker>
+              {usageType.useIcon && (<>
+                <div className={`${ROW}`}>
+                  <div className="text-gray-400 mr-2">
+                    Icon:
+                  </div>
+                  <input
+                    readOnly={true}
+                    value={usageType.icon}
+                    maxLength={1}
+                    className={`${formInputStylesSmall}`}
+                    placeholder=""
+                    onChange={(event) => {
+                      usageType.icon = event.target.value.trim();
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                    onClick={() => {
+                      usageType.showIconPicker = !usageType.showIconPicker;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                  />
+                  <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
+                    onClick={() => {
+                      usageType.icon = "";
+                      usageType.showIconPicker = false;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}>
+                      <span>Clear</span>
+                  </div>
                 </div>
+                {usageType.showIconPicker && (<>
+                  <div className={`ROW mt-2`}>
+                    <Picker data={data}
+                      onEmojiSelect={(emojiData) => {
+                      usageType.icon = emojiData.native;
+                      usageType.showIconPicker = false;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}></Picker>
+                  </div>
+                </>)}
               </>)}
-            </>)}
-            {!usageType.useIcon && (<>
-              <div className={`${ROW}`}>
-                <div className="text-gray-400 mr-2">
-                  Text Color:
+              {!usageType.useIcon && (<>
+                <div className={`${ROW}`}>
+                  <div className="text-gray-400 mr-2">
+                    Text Color:
+                  </div>
+                  <input
+                    readOnly={true}
+                    value={usageType.textColor}
+                    maxLength={7}
+                    className={`${formInputStylesSmall} uppercase`}
+                    placeholder=""
+                    onChange={(event) => {
+                      usageType.textColor = event.target.value.trim();
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                    onClick={() => {
+                      usageType.showColorPicker = !usageType.showColorPicker;
+                      setTextColor(new Color(usageType.textColor || TEXT_COLOR));
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                  />
+                  <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
+                    onClick={() => {
+                      usageType.textColor = "";
+                      usageType.showColorPicker = false;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}>
+                      <span>Clear</span>
+                  </div>
                 </div>
-                <input
-                  readOnly={true}
-                  value={usageType.textColor}
-                  maxLength={7}
-                  className={`${formInputStylesSmall} uppercase`}
-                  placeholder=""
-                  onChange={(event) => {
-                    usageType.textColor = event.target.value.trim();
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}
-                  onClick={() => {
-                    usageType.showColorPicker = !usageType.showColorPicker;
-                    setTextColor(new Color(usageType.textColor || TEXT_COLOR));
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}
-                />
-                <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
-                  onClick={() => {
-                    usageType.textColor = "";
-                    usageType.showColorPicker = false;
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}>
-                    <span>Clear</span>
-                </div>
-              </div>
-              {usageType.showColorPicker && (<>
-                <div className={`ROW mt-2`}>
-                  <ColorPicker value={TEXT_COLOR}
-                    disabledAlpha={true}
-                    onChange={
-                      (color: Color) => {
-                        setTextColor(color);
-                        usageType.textColor = color.toHexString();
-                        setUsageTypes([...USAGE_TYPES]);
-                      }
-                    }></ColorPicker>
-                </div>
+                {usageType.showColorPicker && (<>
+                  <div className={`ROW mt-2`}>
+                    <ColorPicker value={TEXT_COLOR}
+                      disabledAlpha={true}
+                      onChange={
+                        (color: Color) => {
+                          setTextColor(color);
+                          usageType.textColor = color.toHexString();
+                          setUsageTypes([...USAGE_TYPES]);
+                        }
+                      }></ColorPicker>
+                  </div>
+                </>)}
               </>)}
             </>)}
           </div>
