@@ -6,7 +6,7 @@ import Picker from '@emoji-mart/react'
 import ColorPicker, { Color } from '@rc-component/color-picker'
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
-import { DefaultUsageTypeData, type UsageType } from "~/config/AppState"
+import { DEFAULT_ID, DefaultUsageTypeData, type UsageType } from "~/config/AppState"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 
 import '@rc-component/color-picker/assets/index.css'
@@ -112,7 +112,7 @@ export default function AdminUsageTypes() {
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
           <div className={`!min-w-[380px] ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
-              {(usageType.id !== DefaultUsageTypeData.id) && (
+              {(usageType.id !== DEFAULT_ID) && (
                 <div
                   className={`mr-2 ${!!usageType.forDelete && 'text-red-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(usageType)}}>
@@ -120,13 +120,14 @@ export default function AdminUsageTypes() {
                 </div>
               )}
               <div className={`text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
-                {usageType.id === DefaultUsageTypeData.id && (
+                {usageType.id === DEFAULT_ID && (
                   "DEFAULT"
                 )}
-                {usageType.id !== DefaultUsageTypeData.id && (
+                {usageType.id !== DEFAULT_ID && (
                   <span>{index+1}</span>
                 )}
                 <input
+                  disabled={usageType.id === DEFAULT_ID}
                   className={`
                     ${formInputStyles}
                     ${INPUT_FIELD}
@@ -144,9 +145,9 @@ export default function AdminUsageTypes() {
                 />
               </div>
             </div>
-            {(usageType.id !== DefaultUsageTypeData.id) && (<>
+            {(usageType.id !== DEFAULT_ID) && (<>
               <div className={`${ROW} mt-1`}>
-                <div className={`${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
+                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -155,6 +156,20 @@ export default function AdminUsageTypes() {
                   checked={usageType.isActive}
                   onChange={(event) => {
                     usageType.isActive = !usageType.isActive;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                />
+              </div>
+              <div className={`${ROW} mt-1`}>
+                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.isFlatRate? '!text-cyan-500':''}`}>
+                  FLAT RATE:
+                </div>
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={usageType.isFlatRate}
+                  onChange={(event) => {
+                    usageType.isFlatRate = !usageType.isFlatRate;
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                 />
@@ -180,8 +195,8 @@ export default function AdminUsageTypes() {
                 </select>
               </div>
               <div className={`${ROW} mt-1`}>
-                <div className={`${formLabelLeftStyles}`}>
-                  Use Icon:
+                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
+                  USE ICON:
                 </div>
                 <input
                   type="checkbox"

@@ -101,7 +101,8 @@ export default function TableCloseout() {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
       if (player.billable) {
-        total += Number(player.hours) * Number(player.rate);
+        const hours = isFlatRate() ? 1 : Number(player.hours);
+        total += hours * Number(player.rate);
       }
     })
     return total.toFixed(2);
@@ -127,6 +128,7 @@ export default function TableCloseout() {
   const resetTableRate = () => {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const guest = table.guest;
+    const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
     const tableTypeId = table.tableTypeId;
     const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
 
@@ -137,7 +139,6 @@ export default function TableCloseout() {
     }
 
     if (guest.usageTypeId !== DEFAULT_ID) {
-      const usageType = APP_STATE.usageTypes.find((type) => type.id === guest.usageTypeId);
       if (usageType) {
         tableRate = APP_STATE.tableRates.find((rate) => (rate.id === usageType.tableRateId) && rate.isActive);
       }
@@ -158,9 +159,9 @@ export default function TableCloseout() {
 
   const fragmentUsageType = () => {
     const guest = MAIN_TAKEOVER.closeoutTable.guest;
-    const usageType = APP_STATE.usageTypes.find(_ => _.id === guest.usageTypeId);
+    const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    const textColor = (usageType && !usageType.useIcon && usageType.textColor);
+    const textColor = (usageType && !usageType.useIcon && usageType.textColor) || '#e5e7eb';
     return (<>
       <div className="mt-5">
         {!!icon && (
@@ -168,13 +169,19 @@ export default function TableCloseout() {
             {icon}
           </div>
         )}
-        {!!textColor && (
+        {!icon && (guest.usageTypeId !== DEFAULT_ID) && (
           <div className={`uppercase text-xl !px-10 ${usageTypeIndicatorStyles}`} style={{color: textColor}}>
             {usageType.name}
           </div>
         )}
       </div>
     </>)
+  }
+
+  const isFlatRate = () => {
+    const guest = MAIN_TAKEOVER.closeoutTable.guest;
+    const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
+    return usageType.isFlatRate;
   }
 
   useEffect(() => {
@@ -236,11 +243,6 @@ export default function TableCloseout() {
 
         {fragmentUsageType()}
 
-        <div className="text-xl text-gray-400 mt-4">
-          Bill Total: &nbsp;
-          <span className="text-green-500 text-xl">${playersTotal()}</span>
-        </div>
-
         <div className="WORKSHEET text-left p-5 mx-5 mt-2">
           {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
             <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
@@ -265,6 +267,7 @@ export default function TableCloseout() {
               <div className="text-sm text-gray-500 ml-7">
                 {playerAssignedAt(player, index)}
               </div>
+              {!isFlatRate() && (
               <div className="text-sm ml-7 mt-2">
                 <div className="inline-block w-[90px]">
                   <div className="text-xs text-gray-500">HOURS</div>
@@ -298,6 +301,12 @@ export default function TableCloseout() {
                   </div>
                 </div>
               </div>
+              )}
+              {isFlatRate() && (
+                <div className="text-center text-xl my-2 text-green-500">
+                  ${Number(player.rate).toFixed(2)}
+                </div>
+              )}
             </div>
             {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
               <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
