@@ -1,6 +1,6 @@
 import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
-import { DefaultAccountData, type Account} from "~/config/AppState";
+import { DefaultAccountData } from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
