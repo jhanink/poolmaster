@@ -10,6 +10,7 @@ export const MAX_PARTY_SIZE = 20;
 export const MIN_LARGE_PARTY_SIZE = 3;
 export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
 export const LARGE_PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE - (MIN_LARGE_PARTY_SIZE - 1) }, (_, i) => i + MIN_LARGE_PARTY_SIZE);
+export const DEFAULT_TEXT_COLOR = '#EFEFEF';
 
 export interface AppState {
   account: Account,

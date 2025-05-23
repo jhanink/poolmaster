@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, largePartyStylesOptions, smallPartyStyle, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
-import { DEFAULT_ID, type Guest } from "~/config/AppState"
+import { DEFAULT_ID, DEFAULT_TEXT_COLOR, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
@@ -145,7 +145,7 @@ export default function GuestItem(props: {
     const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    const textColor = (usageType && !usageType.useIcon && usageType.textColor) || '#e5e7eb';
+    const textColor = (usageType && !usageType.useIcon && usageType.textColor) || DEFAULT_TEXT_COLOR;
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
     const isLargePartySize = partySize >= statusBar.largePartySize;
