@@ -104,7 +104,7 @@ export default function AdminTableRates() {
               )}
               <div className={`text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
-                  className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`${formInputStyles} text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   onChange={(event) => {
                     tableRate.name = event.target.value;
                     setTableRates([...TABLE_RATES]);

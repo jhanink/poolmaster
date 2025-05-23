@@ -26,6 +26,7 @@ export const dialogBackdropStyles = `fixed inset-0 bg-slate-500 bg-opacity-40 tr
 export const actionIconStyles = `size-5 text-gray-600 hover:cursor-pointer hover:text-gray-300`;
 export const ITEM = `mb-3 border border-gray-800 rounded-lg p-3`;
 export const ROW = `flex items-center`;
+export const ROW_PX_3 = `flex items-center px-3`;
 export const INPUT_FIELD = `ml-2 w-[150px]`;
 export const usageTypeIndicatorStyles = `text-nowrap inline-block py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
 

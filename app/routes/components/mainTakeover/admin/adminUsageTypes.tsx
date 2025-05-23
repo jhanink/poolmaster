@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
+import EmojiPicker from '@emoji-mart/react'
 import ColorPicker, { Color } from '@rc-component/color-picker'
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
@@ -26,10 +26,11 @@ import {
   formInputStylesSmall,
   formLabelLeftStyles,
   formSelectStyles,
+  optionStyles,
   INPUT_FIELD,
   ITEM,
-  optionStyles,
-  ROW
+  ROW,
+  ROW_PX_3
 } from "~/util/GlobalStylesUtil"
 import { Helpers } from "~/util/Helpers"
 
@@ -109,8 +110,8 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!mx-1 ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
-            <div className={`${ROW}`}>
+          <div className={`!mx-1 ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
+            <div className={`${ROW_PX_3}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div
                   className={`mr-2 ${!!usageType.forDelete && 'text-red-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
@@ -130,7 +131,7 @@ export default function AdminUsageTypes() {
                   className={`
                     ${formInputStyles}
                     ${INPUT_FIELD}
-                    w-[250px] text-sm
+                    text-sm
                     ${formFieldStyles}
                   `}
                   style={(!!usageType.textColor) ? {color: usageType.textColor} : {}}
@@ -145,7 +146,7 @@ export default function AdminUsageTypes() {
               </div>
             </div>
             {(usageType.id !== DEFAULT_ID) && (<>
-              <div className={`${ROW} mt-1`}>
+              <div className={`${ROW_PX_3} mt-1`}>
                 <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
@@ -159,7 +160,7 @@ export default function AdminUsageTypes() {
                   }}
                 />
               </div>
-              <div className={`${ROW}`}>
+              <div className={`${ROW_PX_3}`}>
                 <div className="text-gray-400 mr-2">
                   Rate:
                 </div>
@@ -179,7 +180,7 @@ export default function AdminUsageTypes() {
                   }
                 </select>
               </div>
-              <div className={`${ROW} mt-1`}>
+              <div className={`${ROW_PX_3} mt-1`}>
                 <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                   USE ICON:
                 </div>
@@ -194,7 +195,7 @@ export default function AdminUsageTypes() {
                 />
               </div>
               {usageType.useIcon && (<>
-                <div className={`${ROW}`}>
+                <div className={`${ROW_PX_3}`}>
                   <div className="text-gray-400 mr-2">
                     Icon:
                   </div>
@@ -223,17 +224,17 @@ export default function AdminUsageTypes() {
                   </div>
                 </div>
                 {usageType.showIconPicker && (<>
-                  <div className={`ROW mt-2`}>
-                    <Picker data={data}
+                  <div className={`ROW flex justify-center mt-2`}>
+                    <EmojiPicker data={data}
                       onEmojiSelect={(emojiData) => {
                       usageType.icon = emojiData.native;
                       usageType.showIconPicker = false;
                       setUsageTypes([...USAGE_TYPES]);
-                    }}></Picker>
+                    }}></EmojiPicker>
                   </div>
                 </>)}
               </>)}
-              <div className={`${ROW}`}>
+              <div className={`${ROW_PX_3}`}>
                 <div className="text-gray-400 mr-2">
                   Text Color:
                 </div>
