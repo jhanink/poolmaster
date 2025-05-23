@@ -178,6 +178,9 @@ export default function TableCloseout() {
             }
           </select>
         </div>
+        <div className="text-sm text-gray-500 mt-1 italic">
+          (S) = Single Player, (F) = Flat Rate
+        </div>
       </div>
     )
   }
