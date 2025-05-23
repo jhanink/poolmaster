@@ -101,7 +101,7 @@ export default function AdminTableRates() {
               {(tableRate.id !== DefaultTableRateData.id) && (
                 <span>{index+1}</span>
               )}
-              <div className={`text-nowrap  ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`${formInputStyles} w-[250px] text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
                   onChange={(event) => {
@@ -115,7 +115,7 @@ export default function AdminTableRates() {
             </div>
             {(tableRate.id !== DefaultTableRateData.id) && (
               <div className={`${ROW} mt-1`}>
-                <div className={`${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
+                <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -130,7 +130,7 @@ export default function AdminTableRates() {
               </div>
             )}
             <div className={`${ROW} mt-1`}>
-              <div className={`${formLabelLeftStyles}`}>
+              <div className={`text-sm text-nowrap ${formLabelLeftStyles}`}>
                 Base Rate:
               </div>
               <div className="inline-block">
@@ -147,8 +147,22 @@ export default function AdminTableRates() {
               </div>
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`${formLabelLeftStyles}`}>
-                1 hour minimum?
+              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isFlatRate? '!text-cyan-500':''}`}>
+                Flat Rate:
+              </div>
+              <input
+                type="checkbox"
+                className={`ml-2 size-4`}
+                checked={tableRate.isFlatRate}
+                onChange={(event) => {
+                  tableRate.isFlatRate = !tableRate.isFlatRate;
+                  setTableRates([...TABLE_RATES]);
+                }}
+              />
+            </div>
+            <div className={`${ROW} mt-1`}>
+              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles}`}>
+                Min 1 hr:
               </div>
               <input
                 type="checkbox"
@@ -161,8 +175,8 @@ export default function AdminTableRates() {
               />
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`${formLabelLeftStyles}`}>
-                Per player?
+              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles}`}>
+                Per Player:
               </div>
               <input
                 type="checkbox"

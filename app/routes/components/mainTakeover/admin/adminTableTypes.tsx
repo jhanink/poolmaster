@@ -18,6 +18,7 @@ import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
 import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
+import { Helpers } from "~/util/Helpers"
 
 export default function AdminTableTypes() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -146,7 +147,7 @@ export default function AdminTableTypes() {
                 {APP_STATE.tableRates
                   .filter((tableRate) => tableRate.isActive)
                   .map((tableRate) => (
-                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                    <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name} {Helpers.tableRateSuffix(tableRate)}</option>
                   ))
                 }
               </select>

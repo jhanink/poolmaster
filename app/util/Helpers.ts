@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {type AppState, type Guest} from "~/config/AppState";
+import {type AppState, type Guest, type TableRate} from "~/config/AppState";
 
 export type TimeElapsed = {
   durationMinutes: number;
@@ -49,6 +49,17 @@ export const Helpers = {
       return appState.usageTypes[0];
     }
     return match;
+  },
+  tableRateSuffix: (tableRate: TableRate) => {
+    const temp = [];
+    if (!tableRate.tableRateRules.isChargePerPlayer) {
+      temp.push('S');
+    }
+    if (tableRate.isFlatRate) {
+      temp.push('F');
+    }
+    if (temp.length) return `(${temp.join(', ')})`;
+    return '';
   },
   timeElapsed: (start: number, finish?: number): TimeElapsed => {
     const end = finish || Date.now();

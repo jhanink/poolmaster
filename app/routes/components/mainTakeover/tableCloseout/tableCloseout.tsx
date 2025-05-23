@@ -101,7 +101,7 @@ export default function TableCloseout() {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
       if (player.billable) {
-        const hours = isFlatRate() ? 1 : Number(player.hours);
+        const hours = SELECTED_RATE.isFlatRate ? 1 : Number(player.hours);
         total += hours * Number(player.rate);
       }
     })
@@ -161,27 +161,39 @@ export default function TableCloseout() {
     const guest = MAIN_TAKEOVER.closeoutTable.guest;
     const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    const textColor = (usageType && !usageType.useIcon && usageType.textColor) || '#e5e7eb';
     return (<>
       <div className="mt-5">
         {!!icon && (
-          <div className={`text-3xl ${usageTypeIndicatorStyles}`}>
+          <div className={`text-2xl ${usageTypeIndicatorStyles}`}>
             {icon}
-          </div>
-        )}
-        {!icon && (guest.usageTypeId !== DEFAULT_ID) && (
-          <div className={`uppercase text-xl !px-10 ${usageTypeIndicatorStyles}`} style={{color: textColor}}>
-            {usageType.name}
           </div>
         )}
       </div>
     </>)
   }
 
-  const isFlatRate = () => {
-    const guest = MAIN_TAKEOVER.closeoutTable.guest;
-    const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
-    return usageType.isFlatRate;
+  const fragmentTableRate = () => {
+    return (
+      <div className="mt-2">
+        <div className="text-sm uppercase text-gray-500">
+          Table Rate
+        </div>
+        <div>
+          <select
+            onChange={onChangeTableRate}
+            value={SELECTED_RATE.id}
+            className={`${formSelectStyles} text-center`}
+          >
+            {APP_STATE.tableRates
+              .filter((tableRate) => tableRate.isActive)
+              .map((tableRate) => (
+                <option key={tableRate.id} className={`${optionStyles} text-center`} value={tableRate.id}>{tableRate.name} {Helpers.tableRateSuffix(tableRate)}</option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+    )
   }
 
   useEffect(() => {
@@ -201,47 +213,45 @@ export default function TableCloseout() {
           <div className="text-2xl mb-3">
             <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
           </div>
-          <div className="inline-block text-right">
-            <div className="TIME flex items-center text-base mb-2">
-              <div className="w-[50px]">
-                Hours
-              </div>
-              <div className="inline-block">
-              <div className="inline-block w-[90px]">
-                <input
-                  type="text"
-                  className={`text-gray-500 w-[70px] ${formFieldStyles}`}
-                  maxLength={6}
-                  onChange={(event) => {
-                    const hours = event.target.value.trim()
-                    setHoursData(hours);
-                  }}
-                  value={`${HOURS_DATA}`}
-                />
+
+          <div className="text-lg uppercase text-gray-500 mb-2">
+            {SELECTED_RATE.isFlatRate && (
+              `FLATE RATE`
+            )}
+            {!SELECTED_RATE.isFlatRate && (
+              `HOURLY RATE`
+            )}
+          </div>
+
+          {!SELECTED_RATE.isFlatRate && (
+            <div className="inline-block text-right">
+              <div className="TIME flex items-center text-base mb-2">
+                <div className="w-[50px]">
+                  Hours
                 </div>
-                <span className={actionButtonStyles} onClick={() => {useTableHours(HOURS_DATA)}}>use</span>
+                <div className="inline-block">
+                <div className="inline-block w-[90px]">
+                  <input
+                    type="text"
+                    className={`text-gray-500 w-[70px] ${formFieldStyles}`}
+                    maxLength={6}
+                    onChange={(event) => {
+                      const hours = event.target.value.trim()
+                      setHoursData(hours);
+                    }}
+                    value={`${HOURS_DATA}`}
+                  />
+                  </div>
+                  <span className={actionButtonStyles} onClick={() => {useTableHours(HOURS_DATA)}}>use</span>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="mt-2">
-            <select
-              onChange={onChangeTableRate}
-              value={SELECTED_RATE.id}
-              className={`${formSelectStyles} text-center`}
-            >
-              {APP_STATE.tableRates
-                .filter((rate) => rate.isActive)
-                .map((rate) => (
-                <option key={rate.id} className={`${optionStyles} text-center`} value={rate.id}>{rate.name}</option>
-              ))}
-            </select>
-          </div>
+          )}
         </div>
 
         {fragmentUsageType()}
+
+        {fragmentTableRate()}
 
         <div className="WORKSHEET text-left p-5 mx-5 mt-2">
           {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
@@ -267,7 +277,7 @@ export default function TableCloseout() {
               <div className="text-sm text-gray-500 ml-7">
                 {playerAssignedAt(player, index)}
               </div>
-              {!isFlatRate() && (
+              {!SELECTED_RATE.isFlatRate && (
               <div className="text-sm ml-7 mt-2">
                 <div className="inline-block w-[90px]">
                   <div className="text-xs text-gray-500">HOURS</div>
@@ -302,7 +312,7 @@ export default function TableCloseout() {
                 </div>
               </div>
               )}
-              {isFlatRate() && (
+              {SELECTED_RATE.isFlatRate && (
                 <div className="text-center text-xl my-2 text-green-500">
                   ${Number(player.rate).toFixed(2)}
                 </div>

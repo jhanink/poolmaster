@@ -1,6 +1,5 @@
 import type { TimeElapsed } from "~/util/Helpers";
 import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
-import type { ExtraPlayer } from "~/config/AppState";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
 

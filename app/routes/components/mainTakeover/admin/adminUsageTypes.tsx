@@ -31,6 +31,7 @@ import {
   optionStyles,
   ROW
 } from "~/util/GlobalStylesUtil"
+import { Helpers } from "~/util/Helpers"
 
 
 export default function AdminUsageTypes() {
@@ -160,20 +161,6 @@ export default function AdminUsageTypes() {
                   }}
                 />
               </div>
-              <div className={`${ROW} mt-1`}>
-                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.isFlatRate? '!text-cyan-500':''}`}>
-                  FLAT RATE:
-                </div>
-                <input
-                  type="checkbox"
-                  className={`ml-2 size-4`}
-                  checked={usageType.isFlatRate}
-                  onChange={(event) => {
-                    usageType.isFlatRate = !usageType.isFlatRate;
-                    setUsageTypes([...USAGE_TYPES]);
-                  }}
-                />
-              </div>
               <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
                   Rate:
@@ -189,7 +176,7 @@ export default function AdminUsageTypes() {
                   {APP_STATE.tableRates
                     .filter((tableRate) => tableRate.isActive)
                     .map((tableRate) => (
-                      <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name}</option>
+                      <option key={tableRate.id} className={optionStyles} value={tableRate.id}>{tableRate.name} {Helpers.tableRateSuffix(tableRate)}</option>
                     ))
                   }
                 </select>
