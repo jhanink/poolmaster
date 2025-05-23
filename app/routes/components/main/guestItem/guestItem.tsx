@@ -28,7 +28,7 @@ export default function GuestItem(props: {
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
-  const statusBarStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-3'}`;
+  const statusBarStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -149,7 +149,7 @@ export default function GuestItem(props: {
     const showStatusBar = showPartySize || (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
-      <div className={`${statusBarStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-2 mt-2'}`}
+      <div className={`${statusBarStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
           onClick={(event) => {
             if (SELECTED_LIST_FILTER) return;
             props.setItemExpanded(prev => !prev);
