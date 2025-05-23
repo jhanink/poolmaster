@@ -1,4 +1,4 @@
-import { DefaultTableRateData, type TableRate } from "~/config/AppState";
+import { DefaultTableRateData, PARTY_SIZE_ARRAY, type TableRate } from "~/config/AppState";
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
@@ -6,11 +6,12 @@ import {
   actionIconStyles,
   formFieldStyles,
   formInputStyles,
-  formInputStylesExtraSmall,
   formInputStylesSmall,
   formLabelLeftStyles,
+  formSelectStyles,
   INPUT_FIELD,
   ITEM,
+  optionStyles,
   ROW
 } from "~/util/GlobalStylesUtil";
 import { useEffect, useState } from "react";
@@ -193,18 +194,19 @@ export default function AdminTableRates() {
                 <div className={`${formLabelLeftStyles}`}>
                   Player limit:
                 </div>
-                <input
-                  type="number"
-                  value={tableRate.playerRateRules.playerLimit}
-                  maxLength={2}
-                  min={0}
-                  max={99}
-                  className={`${formInputStylesExtraSmall}`}
+                <select
+                  name="partySize"
                   onChange={(event) => {
                     tableRate.playerRateRules.playerLimit = Number(event.target.value.trim());
                     setTableRates([...TABLE_RATES]);
                   }}
-                />
+                  value={tableRate.playerRateRules.playerLimit}
+                  className={`${formSelectStyles} pb-3`}
+                >
+                  {PARTY_SIZE_ARRAY.map((size) => (
+                    <option key={size} className={optionStyles} value={size}>{size}</option>
+                  ))}
+                </select>
               </div>
               <div className={`${ROW} ml-8 mt-1`}>
                 <div className={`${formLabelLeftStyles}`}>
