@@ -109,7 +109,7 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!min-w-[380px] ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
+          <div className={`!mx-1 ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div

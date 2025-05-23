@@ -11,8 +11,8 @@ import AdminUsageTypes from "./adminUsageTypes";
 import AdminStatusBar from "./adminStatusBar";
 
 export const ADMIN_SECTION = `text-left`;
-export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg w-full sticky top-[30px] absolute`;
-export const ADMIN_CONTENT = `text-sm px-1`;
+export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg sticky top-[44px] relative z-5 min-w-[385px]`;
+export const ADMIN_CONTENT = `text-sm`;
 export const ADMIN_ACTIONS = `text-left`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`
 
