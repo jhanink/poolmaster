@@ -100,7 +100,6 @@ export interface TableRate {
   name: string,
   tableRateRules: TableRateRules,
   playerRateRules?: PlayerRateRules,
-  isFlatRate: boolean,
   isActive: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
@@ -113,6 +112,7 @@ export interface PlayerRateRules {
 
 export interface TableRateRules {
   isOneHourMinimum: boolean,
+  isFlatRate: boolean,
   hourlyRate: string,
   isChargePerPlayer: boolean,
 }
@@ -141,6 +141,7 @@ export const DefaultTableRateData: TableRate = {
   name: `Default Rate Schedule`,
   tableRateRules: {
     isOneHourMinimum: true,
+    isFlatRate: false,
     hourlyRate: "10.00",
     isChargePerPlayer: false,
   } as TableRateRules,
@@ -148,7 +149,6 @@ export const DefaultTableRateData: TableRate = {
     playerLimit: 0,
     afterLimitRate: "10.00",
   } as PlayerRateRules,
-  isFlatRate: false,
   isActive: true,
   forDelete: false,
   forAdd: true,

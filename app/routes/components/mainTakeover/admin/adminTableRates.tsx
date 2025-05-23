@@ -148,15 +148,15 @@ export default function AdminTableRates() {
               </div>
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isFlatRate? '!text-cyan-500':''}`}>
+              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.tableRateRules.isFlatRate? '!text-cyan-500':''}`}>
                 Flat Rate:
               </div>
               <input
                 type="checkbox"
                 className={`ml-2 size-4`}
-                checked={tableRate.isFlatRate}
+                checked={tableRate.tableRateRules.isFlatRate}
                 onChange={(event) => {
-                  tableRate.isFlatRate = !tableRate.isFlatRate;
+                  tableRate.tableRateRules.isFlatRate = !tableRate.tableRateRules.isFlatRate;
                   setTableRates([...TABLE_RATES]);
                 }}
               />

@@ -142,6 +142,7 @@ export default function GuestItem(props: {
 
   const itemStatusBar = () => {
     const statusBar = APP_STATE.statusBar;
+    const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const textColor = (usageType && !usageType.useIcon && usageType.textColor) || '#e5e7eb';
@@ -168,17 +169,15 @@ export default function GuestItem(props: {
           </div>
         )}
 
-        <div className="w-full text-right">
-          {!!icon && (
-            <div className={`text-lg ${usageTypeIndicatorStyles}`}>
-              {icon}
-            </div>
-          )}
-          {!icon && (guest.usageTypeId !== DEFAULT_ID) && (
-            <div className={`uppercase text-sm font-semibold ${usageTypeIndicatorStyles}`} style={{color: textColor}}>
-              {usageType.name}
-            </div>
-          )}
+        <div className="w-full text-right text-sm">
+          {(guest.usageTypeId !== DEFAULT_ID) && (<>
+          <div className={`${usageTypeIndicatorStyles}`}>
+            <span className="text-gray-400" style={{color: usageType.textColor}}>{usageType.name}</span>
+            {!!icon && (
+              <span className="ml-2">{icon}</span>
+            )}
+          </div>
+        </>)}
         </div>
       </div>
     </>)

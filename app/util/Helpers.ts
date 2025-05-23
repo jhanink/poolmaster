@@ -55,7 +55,7 @@ export const Helpers = {
     if (!tableRate.tableRateRules.isChargePerPlayer) {
       temp.push('S');
     }
-    if (tableRate.isFlatRate) {
+    if (tableRate.tableRateRules.isFlatRate) {
       temp.push('F');
     }
     if (temp.length) return `(${temp.join(', ')})`;

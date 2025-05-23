@@ -49,9 +49,7 @@ export default function AdminUsageTypes() {
     const types = USAGE_TYPES
       .map((type: UsageType) => {
         const value = {...type, forAdd: false, showIconPicker: false, showColorPicker: false};
-        if (type.useIcon) {
-          value.textColor = '';
-        } else {
+        if (!type.useIcon) {
           value.icon = '';
         }
         return value;
@@ -135,7 +133,7 @@ export default function AdminUsageTypes() {
                     w-[250px] text-sm
                     ${formFieldStyles}
                   `}
-                  style={(!usageType.useIcon && !!usageType.textColor) ? {color: usageType.textColor} : {}}
+                  style={(!!usageType.textColor) ? {color: usageType.textColor} : {}}
                   placeholder="Name..."
                   maxLength={55}
                   onChange={(event) => {
@@ -235,49 +233,47 @@ export default function AdminUsageTypes() {
                   </div>
                 </>)}
               </>)}
-              {!usageType.useIcon && (<>
-                <div className={`${ROW}`}>
-                  <div className="text-gray-400 mr-2">
-                    Text Color:
-                  </div>
-                  <input
-                    readOnly={true}
-                    value={usageType.textColor}
-                    maxLength={7}
-                    className={`${formInputStylesSmall} uppercase`}
-                    placeholder=""
-                    onChange={(event) => {
-                      usageType.textColor = event.target.value.trim();
-                      setUsageTypes([...USAGE_TYPES]);
-                    }}
-                    onClick={() => {
-                      usageType.showColorPicker = !usageType.showColorPicker;
-                      setTextColor(new Color(usageType.textColor || TEXT_COLOR));
-                      setUsageTypes([...USAGE_TYPES]);
-                    }}
-                  />
-                  <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
-                    onClick={() => {
-                      usageType.textColor = "";
-                      usageType.showColorPicker = false;
-                      setUsageTypes([...USAGE_TYPES]);
-                    }}>
-                      <span>Clear</span>
-                  </div>
+              <div className={`${ROW}`}>
+                <div className="text-gray-400 mr-2">
+                  Text Color:
                 </div>
-                {usageType.showColorPicker && (<>
-                  <div className={`ROW mt-2`}>
-                    <ColorPicker value={TEXT_COLOR}
-                      disabledAlpha={true}
-                      onChange={
-                        (color: Color) => {
-                          setTextColor(color);
-                          usageType.textColor = color.toHexString();
-                          setUsageTypes([...USAGE_TYPES]);
-                        }
-                      }></ColorPicker>
-                  </div>
-                </>)}
+                <input
+                  readOnly={true}
+                  value={usageType.textColor}
+                  maxLength={7}
+                  className={`${formInputStylesSmall} uppercase`}
+                  placeholder=""
+                  onChange={(event) => {
+                    usageType.textColor = event.target.value.trim();
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                  onClick={() => {
+                    usageType.showColorPicker = !usageType.showColorPicker;
+                    setTextColor(new Color(usageType.textColor || TEXT_COLOR));
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}
+                />
+                <div className={`ml-2 text-gray-400 hover:underline hover:cursor-pointer`}
+                  onClick={() => {
+                    usageType.textColor = "";
+                    usageType.showColorPicker = false;
+                    setUsageTypes([...USAGE_TYPES]);
+                  }}>
+                    <span>Clear</span>
+                </div>
+              </div>
+              {usageType.showColorPicker && (<>
+                <div className={`ROW mt-2`}>
+                  <ColorPicker value={TEXT_COLOR}
+                    disabledAlpha={true}
+                    onChange={
+                      (color: Color) => {
+                        setTextColor(color);
+                        usageType.textColor = color.toHexString();
+                        setUsageTypes([...USAGE_TYPES]);
+                      }
+                    }></ColorPicker>
+                </div>
               </>)}
             </>)}
           </div>
