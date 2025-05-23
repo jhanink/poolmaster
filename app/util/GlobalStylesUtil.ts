@@ -28,14 +28,14 @@ export const ITEM = `mb-3 border border-gray-800 rounded-lg p-3`;
 export const ROW = `flex items-center`;
 export const ROW_PX_3 = `flex items-center px-3`;
 export const INPUT_FIELD = `ml-2 w-[150px]`;
-export const usageTypeIndicatorStyles = `text-nowrap inline-block py-1 px-5 bg-gray-950 border border-gray-800 rounded-full`;
 
-export const smallPartyStyle = `!bg-transparent !text-gray-400 !text-sm !px-5 !border-gray-800 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle1 = `!bg-gray-300 !text-black !px-5 font-semibold ${usageTypeIndicatorStyles}`;
-export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 !px-5 font-semibold ${usageTypeIndicatorStyles}`;
-export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 !px-5 font-semibold ${usageTypeIndicatorStyles}`;
-export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 !px-5 font-semibold ${usageTypeIndicatorStyles}`;
-export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 !px-5 font-semibold ${usageTypeIndicatorStyles}`;
+export const usageTypeIndicatorStyles = `text-sm text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
+export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle1 = `!bg-gray-300 !text-black font-bold ${usageTypeIndicatorStyles}`;
+export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 
 export const largePartyStylesOptions = [
   {
