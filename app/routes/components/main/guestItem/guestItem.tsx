@@ -145,7 +145,6 @@ export default function GuestItem(props: {
     const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    const textColor = (usageType && !usageType.useIcon && usageType.textColor) || DEFAULT_TEXT_COLOR;
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
     const isLargePartySize = partySize >= statusBar.largePartySize;

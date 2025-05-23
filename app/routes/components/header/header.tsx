@@ -49,8 +49,8 @@ export default function AppHeader() {
   return (
     <div className="w-full text-center">
       <div className="flex items-center relative text-center border-b border-t border-gray-900 p-1 select-none">
-        <div className="flex-1 my-1 text-nowrap text-base text-gray-400">
-          {APP_STATE.account?.venue || 'Pool Master'}
+        <div className="inline-block flex-1 my-1 text-nowrap text-lg text-slate-400 border-gray-800 rounded-full bg-gray-900 mx-5">
+          {APP_STATE.account?.venue}
         </div>
       </div>
       {!MAIN_TAKEOVER && <>
