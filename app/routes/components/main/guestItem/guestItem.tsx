@@ -151,9 +151,10 @@ export default function GuestItem(props: {
     const isLargePartySize = partySize >= statusBar.largePartySize;
     const isEdit = ITEM_EDIT || props.isEditForm;
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
+    const showStatusBar = showPartySize || (usageType.id !== DEFAULT_ID);
 
-    return !isEdit && (showPartySize || icon || textColor) &&  (<>
-      <div className={`${statusBarStyles} ${props.itemExpanded ? 'border-t border-gray-900 pt-2 mt-2' : ''}`}
+    return !isEdit && (showStatusBar) &&  (<>
+      <div className={`${statusBarStyles} border-t border-gray-900 pt-2 mt-2`}
           onClick={(event) => {
             if (SELECTED_LIST_FILTER) return;
             props.setItemExpanded(prev => !prev);
