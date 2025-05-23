@@ -49,7 +49,7 @@ export default function AppHeader() {
   return (
     <div className="w-full text-center">
       <div className="flex items-center relative text-center select-none">
-        <div className="flex-1 mt-3 mb-1 py-1 text-nowrap text-lg text-slate-400 rounded-full bg-gray-900">
+        <div className="flex-1 mt-3 mb-1 mx-2 py-1 text-nowrap text-lg text-slate-400 rounded-full bg-gray-900">
           {APP_STATE.account?.venue}
         </div>
       </div>
