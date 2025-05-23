@@ -143,13 +143,13 @@ export default function GuestItem(props: {
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
-    const isLargePartySize = partySize >= statusBar.largePartySize;
+    const isLargeParty = partySize >= statusBar.largePartySize;
     const isEdit = ITEM_EDIT || props.isEditForm;
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
     const showStatusBar = showPartySize || (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
-      <div className={`${statusBarStyles} border-t border-gray-900 pt-2 mt-2`}
+      <div className={`${statusBarStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-2 mt-2'}`}
           onClick={(event) => {
             if (SELECTED_LIST_FILTER) return;
             props.setItemExpanded(prev => !prev);
@@ -159,7 +159,7 @@ export default function GuestItem(props: {
       >
         {(showPartySize) && (
           <div className="inline-block">
-            <div className={`text-nowrap ${isLargePartySize ? `${largePartyStyle}`: `${smallPartyStyle}`}`}>
+            <div className={`text-nowrap ${isLargeParty ? `${largePartyStyle}`: `${smallPartyStyle}`}`}>
               Party of {props.guest.partySize}
             </div>
           </div>
