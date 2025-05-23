@@ -11,7 +11,7 @@ import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
-const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-500 rounded-full hover:cursor-pointer`;
+const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-800 rounded-full hover:cursor-pointer`;
 const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm select-none`;
 const dndActiveStyle = `bg-green-300 invert`;
 const dndOverStyle = `blur-[2px] bg-white`;
@@ -48,8 +48,8 @@ export default function AppHeader() {
 
   return (
     <div className="w-full text-center">
-      <div className="flex items-center relative text-center border-b border-t border-gray-900 p-1 select-none">
-        <div className="inline-block flex-1 my-1 text-nowrap text-lg text-slate-400 border-gray-800 rounded-full bg-gray-900 mx-5">
+      <div className="flex items-center relative text-center select-none">
+        <div className="flex-1 mt-3 mb-1 py-1 text-nowrap text-lg text-slate-400 rounded-full bg-gray-900">
           {APP_STATE.account?.venue}
         </div>
       </div>

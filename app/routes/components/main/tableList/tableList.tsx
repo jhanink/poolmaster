@@ -7,7 +7,7 @@ import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 
 const chipAssigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-green-800 text-green-600 font-bold hover:cursor-pointer`;
-const chipUnassigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-700 text-gray-600 font-bold  `;
+const chipUnassigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-800 text-gray-600 font-bold  `;
 const selectedChipStyle = `ring-2 ring-white`;
 
 type TableRefs = {

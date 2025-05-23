@@ -7,7 +7,7 @@ import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import { Helpers } from "~/util/Helpers";
 import { fragmentExitTakeover } from "../../fragments/fragments";
 
-const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-700 text-gray-600 font-bold hover:cursor-pointer`;
+const unassignedStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-800 text-gray-600 font-bold hover:cursor-pointer`;
 
 export default function AssignTable() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
