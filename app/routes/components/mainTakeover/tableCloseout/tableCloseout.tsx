@@ -203,6 +203,147 @@ export default function TableCloseout() {
     </>)
   }
 
+  const fragmentFormHeader = () => {
+    return (
+      !SELECTED_RATE.tableRateRules.isFlatRate && (
+        <div className="text-gray-400 mt-5">
+          <div className="text-2xl mb-3">
+            <span className="text-gray-600 mr-3">Close Out</span>
+            <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
+          </div>
+          <div className="inline-block text-right">
+            <div className="mr-1 text-center text-gray-500">
+                HOURS
+              </div>
+            <div className="TIME flex items-center mb-2">
+              <div className="inline-block shrink">
+                <input
+                  type="text"
+                  className={`text-gray-500 w-[100px] !text-center !text-lg ${formFieldStyles}`}
+                  maxLength={6}
+                  value={HOURS_DATA}
+                  onChange={(event) => {
+                    const hours = event.target.value.trim()
+                    setHoursData(hours);
+                    useTableHours(hours);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    )
+  }
+
+  const fragmentFormActionButtons = () => {
+    return (
+      <div className="my-3 mb-20">
+        <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
+        <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out {MAIN_TAKEOVER.closeoutTable.name}</button>
+      </div>
+    )
+  }
+
+  const fragmentBillableData = () => {
+    return (<>
+      <div className="WORKSHEET mt-2 text-left ">
+        {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
+          <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
+
+            <div className="flex">
+              <div className="shrink">
+                <input
+                  type="checkbox"
+                  checked={player.billable}
+                  onChange={(event) => {
+                    player.billable = event.target.checked;
+                    setBillableData({...BILLABLE_DATA});
+                  }}
+                />
+              </div>
+              <div className="grow">
+                <div className="text-center">
+                  <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
+                    {player.name}
+                    {index === 0 && (
+                      <div className="inline-block">&nbsp; (Main)</div>
+                    )}
+                  </div>
+                </div>
+                <div className="text-sm text-gray-500 text-center">
+                  {playerAssignedAt(player, index)}
+                </div>
+                {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
+                  <div className="text-sm mt-2">
+                    <div className="px-1 inline-block">
+                      <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                      <input
+                      type="text"
+                        className={`w-[90px] !text-center ${formFieldStyles}`}
+                        onChange={(event) => {
+                          player.hours = event.target.value;
+                          setBillableData({...BILLABLE_DATA});
+                        }}
+                        value={`${player.hours}`}
+                      />
+                    </div>
+                    <div className="px-1 inline-block">
+                      <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                      <input
+                        type="text"
+                        className={`w-[90px] !text-center ${formFieldStyles}`}
+                        maxLength={6}
+                        onChange={(event) => {
+                          player.rate = event.target.value;
+                          setBillableData({...BILLABLE_DATA});
+                        }}
+                        value={`${player.rate}`}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-center text-xl text-green-500 mt-2">
+                    ${(Number(player.hours) * Number(player.rate)).toFixed(2)}
+                  </div>
+                </>)}
+                {SELECTED_RATE.tableRateRules.isFlatRate && (
+                  <div className="text-center text-xl my-2 text-green-500">
+                    ${Number(player.rate).toFixed(2)}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
+            <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
+              Base Rate Player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
+            </div>
+          </>)}
+        </div>))}
+      </div>
+      <div className="text-xl text-gray-400 my-5">
+        Bill Total: &nbsp;
+        <span className="text-green-500 text-xl">${playersTotal()}</span>
+      </div>
+    </>)
+  }
+
+  const fragmentModalConfirm = () => {
+    return (
+      <ModalConfirm
+        show={SHOW_CONFIRM_CLOSEOUT}
+        dialogTitle={`CLOSE OUT ${MAIN_TAKEOVER.closeoutTable.name}`}
+        dialogMessageFn={() => <div className="text-base">
+          <div className="mt-3 text-xl text-blue-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
+          <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
+        </div>}
+        onConfirm={onClickFinalConfirm}
+        onCancel={() => {setShowConfirmCloseout(false)}}
+      />
+    )
+  }
+
   useEffect(() => {
     setupBillablePlayers();
   }, [SELECTED_RATE]);
@@ -216,135 +357,13 @@ export default function TableCloseout() {
     <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none" ref={TopRef}>
       {fragmentExitTakeover(onClickCancelCheckout)}
       <div className="CONTENT flex-1 text-center">
-        <div className="text-gray-400 mt-5">
-          <div className="text-2xl mb-3">
-            <span className="text-gray-600 mr-3">Close Out</span>
-            <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
-          </div>
-
-          {!SELECTED_RATE.tableRateRules.isFlatRate && (
-            <div className="inline-block text-right">
-              <div className="mr-1 text-center text-gray-500">
-                  HOURS
-                </div>
-              <div className="TIME flex items-center mb-2">
-                <div className="inline-block shrink">
-                  <input
-                    type="text"
-                    className={`text-gray-500 w-[100px] !text-center !text-lg ${formFieldStyles}`}
-                    maxLength={6}
-                    value={HOURS_DATA}
-                    onChange={(event) => {
-                      const hours = event.target.value.trim()
-                      setHoursData(hours);
-                      useTableHours(hours);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
+        {fragmentFormHeader()}
         {fragmentTableRate()}
         {fragmentUsageType()}
-
-        <div className="WORKSHEET mt-2 text-left ">
-          {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
-            <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
-
-              <div className="flex">
-                <div className="shrink">
-                  <input
-                    type="checkbox"
-                    checked={player.billable}
-                    onChange={(event) => {
-                      player.billable = event.target.checked;
-                      setBillableData({...BILLABLE_DATA});
-                    }}
-                  />
-                </div>
-                <div className="grow">
-                  <div className="text-center">
-                    <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
-                      {player.name}
-                      {index === 0 && (
-                        <div className="inline-block">&nbsp; (Main)</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="text-sm text-gray-500 text-center">
-                    {playerAssignedAt(player, index)}
-                  </div>
-                  {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
-                    <div className="text-sm mt-2">
-                      <div className="px-1 inline-block">
-                        <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
-                        <input
-                        type="text"
-                          className={`w-[90px] !text-center ${formFieldStyles}`}
-                          onChange={(event) => {
-                            player.hours = event.target.value;
-                            setBillableData({...BILLABLE_DATA});
-                          }}
-                          value={`${player.hours}`}
-                        />
-                      </div>
-                      <div className="px-1 inline-block">
-                        <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
-                        <input
-                          type="text"
-                          className={`w-[90px] !text-center ${formFieldStyles}`}
-                          maxLength={6}
-                          onChange={(event) => {
-                            player.rate = event.target.value;
-                            setBillableData({...BILLABLE_DATA});
-                          }}
-                          value={`${player.rate}`}
-                        />
-                      </div>
-                    </div>
-                    <div className="text-center text-xl text-green-500 mt-2">
-                      ${(Number(player.hours) * Number(player.rate)).toFixed(2)}
-                    </div>
-                  </>)}
-                  {SELECTED_RATE.tableRateRules.isFlatRate && (
-                    <div className="text-center text-xl my-2 text-green-500">
-                      ${Number(player.rate).toFixed(2)}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
-              <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
-                Base Rate Player Limit: {SELECTED_RATE.playerRateRules.playerLimit}
-              </div>
-            </>)}
-          </div>))}
-        </div>
-
-        <div className="text-xl text-gray-400 my-5">
-          Bill Total: &nbsp;
-          <span className="text-green-500 text-xl">${playersTotal()}</span>
-        </div>
-
-        <div className="my-3 mb-20">
-          <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
-          <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out {MAIN_TAKEOVER.closeoutTable.name}</button>
-        </div>
+        {fragmentBillableData()}
+        {fragmentFormActionButtons()}
+        {fragmentModalConfirm()}
       </div>
-      <ModalConfirm
-        show={SHOW_CONFIRM_CLOSEOUT}
-        dialogTitle={`CLOSE OUT ${MAIN_TAKEOVER.closeoutTable.name}`}
-        dialogMessageFn={() => <div className="text-base">
-          <div className="mt-3 text-xl text-blue-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
-          <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
-        </div>}
-        onConfirm={onClickFinalConfirm}
-        onCancel={() => {setShowConfirmCloseout(false)}}
-      />
     </div>
   );
 }
