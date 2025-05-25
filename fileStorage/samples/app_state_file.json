@@ -14,6 +14,9 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
+  "viewPreferences": {
+    "isTableGridView": false
+  },
   "tableRates": [],
   "tableTypes": [
     {

@@ -37,34 +37,28 @@ export default function TableList() {
     }
   }
 
-  useEffect(() => {
-    const tableRefs: TableRefs = {};
-    APP_STATE.tables.forEach((table) => {tableRefs[`${table.id}`] = React.createRef<HTMLDivElement>()});
-    setTableRefs(tableRefs);
-  }, [APP_STATE.tables]);
+  const fragmentMiniMap = () => {
+    return (
+      <div className="MINIMAP CHIPS my-2 mt-3 mb-5 top-0 z-10" ref={miniMapRef}>
+        {tables
+        .sort((A: TableItem, B: TableItem) => A.number - B.number)
+        .map((table: TableItem, index: number) =>
+          <div className={`CHIP ${table.guest ? chipAssigned : chipUnassigned} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
+            key={table.id}
+            data-table-id={table.id}
+            onClick={(event) => onClickTableChip(event, table)}
+          >
+            {table.name}
+          </div>
+      )}
+      </div>
+    )
+  }
 
-  return (
-    <div className={`${styles.tableListContainer} mx-auto flex-1 max-w-xl text-center select-none`}>
-      <div className={`MINIMAP CHIPS ${mainStyles.column} ${styles.tableList}`}>
-        <div className="my-2 mt-3 mb-5 top-0 z-10" ref={miniMapRef}>
-          {
-            tables
-              .sort((A: TableItem, B: TableItem) =>
-                A.number - B.number
-              )
-              .map((table: TableItem, index: number) =>
-                <div className={`CHIP ${table.guest ? chipAssigned : chipUnassigned} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
-                  key={table.id}
-                  data-table-id={table.id}
-                  onClick={(event) => onClickTableChip(event, table)}
-                >
-                  {table.name}
-                </div>
-              )
-          }
-        </div>
-        <div>
-          {tables
+  const fragmentTables = () => {
+    return (
+      <div>
+        {tables
           .filter((table) => table.guest)
           .sort((A: TableItem, B: TableItem) =>
             A.number - B.number
@@ -77,8 +71,23 @@ export default function TableList() {
             >
               <TableListItem table={table} index={index} tableRef={TABLE_REFS[`${table.id}`]} />
             </div>
-          ))}
-        </div>
+          )
+        )}
+      </div>
+    )
+  }
+
+  useEffect(() => {
+    const tableRefs: TableRefs = {};
+    APP_STATE.tables.forEach((table) => {tableRefs[`${table.id}`] = React.createRef<HTMLDivElement>()});
+    setTableRefs(tableRefs);
+  }, [APP_STATE.tables]);
+
+  return (
+    <div className={`${styles.tableListContainer} mx-auto flex-1 max-w-xl text-center select-none`}>
+      <div className={`${mainStyles.column} ${styles.tableList}`}>
+        {fragmentMiniMap()}
+        {fragmentTables()}
       </div>
       <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
     </div>
