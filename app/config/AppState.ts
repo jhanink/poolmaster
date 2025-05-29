@@ -96,6 +96,29 @@ export interface TableItem {
   modifiedAt?: number,
 }
 
+export interface ScheduleEntry {
+  from: string,
+  to: string,
+  rateBefore: string,
+  rateAfter: string,
+  rateDuring: string,
+}
+
+export interface RateSchedule {
+  id: number,
+  name: string,
+  entries: {
+    Mon: ScheduleEntry,
+    Tue: ScheduleEntry,
+    Wed: ScheduleEntry,
+    Thu: ScheduleEntry,
+    Fri: ScheduleEntry,
+    Sat: ScheduleEntry,
+    Sun: ScheduleEntry,
+  }
+  isActive: boolean,
+}
+
 export interface TableRate {
   id: number,
   name: string,
@@ -115,6 +138,8 @@ export interface TableRateRules {
   isOneHourMinimum: boolean,
   isFlatRate: boolean,
   hourlyRate: string,
+  rateScheduleId: number,
+  useRateSchedule: boolean,
   isChargePerPlayer: boolean,
 }
 
@@ -137,13 +162,73 @@ export const DefaultStatusBar: StatusBar = {
   largePartyStyle: ID_1,
 }
 
+export const DefaultRateSchedule: RateSchedule = {
+  id: DEFAULT_ID,
+  name: "Default Rate Schedule",
+  entries: {
+    Mon: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Tue: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Wed: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Thu: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Fri: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Sat: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+    Sun: {
+      from: "00:00",
+      to: "23:59",
+      rateBefore: "0.00",
+      rateAfter: "0.00",
+      rateDuring: "10.00",
+    },
+
+  },
+  isActive: false,
+}
+
 export const DefaultTableRateData: TableRate = {
   id: DEFAULT_ID,
-  name: `Default Rate Schedule`,
+  name: `Default Table Rate`,
   tableRateRules: {
     isOneHourMinimum: true,
     isFlatRate: false,
     hourlyRate: "10.00",
+    rateScheduleId: DEFAULT_ID,
+    useRateSchedule: false,
     isChargePerPlayer: false,
   } as TableRateRules,
   playerRateRules: {
