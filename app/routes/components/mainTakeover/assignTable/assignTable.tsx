@@ -31,10 +31,15 @@ export default function AssignTable() {
   const returnToGuestList = async () => {
     const assignedTable = APP_STATE.tables.find((table: TableItem) => table.guest?.id === MAIN_TAKEOVER.assignTable.id);
     assignedTable.guest = undefined;
+    const guest = MAIN_TAKEOVER.assignTable;
+    guest.assignedAt = undefined;
+    guest.closedOutAt = undefined;
+
     APP_STATE.guestList = [
       ...APP_STATE.guestList,
-      MAIN_TAKEOVER.assignTable
-    ]
+      {...guest}
+    ];
+
     const newState = await AppStorage.setAppStateRemote(APP_STATE);
     setAppState(newState);
     exit();

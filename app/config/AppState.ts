@@ -23,10 +23,6 @@ export interface AppState {
   statusBar: StatusBar,
 }
 
-export interface ViewPreferences {
-  isTableGridView: boolean,
-}
-
 export interface StatusBar {
   largePartySize: number,
   largePartyStyle: number,

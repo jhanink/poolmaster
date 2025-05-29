@@ -19,10 +19,7 @@ export const action: ActionFunction = async ({ request }) => {
     try {
       const newAppState: AppState = await request.json();
       await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
-
-      console.log('stateService');
       webSocketManager.broadcast({...newAppState});
-
       return Response.json(newAppState);
     } catch (error) {
       console.error('----- Error saving app state:', error);

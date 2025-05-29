@@ -20,9 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
       const newAppState: AppState = await request.json();
       newAppState.modifiedAt = Date.now();
       await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
-
       webSocketManager.broadcast({...newAppState});
-
       return Response.json(newAppState);
     } catch (error) {
       console.error('----- Error saving app state:', {error, request, appStateFilePath});

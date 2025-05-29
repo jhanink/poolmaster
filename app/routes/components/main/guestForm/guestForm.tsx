@@ -348,7 +348,12 @@ export default function GuestForm(props: {
         </button>
         {!MAIN_TAKEOVER?.addGuest && (
           <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
-            Delete
+            {!props.guest.assignedAt && (
+              <span>Delete</span>
+            )}
+            {!!props.guest.assignedAt && (
+              <span>Remove</span>
+            )}
           </button>
         )}
       </div>

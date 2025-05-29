@@ -11,9 +11,7 @@ export const action: ActionFunction = async ({ request }) => {
     const fileAppState: AppState = JSON.parse(fileData);
     const newAppState = handleDelete(fileAppState, requestData);
     await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
-
     webSocketManager.broadcast({...newAppState});
-
     return Response.json(newAppState);
   } catch (error) {
     console.error('----- [deleteGuestService.ts] Error:', error, requestData);
