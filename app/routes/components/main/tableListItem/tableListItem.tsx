@@ -52,7 +52,7 @@ export default function TableListItem(props: {
       <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
-            {table.name}
+            <span className="mr-2">{table.name}</span>
             <div className="absolute top-2 right-0 hover:cursor-pointer">
               {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && <>
                 <div className="text-gray-500">
@@ -60,7 +60,6 @@ export default function TableListItem(props: {
                 </div>
               </>}
             </div>
-            <div className="text-gray-700">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
           </div>
         </div>
         {table.guest && (

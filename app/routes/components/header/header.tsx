@@ -55,11 +55,7 @@ export default function AppHeader() {
       </div>
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
-            className={`
-              text-lg
-              ${dndTargetBaseStyle}
-              ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}
-            `}>
+          className={`text-lg ${dndTargetBaseStyle} ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}`}>
           <div>
             <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
               <span className={`${statusPillStyles} text-nowrap`}>

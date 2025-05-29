@@ -21,7 +21,6 @@ export interface AppState {
   tables: TableItem[],
   modifiedAt: number,
   statusBar: StatusBar,
-  viewPreferences?: ViewPreferences,
 }
 
 export interface ViewPreferences {
@@ -266,8 +265,5 @@ export const DefaultAppState: AppState = {
   ],
   statusBar: {
     ...DefaultStatusBar,
-  },
-  viewPreferences: {
-    isTableGridView: false,
   }
 }

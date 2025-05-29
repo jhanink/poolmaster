@@ -21,10 +21,9 @@ export const action: ActionFunction = async ({ request }) => {
       newAppState.modifiedAt = Date.now();
       await fs.writeFile(appStateFilePath, JSON.stringify(newAppState));
 
-      //console.log('storageService');
       webSocketManager.broadcast({...newAppState});
 
-      return Response.json({ message: 'App state saved successfully again' });
+      return Response.json(newAppState);
     } catch (error) {
       console.error('----- Error saving app state:', {error, request, appStateFilePath});
       return Response.json({ error: 'Failed to save app state' }, { status: 500 });

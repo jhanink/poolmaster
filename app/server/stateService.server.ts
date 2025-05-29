@@ -23,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
       console.log('stateService');
       webSocketManager.broadcast({...newAppState});
 
-      return Response.json({ message: 'App state saved successfully' });
+      return Response.json(newAppState);
     } catch (error) {
       console.error('----- Error saving app state:', error);
       return Response.json({ error: 'Failed to save app state' }, { status: 500 });
