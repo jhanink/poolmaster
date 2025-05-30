@@ -145,7 +145,7 @@ export default function AdminUsageTypes() {
             </div>
             {(usageType.id !== DEFAULT_ID) && (<>
               <div className={`${ROW_PX_3} mt-1`}>
-                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
+                <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -179,7 +179,7 @@ export default function AdminUsageTypes() {
                 </select>
               </div>
               <div className={`${ROW_PX_3} mt-1`}>
-                <div className={`w-[75px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
+                <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                   USE ICON:
                 </div>
                 <input
@@ -231,6 +231,22 @@ export default function AdminUsageTypes() {
                     }}></EmojiPicker>
                   </div>
                 </>)}
+              </>)}
+              {usageType.useIcon && (<>
+                <div className={`${ROW_PX_3} mt-1`}>
+                  <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
+                    ICON ONLY:
+                  </div>
+                  <input
+                    type="checkbox"
+                    className={`ml-2 size-4`}
+                    checked={usageType.iconOnly}
+                    onChange={(event) => {
+                      usageType.iconOnly = !usageType.iconOnly;
+                      setUsageTypes([...USAGE_TYPES]);
+                    }}
+                  />
+                </div>
               </>)}
               <div className={`${ROW_PX_3}`}>
                 <div className="text-gray-400 mr-2">

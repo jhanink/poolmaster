@@ -141,6 +141,7 @@ export default function GuestItem(props: {
     const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
+    const iconOnly = (icon && usageType.iconOnly);
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
     const isLargeParty = partySize >= statusBar.largePartySize;
@@ -168,9 +169,11 @@ export default function GuestItem(props: {
         <div className="w-full text-right text-sm">
           {(guest.usageTypeId !== DEFAULT_ID) && (<>
           <div className={`${usageTypeIndicatorStyles}`}>
-            <span className="text-gray-400" style={{color: usageType.textColor}}>{usageType.name}</span>
+            {(!icon || !iconOnly) && (
+              <span className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
+            )}
             {!!icon && (
-              <span className="ml-2">{icon}</span>
+              <span>{icon}</span>
             )}
           </div>
         </>)}

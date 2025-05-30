@@ -32,6 +32,7 @@
       "usageRate": "10",
       "useIcon": false,
       "icon": "",
+      "iconOnly": false,
       "textColor": "",
       "isActive": true,
       "forDelete": false,
