@@ -14,6 +14,10 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
+  "statusBar": {
+    "largePartySize": 5,
+    "largePartyStyle": 3
+  },
   "tableRates": [],
   "tableTypes": [
     {
@@ -40,6 +44,66 @@
       "showIconPicker": false,
       "showColorPicker": false
     }
+  ],
+  "rateSchedules": [
+      {
+          "id": 999999999,
+          "name": "-- USE TABLE RATE --",
+          "entries": {
+              "Mon": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Tue": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Wed": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Thu": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Fri": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Sat": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              },
+              "Sun": {
+                  "from": "00:00",
+                  "to": "23:59",
+                  "rateBefore": "0.00",
+                  "rateAfter": "0.00",
+                  "rateDuring": "10.00"
+              }
+          },
+          "isActive": true,
+          "forDelete": false,
+          "forAdd": false
+      }
   ],
   "guestList": [],
   "tables": [
