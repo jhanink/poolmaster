@@ -9,6 +9,7 @@ import AdminTableRates from "./adminTableRates";
 import AdminTableTypes from "./adminTableTypes";
 import AdminUsageTypes from "./adminUsageTypes";
 import AdminStatusBar from "./adminStatusBar";
+import AdminRateSchedules from "./adminRateSchedules";
 
 export const ADMIN_SECTION = `text-left min-w-[385px]`;
 export const ADMIN_HEADER = `text-2xl mb-2 py-2 px-5 text-black bg-gray-300 rounded-lg sticky top-[44px] relative z-5`;
@@ -53,6 +54,8 @@ export default function Admin() {
           <AdminTableRates/>
           <hr className="text-gray-900 my-5"/>
           <AdminUsageTypes/>
+          <hr className="text-gray-900 my-5"/>
+          <AdminRateSchedules/>
           <hr className="text-gray-900 my-5"/>
           <AdminTableTypes/>
           <hr className="text-gray-900 my-5"/>

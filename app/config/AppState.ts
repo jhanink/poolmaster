@@ -17,6 +17,7 @@ export interface AppState {
   tableTypes: TableType[],
   tableRates: TableRate[],
   usageTypes: UsageType[],
+  rateSchedules: RateSchedule[],
   guestList: Guest[],
   tables: TableItem[],
   modifiedAt: number,
@@ -117,6 +118,8 @@ export interface RateSchedule {
     Sun: ScheduleEntry,
   }
   isActive: boolean,
+  forDelete?: boolean,
+  forAdd?: boolean,
 }
 
 export interface TableRate {
@@ -164,7 +167,7 @@ export const DefaultStatusBar: StatusBar = {
 
 export const DefaultRateSchedule: RateSchedule = {
   id: DEFAULT_ID,
-  name: "Default Rate Schedule",
+  name: "-- USE TABLE RATE --",
   entries: {
     Mon: {
       from: "00:00",
@@ -217,7 +220,9 @@ export const DefaultRateSchedule: RateSchedule = {
     },
 
   },
-  isActive: false,
+  isActive: true,
+  forDelete: false,
+  forAdd: true,
 }
 
 export const DefaultTableRateData: TableRate = {
@@ -263,9 +268,9 @@ export const DefaultUsageTypeData: UsageType = {
 
 export const DefaultTableItemData: TableItem = {
   id: 0,
-  tableTypeId: DefaultTableTypeData.id,
   number: 1,
   name: "Table 1",
+  tableTypeId: DEFAULT_ID,
   tableRateId: DEFAULT_ID,
   ignoreTableTypeRate: false,
   isActive: true,
@@ -314,7 +319,15 @@ export const DefaultAppState: AppState = {
   tableRates: [
     {
       ...DefaultTableRateData,
-      forAdd: false,
+      forDelete: false,
+      forAdd: true,
+    }
+  ],
+  rateSchedules: [
+    {
+      ...DefaultRateSchedule,
+      forDelete: false,
+      forAdd: true,
     }
   ],
   usageTypes: [
@@ -330,7 +343,7 @@ export const DefaultAppState: AppState = {
       number: 1,
       name: "Table 1",
       isActive: true,
-      tableTypeId: DefaultTableTypeData.id,
+      tableTypeId: DEFAULT_ID,
       ignoreTableTypeRate: false,
       tableRateId: DEFAULT_ID,
     },
@@ -339,7 +352,7 @@ export const DefaultAppState: AppState = {
       number: 2,
       name: "Table 2",
       isActive: true,
-      tableTypeId: DefaultTableTypeData.id,
+      tableTypeId: DEFAULT_ID,
       ignoreTableTypeRate: false,
       tableRateId: DEFAULT_ID,
     },

@@ -1,6 +1,6 @@
 import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
-import { DefaultStatusBar, ID_1, ID_2, ID_3, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
+import { DefaultStatusBar, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";

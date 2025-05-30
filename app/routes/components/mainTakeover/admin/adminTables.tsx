@@ -1,4 +1,4 @@
-import { DEFAULT_ID, DefaultTableTypeData, type TableItem } from "~/config/AppState"
+import { DEFAULT_ID, DefaultTableItemData, DefaultTableTypeData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
@@ -60,15 +60,10 @@ export default function AdminTables() {
     const id = Date.now() + index;
     const number = TABLES.length + index;
     const newTable: TableItem = {
+      ...DefaultTableItemData,
       id,
       number,
       name: `Table ${number}`,
-      tableTypeId: DefaultTableTypeData.id,
-      tableRateId: DEFAULT_ID,
-      ignoreTableTypeRate: false,
-      isActive: true,
-      forDelete: false,
-      forAdd: true,
     };
     return newTable;
   }
@@ -96,7 +91,12 @@ export default function AdminTables() {
               <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
-                  className={`uppercase ml-2 ${formInputStyles} w-full ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}
+                  className={`
+                    uppercase ml-2 !w-[270px]
+                    ${formInputStyles}
+                     ${!!table.forDelete && 'text-red-500'}
+                     ${!!table.forAdd && 'text-green-500'}
+                  `}
                   placeholder="Table name..."
                   maxLength={30}
                   onChange={(event) => {

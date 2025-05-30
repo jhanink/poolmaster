@@ -74,9 +74,6 @@ export default function AdminUsageTypes() {
       ...DefaultUsageTypeData,
       id,
       name: `Usage ${index}`,
-      isActive: true,
-      forDelete: false,
-      forAdd: true,
     }
     return newItem;
   }
@@ -129,9 +126,10 @@ export default function AdminUsageTypes() {
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`
+                    !w-[275px] text-sm
+                    ${usageType.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}
-                    text-sm
                     ${formFieldStyles}
                   `}
                   style={(!!usageType.textColor) ? {color: usageType.textColor} : {}}

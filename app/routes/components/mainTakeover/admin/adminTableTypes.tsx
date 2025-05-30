@@ -1,4 +1,4 @@
-import { DefaultTableTypeData, type TableType } from "~/config/AppState"
+import { DEFAULT_ID, DefaultTableTypeData, type TableType } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import {
@@ -51,10 +51,7 @@ export default function AdminTableTypes() {
     const newItem: TableType = {
       ...DefaultTableTypeData,
       id,
-      name: ``,
-      isActive: true,
-      forDelete: false,
-      forAdd: true,
+      name: `Table Type ${index}`,
     }
     return newItem;
   }
@@ -90,7 +87,7 @@ export default function AdminTableTypes() {
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
           <div className={`!mx-1 ${tableType.isActive? '!border-blue-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
-              {(tableType.id !== DefaultTableTypeData.id) && (
+              {(tableType.id !== DEFAULT_ID) && (
                 <div
                   className={`mr-2 ${!!tableType.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(tableType)}}>
@@ -98,14 +95,20 @@ export default function AdminTableTypes() {
                 </div>
               )}
               <div className={`text-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
-                {tableType.id === DefaultTableTypeData.id && (
+                {tableType.id === DEFAULT_ID && (
                   "DEFAULT"
                 )}
-                {tableType.id !== DefaultTableTypeData.id && (
+                {tableType.id !== DEFAULT_ID && (
                   <span>{index+1}</span>
                 )}
                 <input
-                  className={`w-full ${formInputStyles} ${INPUT_FIELD} ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`
+                    !w-[275px]
+                    ${formInputStyles}
+                    ${INPUT_FIELD}
+                    ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}
+                    ${formFieldStyles}
+                  `}
                   placeholder="Table Type..."
                   maxLength={55}
                   onChange={(event) => {
@@ -116,7 +119,7 @@ export default function AdminTableTypes() {
                 />
               </div>
             </div>
-            {(tableType.id !== DefaultTableTypeData.id) && (
+            {(tableType.id !== DEFAULT_ID) && (
               <div className={`${ROW} mt-1`}>
                 <div className={`${formLabelLeftStyles} ${tableType.isActive? '!text-blue-500':''}`}>
                   ENABLED:

@@ -40,7 +40,11 @@ export default function AdminAccount() {
           Venue:
         </span>
         <input
-          className={`${formInputStyles} w-full ${formFieldStyles}`}
+          className={`
+            w-full
+            ${formInputStyles}
+            ${formFieldStyles}
+          `}
           value={ACCOUNT.venue}
           placeholder="Account name..."
           maxLength={70}

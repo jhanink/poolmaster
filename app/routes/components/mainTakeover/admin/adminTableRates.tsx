@@ -1,4 +1,4 @@
-import { DefaultTableRateData, PARTY_SIZE_ARRAY, type TableRate } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, PARTY_SIZE_ARRAY, type TableRate } from "~/config/AppState";
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
@@ -89,22 +89,29 @@ export default function AdminTableRates() {
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
           <div className={`!mx-1 ${tableRate.isActive? 'border-yellow-500': '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
-              {(tableRate.id !== DefaultTableRateData.id) && (
+              {(tableRate.id !== DEFAULT_ID) && (
                 <div
                   className={`mr-2 ${!!tableRate.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableRate.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(tableRate)}}>
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              {(tableRate.id === DefaultTableRateData.id) && (
+              {(tableRate.id === DEFAULT_ID) && (
                 "DEFAULT"
               )}
-              {(tableRate.id !== DefaultTableRateData.id) && (
+              {(tableRate.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
               <div className={`text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
-                  className={`${formInputStyles} text-sm ${INPUT_FIELD} ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'} ${formFieldStyles}`}
+                  className={`
+                    text-sm !w-[275px]
+                    ${formInputStyles}
+                    ${INPUT_FIELD}
+                    ${!!tableRate.forDelete && 'text-red-500'}
+                    ${!!tableRate.forAdd && 'text-green-500'}
+                    ${formFieldStyles}
+                  `}
                   onChange={(event) => {
                     tableRate.name = event.target.value;
                     setTableRates([...TABLE_RATES]);
@@ -114,7 +121,7 @@ export default function AdminTableRates() {
                 />
               </div>
             </div>
-            {(tableRate.id !== DefaultTableRateData.id) && (
+            {(tableRate.id !== DEFAULT_ID) && (
               <div className={`${ROW} mt-1`}>
                 <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
                   ENABLED:
