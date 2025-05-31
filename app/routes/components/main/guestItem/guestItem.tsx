@@ -102,6 +102,11 @@ export default function GuestItem(props: {
       <div className="text-sm">
         <div className="flex">
           <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
+            {props.guest.partySize > 1 && (
+              <div className="ROW uppercase text-gray-300 mb-1">
+                Party - {props.guest.partySize}
+              </div>
+            )}
             { guest.phoneNumber && (
               <div className="ROW">
               <span className={`${fieldLabel}`}>Phone:</span>
@@ -144,9 +149,7 @@ export default function GuestItem(props: {
     const iconOnly = (icon && usageType.iconOnly);
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
-    const isLargeParty = partySize >= statusBar.largePartySize;
     const isEdit = ITEM_EDIT || props.isEditForm;
-    const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
     const showStatusBar = showPartySize || (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
@@ -158,22 +161,14 @@ export default function GuestItem(props: {
             event.preventDefault();
           }}
       >
-        {(showPartySize) && (
-          <div className="inline-block">
-            <div className={`text-nowrap ${isLargeParty ? `${largePartyStyle}`: `${smallPartyStyle}`}`}>
-              Party of {props.guest.partySize}
-            </div>
-          </div>
-        )}
-
         <div className="w-full text-right text-sm">
           {(guest.usageTypeId !== DEFAULT_ID) && (<>
-          <div className={`${usageTypeIndicatorStyles}`}>
+          <div className={`inline-block px-2 border border rounded-xl border-gray-700`}>
             {(!icon || !iconOnly) && (
               <span className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
             )}
             {!!icon && (
-              <span>{icon}</span>
+              <span className="top-[1px] relative text-xl">{icon}</span>
             )}
           </div>
         </>)}
@@ -193,6 +188,10 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
+    const statusBar = APP_STATE.statusBar;
+    const partySize = props.guest.partySize;
+    const isLargeParty = partySize >= statusBar.largePartySize;
+    const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
     return (
       <div className="flex text-sm">
         {!props.isAssigned && (
@@ -200,8 +199,11 @@ export default function GuestItem(props: {
             <span className="text-gray-600">{props.index + 1}. </span>
           </div>
         )}
-        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} flex-grow uppercase text-left text-blue-500 truncate`}>
-          {guest.name}
+        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
+          <div className={`inline-block ${isLargeParty ? `${largePartyStyle}`: ``}`}>
+            {guest.name}
+          </div>
+          {isLargeParty && <div className="ml-2 inline-block text-gray-500"> Party - {partySize}</div>}
         </div>
         {renderItemDuration()}
       </div>

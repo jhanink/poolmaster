@@ -9,7 +9,6 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 
-
 export default function AdminStatusBar() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [STATUS_BAR, setStatusBar] = useState(DefaultStatusBar);
@@ -41,7 +40,7 @@ export default function AdminStatusBar() {
       <div className={`${ITEM}`}>
         <div className={`${ROW}`}>
           <span className="text-gray-400 mr-2">
-            Large Party Size:
+            Big Party (Size)
           </span>
           <select
             onChange={(event) => {
@@ -58,7 +57,7 @@ export default function AdminStatusBar() {
         </div>
         <div className={`${ROW}`}>
           <span className="text-gray-400 mr-2">
-            Large Party Style:
+            Big Party (Color)
           </span>
           <select
             onChange={(event) => {
@@ -73,10 +72,11 @@ export default function AdminStatusBar() {
             ))}
           </select>
         </div>
-        <div className={`${ROW}`}>
-          <div className={`mt-3 ${largePartyStylesOptions[STATUS_BAR.largePartyStyle - 1].style} text-sm text-gray-200`}>
-            Party Size {STATUS_BAR.largePartySize}
+        <div className={`mt-1 uppercase text-sm text-nowrap`}>
+          <div className={`inline-block ${largePartyStylesOptions[STATUS_BAR.largePartyStyle - 1].style} text-gray-200`}>
+            GUEST NAME
           </div>
+          <div className="ml-2 inline-block text-gray-500"> Party - {STATUS_BAR.largePartySize}</div>
         </div>
       </div>
       <div className={`!text-right ${ADMIN_ACTIONS}`}>
