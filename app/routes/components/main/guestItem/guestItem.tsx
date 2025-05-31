@@ -150,7 +150,7 @@ export default function GuestItem(props: {
     const partySize = props.guest.partySize;
     const showPartySize = partySize > 1;
     const isEdit = ITEM_EDIT || props.isEditForm;
-    const showStatusBar = showPartySize || (usageType.id !== DEFAULT_ID);
+    const showStatusBar = (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
       <div className={`${statusBarStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
