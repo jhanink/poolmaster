@@ -1,5 +1,5 @@
 import { DEFAULT_ID, DefaultTableItemData, DefaultTableTypeData, type TableItem } from "~/config/AppState"
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
@@ -12,7 +12,7 @@ import { Helpers } from "~/util/Helpers"
 export default function AdminTables() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLES, setTables] = useState([] as TableItem[]);
-  const [SHOW_CONFIRM_SAVE_TABLES, setShowConfirmSaveTables] = useState(false);
+  const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
   const onClickResetForm = () => {
     const tables = APP_STATE.tables.map((table: TableItem ) => ({...table}));
@@ -32,7 +32,7 @@ export default function AdminTables() {
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
     setTables(tables);
-    setShowConfirmSaveTables(false);
+    setShowConfirmSave(false);
   }
 
   const onClickForDeleteItem = (table: TableItem) => {
@@ -74,11 +74,19 @@ export default function AdminTables() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ROW} ${ADMIN_HEADER}`}>
-        <div className="pr-5">Tables</div>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
-          <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(10)}}>+10</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Tables</div>
+            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
+            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
+            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(10)}}>+10</button>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
@@ -187,13 +195,9 @@ export default function AdminTables() {
           </div>
         ))}
       </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSaveTables(true)} }>Save</button>
-      </div>
     </div>
     <ModalConfirm
-      show={SHOW_CONFIRM_SAVE_TABLES}
+      show={SHOW_CONFIRM_SAVE}
       dialogTitle={`SAVE TABLES`}
       dialogMessageFn={() => (
         <span className="text-base">
@@ -201,7 +205,7 @@ export default function AdminTables() {
         </span>
       )}
       onConfirm={() => {onClickSaveItem()}}
-      onCancel={() => {setShowConfirmSaveTables(false)}}
+      onCancel={() => {setShowConfirmSave(false)}}
     />
   </>)
 }

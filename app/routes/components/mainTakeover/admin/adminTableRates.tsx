@@ -1,5 +1,5 @@
 import { DEFAULT_ID, DefaultTableRateData, PARTY_SIZE_ARRAY, type TableRate } from "~/config/AppState";
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
   actionButtonStyles,
@@ -81,9 +81,17 @@ export default function AdminTableRates() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`flex items-center ${ADMIN_HEADER}`}>
-        <div className="pr-5">Table Rates</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Table Rates</div>
+            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
@@ -233,10 +241,6 @@ export default function AdminTableRates() {
             </>)}
           </div>
         ))}
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm

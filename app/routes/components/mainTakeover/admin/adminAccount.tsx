@@ -1,5 +1,5 @@
 import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
-import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultAccountData } from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -32,9 +32,17 @@ export default function AdminAccount() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <h2 className={`${ADMIN_HEADER}`}>
-        Account
-      </h2>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Account</div>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
+      </div>
       <div className={`${ITEM} ${ROW}`}>
         <span className="text-gray-400 mr-2">
           Venue:
@@ -53,10 +61,6 @@ export default function AdminAccount() {
             setAccount({...ACCOUNT});
           }}
         />
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm

@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { DEFAULT_ID, DefaultRateSchedule, RateScheduleDays, type RateSchedule } from "~/config/AppState";
@@ -71,9 +71,17 @@ export default function AdminRateSchedules() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`flex items-center ${ADMIN_HEADER}`}>
-        <div className="pr-5">Rate Schedules</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Rate Schedules</div>
+            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {RATE_SCHEDULES.map((rateSchedule: RateSchedule, index: number) => (
@@ -111,22 +119,23 @@ export default function AdminRateSchedules() {
                 />
               </div>
             </div>
-              {(rateSchedule.id !== DEFAULT_ID) && (
-                <div className={`${ROW} mt-1`}>
-                  <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${rateSchedule.isActive? '!text-purple-500':''}`}>
-                    ENABLED:
-                  </div>
-                  <input
-                    type="checkbox"
-                    className={`ml-2 size-4`}
-                    checked={rateSchedule.isActive}
-                    onChange={(event) => {
-                      rateSchedule.isActive = !rateSchedule.isActive;
-                      setRateSchedules([...RATE_SCHEDULES]);
-                    }}
-                  />
+            {(rateSchedule.id !== DEFAULT_ID) && (
+              <div className={`${ROW} mt-1`}>
+                <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${rateSchedule.isActive? '!text-purple-500':''}`}>
+                  ENABLED:
                 </div>
-              )}
+                <input
+                  type="checkbox"
+                  className={`ml-2 size-4`}
+                  checked={rateSchedule.isActive}
+                  onChange={(event) => {
+                    rateSchedule.isActive = !rateSchedule.isActive;
+                    setRateSchedules([...RATE_SCHEDULES]);
+                  }}
+                />
+              </div>
+            )}
+            {(rateSchedule.id !== DEFAULT_ID) && (
               <div className={`${ROW} mt-2`}>
                 <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${rateSchedule.show? '!text-cyan-500':''}`}>
                   SHOW:
@@ -141,7 +150,8 @@ export default function AdminRateSchedules() {
                   }}
                 />
               </div>
-              {(rateSchedule.id !== DEFAULT_ID) && (rateSchedule.show) && (
+            )}
+            {(rateSchedule.id !== DEFAULT_ID) && (rateSchedule.show) && (
               <div className="ml-1 pl-6 border border-gray-800 rounded-md mt-5">
                 {RateScheduleDays.map((day: string) => (
                   <div className="text-gray-500 " key={day}>
@@ -221,10 +231,6 @@ export default function AdminRateSchedules() {
             )}
           </div>
         ))}
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm

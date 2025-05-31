@@ -1,5 +1,5 @@
 import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW } from "~/util/GlobalStylesUtil";
-import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultStatusBar, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -34,9 +34,17 @@ export default function AdminStatusBar() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <h2 className={`${ADMIN_HEADER}`}>
-        Status Bar
-      </h2>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+              <div className={`${ADMIN_HEADER}`}>
+                <div className={`flex items-center`}>
+                  <div className="pr-5">Status Bar</div>
+                </div>
+              </div>
+              <div className={`${ADMIN_ACTIONS}`}>
+                <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+                <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+              </div>
+            </div>
       <div className={`${ITEM}`}>
         <div className={`${ROW}`}>
           <span className="text-gray-400 mr-2">
@@ -78,10 +86,6 @@ export default function AdminStatusBar() {
           </div>
           <div className="ml-2 inline-block text-gray-500"> Party - {STATUS_BAR.largePartySize}</div>
         </div>
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm

@@ -1,5 +1,5 @@
 import { DEFAULT_ID, DefaultTableTypeData, type TableType } from "~/config/AppState"
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_SECTION } from "./admin"
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { TrashIcon } from "@heroicons/react/24/outline"
 import {
   actionButtonStyles,
@@ -79,9 +79,17 @@ export default function AdminTableTypes() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`flex items-center ${ADMIN_HEADER}`}>
-        <div className="pr-5">Table Types</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Table Types</div>
+            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
@@ -157,10 +165,6 @@ export default function AdminTableTypes() {
             </div>
           </div>
         ))}
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm

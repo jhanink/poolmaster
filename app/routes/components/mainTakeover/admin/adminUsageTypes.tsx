@@ -16,6 +16,7 @@ import {
   ADMIN_ACTIONS,
   ADMIN_CONTENT,
   ADMIN_HEADER,
+  ADMIN_HEADER_STICKY,
   ADMIN_SECTION
 } from "./admin"
 import {
@@ -101,9 +102,17 @@ export default function AdminUsageTypes() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`flex items-center ${ADMIN_HEADER}`}>
-        <div className="pr-5">Usage Types</div>
-        <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER}`}>
+          <div className={`flex items-center`}>
+            <div className="pr-5">Usage Types</div>
+            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+          </div>
+        </div>
+        <div className={`${ADMIN_ACTIONS}`}>
+          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+        </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
@@ -293,10 +302,6 @@ export default function AdminUsageTypes() {
             </>)}
           </div>
         ))}
-      </div>
-      <div className={`!text-right ${ADMIN_ACTIONS}`}>
-        <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-        <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
       </div>
     </div>
     <ModalConfirm
