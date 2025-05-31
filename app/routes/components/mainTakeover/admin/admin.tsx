@@ -53,9 +53,9 @@ export default function Admin() {
           <hr className="text-gray-900 my-5"/>
           <AdminTableRates/>
           <hr className="text-gray-900 my-5"/>
-          <AdminUsageTypes/>
-          <hr className="text-gray-900 my-5"/>
           <AdminRateSchedules/>
+          <hr className="text-gray-900 my-5"/>
+          <AdminUsageTypes/>
           <hr className="text-gray-900 my-5"/>
           <AdminTableTypes/>
           <hr className="text-gray-900 my-5"/>

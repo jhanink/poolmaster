@@ -118,6 +118,7 @@ export interface RateSchedule {
     Sun: ScheduleEntry,
   }
   isActive: boolean,
+  show: boolean,
   forDelete?: boolean,
   forAdd?: boolean,
 }
@@ -165,6 +166,8 @@ export const DefaultStatusBar: StatusBar = {
   largePartySize: 20,
   largePartyStyle: ID_1,
 }
+
+export const RateScheduleDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 export const DefaultRateSchedule: RateSchedule = {
   id: DEFAULT_ID,
@@ -224,6 +227,7 @@ export const DefaultRateSchedule: RateSchedule = {
   isActive: true,
   forDelete: false,
   forAdd: true,
+  show: true,
 }
 
 export const DefaultTableRateData: TableRate = {
