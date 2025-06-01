@@ -1,4 +1,4 @@
-import { DEFAULT_ID, DefaultTableItemData, DefaultTableTypeData, type TableItem } from "~/config/AppState"
+import { DefaultTableItemData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
