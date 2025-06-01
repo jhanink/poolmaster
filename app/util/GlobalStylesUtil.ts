@@ -37,6 +37,8 @@ export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${usageTypeIndic
 export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 
+export const headerStyles = `relative text-center select-none mt-3 mb-1 mx-2 py-1 text-nowrap text-lg text-slate-400 rounded-full bg-gray-900`;
+
 export const largePartyStylesOptions = [
   {
     id: ID_1,

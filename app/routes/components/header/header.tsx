@@ -8,6 +8,7 @@ import {
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
+import { headerStyles } from "~/util/GlobalStylesUtil";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -48,10 +49,8 @@ export default function AppHeader() {
 
   return (
     <div className="w-full text-center">
-      <div className="flex items-center relative text-center select-none">
-        <div className="flex-1 mt-3 mb-1 mx-2 py-1 text-nowrap text-lg text-slate-400 rounded-full bg-gray-900">
-          {APP_STATE.account?.venue}
-        </div>
+      <div className={`${headerStyles}`}>
+        {APP_STATE.account?.venue}
       </div>
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
