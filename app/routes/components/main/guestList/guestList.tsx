@@ -1,14 +1,12 @@
 import mainStyles from '../mainStyles.module.css'
-import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestListStyles.module.css";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 
-const addGuestStyles = `flex items-center text-center text-gray-500 border-gray-800 ${actionButtonStyles} hover:ring-1`;
-const addGuestEmptyListStyles = `text-center h-[150px] w-[150px] rounded-full !mr-0 ${addGuestStyles}`;
+const addGuestStyles = `flex items-center text-center h-[30px] w-[125px] mt-5 mb-2 !text-sm !text-blue-500 !text-white inline-flex justify-center items-center hover:cursor-pointer ring-1 ring-gray-500 rounded-full font-semibold hover:ring-blue-500 hover:ring-2`;
+const addGuestEmptyListStyles = `${addGuestStyles} !h-[100px] !w-[100px] !px-0 !text-white`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -21,14 +19,21 @@ export default function GuestList() {
       <div className="flex m-1">
         <div className="flex-1">
           { !MAIN_TAKEOVER?.addGuest && (
-            <div className="flex-1 mx-2 mt-3 mb-5 text-center text-nowrap">
+            <div className="">
               <button
                 type="button"
                 className={`${APP_STATE.guestList.length ? addGuestStyles : addGuestEmptyListStyles}`}
                 onClick={onClickAddGuestForm}
               >
-                <ArrowRightIcon aria-hidden="true" className="mr-2 size-4" />
-                <span className="text-sm">Add Guest</span>
+                <div>
+                  {!!APP_STATE.guestList.length && (<>
+                    <div>Add Guest</div>
+                  </>)}
+                  {!APP_STATE.guestList.length && (<>
+                    <div>Add</div>
+                    <div>Guest</div>
+                  </>)}
+                </div>
               </button>
             </div>
           )}
