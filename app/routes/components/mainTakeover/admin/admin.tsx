@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
@@ -10,21 +10,26 @@ import AdminTableTypes from "./adminTableTypes";
 import AdminUsageTypes from "./adminUsageTypes";
 import AdminStatusIndicators from "./adminStatusIndicators";
 import AdminRateSchedules from "./adminRateSchedules";
+import AdminActions from "./adminActions";
 
 export const ADMIN_SECTION = `text-left min-w-[385px] mb-2`;
 export const ADMIN_HEADER = `text-2xl py-2 px-5 text-black bg-gray-300 rounded-lg relative z-5 p-3`;
-export const ADMIN_HEADER_STICKY = `sticky top-[44px] rounded-lg border mb-2 bg-black`;
+export const ADMIN_HEADER_STICKY = `sticky top-[44px] rounded-lg mb-2 bg-black`;
 export const ADMIN_CONTENT = `text-sm pb-3 mb-20`;
 export const ADMIN_ACTIONS = `flex items-center bg-black justify-center text-left py-2 my-1`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
 
+const actionsSeparatorStyles = "border-b border-gray-500 my-5";
+
 export default function Admin() {
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [SHOW_ACTIONS, setShowActions] = useState(false);
 
   const PageTopRef = useRef<HTMLDivElement>(null);
 
   const onClickExit = () => {
+    setShowActions(false);
     setMainTakeover(undefined);
   }
 
@@ -55,6 +60,16 @@ export default function Admin() {
           <AdminUsageTypes/>
           <AdminTableTypes/>
           <AdminTables/>
+          <hr className={actionsSeparatorStyles}/>
+          <button className={actionButtonStyles} onClick={() => {setShowActions( !SHOW_ACTIONS)}}>
+            Show Admin Actions
+          </button>
+          {SHOW_ACTIONS && (
+            <div>
+              <hr className={actionsSeparatorStyles}/>
+              <AdminActions/>
+            </div>
+          )}
         </div>
       </div>
     </div>

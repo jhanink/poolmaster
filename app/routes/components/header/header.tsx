@@ -55,22 +55,26 @@ export default function AppHeader() {
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
           className={`text-lg ${dndTargetBaseStyle} ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}`}>
-          <div>
-            <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-              <span className={`${statusPillStyles} text-nowrap`}>
-                {APP_STATE.guestList.length} <span className="ml-1 capitalize">{Helpers.pluralizeGuestsWaiting(APP_STATE)} In Line</span>
-              </span>
+          {!(SELECTED_LIST_FILTER === 'tablelist') && (
+            <div>
+              <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
+                <span className={`${statusPillStyles} text-nowrap`}>
+                  {APP_STATE.guestList.length} <span className="ml-1 capitalize">{Helpers.pluralizeGuestsWaiting(APP_STATE)} In Line</span>
+                </span>
+              </div>
+              <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
             </div>
-            <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
-          </div>
-          <div>
-            <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
-              <span className={`${statusPillStyles}`}>
-                {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">{Helpers.pluralizeTablesAssigned(APP_STATE)} Used - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
-              </span>
+          )}
+          {!(SELECTED_LIST_FILTER === 'waitlist') && (
+            <div>
+              <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
+                <span className={`${statusPillStyles}`}>
+                  {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">{Helpers.pluralizeTablesAssigned(APP_STATE)} Used - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
+                </span>
+              </div>
+              <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
             </div>
-            <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
-          </div>
+          )}
         </div>
       </>}
     </div>

@@ -18,7 +18,7 @@ export default function GuestList() {
     <div className={`${styles.guestListContainer} text-center mx-auto flex-1 max-w-xl select-none mb-10`}>
       <div className="flex m-1">
         <div className="flex-1">
-          { !MAIN_TAKEOVER?.addGuest && (
+          {!MAIN_TAKEOVER?.addGuest && (
             <div className="">
               <button
                 type="button"

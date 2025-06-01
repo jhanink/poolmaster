@@ -46,7 +46,7 @@ export default function AdminAccount() {
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-        <div className={`${ITEM} ${ROW} !border-sky`}>
+        <div className={`${ITEM} ${ROW} !border-${sectionColor}`}>
           <span className="text-gray-400 mr-2">
             Venue:
           </span>
