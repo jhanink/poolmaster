@@ -4,8 +4,7 @@ import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
 import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
-import { Helpers } from "~/util/Helpers";
+import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 
 const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-xl`;
 const guestUnassigned =`${cardStyle} text-gray-700`;
@@ -16,7 +15,6 @@ export default function TableListItem(props: {
     index: number,
     tableRef: React.RefObject<HTMLDivElement | null>,
   }) {
-    const [APP_STATE] = useAtom(appStateAtom);
     const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
     const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);

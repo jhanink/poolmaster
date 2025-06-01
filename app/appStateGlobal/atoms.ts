@@ -4,6 +4,7 @@ import  { DefaultAppState, type AppState, type Guest, type TableItem } from "~/c
 import appConfig from "~/config/app-config.json";
 
 export type ListFilterType = "waitlist" | "tablelist" | '';
+
 export enum ListFilterTypeEnum {
   WAITLIST = "waitlist",
   TABLELIST = "tablelist",
