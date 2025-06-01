@@ -21,10 +21,10 @@ export interface AppState {
   guestList: Guest[],
   tables: TableItem[],
   modifiedAt: number,
-  statusBar: StatusBar,
+  statusIndicators: StatusIndicators,
 }
 
-export interface StatusBar {
+export interface StatusIndicators {
   largePartySize: number,
   largePartyStyle: number,
 }
@@ -162,7 +162,7 @@ export interface UsageType {
   forAdd?: boolean,
 }
 
-export const DefaultStatusBar: StatusBar = {
+export const DefaultStatusIndicators: StatusIndicators = {
   largePartySize: 20,
   largePartyStyle: ID_1,
 }
@@ -363,7 +363,7 @@ export const DefaultAppState: AppState = {
       tableRateId: DEFAULT_ID,
     },
   ],
-  statusBar: {
-    ...DefaultStatusBar,
+  statusIndicators: {
+    ...DefaultStatusIndicators,
   }
 }

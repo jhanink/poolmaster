@@ -28,7 +28,7 @@ export default function GuestItem(props: {
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
-  const statusBarStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
+  const statusIndicatorStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
   const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
@@ -151,7 +151,7 @@ export default function GuestItem(props: {
     const showStatusBar = (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
-      <div className={`${statusBarStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
+      <div className={`${statusIndicatorStyles} ${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
           onClick={(event) => {
             if (SELECTED_LIST_FILTER) return;
             props.setItemExpanded(prev => !prev);
@@ -186,7 +186,7 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
-    const statusBar = APP_STATE.statusBar;
+    const statusBar = APP_STATE.statusIndicators;
     const partySize = props.guest.partySize;
     const isLargeParty = partySize >= statusBar.largePartySize;
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;

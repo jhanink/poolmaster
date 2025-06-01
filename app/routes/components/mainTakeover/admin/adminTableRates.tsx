@@ -20,6 +20,8 @@ import { useAtom } from "jotai";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
+const sectionColor = 'yellow-400';
+
 export default function AdminTableRates() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLE_RATES, setTableRates] = useState([] as TableRate[]);
@@ -81,8 +83,8 @@ export default function AdminTableRates() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY}`}>
-        <div className={`${ADMIN_HEADER}`}>
+      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
+        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
           <div className={`flex items-center`}>
             <div className="pr-5">Table Rates</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
@@ -95,7 +97,7 @@ export default function AdminTableRates() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
-          <div className={`!mx-1 ${tableRate.isActive? 'border-yellow-500': '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
+          <div className={`!mx-1 ${tableRate.isActive? `border-${sectionColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
               {(tableRate.id !== DEFAULT_ID) && (
                 <div

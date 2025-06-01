@@ -14,7 +14,7 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
-  "statusBar": {
+  "statusIndicators": {
     "largePartySize": 5,
     "largePartyStyle": 3
   },

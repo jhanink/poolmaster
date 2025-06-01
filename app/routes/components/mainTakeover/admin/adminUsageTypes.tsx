@@ -1,3 +1,5 @@
+import '@rc-component/color-picker/assets/index.css'
+
 import { useEffect, useState } from "react"
 import { useAtom } from "jotai"
 import { TrashIcon } from "@heroicons/react/24/outline"
@@ -8,8 +10,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms"
 import { AppStorage } from "~/util/AppStorage"
 import { DEFAULT_ID, DefaultUsageTypeData, type UsageType } from "~/config/AppState"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
-
-import '@rc-component/color-picker/assets/index.css'
+import { Helpers } from "~/util/Helpers"
 
 import {
   ADMIN_ACTION_BUTTONS,
@@ -33,8 +34,8 @@ import {
   ROW,
   ROW_PX_3
 } from "~/util/GlobalStylesUtil"
-import { Helpers } from "~/util/Helpers"
 
+const sectionColor = 'pink-400';
 
 export default function AdminUsageTypes() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -102,8 +103,8 @@ export default function AdminUsageTypes() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY}`}>
-        <div className={`${ADMIN_HEADER}`}>
+      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
+        <div className={`${ADMIN_HEADER} bg-${sectionColor}`}>
           <div className={`flex items-center`}>
             <div className="pr-5">Usage Types</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
@@ -116,7 +117,7 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!mx-1 ${usageType.isActive? '!border-pink-500':'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
+          <div className={`!mx-1 ${usageType.isActive? `!border-${sectionColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
             <div className={`${ROW_PX_3}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div

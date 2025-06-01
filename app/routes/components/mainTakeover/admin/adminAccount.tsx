@@ -1,11 +1,13 @@
 import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
-import { ADMIN_ACTIONS, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultAccountData } from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
+
+const sectionColor = 'sky-300';
 
 export default function AdminAccount() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -32,8 +34,8 @@ export default function AdminAccount() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY}`}>
-        <div className={`${ADMIN_HEADER}`}>
+      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
+        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
           <div className={`flex items-center`}>
             <div className="pr-5">Account</div>
           </div>
@@ -43,24 +45,26 @@ export default function AdminAccount() {
           <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
-      <div className={`${ITEM} ${ROW}`}>
-        <span className="text-gray-400 mr-2">
-          Venue:
-        </span>
-        <input
-          className={`
-            w-full
-            ${formInputStyles}
-            ${formFieldStyles}
-          `}
-          value={ACCOUNT.venue}
-          placeholder="Account name..."
-          maxLength={70}
-          onChange={(event) => {
-            ACCOUNT.venue = event.target.value;
-            setAccount({...ACCOUNT});
-          }}
-        />
+      <div className={`${ADMIN_CONTENT}`}>
+        <div className={`${ITEM} ${ROW} !border-sky`}>
+          <span className="text-gray-400 mr-2">
+            Venue:
+          </span>
+          <input
+            className={`
+              w-full
+              ${formInputStyles}
+              ${formFieldStyles}
+            `}
+            value={ACCOUNT.venue}
+            placeholder="Account name..."
+            maxLength={70}
+            onChange={(event) => {
+              ACCOUNT.venue = event.target.value;
+              setAccount({...ACCOUNT});
+            }}
+          />
+        </div>
       </div>
     </div>
     <ModalConfirm
