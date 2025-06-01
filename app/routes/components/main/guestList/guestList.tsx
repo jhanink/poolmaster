@@ -5,8 +5,8 @@ import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 
-const addGuestStyles = `flex items-center text-center h-[30px] w-[125px] mt-5 mb-2 !text-sm !text-blue-500 !text-white inline-flex justify-center items-center hover:cursor-pointer ring-1 ring-gray-500 rounded-full font-semibold hover:ring-blue-500 hover:ring-2`;
-const addGuestEmptyListStyles = `${addGuestStyles} !h-[100px] !w-[100px] !px-0 !text-white`;
+const addGuestStyles = `inline-flex items-center justify-center text-sm text-gray-300 h-[30px] w-[125px] mt-5 mb-2 ring-1 ring-gray-500 rounded-full hover:cursor-pointer hover:ring-blue-500 hover:ring-2`;
+const addGuestEmptyListStyles = `${addGuestStyles} !h-[100px] !w-[100px]`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);

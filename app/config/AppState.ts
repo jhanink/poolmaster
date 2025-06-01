@@ -261,7 +261,7 @@ export const DefaultTableTypeData: TableType = {
 
 export const DefaultUsageTypeData: UsageType = {
   id: DEFAULT_ID,
-  name: "-- USE TABLE RATE --",
+  name: "-- NONE --",
   isActive: true,
   tableRateId: DEFAULT_ID,
   useIcon: false,
