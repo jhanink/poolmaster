@@ -26,7 +26,7 @@ export default function GuestItem(props: {
   setEditForm?: React.Dispatch<React.SetStateAction<boolean>>,
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isAssigned?'':'border'} border-blue-800 rounded-xl`;
+  const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
   const statusBarStyles = `flex items-center justify-start space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
@@ -60,6 +60,7 @@ export default function GuestItem(props: {
   const onClickEditItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     props.setEditForm ? props.setEditForm(prev => true) : setEditItem(prev => true);
+    setMainTakeover({editGuest: guest});
   }
 
   const onClickAssignItem = (guest: Guest) => {
@@ -87,7 +88,7 @@ export default function GuestItem(props: {
   const itemDetailHeaderContent = () => {
     return (<>
       <div className="flex relative">
-        {!props.isAssigned && props.itemExpanded && !SELECTED_LIST_FILTER && <>
+        {!props.isAssigned && props.itemExpanded && !SELECTED_LIST_FILTER && !props.isEditForm && <>
           <div className="flex-1 text-right mb-2 text-gray-500" onClick={onClickCloseExpanded}>
             <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-1 size-7 hover:stroke-white" />
           </div>

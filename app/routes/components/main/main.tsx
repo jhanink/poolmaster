@@ -8,6 +8,7 @@ import AssignTable from "../mainTakeover/assignTable/assignTable";
 import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
 import Admin from "../mainTakeover/admin/admin";
 import AddGuest from "../mainTakeover/addGuest/addGuest";
+import EditGuest from "../mainTakeover/editGuest/editGuest";
 
 export default function AppMain() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -20,6 +21,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.assignTable && <AssignTable></AssignTable>}
       {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}
       {MAIN_TAKEOVER?.addGuest && <AddGuest></AddGuest>}
+      {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
         <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>

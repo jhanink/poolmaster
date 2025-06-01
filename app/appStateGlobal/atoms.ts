@@ -16,6 +16,7 @@ export type MainTakeover = {
   closeoutTable?: TableItem,
   assignTable?: Guest,
   addGuest?: boolean,
+  editGuest?: Guest,
 }
 
 export const mainTakoverAtom = atom<MainTakeover | undefined>(undefined as MainTakeover);
