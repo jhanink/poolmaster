@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { actionButtonStyles, largePartyStylesOptions, smallPartyStyle, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
@@ -85,7 +85,7 @@ export default function GuestItem(props: {
   }
 
   const itemDetailHeaderContent = () => {
-    return <>
+    return (<>
       <div className="flex relative">
         {!props.isAssigned && props.itemExpanded && !SELECTED_LIST_FILTER && <>
           <div className="flex-1 text-right mb-2 text-gray-500" onClick={onClickCloseExpanded}>
@@ -94,7 +94,7 @@ export default function GuestItem(props: {
         </>}
       </div>
       {itemCollapsedRowContent()}
-    </>
+    </>)
   }
 
   const itemDetailBodyContent = () => {
@@ -142,13 +142,10 @@ export default function GuestItem(props: {
   }
 
   const itemStatusBar = () => {
-    const statusBar = APP_STATE.statusBar;
     const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
     const icon = (usageType && !!usageType.useIcon && usageType.icon);
     const iconOnly = (icon && usageType.iconOnly);
-    const partySize = props.guest.partySize;
-    const showPartySize = partySize > 1;
     const isEdit = ITEM_EDIT || props.isEditForm;
     const showStatusBar = (usageType.id !== DEFAULT_ID);
 
@@ -163,7 +160,7 @@ export default function GuestItem(props: {
       >
         <div className="w-full text-right text-sm">
           {(guest.usageTypeId !== DEFAULT_ID) && (<>
-          <div className={`inline-block px-2 border border rounded-xl border-gray-700`}>
+          <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
             {(!icon || !iconOnly) && (
               <span className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
             )}

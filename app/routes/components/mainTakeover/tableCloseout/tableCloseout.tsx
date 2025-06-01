@@ -41,8 +41,8 @@ export default function TableCloseout() {
 
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
 
-    const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
     const playerRateRules: PlayerRateRules = SELECTED_RATE.playerRateRules;
+    const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
 
     const guest: Guest = table.guest;
     const start = guest.assignedAt;
@@ -82,7 +82,7 @@ export default function TableCloseout() {
   }
 
   const onChangeTableRate = (event) => {
-    const selectedRate: TableRate = APP_STATE.rateSchedules.find((rate) => rate.id === Number(event.target.value));
+    const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
     setSelectedRate(selectedRate);
     const players: BillablePlayer[] = BILLABLE_DATA.players.map((player) => {
       player.rate = selectedRate.tableRateRules.hourlyRate;
@@ -133,20 +133,20 @@ export default function TableCloseout() {
     const tableTypeId = table.tableTypeId;
     const tableType = APP_STATE.tableTypes.find((type) => type.id === tableTypeId);
 
-    let tableRate: TableRate = APP_STATE.rateSchedules.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
+    let tableRate: TableRate = APP_STATE.tableRates.find((rate) => (rate.id === tableType.tableRateId) && rate.isActive);
 
     if (table.ignoreTableTypeRate) {
-      tableRate = APP_STATE.rateSchedules.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
+      tableRate = APP_STATE.tableRates.find((rate) => (rate.id === table.tableRateId) && rate.isActive);
     }
 
     if (guest.usageTypeId !== DEFAULT_ID) {
       if (usageType) {
-        tableRate = APP_STATE.rateSchedules.find((rate) => (rate.id === usageType.tableRateId) && rate.isActive);
+        tableRate = APP_STATE.tableRates.find((rate) => (rate.id === usageType.tableRateId) && rate.isActive);
       }
     }
 
     if (!tableRate) {
-      tableRate = APP_STATE.rateSchedules[0];
+      tableRate = APP_STATE.tableRates[0];
     }
     setSelectedRate(tableRate);
   }
@@ -170,7 +170,7 @@ export default function TableCloseout() {
             value={SELECTED_RATE.id}
             className={`${formSelectStyles} text-center !text-lg`}
           >
-            {APP_STATE.rateSchedules
+            {APP_STATE.tableRates
               .filter((tableRate) => tableRate.isActive)
               .map((tableRate) => (
                 <option key={tableRate.id} className={`${optionStyles} text-center`} value={tableRate.id}>{tableRate.name} {Helpers.tableRateSuffix(tableRate)}</option>

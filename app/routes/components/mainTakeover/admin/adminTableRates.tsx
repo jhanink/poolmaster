@@ -131,7 +131,7 @@ export default function AdminTableRates() {
             </div>
             {(tableRate.id !== DEFAULT_ID) && (
               <div className={`${ROW} mt-1`}>
-                <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
+                <div className={`w-[90px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.isActive? 'text-yellow-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -163,8 +163,42 @@ export default function AdminTableRates() {
               </div>
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.tableRateRules.isFlatRate? '!text-cyan-500':''}`}>
-                Flat Rate:
+              <div className={`w-[90px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.tableRateRules.isFlatRate? '!text-cyan-500':''}`}>
+                Use Schedule:
+              </div>
+              <input
+                type="checkbox"
+                className={`ml-2 size-4`}
+                checked={tableRate.tableRateRules.useRateSchedule}
+                onChange={(event) => {
+                  tableRate.tableRateRules.useRateSchedule = !tableRate.tableRateRules.useRateSchedule;
+                  setTableRates([...TABLE_RATES]);
+                }}
+              />
+            </div>
+            {tableRate.tableRateRules.useRateSchedule && (<>
+              <div className={`${ROW} ml-8 mt-1`}>
+                <div className={`${formLabelLeftStyles}`}>
+                  Schedule:
+                </div>
+                <select
+                  name="rateSchedule"
+                  onChange={(event) => {
+                    tableRate.tableRateRules.rateScheduleId = Number(event.target.value.trim());
+                    setTableRates([...TABLE_RATES]);
+                  }}
+                  value={tableRate.tableRateRules.rateScheduleId}
+                  className={`${formSelectStyles} pb-3`}
+                >
+                  {APP_STATE.rateSchedules.map((schedule) => (
+                    <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
+                  ))}
+                </select>
+              </div>
+            </>)}
+            <div className={`${ROW} mt-1`}>
+              <div className={`w-[90px] text-sm text-nowrap ${formLabelLeftStyles} ${tableRate.tableRateRules.isFlatRate? '!text-cyan-500':''}`}>
+                Use Flat Rate:
               </div>
               <input
                 type="checkbox"
@@ -177,7 +211,7 @@ export default function AdminTableRates() {
               />
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles}`}>
+              <div className={`w-[90px] text-sm text-nowrap ${formLabelLeftStyles}`}>
                 Min 1 hr:
               </div>
               <input
@@ -191,7 +225,7 @@ export default function AdminTableRates() {
               />
             </div>
             <div className={`${ROW} mt-1`}>
-              <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles}`}>
+              <div className={`w-[90px] text-sm text-nowrap ${formLabelLeftStyles}`}>
                 Per Player:
               </div>
               <input
