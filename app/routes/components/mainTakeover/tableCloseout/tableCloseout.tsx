@@ -238,7 +238,7 @@ export default function TableCloseout() {
 
   const fragmentFormActionButtons = () => {
     return (
-      <div className="my-3 mb-20">
+      <div className="my-3 mb-10">
         <button className={`${actionButtonStyles} mx-2`} onClick={onClickReset}>Reset</button>
         <button className={`${actionButtonStyles} mx-2`} onClick={() => {setShowConfirmCloseout(true)}}>Close Out {MAIN_TAKEOVER.closeoutTable.name}</button>
       </div>
