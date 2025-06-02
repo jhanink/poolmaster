@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
-import { fragmentWelcomeMessage, fragmentAppName, fragmentExitTakeover } from "../../fragments/fragments";
+import { fragmentWelcomeMessage, fragmentExitTakeover } from "../../fragments/fragments";
 import AdminTables from "./adminTables";
 import AdminAccount from "./adminAccount";
 import AdminTableRates from "./adminTableRates";
@@ -42,14 +42,11 @@ export default function Admin() {
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}
-      <div className="CONTENT pt-5 relative">
+      <div className="CONTENT">
         {!APP_STATE.modifiedAt && (
           fragmentWelcomeMessage()
         )}
         <div>
-          {!!APP_STATE.modifiedAt && (
-            <h1>{fragmentAppName('text-2xl ml-2')}</h1>
-          )}
           <h1 className="text-2xl text-gray-300 pb-10 pt-3">Admin Console</h1>
         </div>
         <div className="text-center mb-20">

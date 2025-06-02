@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import ReconnectingWebSocket from 'reconnecting-websocket';
-import AppFooter from "../footer/footer";
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import styles from "./poolMasterStyles.module.css";
@@ -32,7 +31,6 @@ export default function AppPoolMaster() {
 
     ws.current.onopen = () => {
       console.log("---(ws) connection established");
-
     };
 
     ws.current.onmessage = (event) => {
@@ -46,19 +44,17 @@ export default function AppPoolMaster() {
       setTimeout(initializeWebSocket, 5000); // Attempt to reconnect after 5 seconds
     };
 
-    ws.current.onclose = (event) => {
-    };
+    ws.current.onclose = (event) => {};
   };
 
   useEffect(() => {
     initializeWebSocket();
 
-    // Listen for visibility changes
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         console.log(`Visible at (${Date.now()}). Reconnecting ws.`);
         try {
-          initializeWebSocket(); // Reconnect WebSocket when the page becomes visible
+          initializeWebSocket();
           AppStorage.getAppStateRemote().then((appState) => {
             if (appState) {
               setAppState(appState);
@@ -74,12 +70,10 @@ export default function AppPoolMaster() {
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-
     if (APP_STATE.modifiedAt === 0) {
       setMainTakeover({adminScreen: true});
     }
 
-    // Cleanup function
     return () => {
       if (ws.current) {
         ws.current.close();
@@ -88,14 +82,14 @@ export default function AppPoolMaster() {
     };
   }, []);
 
+
   return (
     <>
-      <div className={`${styles.appOuterContainer}`}>
+      <div className="">
         <AppHeader />
-        <div className={`${styles.appContentContainer}`}>
-          <AppMain />
-        </div>
-        <AppFooter />
+      </div>
+      <div className={`${styles.appContentContainer} overflow-y-auto`}>
+        <AppMain />
       </div>
     </>
   );

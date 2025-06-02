@@ -42,7 +42,7 @@ export const fragmentAppName = (style = '') => {
 
 export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
   return (
-    <div className="flex items-center justify-end CLOSE_BUTTON w-full pr-2 pt-2 pb-2 sticky top-0 bg-black z-10">
+    <div className="flex items-center justify-center CLOSE_BUTTON w-full pr-2 pt-2 pb-2 sticky top-0 bg-black z-10">
       <div className="inline-block hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
         <ArrowsPointingInIcon className="mr-3 inline-block size-6"></ArrowsPointingInIcon>
         <span className="relative top-[3px] text-xl">EXIT</span>

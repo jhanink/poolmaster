@@ -31,7 +31,7 @@ export default function TableCloseout() {
 
   const TopRef = useRef<HTMLDivElement>(null);
 
-  const onClickCancelCheckout = () => {
+  const exit = () => {
     MAIN_TAKEOVER.closeoutTable.guest.closedOutAt = 0;
     setMainTakeover(undefined);
   }
@@ -355,7 +355,7 @@ export default function TableCloseout() {
 
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none" ref={TopRef}>
-      {fragmentExitTakeover(onClickCancelCheckout)}
+      {fragmentExitTakeover(exit)}
       <div className="CONTENT flex-1 text-center">
         {fragmentFormHeader()}
         {fragmentTableRate()}

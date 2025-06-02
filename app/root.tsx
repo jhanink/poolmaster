@@ -1,14 +1,11 @@
 import {
   isRouteErrorResponse,
   Links,
-  Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "react-router";
 
-import { useAtom } from "jotai";
-import { appStateAtom } from "./appStateGlobal/atoms";
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -26,17 +23,17 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [APP_STATE] = useAtom(appStateAtom);
   return (
-    <html lang="en">
+    <html lang="en" className="bg-black touch-none">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
         <Links />
       </head>
-      <body className={`bg-black touch-none`}>
+      <body>
+        <div className={`h-dvh flex flex-col w-full mx-auto max-w-[1400px]`}>
         {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -64,7 +61,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     stack = error.stack;
   }
 
-  return (
+  return (<>
     <main className="pt-16 p-4 container mx-auto">
       <h1>{message}</h1>
       <p>{details}</p>
@@ -74,5 +71,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         </pre>
       )}
     </main>
-  );
+  </>);
 }
