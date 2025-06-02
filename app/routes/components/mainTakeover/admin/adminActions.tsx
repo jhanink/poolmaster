@@ -1,5 +1,5 @@
 import { actionButtonStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
-import { ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
@@ -8,7 +8,9 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import type { TableItem } from "~/config/AppState";
 import { Helpers } from "~/util/Helpers";
 
-const sectionColor = 'red-500';
+const borderColor = 'border-white';
+const bgColor = 'bg-white';
+
 enum ACTION_ENUM {
   CLEAR_GUEST_LIST = 'clear-guest-list',
   CLEAR_TABLE_LIST = 'clear-table-list',
@@ -60,15 +62,15 @@ export default function AdminActions() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY} !border-${sectionColor}`}>
-        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
-          <div className={`flex items-center`}>
-            <div className="pr-5">Admin Actions</div>
+      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
+        <div className={`${ADMIN_HEADER} ${bgColor}`}>
+          <div className={`flex items-center text-red`}>
+            <div className="font-semibold">Admin Actions</div>
           </div>
         </div>
       </div>
-      <div className={`${ADMIN_CONTENT} text-center`}>
-        <div className={`${ITEM} ${ROW} !border-${sectionColor} text-xl`}>
+      <div className={`${ADMIN_CONTENT} text-center text-gray-300`}>
+        <div className={`${ITEM} ${ROW} ${borderColor} text-xl`}>
           <span className="w-[175px] text-left">
             <button className={`${actionButtonStyles}`} onClick={() => {onClickAction(ACTION_ENUM.CLEAR_GUEST_LIST)}}>
               Clear GUEST List
@@ -76,7 +78,7 @@ export default function AdminActions() {
           </span>
           {APP_STATE.guestList.length}
         </div>
-        <div className={`${ITEM} ${ROW} !border-${sectionColor} text-xl`}>
+        <div className={`${ITEM} ${ROW} ${borderColor} text-xl`}>
           <span className="w-[175px] text-left">
             <button className={`${actionButtonStyles}`} onClick={() => {onClickAction(ACTION_ENUM.CLEAR_TABLE_LIST)}}>
               Clear TABLE List

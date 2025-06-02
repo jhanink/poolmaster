@@ -9,7 +9,8 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const fieldLabelStyles = `mx-2 w-[45px]`;
-const sectionColor = 'purple-400';
+const borderColor = 'border-purple-400';
+const bgColor = 'bg-purple-400';
 
 export default function AdminRateSchedules() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -72,8 +73,8 @@ export default function AdminRateSchedules() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
-        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
+      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
+        <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
             <div className="pr-5">Rate Schedules</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
@@ -86,7 +87,7 @@ export default function AdminRateSchedules() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {RATE_SCHEDULES.map((rateSchedule: RateSchedule, index: number) => (
-          <div className={`!mx-1 ${rateSchedule.isActive? `border-${sectionColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={rateSchedule.id}>
+          <div className={`!mx-1 ${rateSchedule.isActive? `${borderColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={rateSchedule.id}>
             <div className={`${ROW}`}>
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <div

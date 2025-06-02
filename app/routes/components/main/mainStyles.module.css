@@ -1,12 +1,12 @@
 
 .mainContent{
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 }
 
 @media (min-width: 640px) {
-    .mainContent {
-        display: flex;
-        flex-grow: 1;
-    }
+  .mainContent {
+    display: flex;
+    flex-grow: 1;
+  }
 }

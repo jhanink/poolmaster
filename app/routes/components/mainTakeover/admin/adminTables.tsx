@@ -9,7 +9,8 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 import { Helpers } from "~/util/Helpers"
 
-const sectionColor = 'green-500';
+const borderColor = 'border-green-500';
+const bgColor = 'bg-green-500';
 
 export default function AdminTables() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -76,8 +77,8 @@ export default function AdminTables() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
-        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
+      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
+        <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
             <div className="pr-5">Tables</div>
             <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
@@ -92,7 +93,7 @@ export default function AdminTables() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
-          <div className={`!mx-1 ${table.isActive? `!border-${sectionColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
+          <div className={`!mx-1 ${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
             <div className={`text-nowrap ${ROW}`}>
               <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
               onClick={(event) => {onClickForDeleteItem(table)}}>

@@ -8,7 +8,8 @@ import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
-const sectionColor = 'teal-500';
+const borderColor = 'border-teal-500';
+const bgColor = 'bg-teal-500';
 
 export default function AdminStatusIndicators() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -35,10 +36,10 @@ export default function AdminStatusIndicators() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
-        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
+      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
+        <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Status Indicators</div>
+            <div>Status Indicators</div>
           </div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
@@ -47,7 +48,7 @@ export default function AdminStatusIndicators() {
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-        <div className={`${ITEM} !border-${sectionColor}`}>
+        <div className={`${ITEM} ${borderColor}`}>
           <div className={`${ROW}`}>
             <span className="text-gray-400 mr-2">
               Big Party (Size)

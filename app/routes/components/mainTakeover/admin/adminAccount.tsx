@@ -7,7 +7,8 @@ import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
-const sectionColor = 'sky-300';
+const borderColor = 'border-sky-300';
+const bgColor = 'bg-sky-300';
 
 export default function AdminAccount() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -34,10 +35,10 @@ export default function AdminAccount() {
 
   return (<>
     <div className={`${ADMIN_SECTION}`}>
-      <div className={`${ADMIN_HEADER_STICKY} border-${sectionColor}`}>
-        <div className={`${ADMIN_HEADER} !bg-${sectionColor}`}>
+      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
+        <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Account</div>
+            <div>Account</div>
           </div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
@@ -46,7 +47,7 @@ export default function AdminAccount() {
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-        <div className={`${ITEM} ${ROW} !border-${sectionColor}`}>
+        <div className={`${ITEM} ${ROW} ${borderColor}`}>
           <span className="text-gray-400 mr-2">
             Venue:
           </span>
