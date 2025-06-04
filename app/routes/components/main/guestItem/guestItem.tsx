@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
-import { DEFAULT_ID, type Guest, type UsageType } from "~/config/AppState"
+import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
