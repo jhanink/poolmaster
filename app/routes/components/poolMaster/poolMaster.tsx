@@ -7,13 +7,14 @@ import styles from "./poolMasterStyles.module.css";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
+const CONNECTION_RETRY_INTERVAL = 5000;
+
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
-  // Function to initialize the WebSocket connection
   const initializeWebSocket = () => {
     const clientId = Math.random().toString(36).slice(2, 9);
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
@@ -41,7 +42,7 @@ export default function AppPoolMaster() {
     };
 
     ws.current.onerror = (error) => {
-      setTimeout(initializeWebSocket, 5000); // Attempt to reconnect after 5 seconds
+      setTimeout(initializeWebSocket, CONNECTION_RETRY_INTERVAL);
     };
 
     ws.current.onclose = (event) => {};
@@ -70,6 +71,7 @@ export default function AppPoolMaster() {
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
+    // Lead user to initial admin setup
     if (APP_STATE.modifiedAt === 0) {
       setMainTakeover({adminScreen: true});
     }
