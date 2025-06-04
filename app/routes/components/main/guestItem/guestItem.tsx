@@ -6,11 +6,11 @@ import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
-import { DEFAULT_ID, type Guest } from "~/config/AppState"
+import { DEFAULT_ID, type Guest, type UsageType } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentElapsedTime } from '../../fragments/fragments';
+import { fragmentElapsedTime, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
 
 dayjs.extend(duration);
@@ -143,10 +143,7 @@ export default function GuestItem(props: {
   }
 
   const itemStatusBar = () => {
-    const guest = props.guest;
     const usageType = Helpers.getUsageType(APP_STATE, props.guest.usageTypeId);
-    const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    const iconOnly = (icon && usageType.iconOnly);
     const isEdit = ITEM_EDIT || props.isEditForm;
     const showStatusBar = (usageType.id !== DEFAULT_ID);
 
@@ -159,18 +156,7 @@ export default function GuestItem(props: {
             event.preventDefault();
           }}
       >
-        <div className="w-full text-right text-sm">
-          {(guest.usageTypeId !== DEFAULT_ID) && (<>
-          <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
-            {(!icon || !iconOnly) && (
-              <span className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
-            )}
-            {!!icon && (
-              <span className="top-[1px] relative text-xl">{icon}</span>
-            )}
-          </div>
-        </>)}
-        </div>
+        {fragmentUsageIndicator(usageType)}
       </div>
     </>)
   }

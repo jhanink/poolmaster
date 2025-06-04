@@ -1,5 +1,6 @@
 import type { TimeElapsed } from "~/util/Helpers";
 import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import { DEFAULT_ID, type UsageType } from "~/config/AppState";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
 
@@ -94,6 +95,25 @@ export const fragmentWelcomeMessage = () => {
           ))}
         </ul>
       </div>
+    </div>
+  )
+}
+
+export const fragmentUsageIndicator = (usageType: UsageType) => {
+  const icon = usageType.useIcon && usageType.icon;
+  const iconOnly = usageType.iconOnly;
+  return (
+    <div className="w-full text-right text-sm">
+      {(usageType.id !== DEFAULT_ID) && (<>
+        <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
+          {(!icon || !iconOnly) && (
+            <span className={`text-gray-400 ${icon?'mr-2 relative top-[-2px]':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
+          )}
+          {!!icon && (
+            <span className="top-[1px] relative text-xl">{icon}</span>
+          )}
+        </div>
+      </>)}
     </div>
   )
 }

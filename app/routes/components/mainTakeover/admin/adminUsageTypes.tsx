@@ -34,6 +34,7 @@ import {
   ROW,
   ROW_PX_3
 } from "~/util/GlobalStylesUtil"
+import { fragmentUsageIndicator } from '../../fragments/fragments'
 
 const borderColor = 'border-pink-400';
 const bgColor = 'bg-pink-400';
@@ -287,6 +288,9 @@ export default function AdminUsageTypes() {
                   }}>
                     <span>Clear</span>
                 </div>
+              </div>
+              <div className="mr-2">
+                {fragmentUsageIndicator(usageType)}
               </div>
               {usageType.showColorPicker && (<>
                 <div className={`ROW mt-2`}>
