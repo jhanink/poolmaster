@@ -94,16 +94,18 @@ export default function AdminTables() {
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
           <div className={`!mx-1 ${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
-            <div className={`text-nowrap ${ROW}`}>
-              <div className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
-              onClick={(event) => {onClickForDeleteItem(table)}}>
+            <div className={`${ROW}`}>
+              <div
+                className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                onClick={(event) => {onClickForDeleteItem(table)}}>
                 <TrashIcon></TrashIcon>
               </div>
-              <div className={`grow pr-3 ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
+              <div className={`w-full text-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
                   className={`
-                    uppercase ml-2 !w-[270px]
+                    w-full
+                    uppercase
                     ${formInputStyles}
                      ${!!table.forDelete && 'text-red-500'}
                      ${!!table.forAdd && 'text-green-500'}
@@ -168,9 +170,11 @@ export default function AdminTables() {
               />
             </div>
             {table.ignoreTableTypeRate && (
-              <div className={`ml-8 ${ROW}`}>
+              <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
-                  Rate:
+                  <span className="ml-8">
+                    Rate:
+                  </span>
                 </div>
                 <select
                   onChange={(event) => {
@@ -178,7 +182,7 @@ export default function AdminTables() {
                     setTables([...TABLES]);
                   }}
                   value={table.tableRateId}
-                  className={`grow ${formSelectStyles}`}
+                  className={`w-full ${formSelectStyles}`}
                 >
                   {APP_STATE.tableRates
                     .filter((tableRate) => tableRate.isActive)

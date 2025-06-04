@@ -6,6 +6,7 @@ import AppMain from "../main/main";
 import styles from "./poolMasterStyles.module.css";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
+import { GLOBAL_ZOOM } from "~/util/GlobalStylesUtil";
 
 const CONNECTION_RETRY_INTERVAL = 5000;
 
@@ -84,13 +85,12 @@ export default function AppPoolMaster() {
     };
   }, []);
 
-
   return (
     <>
-      <div>
+      <div style={GLOBAL_ZOOM}>
         <AppHeader />
       </div>
-      <div className={`${styles.appContentContainer} grow overflow-y-scroll`}>
+      <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
         <AppMain />
       </div>
     </>

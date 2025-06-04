@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
@@ -28,6 +28,7 @@ export default function TableCloseout() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
+  const [SAVING, setSaving] = useAtom(isSavingAtom);
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -152,7 +153,9 @@ export default function TableCloseout() {
   }
 
   const onClickFinalConfirm = async () => {
+    setSaving(true);
     const newAppState = await AppStorage.deleteGuestRemote(MAIN_TAKEOVER.closeoutTable.guest.id);
+    setSaving(false);
     setAppState(newAppState);
     setSelectedTable(undefined);
     setMainTakeover(undefined);

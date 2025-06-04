@@ -12,11 +12,11 @@ import AdminStatusIndicators from "./adminStatusIndicators";
 import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
 
-export const ADMIN_SECTION = `text-left min-w-[375px] mb-2`;
-export const ADMIN_HEADER = `text-2xl py-2 px-5 text-black rounded-lg relative z-1 p-3`;
+export const ADMIN_SECTION = `text-left !w-[330px] mb-2`;
+export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative z-1 p-3`;
 export const ADMIN_HEADER_STICKY = `sticky top-[44px] border rounded-lg mb-2 bg-black z-1`;
 export const ADMIN_CONTENT = `text-sm pb-3 mb-20`;
-export const ADMIN_ACTIONS = `flex items-center bg-black justify-center text-left py-2 my-1`;
+export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-left py-2 my-1`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
 
 const actionsSeparatorStyles = "border-b border-gray-500 my-5";
@@ -38,7 +38,7 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center text-center" ref={PageTopRef}>
+    <div className="text-center" ref={PageTopRef}>
       {!!APP_STATE.modifiedAt && (
         fragmentExitTakeover(onClickExit)
       )}
@@ -47,9 +47,9 @@ export default function Admin() {
           fragmentWelcomeMessage()
         )}
         <div>
-          <h1 className="text-2xl text-gray-300 pb-10 pt-3">Admin Console</h1>
+          <h1 className="text-xl text-gray-300 pb-10 pt-3">Admin Console</h1>
         </div>
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 inline-block">
           <AdminAccount/>
           <AdminStatusIndicators/>
           <AdminTableRates/>

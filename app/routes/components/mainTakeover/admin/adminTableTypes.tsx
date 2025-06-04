@@ -105,7 +105,7 @@ export default function AdminTableTypes() {
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`text-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
+              <div className={`flex items-center w-full text-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
                 {tableType.id === DEFAULT_ID && (
                   "DEFAULT"
                 )}
@@ -114,7 +114,7 @@ export default function AdminTableTypes() {
                 )}
                 <input
                   className={`
-                    !w-[275px]
+                    w-full
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}

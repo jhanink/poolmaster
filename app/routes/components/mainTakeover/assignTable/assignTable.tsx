@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { type TableItem } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, buttonHoverRing } from "~/util/GlobalStylesUtil";
@@ -14,17 +14,20 @@ export default function AssignTable() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [ASSIGNED_TABLE, setAssignedTable] = useState<TableItem | undefined>(undefined);
+  const [SAVING, setSaving] = useAtom(isSavingAtom);
 
   const TopRef = useRef<HTMLDivElement>(null);
   const tables = APP_STATE.tables.filter((table: TableItem) => table.isActive);
 
-  const onClickTableChip = async (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
+  const onClickTableChip = async (event: React.MouseEvent<HTMLButtonElement>, table: TableItem) => {
     event.stopPropagation();
     event.preventDefault();
     const tableId = table.id
     const guestId = MAIN_TAKEOVER.assignTable?.id || 0;
-    const newState = await AppStorage.assignToTableRemote({tableId, guestId});
-    setAppState(newState);
+    setSaving(true);
+    const newAppState = await AppStorage.assignToTableRemote({tableId, guestId});
+    setSaving(false);
+    setAppState(newAppState);
     exit();
   }
 
@@ -35,13 +38,18 @@ export default function AssignTable() {
     guest.assignedAt = undefined;
     guest.closedOutAt = undefined;
 
-    APP_STATE.guestList = [
+    const guestList = [
       ...APP_STATE.guestList,
       {...guest}
     ];
 
-    const newState = await AppStorage.setAppStateRemote(APP_STATE);
-    setAppState(newState);
+    const newAppState = {
+      ...APP_STATE,
+      guestList,
+    }
+
+    AppStorage.setAppStateRemote(newAppState);
+    setAppState(newAppState);
     exit();
   }
 
@@ -92,13 +100,15 @@ export default function AssignTable() {
                     A.number - B.number
                   )
                   .map((table: TableItem) =>
-                    <div className={`CHIP ${unassignedStyle} ${buttonHoverRing}`}
+                    <button
+                      disabled={SAVING}
+                      className={`CHIP ${unassignedStyle} ${buttonHoverRing}`}
                       key={table.id}
                       data-table-id={table.id}
                       onClick={(event) => onClickTableChip(event, table)}
                     >
                       <div className="uppercase text-base text-green-700">{table.name}</div><div className="uppercase text-xs">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
-                    </div>
+                    </button>
                   )
               }
             </div>
@@ -106,11 +116,10 @@ export default function AssignTable() {
               <div className="my-5 text-gray-500 text-base">
                 OR
               </div>
-              <button className={`!text-gray-500 !text-base ${actionButtonStyles}`} onClick={returnToGuestList}>
+              <button disabled={SAVING} className={`!text-gray-500 !text-base ${actionButtonStyles}`} onClick={returnToGuestList}>
                 Move Back to Guest List
               </button>
             </>)}
-
           </>}
         </div>
       </div>

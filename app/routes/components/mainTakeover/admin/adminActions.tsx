@@ -40,7 +40,6 @@ export default function AdminActions() {
 
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-
     setAction(undefined);
     setShowConfirmSave(false);
   }

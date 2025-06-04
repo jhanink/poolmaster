@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { DEFAULT_ID, DefaultGuestData, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import styles from "./guestFormStyles.module.css";
 import { actionIconStyles, formFieldStylesFullWidth, formSelectStyles } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
@@ -29,6 +29,7 @@ export default function GuestForm(props: {
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
+  const [SAVING, setSaving] = useAtom(isSavingAtom);
 
   // local state
   const [FORM_FIELDS, setFormFields] = useState({
@@ -49,7 +50,9 @@ export default function GuestForm(props: {
   });
 
   const saveGuest = async (guest: Guest) => {
+    setSaving(true);
     const newState = await AppStorage.saveGuestRemote(guest);
+    setSaving(false);
     setAppState(newState);
   }
 
@@ -83,7 +86,9 @@ export default function GuestForm(props: {
   }
 
   const onClickConfirmDelete = async () => {
+    setSaving(true);
     const appState = await AppStorage.deleteGuestRemote(props.guest.id);
+    setSaving(false);
     setAppState(appState);
     setShowConfirmDelete(prev => false);
     cleanupForm();
@@ -343,7 +348,7 @@ export default function GuestForm(props: {
         <button type="button" onClick={onClickCancel} className={`${actionButtonStyles}`}>
           Cancel
         </button>
-        <button onClick={onClickSaveItem} className={actionButtonStyles}>
+        <button disabled={SAVING} type="submit" onClick={onClickSaveItem} className={actionButtonStyles}>
           Save
         </button>
         {!MAIN_TAKEOVER?.addGuest && (

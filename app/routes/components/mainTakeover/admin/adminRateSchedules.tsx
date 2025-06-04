@@ -34,7 +34,6 @@ export default function AdminRateSchedules() {
     }
 
     AppStorage.setAppStateRemote(newState);
-    setAppState(newState);
     setRateSchedules(rateSchedules);
     setShowConfirmSave(false);
   }
@@ -102,11 +101,11 @@ export default function AdminRateSchedules() {
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
-              <div className={`text-nowrap ${!!rateSchedule.forDelete && 'text-red-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
+              <div className={`w-full text-nowrap ${!!rateSchedule.forDelete && 'text-red-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={rateSchedule.id === DEFAULT_ID}
                   className={`
-                    text-sm !w-[275px]
+                    w-full
                     ${rateSchedule.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-red-500'}
                     ${!!rateSchedule.forAdd && 'text-green-500'}

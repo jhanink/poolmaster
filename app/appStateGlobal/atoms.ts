@@ -28,3 +28,4 @@ export const profileMenuOpenAtom = atom<boolean>(false);
 export const selectedTableAtom = atom<TableItem | undefined>(undefined as TableItem);
 export const selectedListFilterAtom = atom<ListFilterType>('');
 export const manageTablesAtom = atom<boolean>(false);
+export const isSavingAtom = atom<boolean>(false);

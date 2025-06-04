@@ -3,7 +3,7 @@ import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { DEFAULT_ID, type Guest } from "~/config/AppState"
@@ -30,11 +30,12 @@ export default function GuestItem(props: {
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
   const statusIndicatorStyles = `flex items-center space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
-  const [APP_STATE] = useAtom(appStateAtom);
+  const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
+  const [SAVING, setSaving] = useAtom(isSavingAtom);
 
   const guest = props.guest;
 
@@ -53,8 +54,11 @@ export default function GuestItem(props: {
     event.stopPropagation();
     const table = APP_STATE.tables.find(_ => _.guest?.id === props.guest.id);
     table.guest.closedOutAt = Date.now();
-    await AppStorage.saveGuestRemote(table.guest);
+    setSaving(true);
+    const newAppState = await AppStorage.saveGuestRemote(table.guest);
+    setAppState(newAppState);
     setMainTakeover({closeoutTable: table});
+    setSaving(false);
   }
 
   const onClickEditItem = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,7 +141,9 @@ export default function GuestItem(props: {
               {!props.isAssigned && 'Assign'}
             </button>
             {props.isAssigned && (
-              <button className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
+              <button
+               disabled={SAVING}
+               className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
             )}
           </div>
         </div>

@@ -32,7 +32,6 @@ import {
   INPUT_FIELD,
   ITEM,
   ROW,
-  ROW_PX_3
 } from "~/util/GlobalStylesUtil"
 import { fragmentUsageIndicator } from '../../fragments/fragments'
 
@@ -119,8 +118,8 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!mx-1 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
-            <div className={`${ROW_PX_3}`}>
+          <div className={`!mx-1 !px-3 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
+            <div className={`${ROW}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div
                   className={`mr-2 ${!!usageType.forDelete && 'text-red-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
@@ -128,17 +127,19 @@ export default function AdminUsageTypes() {
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
-                {usageType.id === DEFAULT_ID && (
-                  "DEFAULT"
-                )}
-                {usageType.id !== DEFAULT_ID && (
-                  <span>{index+1}</span>
-                )}
+              {usageType.id === DEFAULT_ID && (
+                <span>
+                  DEFAULT
+                </span>
+              )}
+              {usageType.id !== DEFAULT_ID && (
+                <span>{index+1}</span>
+              )}
+              <div className={`w-full text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`
-                    !w-[275px] text-sm
+                    w-full
                     ${usageType.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}
@@ -156,7 +157,7 @@ export default function AdminUsageTypes() {
               </div>
             </div>
             {(usageType.id !== DEFAULT_ID) && (<>
-              <div className={`${ROW_PX_3} mt-1`}>
+              <div className={`${ROW} mt-1`}>
                 <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
@@ -170,7 +171,7 @@ export default function AdminUsageTypes() {
                   }}
                 />
               </div>
-              <div className={`${ROW_PX_3}`}>
+              <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
                   Rate:
                 </div>
@@ -190,7 +191,7 @@ export default function AdminUsageTypes() {
                   }
                 </select>
               </div>
-              <div className={`${ROW_PX_3} mt-1`}>
+              <div className={`${ROW} mt-1`}>
                 <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                   USE ICON:
                 </div>
@@ -205,7 +206,7 @@ export default function AdminUsageTypes() {
                 />
               </div>
               {usageType.useIcon && (<>
-                <div className={`${ROW_PX_3}`}>
+                <div className={`${ROW}`}>
                   <div className="text-gray-400 mr-2">
                     Icon:
                   </div>
@@ -245,7 +246,7 @@ export default function AdminUsageTypes() {
                 </>)}
               </>)}
               {usageType.useIcon && (<>
-                <div className={`${ROW_PX_3} mt-1`}>
+                <div className={`${ROW} mt-1`}>
                   <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                     ICON ONLY:
                   </div>
@@ -260,7 +261,7 @@ export default function AdminUsageTypes() {
                   />
                 </div>
               </>)}
-              <div className={`${ROW_PX_3}`}>
+              <div className={`${ROW}`}>
                 <div className="text-gray-400 mr-2">
                   Text Color:
                 </div>
