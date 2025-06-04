@@ -20,9 +20,7 @@ export default function TableList() {
   const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
   const [TABLE_REFS, setTableRefs] = useState<TableRefs>({});
 
-  const tables = APP_STATE.tables.filter((table: TableItem) => {
-    return table.isActive;
-  });
+  const tables = Helpers.tables(APP_STATE);
   const miniMapRef = useRef<HTMLDivElement>(null);
 
   const onClickTableChip = (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
