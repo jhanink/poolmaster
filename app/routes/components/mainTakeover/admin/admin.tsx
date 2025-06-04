@@ -12,7 +12,7 @@ import AdminStatusIndicators from "./adminStatusIndicators";
 import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
 
-export const ADMIN_SECTION = `text-left !w-[330px] mb-2`;
+export const ADMIN_SECTION = `text-left mb-2`;
 export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative z-1 p-3`;
 export const ADMIN_HEADER_STICKY = `sticky top-[44px] border rounded-lg mb-2 bg-black z-1`;
 export const ADMIN_CONTENT = `text-sm pb-3 mb-20`;

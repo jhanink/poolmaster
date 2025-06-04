@@ -107,7 +107,7 @@ export default function AdminUsageTypes() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Usage Types</div>
+            <div className="pr-2">Usage Types</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
         </div>
@@ -135,11 +135,10 @@ export default function AdminUsageTypes() {
               {usageType.id !== DEFAULT_ID && (
                 <span>{index+1}</span>
               )}
-              <div className={`w-full text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`
-                    w-full
                     ${usageType.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}

@@ -85,7 +85,7 @@ export default function AdminTableTypes() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Table Types</div>
+            <div className="pr-2">Table Types</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
         </div>
@@ -114,7 +114,6 @@ export default function AdminTableTypes() {
                 )}
                 <input
                   className={`
-                    w-full
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}

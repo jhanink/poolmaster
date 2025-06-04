@@ -39,27 +39,27 @@ export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndica
 export const largePartyStylesOptions = [
   {
     id: ID_1,
-    name: 'Style 1 (White)',
+    name: '1 (White)',
     style: largePartyStyle1,
   },
   {
     id: ID_2,
-    name: 'Style 2 (Red)',
+    name: '2 (Red)',
     style: largePartyStyle2,
   },
   {
     id: ID_3,
-    name: 'Style 3 (Emerald)',
+    name: '3 (Emerald)',
     style: largePartyStyle3,
   },
   {
     id: ID_4,
-    name: 'Style 4 (Amber)',
+    name: '4 (Amber)',
     style: largePartyStyle4,
   },
   {
     id: ID_5,
-    name: 'Style 5 (Violet)',
+    name: '5 (Violet)',
     style: largePartyStyle5,
   }
 ];

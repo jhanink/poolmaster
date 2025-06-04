@@ -14,7 +14,7 @@ export default function AddGuest() {
   return (
     <div className="select-none flex-1 text-center relative items-center">
       {fragmentExitTakeover(exit)}
-      <div className="mt-2 mb-10 border border-yellow-500 border-solid opacity-[.9] rounded-xl pt-1 px-2 inline-block min-w-[330px]">
+      <div className="mt-2 mb-10 border border-yellow-500 border-solid opacity-[.9] rounded-xl pt-1 px-2 inline-block min-w-[300px]">
         <div className="text-base text-yellow-500 uppercase">
           Add Guest
         </div>

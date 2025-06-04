@@ -53,7 +53,6 @@ export default function AdminAccount() {
           </span>
           <input
             className={`
-              w-full
               ${formInputStyles}
               ${formFieldStyles}
             `}

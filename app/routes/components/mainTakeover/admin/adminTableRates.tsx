@@ -87,7 +87,7 @@ export default function AdminTableRates() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Table Rates</div>
+            <div className="pr-2">Table Rates</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
         </div>
@@ -115,10 +115,9 @@ export default function AdminTableRates() {
               {(tableRate.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
-              <div className={`w-full text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`
-                    w-full
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${!!tableRate.forDelete && 'text-red-500'}
@@ -183,9 +182,6 @@ export default function AdminTableRates() {
             </div>
             {tableRate.tableRateRules.useRateSchedule && (<>
               <div className={`${ROW} ml-8 mt-1`}>
-                <div className={`${formLabelLeftStyles}`}>
-                  Schedule:
-                </div>
                 <select
                   name="rateSchedule"
                   onChange={(event) => {

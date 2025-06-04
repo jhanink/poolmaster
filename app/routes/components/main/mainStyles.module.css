@@ -1,9 +1,4 @@
 
-.mainContent{
-  position: relative;
-  height: 100%;
-}
-
 @media (min-width: 640px) {
   .mainContent {
     display: flex;

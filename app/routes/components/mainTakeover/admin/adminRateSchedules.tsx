@@ -34,6 +34,7 @@ export default function AdminRateSchedules() {
     }
 
     AppStorage.setAppStateRemote(newState);
+    setAppState(newState);
     setRateSchedules(rateSchedules);
     setShowConfirmSave(false);
   }
@@ -75,7 +76,7 @@ export default function AdminRateSchedules() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Rate Schedules</div>
+            <div className="pr-2">Rate Schedules</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
         </div>
@@ -101,11 +102,10 @@ export default function AdminRateSchedules() {
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
-              <div className={`w-full text-nowrap ${!!rateSchedule.forDelete && 'text-red-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!rateSchedule.forDelete && 'text-red-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={rateSchedule.id === DEFAULT_ID}
                   className={`
-                    w-full
                     ${rateSchedule.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-red-500'}
                     ${!!rateSchedule.forAdd && 'text-green-500'}

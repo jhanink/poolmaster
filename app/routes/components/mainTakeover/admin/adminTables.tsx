@@ -80,10 +80,9 @@ export default function AdminTables() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div className="pr-5">Tables</div>
+            <div className="pr-2">Tables</div>
             <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
             <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
-            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(10)}}>+10</button>
           </div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
@@ -100,11 +99,10 @@ export default function AdminTables() {
                 onClick={(event) => {onClickForDeleteItem(table)}}>
                 <TrashIcon></TrashIcon>
               </div>
-              <div className={`w-full text-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
                   className={`
-                    w-full
                     uppercase
                     ${formInputStyles}
                      ${!!table.forDelete && 'text-red-500'}
