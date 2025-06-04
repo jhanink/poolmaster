@@ -8,7 +8,7 @@ import {
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
-import AppFooter from "../footer/footer";
+import BrandingBar from "../brandingBar/brandingBar";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -53,7 +53,7 @@ export default function AppHeader() {
       <div className={`${headerStyles}`}>
         {APP_STATE.account?.venue}
       </div>
-      <AppFooter />
+      <BrandingBar />
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
           className={`text-lg ${dndTargetBaseStyle} ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}`}>

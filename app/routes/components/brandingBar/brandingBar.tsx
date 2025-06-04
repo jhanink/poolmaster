@@ -6,7 +6,7 @@ import { actionIconStyles } from "~/util/GlobalStylesUtil";
 const footerStyles = `flex items-center justify-center !text-xs mb-0 mt-2`;
 const adminCogStyles = `size-[16px] relative top-[1px] hover:text-yellow-500 text-gray-500`;
 
-export default function AppFooter() {
+export default function BrandingBar() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
 
