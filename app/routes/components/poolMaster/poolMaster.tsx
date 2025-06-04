@@ -85,10 +85,10 @@ export default function AppPoolMaster() {
 
   return (
     <>
-      <div className="">
+      <div>
         <AppHeader />
       </div>
-      <div className={`${styles.appContentContainer} overflow-y-auto`}>
+      <div className={`${styles.appContentContainer} grow overflow-y-scroll`}>
         <AppMain />
       </div>
     </>
