@@ -99,13 +99,16 @@ export default function GuestItem(props: {
   }
 
   const itemDetailBodyContent = () => {
+    const partySize = props.guest.partySize;
+    const bigPartySize = APP_STATE.statusIndicators.largePartySize;
+
     return !(ITEM_EDIT || props.isEditForm) && (
       <div className="text-sm">
         <div className="flex">
           <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
-            {props.guest.partySize > 1 && (
+            {partySize > 1 && partySize < bigPartySize && (
               <div className="ROW uppercase text-gray-300 mb-1">
-                Party - {props.guest.partySize}
+                Party - {partySize}
               </div>
             )}
             { guest.phoneNumber && (
@@ -176,6 +179,7 @@ export default function GuestItem(props: {
     const partySize = props.guest.partySize;
     const isLargeParty = partySize >= statusBar.largePartySize;
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
+
     return (
       <div className="flex text-sm">
         {!props.isAssigned && (
