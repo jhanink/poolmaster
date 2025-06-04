@@ -289,7 +289,7 @@ export default function AdminUsageTypes() {
                     <span>Clear</span>
                 </div>
               </div>
-              <div className="mr-2">
+              <div className="flex justify-end mx-2">
                 {fragmentUsageIndicator(usageType)}
               </div>
               {usageType.showColorPicker && (<>
