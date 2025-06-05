@@ -30,6 +30,7 @@ export default function GuestForm(props: {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [SHOW_CONFIRM_DELETE, setShowConfirmDelete] = useState(false);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
+  const [ATTEMPTED_SAVE, setAttemptedSave] = useState(false);
 
   // local state
   const [FORM_FIELDS, setFormFields] = useState({
@@ -60,6 +61,7 @@ export default function GuestForm(props: {
     event.preventDefault();
     event.stopPropagation();
 
+    setAttemptedSave(true);
     if (!FORM_FIELDS.name.trim().length) return;
 
     const extraPlayers = FORM_FIELDS.extraPlayers
@@ -223,6 +225,11 @@ export default function GuestForm(props: {
               placeholder="Enter Guest Name..."
               maxLength={40}/>
           </div>
+        </div>
+        <div className="relative">
+          {ATTEMPTED_SAVE && !FORM_FIELDS.name.trim().length && (
+            <div className="text-fuchsia-500 text-left ml-3 text-sm top-[-3px] relative">Name is required</div>
+          )}
         </div>
         <div className={formColumnStyles}>
           <div className={`${labelStyles}`}>
