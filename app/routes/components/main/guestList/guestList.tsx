@@ -5,8 +5,9 @@ import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 
-const addGuestStyles = `inline-flex items-center justify-center text-sm text-gray-300 py-1 px-5 mt-1 mb-2 ring-1 ring-gray-500 rounded-full hover:cursor-pointer hover:ring-blue-500 hover:ring-2`;
-const addGuestEmptyListStyles = `${addGuestStyles} !h-[100px] !w-[100px] !py-0 !px-0`;
+const addGuestBaseStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full`;
+const addGuestStyles = `${addGuestBaseStyles} text-sm ring-gray-500 text-gray-500 hover:ring-1 hover:ring-white`;
+const addGuestEmptyListStyles = `${addGuestBaseStyles} text-lg ring-red-500 rounded-full hover:ring-3 hover:cursor-pointer !h-[100px] !w-[100px] !py-0 !px-0`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -30,8 +31,8 @@ export default function GuestList() {
                     <div>Add Guest</div>
                   </>)}
                   {!APP_STATE.guestList.length && (<>
-                    <div>Add</div>
-                    <div>Guest</div>
+                    <div>ADD</div>
+                    <div>GUEST</div>
                   </>)}
                 </div>
               </button>
