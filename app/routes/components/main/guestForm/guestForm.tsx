@@ -228,7 +228,7 @@ export default function GuestForm(props: {
         </div>
         <div className="relative">
           {ATTEMPTED_SAVE && !FORM_FIELDS.name.trim().length && (
-            <div className="text-fuchsia-500 text-left ml-3 text-sm top-[-3px] relative">Name is required</div>
+            <div className="text-red-500 text-left ml-3 text-sm top-[-3px] relative">Name is required</div>
           )}
         </div>
         <div className={formColumnStyles}>

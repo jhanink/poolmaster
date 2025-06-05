@@ -253,7 +253,6 @@ export default function TableCloseout() {
       <div className="WORKSHEET mt-2 text-left ">
         {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
           <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
-
             <div className="flex">
               <div className="shrink">
                 <input
