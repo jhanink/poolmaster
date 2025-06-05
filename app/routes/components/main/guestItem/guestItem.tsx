@@ -110,9 +110,10 @@ export default function GuestItem(props: {
       <div className="text-sm">
         <div className="flex">
           <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
-            {partySize > 1 && partySize < bigPartySize && (
-              <div className="ROW uppercase text-gray-300 mb-1">
-                Party - {partySize}
+            {partySize > 1 && (
+              <div className="ROW text-gray-300 mb-1">
+                <span className={`${fieldLabel}`}>Size:</span>
+                Party of {partySize}
               </div>
             )}
             { guest.phoneNumber && (
@@ -197,7 +198,9 @@ export default function GuestItem(props: {
           <div className={`inline-block ${isLargeParty ? `${largePartyStyle}`: ``}`}>
             {guest.name}
           </div>
-          {isLargeParty && <div className="ml-2 inline-block text-gray-500"> Party - {partySize}</div>}
+          {isLargeParty && (
+            <span className='text-gray-500 ml-2'> {partySize}</span>
+          )}
         </div>
         {renderItemDuration()}
       </div>

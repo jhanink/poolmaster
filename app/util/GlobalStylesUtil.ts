@@ -1,4 +1,4 @@
-import { ID_1, ID_2, ID_3, ID_4, ID_5 } from "~/config/AppState";
+import { ID_1, ID_2, ID_3, ID_4, ID_5, ID_6 } from "~/config/AppState";
 
 export const buttonRingRed = `hover:ring-red-600`;
 export const buttonRingBlue = `hover:ring-blue-600`;
@@ -35,6 +35,7 @@ export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${usageTypeIndicato
 export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${usageTypeIndicatorStyles}`;
 export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
+export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 
 export const largePartyStylesOptions = [
   {
@@ -61,6 +62,12 @@ export const largePartyStylesOptions = [
     id: ID_5,
     name: '5 (Violet)',
     style: largePartyStyle5,
+  }
+  ,
+  {
+    id: ID_6,
+    name: '5 (Fuchsia)',
+    style: largePartyStyle6,
   }
 ];
 

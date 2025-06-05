@@ -50,7 +50,7 @@ export default function AdminStatusIndicators() {
       <div className={`${ADMIN_CONTENT}`}>
         <div className={`${ITEM} ${borderColor}`}>
           <div className={`${ROW} text-gray-400 `}>
-            Large Party Size / Color:
+            Large Party Size & Color:
           </div>
           <div className={`${ROW}`}>
             <select
@@ -82,9 +82,9 @@ export default function AdminStatusIndicators() {
           </div>
           <div className={`mt-3 uppercase text-sm text-nowrap`}>
             <div className={`inline-block ${largePartyStylesOptions[STATUS_INDICATORS.largePartyStyle - 1].style} text-gray-200`}>
-              NAME
+              Samantha
             </div>
-            <div className="ml-2 inline-block text-gray-500"> Party - {STATUS_INDICATORS.largePartySize}</div>
+            <span className='text-gray-500 ml-2'> {STATUS_INDICATORS.largePartySize}</span>
           </div>
         </div>
       </div>
