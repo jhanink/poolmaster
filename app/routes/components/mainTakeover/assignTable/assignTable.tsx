@@ -65,62 +65,64 @@ export default function AssignTable() {
   }, []);
 
   return (
-    <div className="select-none flex-1 text-center relative items-center" ref={TopRef}>
-      {fragmentExitTakeover(exit)}
+    <div className="select-none flex justify-center" ref={TopRef}>
       <div>
-        <div className="CONTENT mx-5">
-          {!Helpers.tablesAvailable(APP_STATE).length && <>
-            <div className="text-gray-500 text-sm mt-3 p-3 uppercase">
-              No open tables available
-            </div>
-            <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
-          </>}
-          {!!Helpers.tablesAvailable(APP_STATE).length && <>
-            <div className="text-2xl mt-5">
-              <div className="text-gray-300 uppercase">
-                {!!MAIN_TAKEOVER?.assignTable?.assignedAt && (
-                  <span>Move</span>
-                )}
-                {!MAIN_TAKEOVER?.assignTable?.assignedAt && (
-                  <span>Assign</span>
-                )}
+        {fragmentExitTakeover(exit)}
+        <div className="border border-red-900 rounded-xl p-5 text-center">
+          <div className="CONTENT">
+            {!Helpers.tablesAvailable(APP_STATE).length && <>
+              <div className="text-gray-500 text-sm p-3 uppercase">
+                No open tables available
               </div>
-              <div className="uppercase text-red-500 mx-3 my-5 text-nowrap">
-                {MAIN_TAKEOVER.assignTable?.name}
+              <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
+            </>}
+            {!!Helpers.tablesAvailable(APP_STATE).length && <>
+              <div className="text-3xl">
+                <div className="text-gray-300 uppercase">
+                  {!!MAIN_TAKEOVER?.assignTable?.assignedAt && (
+                    <span>Move</span>
+                  )}
+                  {!MAIN_TAKEOVER?.assignTable?.assignedAt && (
+                    <span>Assign</span>
+                  )}
+                </div>
+                <div className="uppercase text-red-500 mx-3 my-2 text-nowrap">
+                  {MAIN_TAKEOVER.assignTable?.name}
+                </div>
+                <div className="text-gray-500 text-base">
+                  to an open table
+                </div>
               </div>
-              <div className="text-gray-500 text-base">
-                to one of the following open tables
+              <div className={`mt-5`}>
+                {
+                  tables
+                    .filter((table: TableItem) => !table.guest)
+                    .sort((A: TableItem, B: TableItem) =>
+                      A.number - B.number
+                    )
+                    .map((table: TableItem) =>
+                      <button
+                        disabled={SAVING}
+                        className={`CHIP ${unassignedStyle} ${buttonHoverRing}`}
+                        key={table.id}
+                        data-table-id={table.id}
+                        onClick={(event) => onClickTableChip(event, table)}
+                      >
+                        <div className="uppercase text-sm text-green-700">{table.name}</div><div className="uppercase text-xs">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
+                      </button>
+                    )
+                }
               </div>
-            </div>
-            <div className={`mt-5 inline-block max-w-lg mx-auto`}>
-              {
-                tables
-                  .filter((table: TableItem) => !table.guest)
-                  .sort((A: TableItem, B: TableItem) =>
-                    A.number - B.number
-                  )
-                  .map((table: TableItem) =>
-                    <button
-                      disabled={SAVING}
-                      className={`CHIP ${unassignedStyle} ${buttonHoverRing}`}
-                      key={table.id}
-                      data-table-id={table.id}
-                      onClick={(event) => onClickTableChip(event, table)}
-                    >
-                      <div className="uppercase text-base text-green-700">{table.name}</div><div className="uppercase text-xs">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
-                    </button>
-                  )
-              }
-            </div>
-            {ASSIGNED_TABLE && (<>
-              <div className="my-5 text-gray-500 text-base">
-                OR
-              </div>
-              <button disabled={SAVING} className={`!text-gray-500 !text-base ${actionButtonStyles}`} onClick={returnToGuestList}>
-                Move Back to Guest List
-              </button>
-            </>)}
-          </>}
+              {ASSIGNED_TABLE && (<>
+                <div className="my-5 text-gray-500 text-base">
+                  OR
+                </div>
+                <button disabled={SAVING} className={`!text-gray-500 !text-base ${actionButtonStyles}`} onClick={returnToGuestList}>
+                  Back to Guest List
+                </button>
+              </>)}
+            </>}
+          </div>
         </div>
       </div>
     </div>

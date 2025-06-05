@@ -337,7 +337,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.notes}
-              className={`${styles.noScrollbar} text-left resize-none h-24 ${formFieldStylesFullWidth}`}
+              className={`${styles.noScrollbar} text-left resize-none h-12 ${formFieldStylesFullWidth}`}
               maxLength={500}
               placeholder="Add Notes...">
             </textarea>

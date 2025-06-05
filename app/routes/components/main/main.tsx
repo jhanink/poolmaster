@@ -8,6 +8,7 @@ import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
 import Admin from "../mainTakeover/admin/admin";
 import AddGuest from "../mainTakeover/addGuest/addGuest";
 import EditGuest from "../mainTakeover/editGuest/editGuest";
+import styles from "./mainStyles.module.css"
 
 export default function AppMain() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -23,7 +24,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`mx-3 pt-0 gap-x-4`}>
+        <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}
