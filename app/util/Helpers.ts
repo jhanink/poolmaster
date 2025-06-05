@@ -32,6 +32,9 @@ export const Helpers = {
   tablesAssigned: (appState: AppState) => {
     return appState.tables.filter(table => table.isActive && table.guest);
   },
+  hasGuests: (appState: AppState) => {
+    return Helpers.tablesAssigned(appState).length > 0 ||appState.guestList.length > 0;
+  },
   getTableType: (appState: AppState, tableTypeId: number) => {
     const match = appState.tableTypes.find(tableType => {
       return tableType.id === tableTypeId;
