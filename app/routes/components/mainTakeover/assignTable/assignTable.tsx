@@ -68,7 +68,7 @@ export default function AssignTable() {
     <div className="select-none flex justify-center" ref={TopRef}>
       <div>
         {fragmentExitTakeover(exit)}
-        <div className="border border-red-900 rounded-xl py-5 text-center">
+        <div className="border border-red-500 rounded-xl py-5 text-center">
           <div className="CONTENT">
             {!Helpers.tablesAvailable(APP_STATE).length && <>
               <div className="text-gray-500 text-sm p-3 uppercase">
