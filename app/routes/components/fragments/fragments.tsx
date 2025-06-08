@@ -102,18 +102,18 @@ export const fragmentWelcomeMessage = () => {
 export const fragmentUsageIndicator = (usageType: UsageType) => {
   const icon = usageType.useIcon && usageType.icon;
   const iconOnly = usageType.iconOnly;
-  return (
-    <div className="text-sm">
-      {(usageType.id !== DEFAULT_ID) && (<>
+  return (<>
+    {(usageType.id !== DEFAULT_ID) && (<>
+      <div className="text-sm">
         <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
           {(!icon || !iconOnly) && (
             <span className={`text-gray-400 ${icon?'mr-2 relative top-[-2px]':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
           )}
           {!!icon && (
-            <span className="top-[1px] relative text-xl">{icon}</span>
+            <span className="top-[1px] relative text-lg">{icon}</span>
           )}
         </div>
-      </>)}
-    </div>
-  )
+      </div>
+    </>)}
+  </>)
 }

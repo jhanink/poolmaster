@@ -2,10 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, usageTypeIndicatorStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
-import { fragmentExitTakeover } from "../../fragments/fragments";
+import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
 import { DEFAULT_ID, DefaultTableRateData, type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 type BillablePlayer = {
@@ -28,7 +28,7 @@ export default function TableCloseout() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
-  const [SAVING, setSaving] = useAtom(isSavingAtom);
+  const [, setSaving] = useAtom(isSavingAtom);
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -191,19 +191,7 @@ export default function TableCloseout() {
   const fragmentUsageType = () => {
     const guest = MAIN_TAKEOVER.closeoutTable.guest;
     const usageType = Helpers.getUsageType(APP_STATE, guest.usageTypeId);
-    const icon = (usageType && !!usageType.useIcon && usageType.icon);
-    return (<>
-      <div className="mt-7 text-base">
-        {(guest.usageTypeId !== DEFAULT_ID) && (<>
-          <div className={`${usageTypeIndicatorStyles}`}>
-            <span className="text-gray-400" style={{color: usageType.textColor}}>{usageType.name}</span>
-            {!!icon && (
-              <span className="ml-2">{icon}</span>
-            )}
-          </div>
-        </>)}
-      </div>
-    </>)
+    return fragmentUsageIndicator(usageType);
   }
 
   const fragmentFormHeader = () => {
