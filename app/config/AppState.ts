@@ -23,6 +23,7 @@ export interface AppState {
   tables: TableItem[],
   modifiedAt: number,
   statusIndicators: StatusIndicators,
+  businessDayEnd: string,
 }
 
 export interface StatusIndicators {
@@ -314,6 +315,7 @@ export const DefaultAccountData: Account = {
 
 export const DefaultAppState: AppState = {
   modifiedAt: 0,
+  businessDayEnd: "02:00",
   account: {
     ...DefaultAccountData
   },
