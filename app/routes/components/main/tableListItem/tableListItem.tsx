@@ -7,7 +7,6 @@ import { useAtom } from "jotai";
 import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 
 const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-xl`;
-const guestUnassigned =`${cardStyle} text-gray-700`;
 const guestAssigned = `${cardStyle} border-green-900 text-green-700`;
 
 export default function TableListItem(props: {
@@ -47,7 +46,7 @@ export default function TableListItem(props: {
     }
 
     return (
-      <div className={`${SELECTED_TABLE && 'border-white'} ${table.guest ? guestAssigned : guestUnassigned} hover:cursor-pointer relative`} onClick={onClickTable}>
+      <div className={`${SELECTED_TABLE && 'border-white'} ${guestAssigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
             <span className="mr-2">{table.name}</span>
@@ -62,16 +61,14 @@ export default function TableListItem(props: {
         </div>
         {table.guest && (
           <div className="ml-1">
-            {props.table.guest && (
-              <GuestItem guest={table.guest}
-                index={0}
-                isAssigned={true}
-                itemExpanded={!!SELECTED_TABLE || ITEM_EXPANDED}
-                setItemExpanded={setItemExpanded}
-                isEditForm={EDIT_FORM}
-                setEditForm={setEditForm}>
-              </GuestItem>
-            )}
+            <GuestItem guest={table.guest}
+              index={0}
+              isAssigned={true}
+              itemExpanded={!!SELECTED_TABLE || ITEM_EXPANDED}
+              setItemExpanded={setItemExpanded}
+              isEditForm={EDIT_FORM}
+              setEditForm={setEditForm}>
+            </GuestItem>
           </div>
         )}
       </div>

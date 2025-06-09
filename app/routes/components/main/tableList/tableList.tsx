@@ -6,10 +6,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 import { Helpers } from "~/util/Helpers";
-
-const chipAssigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-green-800 text-green-600 font-bold hover:cursor-pointer`;
-const chipUnassigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-800 text-gray-600 font-bold  `;
-const selectedChipStyle = `ring-2 ring-white`;
+import { selectedTableChipStyle, tableChipAssigned } from "~/util/GlobalStylesUtil";
 
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
@@ -42,7 +39,7 @@ export default function TableList() {
         {Helpers.tablesAssigned(APP_STATE)
         .sort((A: TableItem, B: TableItem) => A.number - B.number)
         .map((table: TableItem, index: number) =>
-          <div className={`CHIP ${table.guest ? chipAssigned : chipUnassigned} ${SELECTED_TABLE?.id === table.id ? selectedChipStyle : ''}`}
+          <div className={`CHIP ${tableChipAssigned} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
             key={table.id}
             data-table-id={table.id}
             onClick={(event) => onClickTableChip(event, table)}
