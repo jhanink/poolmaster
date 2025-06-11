@@ -6,15 +6,12 @@ import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import styles from "./guestFormStyles.module.css";
-import { actionIconStyles, formFieldStylesFullWidth, formSelectStyles } from "~/util/GlobalStylesUtil";
+import { actionIconStyles, fieldStyles, formColumnStyles, formFieldStylesFullWidth, formSelectStyles, labelStyles } from "~/util/GlobalStylesUtil";
 import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { useFetcher } from 'react-router';
 import ModalConfirm from '../../ui-components/modal/modalConfirm';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
-const formColumnStyles = `COLUMN flex m-1`;
-const fieldStyles = `flex-1`;
-const labelStyles = `text-sm text-gray-400 ml-1 top-2 relative`;
 const partySizeArray = [...PARTY_SIZE_ARRAY];
 const actionButtons = `${actionButtonStyles} !py-0`;
 

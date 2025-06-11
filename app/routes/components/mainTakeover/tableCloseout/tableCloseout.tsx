@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useAtom } from "jotai";
+import dayjs from "dayjs";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, ROW } from "~/util/GlobalStylesUtil";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -23,12 +24,15 @@ export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [, setSaving] = useAtom(isSavingAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
   const [HOURS_DATA, setHoursData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
-  const [, setSaving] = useAtom(isSavingAtom);
+
+  const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
+  const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().subtract(businessDayOffsetHours, 'hour').day());
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -163,15 +167,12 @@ export default function TableCloseout() {
 
   const fragmentTableRate = () => {
     return (
-      <div className="mt-3">
-        <div className="text-sm uppercase text-gray-500">
-          Table Rate
-        </div>
+      <div className="mt-1">
         <div>
           <select
             onChange={onChangeTableRate}
             value={SELECTED_RATE.id}
-            className={`${formSelectStyles} text-center !text-lg`}
+            className={`${formSelectStyles} text-center !text-base`}
           >
             {APP_STATE.tableRates
               .filter((tableRate) => tableRate.isActive)
@@ -198,15 +199,12 @@ export default function TableCloseout() {
     return (
       !SELECTED_RATE.tableRateRules.isFlatRate && (
         <div className="text-gray-400 mt-5">
-          <div className="text-2xl mb-3">
-            <span className="text-gray-600 mr-3">Close Out</span>
-            <span className="text-green-500">{MAIN_TAKEOVER.closeoutTable.name}</span>
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
+            {fragmentUsageType()}
           </div>
           <div className="inline-block text-right">
-            <div className="mr-1 text-center text-gray-500">
-                HOURS
-              </div>
-            <div className="TIME flex items-center mb-2">
+            <div className="TIME flex items-center">
               <div className="inline-block shrink">
                 <input
                   type="text"
@@ -219,6 +217,9 @@ export default function TableCloseout() {
                     useTableHours(hours);
                   }}
                 />
+              </div>
+              <div className="ml-2 text-center text-gray-500">
+                hrs
               </div>
             </div>
           </div>
@@ -319,6 +320,29 @@ export default function TableCloseout() {
     </>)
   }
 
+  const fragmentBusinessDay = () => {
+    return (<>
+      <div className={`${ROW} items-center justify-center my-2`}>
+          <div className={`text-gray-500 mr-1`}>
+            Business Day
+          </div>
+          <select
+            className={`${formSelectStyles} text-center cursor-pointer`}
+            value={SELECTED_DAY}
+            onChange={(event) => {
+              setSelectedDay(Number(event.target.value));
+            }}
+            >
+              {WEEK_DAYS.map((day, index) => {
+                return (
+                  <option value={index} className={`${optionStyles} text-center`}>{day}</option>
+                )
+              })}
+          </select>
+      </div>
+    </>)
+  }
+
   const fragmentModalConfirm = () => {
     return (
       <ModalConfirm
@@ -349,7 +373,7 @@ export default function TableCloseout() {
       <div className="CONTENT flex-1 text-center">
         {fragmentFormHeader()}
         {fragmentTableRate()}
-        {fragmentUsageType()}
+        {fragmentBusinessDay()}
         {fragmentBillableData()}
         {fragmentFormActionButtons()}
         {fragmentModalConfirm()}

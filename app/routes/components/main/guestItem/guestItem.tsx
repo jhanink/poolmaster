@@ -1,6 +1,3 @@
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
@@ -12,9 +9,6 @@ import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
 import { fragmentElapsedTime, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
-
-dayjs.extend(duration);
-dayjs.extend(relativeTime);
 
 export default function GuestItem(props: {
   guest: Guest,

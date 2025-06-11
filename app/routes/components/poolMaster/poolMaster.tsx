@@ -1,3 +1,8 @@
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import weekday from 'dayjs/plugin/weekday';
+
 import { useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import ReconnectingWebSocket from 'reconnecting-websocket';
@@ -7,6 +12,10 @@ import styles from "./poolMasterStyles.module.css";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { GLOBAL_ZOOM } from "~/util/GlobalStylesUtil";
+
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
+dayjs.extend(weekday);
 
 const CONNECTION_RETRY_INTERVAL = 5000;
 

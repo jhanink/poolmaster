@@ -41,6 +41,10 @@ export const tableChipAssigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 t
 export const tableChipUnassigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-800 text-gray-600 font-bold `;
 export const selectedTableChipStyle = `ring-2 ring-white`;
 
+export const formColumnStyles = `COLUMN flex m-1`;
+export const fieldStyles = `flex-1`;
+export const labelStyles = `text-sm text-gray-400 ml-1 top-2 relative`;
+
 export const largePartyStylesOptions = [
   {
     id: ID_1,

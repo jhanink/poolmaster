@@ -13,6 +13,8 @@ export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i
 export const LARGE_PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE - (MIN_LARGE_PARTY_SIZE - 1) }, (_, i) => i + MIN_LARGE_PARTY_SIZE);
 export const DEFAULT_TEXT_COLOR = '#EFEFEF';
 
+export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 export interface AppState {
   account: Account,
   tableTypes: TableType[],
@@ -23,7 +25,7 @@ export interface AppState {
   tables: TableItem[],
   modifiedAt: number,
   statusIndicators: StatusIndicators,
-  businessDayEnd: string,
+  businessDayOffsetHours: number,
 }
 
 export interface StatusIndicators {
@@ -315,7 +317,7 @@ export const DefaultAccountData: Account = {
 
 export const DefaultAppState: AppState = {
   modifiedAt: 0,
-  businessDayEnd: "02:00",
+  businessDayOffsetHours: 2,
   account: {
     ...DefaultAccountData
   },
