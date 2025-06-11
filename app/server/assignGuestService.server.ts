@@ -19,10 +19,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-const handleAssignment = (fileAppState: AppState, requestData: {tableId: number, guestId: number}): AppState => {
+const handleAssignment = (fileAppState: AppState, requestData: {tableId: number, guestId: number, assignedAt: number}): AppState => {
   const guestList = fileAppState.guestList;
   const tables = fileAppState.tables;
-  const NOW = Date.now();
 
   const newGuestList = guestList.filter((guest: Guest) => guest.id !== requestData.guestId);
   const newGuest = guestList.find((guest) => guest.id === requestData.guestId);
@@ -31,11 +30,13 @@ const handleAssignment = (fileAppState: AppState, requestData: {tableId: number,
 
   if (newGuest) {
     toTable.guest = newGuest;
-    newGuest.assignedAt = NOW;
+    const assignedAt = requestData.assignedAt;
+    newGuest.assignedAt = assignedAt;
+    const NOW = Date.now();
     newGuest.extraPlayers = newGuest.extraPlayers.map((extraPlayer) => {
       return {
         ...extraPlayer,
-        assignedAt: NOW,
+        assignedAt,
       };
     });
   } else {

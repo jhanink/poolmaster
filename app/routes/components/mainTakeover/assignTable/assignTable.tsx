@@ -24,8 +24,9 @@ export default function AssignTable() {
     event.preventDefault();
     const tableId = table.id
     const guestId = MAIN_TAKEOVER.assignTable?.id || 0;
+    const assignedAt = new Date().getTime();
     setSaving(true);
-    const newAppState = await AppStorage.assignToTableRemote({tableId, guestId});
+    const newAppState = await AppStorage.assignToTableRemote({tableId, guestId, assignedAt});
     setSaving(false);
     setAppState(newAppState);
     exit();

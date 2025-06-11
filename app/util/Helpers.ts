@@ -37,7 +37,7 @@ export const Helpers = {
   },
   getTableType: (appState: AppState, tableTypeId: number) => {
     const match = appState.tableTypes.find(tableType => {
-      return tableType.id === tableTypeId;
+      return tableType.id === tableTypeId && tableType.isActive;
     });
     if (!match) {
       return appState.tableTypes[0];
@@ -46,10 +46,19 @@ export const Helpers = {
   },
   getUsageType: (appState: AppState, usageTypeId: number) => {
     const match = appState.usageTypes.find(usageType => {
-      return usageType.id === usageTypeId;
+      return usageType.id === usageTypeId && usageType.isActive;
     });
     if (!match) {
       return appState.usageTypes[0];
+    }
+    return match;
+  },
+  getRateSchedule: (appState: AppState, rateScheduleId: number) => {
+    const match = appState.rateSchedules.find(rateSchedule => {
+      return rateSchedule.id === rateScheduleId && rateSchedule.isActive;
+    });
+    if (!match) {
+      return appState.rateSchedules[0];
     }
     return match;
   },

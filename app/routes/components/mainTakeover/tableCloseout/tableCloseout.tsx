@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type Guest, type PlayerRateRules, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type Guest, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 type BillablePlayer = {
   id: number,
@@ -30,9 +30,7 @@ export default function TableCloseout() {
   const [HOURS_DATA, setHoursData] = useState('');
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
-
-  const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
-  const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().subtract(businessDayOffsetHours, 'hour').day());
+  const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +44,20 @@ export default function TableCloseout() {
 
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
 
+    const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
+    const assignedAt = table.guest.assignedAt;
+    // Local time handling - depends on assignedAt set from the browser, not server.
+    // See assignTable.tsx and assignGuestService.server.ts
+    setSelectedDay(dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour').day());
+
     const playerRateRules: PlayerRateRules = SELECTED_RATE.playerRateRules;
     const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
+
+    const useRateSchedule = tableRateRules.useRateSchedule || undefined;
+    const rateSchedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
+    const rateEntry: ScheduleEntry = rateSchedule && rateSchedule.entries[WEEK_DAYS[SELECTED_DAY]];
+    console.log(rateEntry)
+
 
     const guest: Guest = table.guest;
     const start = guest.assignedAt;
@@ -241,7 +251,7 @@ export default function TableCloseout() {
     return (<>
       <div className="WORKSHEET mt-2 text-left ">
         {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
-          <div className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
+          <div key={player.id} className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
             <div className="flex">
               <div className="shrink">
                 <input
@@ -335,7 +345,7 @@ export default function TableCloseout() {
             >
               {WEEK_DAYS.map((day, index) => {
                 return (
-                  <option value={index} className={`${optionStyles} text-center`}>{day}</option>
+                  <option key={index} value={index} className={`${optionStyles} text-center`}>{day}</option>
                 )
               })}
           </select>
