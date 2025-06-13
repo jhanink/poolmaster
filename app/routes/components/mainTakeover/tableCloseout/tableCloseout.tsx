@@ -45,7 +45,8 @@ export default function TableCloseout() {
     const useRateSchedule = tableRateRules.useRateSchedule || undefined;
     const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
     const entry: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[SELECTED_DAY]];
-    console.log(entry);
+    entry && console.log(entry);
+    entry && console.log({start: entry && entry.start})
 
     const guest: Guest = table.guest;
     const start = guest.assignedAt;

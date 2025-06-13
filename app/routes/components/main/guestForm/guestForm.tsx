@@ -348,13 +348,7 @@ export default function GuestForm(props: {
           </div>
         </div>
       </div>
-      <div className="flex items-center mt-1 mb-3 justify-end mr-2">
-        <button type="button" onClick={onClickCancel} className={`${actionButtonStyles}`}>
-          Cancel
-        </button>
-        <button disabled={SAVING} type="submit" onClick={onClickSaveItem} className={actionButtonStyles}>
-          Save
-        </button>
+      <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
           <button className={`!text-red-500 ${actionButtonStyles}`} onClick={onClickDeleteItem}>
             {!props.guest.assignedAt && (
@@ -365,6 +359,13 @@ export default function GuestForm(props: {
             )}
           </button>
         )}
+        <button type="button" onClick={onClickCancel} className={`${actionButtonStyles}`}>
+          Cancel
+        </button>
+        <button disabled={SAVING} type="submit" onClick={onClickSaveItem} className={actionButtonStyles}>
+          Save
+        </button>
+
       </div>
     </fetcher.Form>
     <ModalConfirm
