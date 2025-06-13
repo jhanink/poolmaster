@@ -101,10 +101,10 @@ export default function GuestItem(props: {
 
     return !(ITEM_EDIT || props.isEditForm) && (
       <div className="text-sm">
-        <div className="flex">
-          <div className={`${!props.isAssigned && 'ml-7'} COLUMN text-left flex-1 text-gray-300 my-3`}>
+        <div className="">
+          <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
             {partySize > 1 && (
-              <div className="ROW text-gray-300 mb-1">
+              <div className="ROW text-gray-300">
                 <span className={`${fieldLabel}`}>Size:</span>
                 Party of {partySize}
               </div>
@@ -192,7 +192,7 @@ export default function GuestItem(props: {
             {guest.name}
           </div>
           {isLargeParty && (
-            <span className='text-gray-500 ml-2'> {partySize}</span>
+            <span className='text-gray-500 ml-1'> - {partySize}</span>
           )}
         </div>
         {renderItemDuration()}
@@ -223,8 +223,15 @@ export default function GuestItem(props: {
       { props.itemExpanded && (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
+          <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
+            Guest Info
+          </div>
+          <hr className="border-gray-800 mt-1"/>
+          <div className="mx-2">
           {itemDetailBodyContent()}
+          </div>
           {itemDetailGuestEditForm()}
+
         </div>
       )}
       {!props.itemExpanded && itemCollapsedRowContent()}
