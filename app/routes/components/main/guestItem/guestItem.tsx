@@ -99,8 +99,8 @@ export default function GuestItem(props: {
   const itemDetailBodyContent = () => {
     const partySize = props.guest.partySize;
 
-    return !(ITEM_EDIT || props.isEditForm) && (
-      <div className="text-sm">
+    return !(ITEM_EDIT || props.isEditForm) && (<>
+      <div className="text-sm mx-3">
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
             {partySize > 1 && (
@@ -127,22 +127,25 @@ export default function GuestItem(props: {
             )}
           </div>
         </div>
+      </div>
+      <hr className="border-gray-800 mt-1 mb-2 mx-1"/>
+      <div>
         <div className="flex">
           <div className="COLUMN flex-1 p-1 pb-2 text-right">
-            <button className={`${actionButtonStyles}`} onClick={onClickEditItem}>Edit </button>
-            <button className={`${actionButtonStyles}`} onClick={() => {onClickAssignItem(guest)}}>
+            <button className={`${actionButtonStyles} !text-xs`} onClick={onClickEditItem}>Edit </button>
+            <button className={`${actionButtonStyles} !text-xs`} onClick={() => {onClickAssignItem(guest)}}>
               {props.isAssigned && 'Move'}
               {!props.isAssigned && 'Assign'}
             </button>
             {props.isAssigned && (
               <button
                disabled={SAVING}
-               className={`${actionButtonStyles}`} onClick={onClickTableCloseout}>Close Out </button>
+               className={`${actionButtonStyles} !text-xs`} onClick={onClickTableCloseout}>Close Out </button>
             )}
           </div>
         </div>
       </div>
-    )
+    </>)
   }
 
   const itemStatusBar = () => {
@@ -226,10 +229,8 @@ export default function GuestItem(props: {
           <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
             Guest Info
           </div>
-          <hr className="border-gray-800 mt-1"/>
-          <div className="mx-2">
+          <hr className="border-gray-800 mt-1 mx-1"/>
           {itemDetailBodyContent()}
-          </div>
           {itemDetailGuestEditForm()}
 
         </div>

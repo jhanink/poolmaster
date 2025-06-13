@@ -78,7 +78,7 @@ export default function AssignTable() {
               <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
             </>}
             {!!Helpers.tablesAvailable(APP_STATE).length && <>
-              <div className="text-3xl">
+              <div className="text-2xl">
                 <div className="text-gray-300 uppercase">
                   {!!MAIN_TAKEOVER?.assignTable?.assignedAt && (
                     <span>Move</span>
@@ -118,7 +118,7 @@ export default function AssignTable() {
                 <div className="my-5 text-gray-500 text-base">
                   OR
                 </div>
-                <button disabled={SAVING} className={`!text-gray-500 !text-base ${actionButtonStyles}`} onClick={returnToGuestList}>
+                <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={returnToGuestList}>
                   Back to Guest List
                 </button>
               </>)}
