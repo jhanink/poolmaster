@@ -4,7 +4,7 @@ import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
 import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import ExpiredGuest from "../expiredGuest/expiredGuest";
 
@@ -16,6 +16,7 @@ export default function TableListItem(props: {
     index: number,
     tableRef: React.RefObject<HTMLDivElement | null>,
   }) {
+    const [APP_STATE] = useAtom(appStateAtom);
     const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
     const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);
@@ -62,6 +63,9 @@ export default function TableListItem(props: {
                 </div>
               </>}
             </div>
+          </div>
+          <div className="text-gray-500 text-xs italic">
+            {Helpers.getTableType(APP_STATE, table.tableTypeId).name}
           </div>
         </div>
 
