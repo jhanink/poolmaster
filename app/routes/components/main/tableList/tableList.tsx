@@ -37,16 +37,16 @@ export default function TableList() {
     return (
       <div className="MINIMAP CHIPS my-2 mt-3 mb-5 top-0 z-10" ref={miniMapRef}>
         {Helpers.tablesAssigned(APP_STATE)
-        .sort((A: TableItem, B: TableItem) => A.number - B.number)
-        .map((table: TableItem, index: number) =>
-          <div className={`CHIP ${tableChipAssigned} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
-            key={table.id}
-            data-table-id={table.id}
-            onClick={(event) => onClickTableChip(event, table)}
-          >
-            {table.name}
-          </div>
-      )}
+          .sort((A: TableItem, B: TableItem) => A.number - B.number)
+          .map((table: TableItem, index: number) =>
+            <div className={`CHIP ${tableChipAssigned} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
+              key={table.id}
+              data-table-id={table.id}
+              onClick={(event) => onClickTableChip(event, table)}
+            >
+              {table.name}
+            </div>
+        )}
       </div>
     )
   }

@@ -52,50 +52,50 @@
           "name": "-- USE TABLE RATE --",
           "entries": {
               "Mon": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Tue": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Wed": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Thu": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Fri": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Sat": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"
               },
               "Sun": {
-                  "from": "00:00",
-                  "to": "23:59",
+                  "start": "00:00",
+                  "end": "23:59",
                   "rateBefore": "0.00",
                   "rateAfter": "0.00",
                   "rateDuring": "10.00"

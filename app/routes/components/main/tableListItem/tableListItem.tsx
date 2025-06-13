@@ -5,6 +5,8 @@ import React, { useEffect, useState } from "react";
 import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { Helpers } from "~/util/Helpers";
+import ExpiredGuest from "../expiredGuest/expiredGuest";
 
 const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-xl`;
 const guestAssigned = `${cardStyle} border-green-900 text-green-700`;
@@ -45,13 +47,16 @@ export default function TableListItem(props: {
       setSelectedTable(undefined as TableItem);
     }
 
+    const IS_EXPIRED = Helpers.isExpiredGuest(table.guest);
+    const EXPIRED_OVERRIDE = (IS_EXPIRED && 'border-dashed !border-gray-800 hover:!cursor-default') || (SELECTED_TABLE && '!border-white');
+
     return (
-      <div className={`${SELECTED_TABLE && 'border-white'} ${guestAssigned} hover:cursor-pointer relative`} onClick={onClickTable}>
+      <div className={`${EXPIRED_OVERRIDE} ${guestAssigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
-            <span className="mr-2">{table.name}</span>
+            <span>{table.name}</span>
             <div className="absolute top-2 right-0 hover:cursor-pointer">
-              {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && <>
+              {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && !IS_EXPIRED && <>
                 <div className="text-gray-500">
                   <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-3 size-7 hover:stroke-white" />
                 </div>
@@ -59,7 +64,10 @@ export default function TableListItem(props: {
             </div>
           </div>
         </div>
-        {table.guest && (
+
+        {IS_EXPIRED ? (
+          <ExpiredGuest guest={table.guest} />
+        ) : (
           <div className="ml-1">
             <GuestItem guest={table.guest}
               index={0}

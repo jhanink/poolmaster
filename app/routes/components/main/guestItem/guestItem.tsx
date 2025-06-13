@@ -98,7 +98,6 @@ export default function GuestItem(props: {
 
   const itemDetailBodyContent = () => {
     const partySize = props.guest.partySize;
-    const bigPartySize = APP_STATE.statusIndicators.largePartySize;
 
     return !(ITEM_EDIT || props.isEditForm) && (
       <div className="text-sm">

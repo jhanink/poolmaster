@@ -102,12 +102,33 @@ export interface TableItem {
 }
 
 export interface ScheduleEntry {
-  from: string,
-  to: string,
+  start: string,
+  end: string,
   rateBefore: string,
   rateAfter: string,
   rateDuring: string,
 }
+
+export interface MeteredTime {
+  hours: string,
+  rate: string,
+}
+
+export interface BillablePlayer {
+  id: number,
+  name: string,
+  hours: string,
+  hourlyRate: string,
+  rateScheduled: MeteredTime
+  rateAfter: MeteredTime
+  rateBefore: MeteredTime
+  billable: boolean,
+}
+
+export interface BillableData {
+  players: BillablePlayer[],
+}
+
 
 export interface RateSchedule {
   id: number,
@@ -178,50 +199,50 @@ export const DefaultRateSchedule: RateSchedule = {
   name: "-- USE TABLE RATE --",
   entries: {
     Mon: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Tue: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Wed: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Thu: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Fri: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Sat: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
     },
     Sun: {
-      from: "00:00",
-      to: "23:59",
+      start: "00:00",
+      end: "23:59",
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",

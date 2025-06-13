@@ -167,9 +167,9 @@ export default function AdminRateSchedules() {
                         <input
                           className={`${formInputStyles} ${INPUT_FIELD}`}
                           type="time"
-                          value={rateSchedule.entries[day].from}
+                          value={rateSchedule.entries[day].start}
                           onChange={(event) => {
-                            rateSchedule.entries[day].from = event.target.value;
+                            rateSchedule.entries[day].start = event.target.value;
                             setRateSchedules([...RATE_SCHEDULES]);
                           }}
                         />
@@ -179,9 +179,9 @@ export default function AdminRateSchedules() {
                         <input
                           className={`${formInputStyles} ${INPUT_FIELD}`}
                           type="time"
-                          value={rateSchedule.entries[day].to}
+                          value={rateSchedule.entries[day].end}
                           onChange={(event) => {
-                            rateSchedule.entries[day].to = event.target.value;
+                            rateSchedule.entries[day].end = event.target.value;
                             setRateSchedules([...RATE_SCHEDULES]);
                           }}
                         />

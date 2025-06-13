@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
-import {type AppState, type Guest, type TableRate} from "~/config/AppState";
+import {type AppState, type Guest, type TableItem, type TableRate} from "~/config/AppState";
+
+const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
 
 export type TimeElapsed = {
   durationMinutes: number;
@@ -61,6 +63,12 @@ export const Helpers = {
       return appState.rateSchedules[0];
     }
     return match;
+  },
+  isExpiredGuest: (guest: Guest) => {
+    const startTime = guest.assignedAt || guest.createdAt;
+    if (!startTime) return false;
+    const NOW = Date.now();
+    return (NOW - startTime) >= MILLIS_24_HOURS;
   },
   tableRateSuffix: (tableRate: TableRate) => {
     const temp = [];
