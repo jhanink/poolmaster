@@ -122,7 +122,7 @@ export default function AdminUsageTypes() {
             <div className={`${ROW}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div
-                  className={`mr-2 ${!!usageType.forDelete && 'text-red-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  className={`mr-2 ${!!usageType.forDelete && 'text-rose-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(usageType)}}>
                   <TrashIcon></TrashIcon>
                 </div>
@@ -135,7 +135,7 @@ export default function AdminUsageTypes() {
               {usageType.id !== DEFAULT_ID && (
                 <span>{index+1}</span>
               )}
-              <div className={`text-nowrap ${!!usageType.forDelete && 'text-red-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!usageType.forDelete && 'text-rose-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`

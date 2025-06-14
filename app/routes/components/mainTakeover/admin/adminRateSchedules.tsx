@@ -91,7 +91,7 @@ export default function AdminRateSchedules() {
             <div className={`${ROW}`}>
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <div
-                  className={`mr-2 ${!!rateSchedule.forDelete && 'text-red-500 hover:text-red-800'} ${!!rateSchedule.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  className={`mr-2 ${!!rateSchedule.forDelete && 'text-rose-500 hover:text-red-800'} ${!!rateSchedule.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(rateSchedule)}}>
                   <TrashIcon></TrashIcon>
                 </div>
@@ -102,12 +102,12 @@ export default function AdminRateSchedules() {
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
-              <div className={`text-nowrap ${!!rateSchedule.forDelete && 'text-red-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!rateSchedule.forDelete && 'text-rose-500'} ${!!rateSchedule.forAdd && 'text-green-500'}`}>
                 <input
                   disabled={rateSchedule.id === DEFAULT_ID}
                   className={`
                     ${rateSchedule.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
-                    ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-red-500'}
+                    ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-rose-500'}
                     ${!!rateSchedule.forAdd && 'text-green-500'}
                     ${formFieldStyles}
                   `}

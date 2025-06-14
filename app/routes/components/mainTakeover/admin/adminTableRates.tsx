@@ -102,7 +102,7 @@ export default function AdminTableRates() {
             <div className={`${ROW}`}>
               {(tableRate.id !== DEFAULT_ID) && (
                 <div
-                  className={`mr-2 ${!!tableRate.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableRate.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  className={`mr-2 ${!!tableRate.forDelete && 'text-rose-500 hover:text-red-800'} ${!!tableRate.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(tableRate)}}>
                   <TrashIcon></TrashIcon>
                 </div>
@@ -115,12 +115,12 @@ export default function AdminTableRates() {
               {(tableRate.id !== DEFAULT_ID) && (
                 <span>{index+1}</span>
               )}
-              <div className={`text-nowrap ${!!tableRate.forDelete && 'text-red-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!tableRate.forDelete && 'text-rose-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`
                     ${formInputStyles}
                     ${INPUT_FIELD}
-                    ${!!tableRate.forDelete && 'text-red-500'}
+                    ${!!tableRate.forDelete && 'text-rose-500'}
                     ${!!tableRate.forAdd && 'text-green-500'}
                     ${formFieldStyles}
                   `}

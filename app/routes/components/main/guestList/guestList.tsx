@@ -8,7 +8,7 @@ import { Helpers } from '~/util/Helpers';
 
 const addGuestBaseStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
 const addGuestStyles = `${addGuestBaseStyles} text-sm ring-gray-500 text-gray-500 hover:ring-1 hover:ring-white`;
-const addGuestEmptyListStyles = `${addGuestBaseStyles} text-lg ring-red-500 rounded-full hover:ring-3 !h-[100px] !w-[100px] !py-0 !px-0`;
+const addGuestEmptyListStyles = `${addGuestBaseStyles} text-lg ring-rose-500 rounded-full hover:ring-3 !h-[100px] !w-[100px] !py-0 !px-0`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);

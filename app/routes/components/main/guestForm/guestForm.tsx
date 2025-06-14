@@ -160,7 +160,7 @@ export default function GuestForm(props: {
             {FORM_FIELDS.extraPlayers.map((player, index) => (
               <div key={index} className={`flex items-center justify-between ${styles.extraPlayerRow}`}>
                 <div className="PLAYER_ROW">
-                  <div className={`inline-block mr-2 relative top-1 ${!!player.forDelete && 'text-red-500 hover:text-red-800'} ${!!player.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  <div className={`inline-block mr-2 relative top-1 ${!!player.forDelete && 'text-rose-500 hover:text-red-800'} ${!!player.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                     onClick={() => {onClickForDelete(player)}}>
                     <TrashIcon></TrashIcon>
                   </div>
@@ -225,7 +225,7 @@ export default function GuestForm(props: {
         </div>
         <div className="relative">
           {ATTEMPTED_SAVE && !FORM_FIELDS.name.trim().length && (
-            <div className="text-red-500 text-left ml-3 text-sm top-[-3px] relative">Name is required</div>
+            <div className="text-rose-500 text-left ml-3 text-sm top-[-3px] relative">Name is required</div>
           )}
         </div>
         <div className={formColumnStyles}>
@@ -350,7 +350,7 @@ export default function GuestForm(props: {
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
-          <button className={`!text-red-500 ${actionButtonStyles} !text-xs`} onClick={onClickDeleteItem}>
+          <button className={`!text-rose-500 ${actionButtonStyles} !text-xs`} onClick={onClickDeleteItem}>
             DELETE
           </button>
         )}
@@ -368,7 +368,7 @@ export default function GuestForm(props: {
         dialogTitle={`CONFIRM DELETE`}
         dialogMessageFn={() => <span className="text-sm">
           Remove
-          <span className="text-red-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
+          <span className="text-rose-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
           {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}?` : 'from the Wait List?'}
         </span>}
         onConfirm={onClickConfirmDelete}

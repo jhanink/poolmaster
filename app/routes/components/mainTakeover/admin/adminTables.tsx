@@ -95,17 +95,17 @@ export default function AdminTables() {
           <div className={`!mx-1 ${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
             <div className={`${ROW}`}>
               <div
-                className={`mr-2 ${!!table.forDelete && 'text-red-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                className={`mr-2 ${!!table.forDelete && 'text-rose-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                 onClick={(event) => {onClickForDeleteItem(table)}}>
                 <TrashIcon></TrashIcon>
               </div>
-              <div className={`text-nowrap ${!!table.forDelete && 'text-red-500'} ${!!table.forAdd && 'text-green-500'}`}>
+              <div className={`text-nowrap ${!!table.forDelete && 'text-rose-500'} ${!!table.forAdd && 'text-green-500'}`}>
                 {index+1}
                 <input
                   className={`
                     uppercase
                     ${formInputStyles}
-                     ${!!table.forDelete && 'text-red-500'}
+                     ${!!table.forDelete && 'text-rose-500'}
                      ${!!table.forAdd && 'text-green-500'}
                   `}
                   placeholder="Table name..."
@@ -192,7 +192,7 @@ export default function AdminTables() {
               </div>
             )}
             {!!table.forDelete && table.guest && (
-              <div className="text-red-500 mt-2 mb-4 text-sm italic ml-10">
+              <div className="text-rose-500 mt-2 mb-4 text-sm italic ml-10">
                 <ArrowRightIcon className="inline-block w-4 h-4 mr-1"></ArrowRightIcon>
                 <span className="uppercase">{table.guest.name}</span> is on {table.name}
               </div>

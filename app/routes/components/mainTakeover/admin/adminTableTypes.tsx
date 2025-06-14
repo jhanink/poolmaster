@@ -100,12 +100,12 @@ export default function AdminTableTypes() {
             <div className={`${ROW}`}>
               {(tableType.id !== DEFAULT_ID) && (
                 <div
-                  className={`mr-2 ${!!tableType.forDelete && 'text-red-500 hover:text-red-800'} ${!!tableType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  className={`mr-2 ${!!tableType.forDelete && 'text-rose-500 hover:text-red-800'} ${!!tableType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(tableType)}}>
                   <TrashIcon></TrashIcon>
                 </div>
               )}
-              <div className={`flex items-center w-full text-nowrap ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
+              <div className={`flex items-center w-full text-nowrap ${!!tableType.forDelete && 'text-rose-500'} ${!!tableType.forAdd && 'text-green-500'}`}>
                 {tableType.id === DEFAULT_ID && (
                   "DEFAULT"
                 )}
@@ -116,7 +116,7 @@ export default function AdminTableTypes() {
                   className={`
                     ${formInputStyles}
                     ${INPUT_FIELD}
-                    ${!!tableType.forDelete && 'text-red-500'} ${!!tableType.forAdd && 'text-green-500'}
+                    ${!!tableType.forDelete && 'text-rose-500'} ${!!tableType.forAdd && 'text-green-500'}
                     ${formFieldStyles}
                   `}
                   placeholder="Table Type..."

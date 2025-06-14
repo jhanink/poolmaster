@@ -36,7 +36,7 @@ export const fragmentAppName = (style = '') => {
   return (
     <div className={`${style} inline-block text-gray-600`}>
       <span>POOLHALL</span>
-      <span className="text-red-500">MASTER</span>
+      <span className="text-rose-500">MASTER</span>
     </div>
   )
 }
