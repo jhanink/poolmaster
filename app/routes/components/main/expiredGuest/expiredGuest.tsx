@@ -29,7 +29,7 @@ export default function ExpiredGuest(props: {
         </div>
       </div>
       <div className={'mb-3'}>
-        <button className={`${actionButtonStyles} !text-rose-500`}
+        <button className={`${actionButtonStyles} !text-gray-500`}
           onClick={async () => {
             if (SAVING) return;
             setSaving(true);
