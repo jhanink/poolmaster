@@ -10,7 +10,7 @@ export default function ExpiredGuest(props: {
 }) {
   const [, setAppState] = useAtom(appStateAtom);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
-  const CREATED_AT = dayjs(props.guest.createdAt).format('MMM D - H:m a');
+  const CREATED_AT = dayjs(props.guest.createdAt).format('MMM D - H:mm a');
   return (<>
     <div className={``}>
       <div className={`my-3 text-gray-500`}>
