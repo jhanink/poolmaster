@@ -18,9 +18,6 @@ export default function ExpiredGuest(props: {
   return (<>
     <div className={``}>
       <div className={`my-3 text-gray-500`}>
-        <div className="text-sm mb-2">
-          <span className="text-lg text-gray-500 uppercase">Expired</span>
-        </div>
         <div className="italic text-sm">
           <span className={`${hiliteColor} uppercase`}>{props.guest.name}</span> was added <span className={`${hiliteColor}`}>{HOURS_AGO}</span> hours ago
         </div>
@@ -37,7 +34,7 @@ export default function ExpiredGuest(props: {
             setSaving(false);
             setAppState(newAppState);
           }}>
-          Remove
+          <span className="text-gray-500">Remove Expired Guest </span>
         </button>
       </div>
     </div>
