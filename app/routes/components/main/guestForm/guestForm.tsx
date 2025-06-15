@@ -229,7 +229,7 @@ export default function GuestForm(props: {
                }}
                value={FORM_FIELDS.name}
               className={`${formFieldStylesFullWidth}`}
-              placeholder="Enter Guest Name..."
+              placeholder="Enter Name..."
               maxLength={40}/>
           </div>
         </div>
@@ -254,7 +254,7 @@ export default function GuestForm(props: {
               }}
               value={FORM_FIELDS.phoneNumber}
               className={`${formFieldStylesFullWidth}`}
-              placeholder="Add Phone Number..."
+              placeholder="Enter Number..."
             />
           </div>
         </div>

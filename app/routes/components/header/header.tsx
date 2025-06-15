@@ -62,7 +62,7 @@ export default function AppHeader() {
               <div className="flex flex-col items-center justify-center">
                 <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
                   <span className={`${statusPillStyles} text-nowrap`}>
-                    {APP_STATE.guestList.length} <span className="ml-1 capitalize">Pending</span>
+                    {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
                   </span>
                 </div>
                 <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
@@ -72,7 +72,7 @@ export default function AppHeader() {
               <div className="flex flex-col items-center justify-center">
                 <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
                   <span className={`${statusPillStyles}`}>
-                    {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
+                    {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Tables - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
                   </span>
                 </div>
                 <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
