@@ -101,7 +101,7 @@ export default function GuestItem(props: {
     if (partySize < 2 && !guest.phoneNumber && !guest.notes && props.isAssigned) return;
     return (<>
     <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
-        Guest Info
+        Visit Information
       </div>
       <hr className="border-gray-900 mt-1 mx-1"/>
       <div className="text-sm mx-3">
@@ -204,12 +204,12 @@ export default function GuestItem(props: {
           </div>
         )}
         <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
-          <div className={`inline-block ${isLargeParty ? `${largePartyStyle}`: ``}`}>
+          <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle} !text-xs`: ``}`}>
             {guest.name}
+            {guest.partySize > 1 && (<>
+              <span className={`${isLargeParty?'':'text-gray-500'}`}> : {guest.partySize}</span>
+            </>)}
           </div>
-          {isLargeParty && (
-            <span className='text-gray-500 ml-2'> {partySize}</span>
-          )}
         </div>
         {renderItemDuration()}
       </div>

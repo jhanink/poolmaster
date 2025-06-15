@@ -37,7 +37,7 @@ export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${usageTypeIndicat
 export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
 
-export const tableChipAssigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-green-800 text-green-600 font-bold hover:cursor-pointer`;
+export const tableChipAssigned = `inline-block m-1 mb-2 rounded-full py-1 px-7 text-xs border border-green-800 text-green-600 font-bold hover:cursor-pointer`;
 export const tableChipUnassigned = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-gray-800 text-gray-600 font-bold `;
 export const selectedTableChipStyle = `ring-2 ring-white`;
 

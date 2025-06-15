@@ -78,7 +78,7 @@ export default function GuestForm(props: {
     cleanupForm(event);
   }
 
-  const onClickDeleteItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onClickDeleteItem = (event: any) => {
     event.preventDefault();
     event.stopPropagation();
     setShowConfirmDelete(prev => true);
@@ -201,7 +201,7 @@ export default function GuestForm(props: {
   }, []);
 
   return ( <>
-    <fetcher.Form method="POST" className={`bg-transparent`} onClick={onClickForm}>
+    <fetcher.Form method="POST" className={`bg-transparent`} onSubmit={onClickSaveItem}>
       <div>
         <div className={formColumnStyles}>
           <div className={`${labelStyles} ml-1`}>
@@ -350,13 +350,13 @@ export default function GuestForm(props: {
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
-          <button className={`!text-rose-500 ${actionButtonStyles} !text-xs`} onClick={onClickDeleteItem}>
+          <div onClick={onClickDeleteItem} className={`!text-rose-500 ${actionButtonStyles} !text-xs`}>
             DELETE
-          </button>
+          </div>
         )}
-        <button type="button" onClick={onClickCancel} className={`${actionButtonStyles} !text-xs`}>
+        <div onClick={onClickCancel} className={`${actionButtonStyles} !text-xs`}>
           Cancel
-        </button>
+        </div>
         <button disabled={SAVING} type="submit" onClick={onClickSaveItem} className={`${actionButtonStyles} !text-xs`}>
           Save
         </button>

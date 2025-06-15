@@ -45,6 +45,11 @@ export default function TableList() {
               onClick={(event) => onClickTableChip(event, table)}
             >
               {table.name}
+              <div className="uppercase italic !text-xs text-gray-500 mt-1 !font-normal">
+                {table.guest.name} {table.guest.partySize > 1 && (<>
+                  : <span className="text-gray-300">{table.guest.partySize}</span>
+                </>)}
+              </div>
             </div>
         )}
       </div>
