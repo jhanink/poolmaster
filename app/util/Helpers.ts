@@ -37,32 +37,25 @@ export const Helpers = {
   hasGuests: (appState: AppState) => {
     return Helpers.tablesAssigned(appState).length > 0 ||appState.guestList.length > 0;
   },
+  getTable: (appState: AppState, tableId: number) => {
+    const match = appState.tables.find(table => table.id === tableId);
+    return (match && match.isActive && match) || appState.tables[0];
+  },
   getTableType: (appState: AppState, tableTypeId: number) => {
-    const match = appState.tableTypes.find(tableType => {
-      return tableType.id === tableTypeId && tableType.isActive;
-    });
-    if (!match) {
-      return appState.tableTypes[0];
-    }
-    return match;
+    const match = appState.tableTypes.find(tableType => tableType.id === tableTypeId);
+    return (match.isActive && match) || appState.tableTypes[0];
+  },
+  getTableOrTableType: (appState: AppState, guest: Guest) => {
+    if (guest.tableOrTableType) return Helpers.getTable(appState, guest.tableOrTableTypeId);
+    return Helpers.getTableType(appState, guest.tableOrTableTypeId);
   },
   getUsageType: (appState: AppState, usageTypeId: number) => {
-    const match = appState.usageTypes.find(usageType => {
-      return usageType.id === usageTypeId && usageType.isActive;
-    });
-    if (!match) {
-      return appState.usageTypes[0];
-    }
-    return match;
+    const match = appState.usageTypes.find(usageType => usageType.id === usageTypeId);
+    return (match.isActive && match) || appState.usageTypes[0];
   },
   getRateSchedule: (appState: AppState, rateScheduleId: number) => {
-    const match = appState.rateSchedules.find(rateSchedule => {
-      return rateSchedule.id === rateScheduleId && rateSchedule.isActive;
-    });
-    if (!match) {
-      return appState.rateSchedules[0];
-    }
-    return match;
+    const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
+    return (match.isActive && match) || appState.rateSchedules[0];
   },
   isExpiredGuest: (guest: Guest) => {
     const startTime = guest.assignedAt || guest.createdAt;

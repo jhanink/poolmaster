@@ -1,6 +1,6 @@
 
 import { useMask } from '@react-input/mask';
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DEFAULT_ID, DefaultGuestData, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
@@ -14,6 +14,8 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 
 const partySizeArray = [...PARTY_SIZE_ARRAY];
 const actionButtons = `${actionButtonStyles} !py-0`;
+const tableOrTableTypeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500`;
+const tableOrTableTypeSelectedStyles = `bg-green-500 !text-black`;
 
 export default function GuestForm(props: {
   guest: Guest,
@@ -36,7 +38,8 @@ export default function GuestForm(props: {
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
-    tableTypeId: props.guest.tableTypeId || DEFAULT_ID,
+    tableOrTableType: props.guest.tableOrTableType || false,
+    tableOrTableTypeId: props.guest.tableOrTableTypeId || DEFAULT_ID,
     usageTypeId: props.guest.usageTypeId || DEFAULT_ID,
     notes: props.guest.notes || "",
   });
@@ -149,13 +152,13 @@ export default function GuestForm(props: {
   const fragmentExtraPlayersTable = () => {
     return (<>
       {FORM_FIELDS.partySize > 1 && (<>
-        <div className={formColumnStyles}>
-          <div className={`${labelStyles} mb-2`}>
+        <div className={`${formColumnStyles} !mx-0`}>
+          <div className={`${labelStyles} !top-0`}>
             Extra Player Names
-            <button className={`${actionButtons}`} onClick={() => {onClickAddExtraPlayer()}}>+1</button>
+            <button className={`${actionButtons} !px-3`} onClick={() => {onClickAddExtraPlayer()}}>+1</button>
           </div>
         </div>
-        <div className={formColumnStyles}>
+        <div className={`${formColumnStyles} !mx-0`}>
           <div className={`${fieldStyles} flex-grow text-nowrap`}>
             {FORM_FIELDS.extraPlayers.map((player, index) => (
               <div key={index} className={`flex items-center justify-between ${styles.extraPlayerRow}`}>
@@ -190,6 +193,13 @@ export default function GuestForm(props: {
     </>)
   }
 
+  const toggleTableOrTableType = (which: boolean) =>{
+    if (which === FORM_FIELDS.tableOrTableType) return;
+    FORM_FIELDS.tableOrTableType = !FORM_FIELDS.tableOrTableType;
+    FORM_FIELDS.tableOrTableTypeId = DEFAULT_ID;
+    setFormFields({...FORM_FIELDS})
+  }
+
   useEffect(() => {
     if (!props.guest.id) return;
 
@@ -201,7 +211,7 @@ export default function GuestForm(props: {
   }, []);
 
   return ( <>
-    <fetcher.Form method="POST" className={`bg-transparent`} onSubmit={onClickSaveItem}>
+    <fetcher.Form method="POST" className={`bg-transparent`} onSubmit={onClickSaveItem} onClick={onClickForm}>
       <div>
         <div className={formColumnStyles}>
           <div className={`${labelStyles} ml-1`}>
@@ -274,32 +284,65 @@ export default function GuestForm(props: {
             </div>
           </div>
         </div>
-        <div className={`${FORM_FIELDS.partySize === 1 ? 'hidden' : ''}`}>
+        <div className={`ml-1 p-1 border border-gray-800 rounded-lg mb-2 ${FORM_FIELDS.partySize === 1 ? 'hidden' : ''}`}>
           {fragmentExtraPlayersTable()}
         </div>
-        <div className={formColumnStyles}>
-          <div className={`${labelStyles} ml-1 mt-1`}>
-            Table or Table Type
+        <div className={`ml-1 p-1 border border-gray-800 rounded-lg`}>
+          <div className={`${formColumnStyles}`}>
+            <div className={`${labelStyles} !mx-0 mb-1`}>
+              <div className="flex shrink gap-2 text-xs items-center">
+                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-cyan-500 ${tableOrTableTypeSelectedStyles}`}`}
+                  onClick={() => {toggleTableOrTableType(false)}}
+                >
+                  Table Type
+                </div>
+                <div>- OR -</div>
+                <div className={`${tableOrTableTypeStyles} ${FORM_FIELDS.tableOrTableType && tableOrTableTypeSelectedStyles}`}
+                  onClick={() => {toggleTableOrTableType(true)}}
+                >
+                  Table
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className={formColumnStyles}>
-          <div className={fieldStyles}>
-            <select
-              name="tableType"
-              onChange={(event) => {
-                FORM_FIELDS.tableTypeId = Number(event.target.value);
-                setFormFields({...FORM_FIELDS})
-              }}
-              value={FORM_FIELDS.tableTypeId}
-              className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
-            >
-              {APP_STATE.tableTypes
-                .filter((type) => type.isActive)
-                .map((type) => (
-                  <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
-                ))
-              }
-            </select>
+          <div className={formColumnStyles}>
+            <div className={fieldStyles}>
+              {FORM_FIELDS.tableOrTableType ? (
+                <select
+                  name="table"
+                  onChange={(event) => {
+                    FORM_FIELDS.tableOrTableTypeId = Number(event.target.value);
+                    setFormFields({...FORM_FIELDS})
+                  }}
+                  value={FORM_FIELDS.tableOrTableTypeId}
+                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
+                >
+                  {APP_STATE.tables
+                    .filter((type) => type.isActive)
+                    .map((type) => (
+                      <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                    ))
+                  }
+                </select>
+              ) : (
+                <select
+                  name="tableType"
+                  onChange={(event) => {
+                    FORM_FIELDS.tableOrTableTypeId = Number(event.target.value);
+                    setFormFields({...FORM_FIELDS})
+                  }}
+                  value={FORM_FIELDS.tableOrTableTypeId}
+                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
+                >
+                  {APP_STATE.tableTypes
+                    .filter((type) => type.isActive)
+                    .map((type) => (
+                      <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                    ))
+                  }
+                </select>
+              )}
+            </div>
           </div>
         </div>
         <div className={formColumnStyles}>

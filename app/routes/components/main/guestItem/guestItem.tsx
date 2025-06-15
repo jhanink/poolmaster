@@ -20,7 +20,7 @@ export default function GuestItem(props: {
   setEditForm?: React.Dispatch<React.SetStateAction<boolean>>,
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const itemCardStyles = `bg-transparent mt-2 p-2 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
+  const itemCardStyles = `bg-transparent mt-2 p-1 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
   const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
   const statusIndicatorStyles = `flex items-center space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
@@ -130,8 +130,16 @@ export default function GuestItem(props: {
             )}
             {!props.isAssigned && (
               <div className="ROW">
-                <span className={`${fieldLabel}`}>Table:</span>
-                <span className="uppercase">{Helpers.getTableType(APP_STATE, guest.tableTypeId).name}</span>
+                <span className={`${fieldLabel}`}>
+                  {guest.tableOrTableType ? (
+                    `Table:`
+                  ): (
+                    `Type:`
+                  )}
+                </span>
+                <span className="uppercase">
+                  {Helpers.getTableOrTableType(APP_STATE, guest).name}
+                </span>
               </div>
             )}
             {guest.notes && (
@@ -192,7 +200,7 @@ export default function GuestItem(props: {
   const itemDetailGuestEditForm = () => {
     return (
       (ITEM_EDIT || props.isEditForm) && (
-        <div className={`${!props.isAssigned && 'mx-5'}`}>
+        <div>
           <GuestForm guest={props.guest} onEditCloseCallback={onClickCancelEdit}></GuestForm>
         </div>
       )
@@ -251,7 +259,6 @@ export default function GuestItem(props: {
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}
-
         </div>
       )}
       {!props.itemExpanded && itemCollapsedRowContent()}
