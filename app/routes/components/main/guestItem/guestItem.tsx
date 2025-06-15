@@ -96,10 +96,14 @@ export default function GuestItem(props: {
     </>)
   }
 
-  const itemDetailBodyContent = () => {
-    const partySize = props.guest.partySize;
-
-    return !(ITEM_EDIT || props.isEditForm) && (<>
+  const itemDetailGuestInfo = (guest: Guest) => {
+    const partySize = guest.partySize;
+    if (partySize < 2 && !guest.phoneNumber && !guest.notes && props.isAssigned) return;
+    return (<>
+    <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
+        Guest Info
+      </div>
+      <hr className="border-gray-900 mt-1 mx-1"/>
       <div className="text-sm mx-3">
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
@@ -115,10 +119,12 @@ export default function GuestItem(props: {
               {guest.phoneNumber}
               </div>
             )}
-            <div className="ROW">
-              <span className={`${fieldLabel}`}>Type:</span>
-              <span className="uppercase">{Helpers.getTableType(APP_STATE, guest.tableTypeId).name}</span>
-            </div>
+            {!props.isAssigned && (
+              <div className="ROW">
+                <span className={`${fieldLabel}`}>Type:</span>
+                <span className="uppercase">{Helpers.getTableType(APP_STATE, guest.tableTypeId).name}</span>
+              </div>
+            )}
             {guest.notes && (
               <div className="ROW">
                 <span className={`${fieldLabel}`}>Notes:</span>
@@ -128,10 +134,17 @@ export default function GuestItem(props: {
           </div>
         </div>
       </div>
-      <hr className="border-gray-800 mt-1 mb-2 mx-1"/>
+    </>)
+  }
+
+  const itemDetailBodyContent = () => {
+    if (ITEM_EDIT || props.isEditForm) return;
+    return (<>
+      {itemDetailGuestInfo(props.guest)}
+      <hr className="border-gray-900 my-2 mx-1"/>
       <div>
         <div className="flex">
-          <div className="COLUMN flex-1 p-1 pb-2 text-right">
+          <div className="COLUMN flex-1 p-1 text-right">
             <button className={`${actionButtonStyles} !text-xs`} onClick={onClickEditItem}>Edit </button>
             <button className={`${actionButtonStyles} !text-xs`} onClick={() => {onClickAssignItem(guest)}}>
               {props.isAssigned && 'Move'}
@@ -226,10 +239,6 @@ export default function GuestItem(props: {
       { props.itemExpanded && (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
-          <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
-            Guest Info
-          </div>
-          <hr className="border-gray-800 mt-1 mx-1"/>
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}
 
