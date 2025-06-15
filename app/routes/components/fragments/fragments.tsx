@@ -104,14 +104,16 @@ export const fragmentUsageIndicator = (usageType: UsageType) => {
   const iconOnly = usageType.iconOnly;
   return (<>
     {(usageType.id !== DEFAULT_ID) && (<>
-      <div className="text-sm">
+      <div className="text-xs">
         <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
+          <div className="flex items-center">
           {(!icon || !iconOnly) && (
-            <span className={`text-gray-400 ${icon?'mr-2 relative top-[-2px]':''}`} style={{color: usageType.textColor}}>{usageType.name}</span>
+            <div className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</div>
           )}
           {!!icon && (
-            <span className="top-[1px] relative text-lg">{icon}</span>
+            <div className="text-base">{icon}</div>
           )}
+          </div>
         </div>
       </div>
     </>)}

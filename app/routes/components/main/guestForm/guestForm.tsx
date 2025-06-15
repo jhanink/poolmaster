@@ -279,7 +279,7 @@ export default function GuestForm(props: {
         </div>
         <div className={formColumnStyles}>
           <div className={`${labelStyles} ml-1 mt-1`}>
-            Table Type
+            Table or Table Type
           </div>
         </div>
         <div className={formColumnStyles}>
@@ -364,15 +364,15 @@ export default function GuestForm(props: {
       </div>
     </fetcher.Form>
     <ModalConfirm
-        show={SHOW_CONFIRM_DELETE}
-        dialogTitle={`CONFIRM DELETE`}
-        dialogMessageFn={() => <span className="text-sm">
-          Remove
-          <span className="text-rose-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
-          {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}?` : 'from the Wait List?'}
-        </span>}
-        onConfirm={onClickConfirmDelete}
-        onCancel={onClickCancelDelete}
-      />
+      show={SHOW_CONFIRM_DELETE}
+      dialogTitle={`CONFIRM DELETE`}
+      dialogMessageFn={() => <span className="text-sm">
+        Remove
+        <span className="text-rose-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
+        {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}?` : 'from the Wait List?'}
+      </span>}
+      onConfirm={onClickConfirmDelete}
+      onCancel={onClickCancelDelete}
+    />
   </>)
 }

@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 import { Helpers } from "~/util/Helpers";
-import { selectedTableChipStyle, tableChipAssigned } from "~/util/GlobalStylesUtil";
+import { selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
 
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
@@ -39,7 +39,7 @@ export default function TableList() {
         {Helpers.tablesAssigned(APP_STATE)
           .sort((A: TableItem, B: TableItem) => A.number - B.number)
           .map((table: TableItem, index: number) =>
-            <div className={`CHIP ${tableChipAssigned} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
+            <div className={`CHIP ${tableChipsStyle} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
               key={table.id}
               data-table-id={table.id}
               onClick={(event) => onClickTableChip(event, table)}

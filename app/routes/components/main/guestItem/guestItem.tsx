@@ -100,10 +100,10 @@ export default function GuestItem(props: {
     const partySize = guest.partySize;
     if (partySize < 2 && !guest.phoneNumber && !guest.notes && props.isAssigned) return;
     return (<>
-    <div className="text-gray-500 mt-4 mx-6 text-center uppercase">
-        Visit Information
+      <hr className="border-gray-900 mt-3 mx-1"/>
+      <div className="text-gray-500 mt-1 mx-6 text-center uppercase">
+        <span>Visit Information</span>
       </div>
-      <hr className="border-gray-900 mt-1 mx-1"/>
       <div className="text-sm mx-3">
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
@@ -113,6 +113,15 @@ export default function GuestItem(props: {
                 Party of {partySize}
               </div>
             )}
+            {!!guest.extraPlayers.length && (<>
+              <div className="ROW text-gray-300">
+                <span className={`${fieldLabel}`}>Names:</span>
+                {guest.extraPlayers.reduce((all, next) => {
+                  all.push(next.name);
+                  return all;
+                }, []).join(', ')}
+              </div>
+            </>)}
             { guest.phoneNumber && (
               <div className="ROW">
               <span className={`${fieldLabel}`}>Phone:</span>
@@ -121,7 +130,7 @@ export default function GuestItem(props: {
             )}
             {!props.isAssigned && (
               <div className="ROW">
-                <span className={`${fieldLabel}`}>Type:</span>
+                <span className={`${fieldLabel}`}>Table:</span>
                 <span className="uppercase">{Helpers.getTableType(APP_STATE, guest.tableTypeId).name}</span>
               </div>
             )}
@@ -167,7 +176,7 @@ export default function GuestItem(props: {
     const showStatusBar = (usageType.id !== DEFAULT_ID);
 
     return !isEdit && (showStatusBar) &&  (<>
-      <div className={`${statusIndicatorStyles} justify-end text${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
+      <div className={`${statusIndicatorStyles} justify-center text${props.itemExpanded && 'border-t border-gray-900 pt-1'}`}
           onClick={(event) => {
             if (SELECTED_LIST_FILTER) return;
             props.setItemExpanded(prev => !prev);
@@ -196,7 +205,7 @@ export default function GuestItem(props: {
     const isLargeParty = partySize >= statusBar.largePartySize;
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
 
-    return (
+    return (<>
       <div className="flex text-sm">
         {!props.isAssigned && (
           <div className="flex-grow-0 text-left min-w-7">
@@ -213,7 +222,8 @@ export default function GuestItem(props: {
         </div>
         {renderItemDuration()}
       </div>
-    )
+      {itemStatusBar()}
+    </>)
   }
 
   useEffect(() => {
@@ -245,7 +255,6 @@ export default function GuestItem(props: {
         </div>
       )}
       {!props.itemExpanded && itemCollapsedRowContent()}
-      {itemStatusBar()}
     </div>
   )
 }

@@ -129,7 +129,6 @@ export interface BillableData {
   players: BillablePlayer[],
 }
 
-
 export interface RateSchedule {
   id: number,
   name: string,
