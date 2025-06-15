@@ -214,7 +214,7 @@ export default function GuestItem(props: {
     const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
 
     return (<>
-      <div className="flex text-sm">
+      <div className="flex text-sm px-1">
         {!props.isAssigned && (
           <div className="flex-grow-0 text-left min-w-7">
             <span className="text-gray-600">{props.index + 1}. </span>
