@@ -195,7 +195,7 @@ export default function GuestItem(props: {
             {guest.name}
           </div>
           {isLargeParty && (
-            <span className='text-gray-500 ml-1'> - {partySize}</span>
+            <span className='text-gray-500 ml-2'> {partySize}</span>
           )}
         </div>
         {renderItemDuration()}
