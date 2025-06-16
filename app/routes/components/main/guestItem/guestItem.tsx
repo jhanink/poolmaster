@@ -146,7 +146,7 @@ export default function GuestItem(props: {
                     `Type:`
                   )}
                 </span>
-                <span className={`${guest.tableOrTableType ? 'text-green-500' : 'text-blue-500'} uppercase italic`}>
+                <span className={`${guest.tableOrTableType ? 'text-green-600' : 'text-blue-500'} uppercase italic`}>
                   {Helpers.getTableOrTableType(APP_STATE, guest).name}
                 </span>
               </div>

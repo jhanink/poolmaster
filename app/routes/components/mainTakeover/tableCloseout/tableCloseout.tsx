@@ -367,7 +367,7 @@ export default function TableCloseout() {
         show={SHOW_CONFIRM_CLOSEOUT}
         dialogTitle={`CLOSE OUT ${MAIN_TAKEOVER.closeoutTable.name}`}
         dialogMessageFn={() => <div className="text-base">
-          <div className="mt-3 text-xl text-blue-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
+          <div className="mt-3 text-xl text-sky-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
           <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
         </div>}
         onConfirm={onClickFinalConfirm}
