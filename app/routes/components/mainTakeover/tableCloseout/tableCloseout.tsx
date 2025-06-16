@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type Guest, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type ExtraPlayer, type Guest, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -17,9 +17,12 @@ export default function TableCloseout() {
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
   const [HOURS_DATA, setHoursData] = useState('');
-  const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
+  const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
+
+  const playerOrTableTimeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500 ring-gray-800`;
+  const playerOrTableTimeSelectedStyles = `bg-green-500 !text-black`;
 
   const TopRef = useRef<HTMLDivElement>(null);
 
@@ -53,7 +56,7 @@ export default function TableCloseout() {
     const end = guest.closedOutAt;
     const time: TimeElapsed = Helpers.timeElapsed(start, end);
     const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
-    const rate = tableRateRules.hourlyRate;
+    const hourlyRate = tableRateRules.hourlyRate;
     const isChargePerPlayer = tableRateRules.isChargePerPlayer;
     const playerLimit = playerRateRules.playerLimit;
     const afterLimitRate = playerRateRules.afterLimitRate;
@@ -62,48 +65,56 @@ export default function TableCloseout() {
     const players: BillablePlayer[] = [];
 
     for (let i = 0; i < (PLAYERS_COUNT); i++) {
-      const hourlyRate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : rate;
-      const rateScheduled: MeteredTime = {hours, rate: hourlyRate}
-      const rateBefore: MeteredTime = undefined;
-      const rateAfter: MeteredTime = undefined;
+      const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
+      const rateHoursDuring: MeteredTime = {hours, rate: hourlyRate}
+      const rateHoursBefore: MeteredTime = undefined;
+      const rateHoursAfter: MeteredTime = undefined;
 
       players.push({
         id: i,
         name: `Player ${i + 1}`,
         hours,
-        hourlyRate,
-        rateScheduled,
-        rateBefore,
-        rateAfter,
+        rate,
+        rateHoursDuring, // A tuple - MeteredTime
+        rateHoursBefore,
+        rateHoursAfter,
         billable: true,
         isAddedPlayer: false,
-        useAddedPlayerTime: false,
+        usePlayerTime: false,
+        assignedAt: guest.assignedAt,
       } as BillablePlayer);
     }
     players[0].name = guest.name.toUpperCase();
 
-    guest.extraPlayers.forEach((player, index) => {
+    guest.extraPlayers.forEach((player: ExtraPlayer, index) => {
       const playersIndex = index + 1;
       if (playersIndex > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
       players[playersIndex].isAddedPlayer = true;
-      players[playersIndex].useAddedPlayerTime = true;
+      players[playersIndex].usePlayerTime = true;
+      players[playersIndex].assignedAt = player.assignedAt;
 
       // named extra players hours can differ if added after table assignment
       const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
       const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
       players[playersIndex].hours = hours;
-      players[playersIndex].rateScheduled = {hours, rate};
+      //players[playersIndex].rateHoursDuring = {hours, rate: hourlyRate};
     });
 
     setBillableData({players});
+  }
+
+  const getPlayerHours = (player: BillablePlayer, guest: Guest) => {
+    const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
+    const hours = (SELECTED_RATE.tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+    return hours;
   }
 
   const onChangeTableRate = (event) => {
     const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
     setSelectedRate(selectedRate);
     const players: BillablePlayer[] = BILLABLE_DATA.players.map((player) => {
-      player.hourlyRate = selectedRate.tableRateRules.hourlyRate;
+      player.rate = selectedRate.tableRateRules.hourlyRate;
       return player;
     });
     useTableHours(HOURS_DATA);
@@ -112,8 +123,10 @@ export default function TableCloseout() {
 
   const useTableHours = (hours: string) => {
     BILLABLE_DATA.players.forEach((player) => {
-      player.hours = hours;
-      player.rateScheduled = {hours, rate: player.rateScheduled.rate};
+      player.hours = player.usePlayerTime ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : hours;
+
+      // TODO: if using rate schedule...
+      //player.rateHoursDuring = {hours: player.hours, rate: player.rateHoursDuring.rate};
     })
     setBillableData({...BILLABLE_DATA});
   }
@@ -122,9 +135,9 @@ export default function TableCloseout() {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
       if (player.billable) {
-        // TODO: use BILLABLE_DATA...
-        const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(player.hours);
-        total += hours * Number(player.hourlyRate);
+        const playerHours = player.isAddedPlayer && player.usePlayerTime ? player.hours : HOURS_DATA;
+        const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(playerHours);
+        total += hours * Number(player.rate);
       }
     })
     return total.toFixed(2);
@@ -134,6 +147,13 @@ export default function TableCloseout() {
     const guest: Guest = MAIN_TAKEOVER.closeoutTable.guest;
     const assignedAt = !index ? guest.assignedAt : ((guest.extraPlayers[index - 1]?.assignedAt) || guest.assignedAt);
     return dayjs(new Date(assignedAt)).format(DAYJS_DATE_FORMAT);
+  }
+
+  const usePlayerTime = (player: BillablePlayer, which: boolean) =>{
+    if (which === player.usePlayerTime) return;
+    player.usePlayerTime = which;
+    player.hours = which ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : HOURS_DATA;
+    setBillableData({...BILLABLE_DATA});
   }
 
   const onClickReset = () => {
@@ -265,6 +285,7 @@ export default function TableCloseout() {
               <div className="shrink">
                 <input
                   type="checkbox"
+                  className="hover:cursor-pointer"
                   checked={player.billable}
                   onChange={(event) => {
                     player.billable = event.target.checked;
@@ -272,7 +293,7 @@ export default function TableCloseout() {
                   }}
                 />
               </div>
-              <div className="grow">
+              <div className={`${!player.billable && 'pointer-events-none'}`}>
                 <div className="text-center">
                   <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
                     {player.name}
@@ -285,17 +306,17 @@ export default function TableCloseout() {
                   {playerAssignedAt(player, index)}
                 </div>
                 {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
-                  <div className="text-sm mt-2">
+                  <div className="text-sm mt-2 text-center">
                     <div className="px-1 inline-block">
                       <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
                       <input
                         type="text"
                         className={`w-[90px] !text-center ${formFieldStyles}`}
                         onChange={(event) => {
-                          player.rateScheduled.hours = event.target.value;
+                          player.hours = event.target.value;
                           setBillableData({...BILLABLE_DATA});
                         }}
-                        value={`${player.rateScheduled.hours}`}
+                        value={`${player.hours}`}
                       />
                     </div>
                     <div className="px-1 inline-block">
@@ -305,21 +326,37 @@ export default function TableCloseout() {
                         className={`w-[90px] !text-center ${formFieldStyles}`}
                         maxLength={6}
                         onChange={(event) => {
-                          player.rateScheduled.rate = event.target.value;
+                          player.rate = event.target.value;
                           setBillableData({...BILLABLE_DATA});
                         }}
-                        value={`${player.rateScheduled.rate}`}
+                        value={`${player.rate}`}
                       />
                     </div>
                   </div>
+                  {player.isAddedPlayer && (<>
+                    <div className="flex shrink gap-2 text-xs items-center my-2 justify-center">
+                      <div className={`${playerOrTableTimeStyles} ${player.usePlayerTime && `!bg-blue-400 ${playerOrTableTimeSelectedStyles}`}`}
+                        onClick={() => {usePlayerTime(player, true)}}
+                      >
+                        Player Time
+                      </div>
+                      <div> OR </div>
+                      <div className={`${playerOrTableTimeStyles} ${!player.usePlayerTime && playerOrTableTimeSelectedStyles}`}
+                        onClick={() => {usePlayerTime(player, false)}}
+                      >
+                        Table Time
+                      </div>
+                    </div>
+                  </>)}
+
                   <div className="text-center text-xl text-green-500 mt-2">
-                    ${(Number(player.rateScheduled.hours) * Number(player.rateScheduled.rate)).toFixed(2)}
+                    ${(Number(player.hours) * Number(player.rate)).toFixed(2)}
                     <span className="!text-gray-500 ml-2 text-base"> / ${playersTotal()}</span>
                   </div>
                 </>)}
                 {SELECTED_RATE.tableRateRules.isFlatRate && (
                   <div className="text-center text-xl my-2 text-green-500">
-                    ${Number(player.rateScheduled.rate).toFixed(2)}
+                    ${Number(player.rate).toFixed(2)}
                   </div>
                 )}
               </div>

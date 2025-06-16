@@ -120,13 +120,14 @@ export interface BillablePlayer {
   id: number,
   name: string,
   hours: string,
-  hourlyRate: string,
-  rateScheduled: MeteredTime
-  rateAfter: MeteredTime
-  rateBefore: MeteredTime
+  rate: string,
+  rateHoursDuring: MeteredTime
+  rateHoursAfter: MeteredTime
+  rateHoursBefore: MeteredTime
   billable: boolean,
   isAddedPlayer?: boolean,
-  useAddedPlayerTime?: boolean,
+  usePlayerTime?: boolean,
+  assignedAt?: number,
 }
 
 export interface BillableData {
