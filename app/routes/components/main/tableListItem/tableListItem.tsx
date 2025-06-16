@@ -48,7 +48,7 @@ export default function TableListItem(props: {
       setSelectedTable(undefined as TableItem);
     }
 
-    const IS_EXPIRED = Helpers.isExpiredGuest(table.guest);
+    const IS_EXPIRED = Helpers.isExpiredVisit(table.guest);
     const EXPIRED_OVERRIDE = (IS_EXPIRED && 'border-dashed !border-gray-800 hover:!cursor-default') || (SELECTED_TABLE && '!border-white');
 
     return (

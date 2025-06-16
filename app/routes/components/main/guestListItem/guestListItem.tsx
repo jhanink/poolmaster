@@ -48,7 +48,7 @@ export default function GuestListItem(props: {
   drag(dragRef); // Attach drag behavior to the element
   dragPreview(dragRef); // Use the same element as the drag preview
 
-  const IS_EXPIRED = Helpers.isExpiredGuest(props.guest);
+  const IS_EXPIRED = Helpers.isExpiredVisit(props.guest);
 
   return <>
     <div className="select-none mb-4">
