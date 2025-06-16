@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import {type AppState, type Guest, type TableRate} from "~/config/AppState";
 
 export const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
-export const DAYJS_DATE_FORMAT = 'MMM D h:mm a';
+export const DAYJS_DATE_FORMAT = 'MMM D, h:mm a';
 export const DAYJS_DAY_FORMAT = 'MMM D';
 export const DAYJS_TIME_FORMAT = 'h:mm a';
 
