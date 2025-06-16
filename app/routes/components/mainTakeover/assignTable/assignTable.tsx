@@ -73,7 +73,7 @@ export default function AssignTable() {
     <div className="select-none flex justify-center" ref={TopRef}>
       <div>
         {fragmentExitTakeover(exit)}
-        <div className="border border-red-500 rounded-xl py-5 text-center">
+        <div className="border border-red-500 rounded-xl py-5 text-center min-w-[300px]">
           <div className="CONTENT">
             {!Helpers.tablesAvailable(APP_STATE).length && <>
               <div className="text-gray-500 text-sm p-3 uppercase">
@@ -98,7 +98,7 @@ export default function AssignTable() {
                   to an open table
                 </div>
               </div>
-              <div className={`mt-5 mx-2 flex gap-2`}>
+              <div className={`mt-5 mx-2 flex gap-2 justify-center`}>
                 {
                   tables
                     .filter((table: TableItem) => !table.guest)
