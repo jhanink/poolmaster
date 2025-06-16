@@ -21,7 +21,7 @@ export default function GuestItem(props: {
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
   const itemCardStyles = `bg-transparent mt-2 p-1 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
-  const fieldLabel = `inline-block text-gray-500 !w-[60px]`;
+  const fieldLabel = `inline-block text-gray-500 !w-[75px]`;
   const statusIndicatorStyles = `flex items-center space-x-2 ${props.itemExpanded ? '': 'mt-1'}`;
 
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -107,31 +107,30 @@ export default function GuestItem(props: {
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
             <div className="ROW">
-              <span className={`${fieldLabel} italic`}>Arrived:</span>
+              <span className={`${fieldLabel}`}>Arrived:</span>
               {fragmentDateStyled(guest.createdAt, false)}
               {props.isAssigned && (<>
-                <span className={`ml-3 text-gray-500 mr-1 italic`}>Assigned:</span>
+                <span className={`ml-3 text-gray-500 mr-1`}>Assigned:</span>
                 {fragmentDateStyled(guest.assignedAt, false)}
               </>)}
             </div>
-
             {partySize > 1 && (
               <div className="ROW text-gray-300">
-                <span className={`${fieldLabel}`}>Total:</span>
-                {partySize}
-                {!guest.extraPlayers.length && (<>
-                  <span className="text-gray-500 ml-1">players</span>
-                </>)}
-                {!!guest.extraPlayers.length && (<>
-                    <span className="text-gray-500 lowercase ml-3">
-                    {guest.extraPlayers.reduce((all, next) => {
-                      all.push(next.name);
-                      return all;
-                    }, []).join(', ')}
-                  </span>
-                </>)}
+                <span className={`${fieldLabel}`}>Size:</span>
+                Party of {partySize}
               </div>
             )}
+            {!!guest.extraPlayers.length && (<>
+              <div className="ROW text-gray-300 ">
+                <span className={`${fieldLabel}`}>Others:</span>
+                <span className="lowercase">
+                  {guest.extraPlayers.reduce((all, next) => {
+                    all.push(next.name);
+                    return all;
+                  }, []).join(', ')}
+                </span>
+              </div>
+            </>)}
             { guest.phoneNumber && (
               <div className="ROW">
               <span className={`${fieldLabel}`}>Phone:</span>
