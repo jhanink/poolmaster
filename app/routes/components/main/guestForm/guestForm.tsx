@@ -291,7 +291,7 @@ export default function GuestForm(props: {
           <div className={`${formColumnStyles}`}>
             <div className={`${labelStyles} !mx-0 mb-1`}>
               <div className="flex shrink gap-2 text-xs items-center mb-1">
-                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-blue-500 ${tableOrTableTypeSelectedStyles}`}`}
+                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-blue-400 ${tableOrTableTypeSelectedStyles}`}`}
                   onClick={() => {toggleTableOrTableType(false)}}
                 >
                   Table Type

@@ -76,8 +76,8 @@ export default function TableCloseout() {
         rateBefore,
         rateAfter,
         billable: true,
-        isExtraPlayer: false,
-        usePlayerAssignedTime: false,
+        isAddedPlayer: false,
+        useAddedPlayerTime: false,
       } as BillablePlayer);
     }
     players[0].name = guest.name.toUpperCase();
@@ -86,8 +86,8 @@ export default function TableCloseout() {
       const playersIndex = index + 1;
       if (playersIndex > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
-      players[playersIndex].isExtraPlayer = true;
-      players[playersIndex].usePlayerAssignedTime = true;
+      players[playersIndex].isAddedPlayer = true;
+      players[playersIndex].useAddedPlayerTime = true;
 
       // named extra players hours can differ if added after table assignment
       const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
@@ -122,6 +122,7 @@ export default function TableCloseout() {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
       if (player.billable) {
+        // TODO: use BILLABLE_DATA...
         const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(player.hours);
         total += hours * Number(player.hourlyRate);
       }
@@ -313,6 +314,7 @@ export default function TableCloseout() {
                   </div>
                   <div className="text-center text-xl text-green-500 mt-2">
                     ${(Number(player.rateScheduled.hours) * Number(player.rateScheduled.rate)).toFixed(2)}
+                    <span className="!text-gray-500 ml-2 text-base"> / ${playersTotal()}</span>
                   </div>
                 </>)}
                 {SELECTED_RATE.tableRateRules.isFlatRate && (
@@ -394,8 +396,8 @@ export default function TableCloseout() {
         {fragmentBusinessDay()}
         {fragmentBillableData()}
         {fragmentFormActionButtons()}
-        {fragmentModalConfirm()}
       </div>
+      {fragmentModalConfirm()}
     </div>
   );
 }

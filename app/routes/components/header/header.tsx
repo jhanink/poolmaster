@@ -80,6 +80,7 @@ export default function AppHeader() {
             )}
           </>)}
         </div>
+        <hr className="border-gray-900"/>
       </>}
     </div>
   );

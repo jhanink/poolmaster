@@ -125,8 +125,8 @@ export interface BillablePlayer {
   rateAfter: MeteredTime
   rateBefore: MeteredTime
   billable: boolean,
-  isExtraPlayer?: boolean,
-  usePlayerAssignedTime?: boolean,
+  isAddedPlayer?: boolean,
+  useAddedPlayerTime?: boolean,
 }
 
 export interface BillableData {
