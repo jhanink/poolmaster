@@ -220,7 +220,7 @@ export default function GuestItem(props: {
     const statusBar = APP_STATE.statusIndicators;
     const partySize = props.guest.partySize;
     const isLargeParty = partySize >= statusBar.largePartySize;
-    const largePartyStyle = `!text-sm ${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
+    const largePartyStyle = `${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
 
     return (<>
       <div className="flex text-sm px-1">
@@ -230,7 +230,7 @@ export default function GuestItem(props: {
           </div>
         )}
         <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
-          <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle} !text-xs`: ``}`}>
+          <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle}`: ``}`}>
             {guest.name}
             {guest.partySize > 1 && (<>
               <span className={`${isLargeParty?'':'text-gray-500'}`}> : {guest.partySize}</span>

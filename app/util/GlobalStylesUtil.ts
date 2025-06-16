@@ -1,4 +1,4 @@
-import { ID_1, ID_2, ID_3, ID_4, ID_5, ID_6 } from "~/config/AppState";
+import { ID_1, ID_2, ID_3, ID_4, ID_5, ID_6, ID_7 } from "~/config/AppState";
 
 export const buttonRingRed = `hover:ring-red-600`;
 export const buttonRingBlue = `hover:ring-blue-600`;
@@ -28,14 +28,15 @@ export const ITEM = `mb-3 border border-gray-800 rounded-lg p-3`;
 export const ROW = `flex items-center w-full`;
 export const INPUT_FIELD = `ml-2 w-[150px]`;
 
-export const usageTypeIndicatorStyles = `text-sm text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
-export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle1 = `!bg-gray-300 !text-black font-bold ${usageTypeIndicatorStyles}`;
-export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
-export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-100 ${usageTypeIndicatorStyles}`;
+export const partySizeStyles = `text-sm font-bold text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
+export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${partySizeStyles}`;
+export const largePartyStyle1 = `!bg-gray-300 !text-black font-bold ${partySizeStyles}`;
+export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle7 = `!bg-cyan-500 !text-black ${partySizeStyles}`;
 
 export const tableChipsStyle = `inline-block m-1 mb-2 rounded-full py-1 px-4 text-xs border border-green-800 text-green-600 font-bold`;
 export const selectedTableChipStyle = `ring-2 ring-white`;
@@ -69,12 +70,16 @@ export const largePartyStylesOptions = [
     id: ID_5,
     name: '5 (Violet)',
     style: largePartyStyle5,
-  }
-  ,
+  },
   {
     id: ID_6,
     name: '5 (Fuchsia)',
     style: largePartyStyle6,
+  },
+  {
+    id: ID_7,
+    name: '7 (Cyan)',
+    style: largePartyStyle7,
   }
 ];
 

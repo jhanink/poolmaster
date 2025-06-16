@@ -80,7 +80,7 @@ export default function AdminStatusIndicators() {
               ))}
             </select>
           </div>
-          <div className={`mt-3 uppercase text-sm text-nowrap`}>
+          <div className={`mt-3 uppercasetext-nowrap`}>
             <div className={`inline-block ${largePartyStylesOptions[STATUS_INDICATORS.largePartyStyle - 1].style} text-gray-200`}>
               Samantha : {STATUS_INDICATORS.largePartySize}
             </div>

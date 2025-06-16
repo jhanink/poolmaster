@@ -7,6 +7,7 @@ export const ID_3 = 3;
 export const ID_4 = 4;
 export const ID_5 = 5;
 export const ID_6 = 6;
+export const ID_7 = 7;
 export const MAX_PARTY_SIZE = 20;
 export const MIN_LARGE_PARTY_SIZE = 3;
 export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
