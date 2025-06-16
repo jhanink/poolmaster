@@ -106,14 +106,18 @@ export default function GuestItem(props: {
       <div className="text-sm mx-3">
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
-            <div className="ROW">
-              <span className={`${fieldLabel}`}>Arrived:</span>
-              {fragmentDateStyled(guest.createdAt, false)}
-              {props.isAssigned && (<>
-                <span className={`ml-3 text-gray-500 mr-1`}>Assigned:</span>
+            {!props.isAssigned && (<>
+              <div className="ROW">
+                <span className={`${fieldLabel}`}>Added:</span>
+                {fragmentDateStyled(guest.createdAt, false)}
+              </div>
+            </>)}
+            {props.isAssigned && (<>
+              <div className="ROW">
+                <span className={`${fieldLabel}`}>Assigned:</span>
                 {fragmentDateStyled(guest.assignedAt, false)}
-              </>)}
-            </div>
+              </div>
+            </>)}
             {partySize > 1 && (
               <div className="ROW text-gray-300">
                 <span className={`${fieldLabel}`}>Size:</span>

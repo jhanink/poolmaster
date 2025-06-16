@@ -11,7 +11,7 @@ export default function ExpiredVisit(props: {
   const [, setAppState] = useAtom(appStateAtom);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
 
-  const CREATED_AT = Helpers.formatDate(props.guest.createdAt);
+  const CREATED_AT = Helpers.formatDate(props.guest.assignedAt || props.guest.createdAt);
   const HOURS_AGO = Helpers.timeElapsedGuest(props.guest).hours;
   const hiliteColor = 'text-gray-400 font-bold';
 

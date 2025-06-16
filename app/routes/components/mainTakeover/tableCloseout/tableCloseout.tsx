@@ -16,7 +16,7 @@ export default function TableCloseout() {
   const [, setSaving] = useAtom(isSavingAtom);
   const [, setElapsedTime] = useState<TimeElapsed>({} as TimeElapsed);
   const [SHOW_CONFIRM_CLOSEOUT, setShowConfirmCloseout] = useState(false);
-  const [HOURS_DATA, setHoursData] = useState('');
+  const [TABLE_HOURS, setTableHours] = useState('');
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
   const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
@@ -35,9 +35,11 @@ export default function TableCloseout() {
     if (!SELECTED_RATE.id) return;
 
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const guest: Guest = table.guest;
 
     const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
     const assignedAt = table.guest.assignedAt;
+
     // Use local time from the browser, not server.
     // See assignTable.tsx and assignGuestService.server.ts
     setSelectedDay(dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour').day());
@@ -45,17 +47,15 @@ export default function TableCloseout() {
     const playerRateRules: PlayerRateRules = SELECTED_RATE.playerRateRules;
     const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
 
-    const useRateSchedule = tableRateRules.useRateSchedule || undefined;
+    const useRateSchedule = tableRateRules.useRateSchedule;
     const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
-    const entry: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[SELECTED_DAY]];
-    entry && console.log(entry);
-    entry && console.log({start: entry && entry.start})
+    const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[SELECTED_DAY]];
 
-    const guest: Guest = table.guest;
     const start = guest.assignedAt;
     const end = guest.closedOutAt;
     const time: TimeElapsed = Helpers.timeElapsed(start, end);
     const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+
     const hourlyRate = tableRateRules.hourlyRate;
     const isChargePerPlayer = tableRateRules.isChargePerPlayer;
     const playerLimit = playerRateRules.playerLimit;
@@ -66,18 +66,13 @@ export default function TableCloseout() {
 
     for (let i = 0; i < (PLAYERS_COUNT); i++) {
       const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
-      const rateHoursDuring: MeteredTime = {hours, rate: hourlyRate}
-      const rateHoursBefore: MeteredTime = undefined;
-      const rateHoursAfter: MeteredTime = undefined;
 
       players.push({
         id: i,
         name: `Player ${i + 1}`,
         hours,
         rate,
-        rateHoursDuring, // A tuple - MeteredTime
-        rateHoursBefore,
-        rateHoursAfter,
+        daySchedule,
         billable: true,
         isAddedPlayer: false,
         usePlayerTime: false,
@@ -94,11 +89,10 @@ export default function TableCloseout() {
       players[playersIndex].usePlayerTime = true;
       players[playersIndex].assignedAt = player.assignedAt;
 
-      // named extra players hours can differ if added after table assignment
+      // NOTE: Added Players:  Player-Assignment TIME !== Table-Assignment TIME
       const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
       const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
       players[playersIndex].hours = hours;
-      //players[playersIndex].rateHoursDuring = {hours, rate: hourlyRate};
     });
 
     setBillableData({players});
@@ -117,16 +111,13 @@ export default function TableCloseout() {
       player.rate = selectedRate.tableRateRules.hourlyRate;
       return player;
     });
-    useTableHours(HOURS_DATA);
+    useTableHours(TABLE_HOURS);
     setBillableData({...BILLABLE_DATA, players});
   }
 
   const useTableHours = (hours: string) => {
     BILLABLE_DATA.players.forEach((player) => {
       player.hours = player.usePlayerTime ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : hours;
-
-      // TODO: if using rate schedule...
-      //player.rateHoursDuring = {hours: player.hours, rate: player.rateHoursDuring.rate};
     })
     setBillableData({...BILLABLE_DATA});
   }
@@ -135,7 +126,7 @@ export default function TableCloseout() {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
       if (player.billable) {
-        const playerHours = player.isAddedPlayer && player.usePlayerTime ? player.hours : HOURS_DATA;
+        const playerHours = player.isAddedPlayer && player.usePlayerTime ? player.hours : TABLE_HOURS;
         const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(playerHours);
         total += hours * Number(player.rate);
       }
@@ -152,7 +143,7 @@ export default function TableCloseout() {
   const usePlayerTime = (player: BillablePlayer, which: boolean) =>{
     if (which === player.usePlayerTime) return;
     player.usePlayerTime = which;
-    player.hours = which ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : HOURS_DATA;
+    player.hours = which ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : TABLE_HOURS;
     setBillableData({...BILLABLE_DATA});
   }
 
@@ -163,7 +154,7 @@ export default function TableCloseout() {
     const end = guest.closedOutAt;
     const hours = Helpers.timeElapsed(start, end);
     setElapsedTime(hours);
-    setHoursData(`${hours.durationHoursDecimal3}`);
+    setTableHours(`${hours.durationHoursDecimal3}`);
     resetTableRate();
   }
 
@@ -237,6 +228,7 @@ export default function TableCloseout() {
         <div className="text-gray-400 mt-5">
           <div className="flex items-center justify-center gap-2">
             <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
+            <span className="text-gray-600 text-base ml-1"> WORKSHEET </span>
             {fragmentUsageType()}
           </div>
           <div className="mb-3 text-gray-300 italic">
@@ -249,10 +241,10 @@ export default function TableCloseout() {
                   type="text"
                   className={`text-gray-500 w-[100px] !text-center !text-lg ${formFieldStyles}`}
                   maxLength={6}
-                  value={HOURS_DATA}
+                  value={TABLE_HOURS}
                   onChange={(event) => {
                     const hours = event.target.value.trim()
-                    setHoursData(hours);
+                    setTableHours(hours);
                     useTableHours(hours);
                   }}
                 />

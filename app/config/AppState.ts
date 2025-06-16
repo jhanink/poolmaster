@@ -121,9 +121,7 @@ export interface BillablePlayer {
   name: string,
   hours: string,
   rate: string,
-  rateHoursDuring: MeteredTime
-  rateHoursAfter: MeteredTime
-  rateHoursBefore: MeteredTime
+  daySchedule: ScheduleEntry,
   billable: boolean,
   isAddedPlayer?: boolean,
   usePlayerTime?: boolean,
