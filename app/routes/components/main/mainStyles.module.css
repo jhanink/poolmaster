@@ -1,5 +1,5 @@
 
-@media (min-width: 640px) {
+@media (min-width: 700px) {
   .mainContent {
     display: flex;
     flex-grow: 1;
