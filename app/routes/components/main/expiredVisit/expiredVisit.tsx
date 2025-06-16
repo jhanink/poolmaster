@@ -1,5 +1,4 @@
 import { useAtom } from "jotai";
-import dayjs from "dayjs";
 import { appStateAtom, isSavingAtom } from "~/appStateGlobal/atoms";
 import type { Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
