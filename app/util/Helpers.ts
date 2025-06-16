@@ -61,8 +61,8 @@ export const Helpers = {
     const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
     return (match.isActive && match) || appState.rateSchedules[0];
   },
-  isExpiredGuest: (guest: Guest) => {
-    const startTime = guest.assignedAt || guest.createdAt;
+  isExpiredVisit: (guest: Guest) => {
+    const startTime = guest.createdAt;
     if (!startTime) return false;
     const NOW = Date.now();
     return (NOW - startTime) >= MILLIS_24_HOURS;
