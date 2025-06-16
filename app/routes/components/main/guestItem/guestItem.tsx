@@ -7,7 +7,7 @@ import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentElapsedTime, fragmentUsageIndicator } from '../../fragments/fragments';
+import { fragmentDateStyled, fragmentElapsedTime, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
 
 export default function GuestItem(props: {
@@ -98,30 +98,40 @@ export default function GuestItem(props: {
 
   const itemDetailGuestInfo = (guest: Guest) => {
     const partySize = guest.partySize;
-    if (partySize < 2 && !guest.phoneNumber && !guest.notes && props.isAssigned) return;
     return (<>
       <hr className="border-gray-900 mt-3 mx-1"/>
       <div className="text-gray-500 mt-1 mx-6 text-center uppercase">
-        <span>Visit Information</span>
+        <span className="italic mr-1">Visit</span> <span className="text-gray-300">Info</span>
       </div>
       <div className="text-sm mx-3">
         <div className="">
           <div className={`COLUMN flex flex-col gap-1 text-left text-gray-300 my-3`}>
+            <div className="ROW">
+              <span className={`${fieldLabel} italic`}>Arrived:</span>
+              {fragmentDateStyled(guest.createdAt, false)}
+              {props.isAssigned && (<>
+                <span className={`ml-3 text-gray-500 mr-1 italic`}>Assigned:</span>
+                {fragmentDateStyled(guest.assignedAt, false)}
+              </>)}
+            </div>
+
             {partySize > 1 && (
               <div className="ROW text-gray-300">
-                <span className={`${fieldLabel}`}>Size:</span>
-                Party of {partySize}
+                <span className={`${fieldLabel}`}>Total:</span>
+                {partySize}
+                {!guest.extraPlayers.length && (<>
+                  <span className="text-gray-500 ml-1">players</span>
+                </>)}
+                {!!guest.extraPlayers.length && (<>
+                    <span className="text-gray-500 lowercase ml-3">
+                    {guest.extraPlayers.reduce((all, next) => {
+                      all.push(next.name);
+                      return all;
+                    }, []).join(', ')}
+                  </span>
+                </>)}
               </div>
             )}
-            {!!guest.extraPlayers.length && (<>
-              <div className="ROW text-gray-300">
-                <span className={`${fieldLabel}`}>Names:</span>
-                {guest.extraPlayers.reduce((all, next) => {
-                  all.push(next.name);
-                  return all;
-                }, []).join(', ')}
-              </div>
-            </>)}
             { guest.phoneNumber && (
               <div className="ROW">
               <span className={`${fieldLabel}`}>Phone:</span>
@@ -137,7 +147,7 @@ export default function GuestItem(props: {
                     `Type:`
                   )}
                 </span>
-                <span className="uppercase">
+                <span className={`${guest.tableOrTableType ? 'text-green-500' : 'text-blue-500'} uppercase italic`}>
                   {Helpers.getTableOrTableType(APP_STATE, guest).name}
                 </span>
               </div>

@@ -14,7 +14,7 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 
 const partySizeArray = [...PARTY_SIZE_ARRAY];
 const actionButtons = `${actionButtonStyles} !py-0`;
-const tableOrTableTypeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500`;
+const tableOrTableTypeStyles = `hover:cursor-pointer ring-1 rounded-full py-1 px-2 text-gray-500 ring-gray-800`;
 const tableOrTableTypeSelectedStyles = `bg-green-500 !text-black`;
 
 export default function GuestForm(props: {
@@ -290,8 +290,8 @@ export default function GuestForm(props: {
         <div className={`ml-1 p-1 border border-gray-800 rounded-lg`}>
           <div className={`${formColumnStyles}`}>
             <div className={`${labelStyles} !mx-0 mb-1`}>
-              <div className="flex shrink gap-2 text-xs items-center">
-                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-cyan-500 ${tableOrTableTypeSelectedStyles}`}`}
+              <div className="flex shrink gap-2 text-xs items-center mb-1">
+                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-blue-500 ${tableOrTableTypeSelectedStyles}`}`}
                   onClick={() => {toggleTableOrTableType(false)}}
                 >
                   Table Type

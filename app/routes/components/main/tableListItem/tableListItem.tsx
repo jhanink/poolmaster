@@ -6,7 +6,7 @@ import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
 import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
-import ExpiredGuest from "../expiredGuest/expiredGuest";
+import ExpiredVisit from "../expiredVisit/expiredVisit";
 
 const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-xl`;
 const guestAssigned = `${cardStyle} border-green-900 text-green-700`;
@@ -70,7 +70,7 @@ export default function TableListItem(props: {
         </div>
 
         {IS_EXPIRED ? (
-          <ExpiredGuest guest={table.guest} />
+          <ExpiredVisit guest={table.guest} />
         ) : (
           <div className="ml-1">
             <GuestItem guest={table.guest}

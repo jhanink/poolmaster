@@ -1,5 +1,5 @@
-import type { TimeElapsed } from "~/util/Helpers";
-import { CogIcon, ArrowRightIcon, ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import { Helpers, type TimeElapsed } from "~/util/Helpers";
+import { CogIcon, ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
 import { DEFAULT_ID, type UsageType } from "~/config/AppState";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
@@ -44,9 +44,9 @@ export const fragmentAppName = (style = '') => {
 export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
   return (
     <div className="flex items-center justify-center CLOSE_BUTTON w-full pr-2 pt-2 pb-2 sticky top-0 bg-black z-10">
-      <div className="inline-block hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
-        <ArrowsPointingInIcon className="mr-3 inline-block size-6"></ArrowsPointingInIcon>
-        <span className="relative top-[3px] text-xl">EXIT</span>
+      <div className="flex items-center hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
+        <ArrowUturnLeftIcon className="mr-2 size-6"></ArrowUturnLeftIcon>
+        <span className="text-xl">EXIT</span>
       </div>
     </div>
   )
@@ -116,6 +116,16 @@ export const fragmentUsageIndicator = (usageType: UsageType) => {
           </div>
         </div>
       </div>
+    </>)}
+  </>)
+}
+
+export const fragmentDateStyled = (date: number, includeDay: boolean = true) => {
+  return (<>
+    <span className="text-gray-200">{Helpers.formatTime(date)}</span>
+    {includeDay && (<>
+      <span>, </span>
+      <span className="text-gray-500">{Helpers.formatDay(date)}</span>
     </>)}
   </>)
 }

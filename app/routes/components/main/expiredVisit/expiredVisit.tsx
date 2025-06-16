@@ -1,17 +1,18 @@
 import { useAtom } from "jotai";
+import dayjs from "dayjs";
 import { appStateAtom, isSavingAtom } from "~/appStateGlobal/atoms";
 import type { Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
-import dayjs from "dayjs";
 import { Helpers } from "~/util/Helpers";
 
-export default function ExpiredGuest(props: {
+export default function ExpiredVisit(props: {
   guest: Guest,
 }) {
   const [, setAppState] = useAtom(appStateAtom);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
-  const CREATED_AT = dayjs(props.guest.createdAt).format('MMM D, h:mm a');
+
+  const CREATED_AT = dayjs(props.guest.createdAt).format('MMM D, h:mm A');
   const HOURS_AGO = Helpers.timeElapsedGuest(props.guest).hours;
   const hiliteColor = 'text-gray-400 font-bold';
 
@@ -34,7 +35,7 @@ export default function ExpiredGuest(props: {
             setSaving(false);
             setAppState(newAppState);
           }}>
-          <span className="text-gray-500">Remove Expired Guest </span>
+          <span className="text-gray-500">Clear Expired Visit</span>
         </button>
       </div>
     </div>

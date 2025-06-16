@@ -5,7 +5,7 @@ import { useDrag } from 'react-dnd';
 import { ListFilterTypeEnum, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { useAtom } from "jotai";
 import { Helpers } from "~/util/Helpers";
-import ExpiredGuest from "../expiredGuest/expiredGuest";
+import ExpiredVisit from "../expiredVisit/expiredVisit";
 
 export default function GuestListItem(props: {
   guest: Guest,
@@ -54,7 +54,7 @@ export default function GuestListItem(props: {
     <div className="select-none mb-4">
       {IS_EXPIRED ? (
         <div className="border border-gray-800 border-dashed rounded-xl">
-          <ExpiredGuest guest={props.guest} />
+          <ExpiredVisit guest={props.guest} />
         </div>
       ) : (
         <div ref={dragRef}

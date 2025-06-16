@@ -6,8 +6,11 @@
   height: 0;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 640px) {
   .bottomScrollSpacer {
     height: 40px;
+  }
+  .tableChipsCompact {
+    display: none;
   }
 }

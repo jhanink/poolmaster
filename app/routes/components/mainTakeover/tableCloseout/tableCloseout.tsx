@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, ROW } from "~/util/GlobalStylesUtil";
-import { Helpers, type TimeElapsed } from "~/util/Helpers";
+import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
 import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type Guest, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
@@ -76,14 +76,19 @@ export default function TableCloseout() {
         rateBefore,
         rateAfter,
         billable: true,
+        isExtraPlayer: false,
+        usePlayerAssignedTime: false,
       } as BillablePlayer);
     }
     players[0].name = guest.name.toUpperCase();
 
     guest.extraPlayers.forEach((player, index) => {
       const playersIndex = index + 1;
-      if ((playersIndex) > players.length - 1) return;
+      if (playersIndex > players.length - 1) return;
       players[playersIndex].name = player.name.toUpperCase();
+      players[playersIndex].isExtraPlayer = true;
+      players[playersIndex].usePlayerAssignedTime = true;
+
       // named extra players hours can differ if added after table assignment
       const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
       const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
@@ -127,7 +132,7 @@ export default function TableCloseout() {
   const playerAssignedAt = (player: BillablePlayer, index: number) => {
     const guest: Guest = MAIN_TAKEOVER.closeoutTable.guest;
     const assignedAt = !index ? guest.assignedAt : ((guest.extraPlayers[index - 1]?.assignedAt) || guest.assignedAt);
-    return new Date(assignedAt).toLocaleString();
+    return dayjs(new Date(assignedAt)).format(DAYJS_DATE_FORMAT);
   }
 
   const onClickReset = () => {
@@ -209,9 +214,12 @@ export default function TableCloseout() {
     return (
       !SELECTED_RATE.tableRateRules.isFlatRate && (
         <div className="text-gray-400 mt-5">
-          <div className="mb-3 flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
             {fragmentUsageType()}
+          </div>
+          <div className="mb-3 text-gray-300 italic">
+            <span className="text-gray-500">Assigned: </span>{dayjs(new Date(MAIN_TAKEOVER.closeoutTable.guest.assignedAt)).format(DAYJS_DATE_FORMAT)}
           </div>
           <div className="inline-block text-right">
             <div className="TIME flex items-center">

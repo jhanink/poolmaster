@@ -1,7 +1,11 @@
 import dayjs from "dayjs";
-import {type AppState, type Guest, type TableItem, type TableRate} from "~/config/AppState";
+import {type AppState, type Guest, type TableRate} from "~/config/AppState";
 
-const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
+export const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
+export const DAYJS_DATE_FORMAT = 'MMM D h:mm a';
+export const DAYJS_DAY_FORMAT = 'MMM D';
+export const DAYJS_TIME_FORMAT = 'h:mm a';
+
 
 export type TimeElapsed = {
   durationMinutes: number;
@@ -114,6 +118,15 @@ export const Helpers = {
       return `${Helpers.formatHoursDecimal(averageWaitTimeMinutes/60, 1)} hrs`
     }
     return `${Math.round(averageWaitTimeMinutes)} min`;
+  },
+  formatDate: (date: number) => {
+    return dayjs(date).format(DAYJS_DATE_FORMAT);
+  },
+  formatDay: (date: number) => {
+    return dayjs(date).format(DAYJS_DAY_FORMAT);
+  },
+  formatTime: (date: number) => {
+    return dayjs(date).format(DAYJS_TIME_FORMAT);
   },
   percentTablesAssigned: (appState: AppState) => {
     return Math.round(Helpers.tablesAssigned(appState).length / Helpers.tables(appState).length * 100);
