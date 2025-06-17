@@ -289,7 +289,11 @@ export default function TableCloseout() {
               <div className={`${!player.billable && 'pointer-events-none'}`}>
                 <div className="text-center">
                   <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
-                    {player.name}
+                    {(index >  MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? (
+                      <span>- {player.name} -</span>
+                    ) : (
+                      <span>{player.name}</span>
+                    )}
                     {index === 0 && (
                       <div className="inline-block">&nbsp; (Main)</div>
                     )}
