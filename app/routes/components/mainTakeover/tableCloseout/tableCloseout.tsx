@@ -352,7 +352,7 @@ export default function TableCloseout() {
                 </>)}
 
                 <div className="text-center text-xl text-green-500 mt-2">
-                  ${(Number(player.hours) * Number(player.rate)).toFixed(2)}
+                  ${(Number(SELECTED_RATE.tableRateRules.isFlatRate? 1:player.hours) * Number(player.rate)).toFixed(2)}
                   <span className="!text-gray-500 ml-2 text-base"> / ${playersTotal()}</span>
                 </div>
 
