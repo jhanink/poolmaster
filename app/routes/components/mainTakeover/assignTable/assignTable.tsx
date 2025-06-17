@@ -98,7 +98,7 @@ export default function AssignTable() {
                   to an open table
                 </div>
               </div>
-              <div className={`mt-5 mx-2 flex gap-2 justify-center`}>
+              <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
                 {
                   tables
                     .filter((table: TableItem) => !table.guest)
