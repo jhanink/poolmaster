@@ -1,7 +1,7 @@
 import mainStyles from '../mainStyles.module.css'
 import styles from "./guestListStyles.module.css";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, ListFilterTypeEnum, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 import { Helpers } from '~/util/Helpers';
@@ -13,6 +13,7 @@ const addGuestEmptyListStyles = `${addGuestBaseStyles} text-lg ring-rose-500 rou
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
 
@@ -52,7 +53,9 @@ export default function GuestList() {
             )
           }
         </div>
-        <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
+        {(!Helpers.tablesAssigned(APP_STATE).length || SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST) && (<>
+          <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
+        </>)}
       </>)}
     </div>
   )
