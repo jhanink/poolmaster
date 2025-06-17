@@ -225,12 +225,12 @@ export default function TableCloseout() {
   const fragmentFormHeader = () => {
     return (
         <div className="text-gray-400 mt-5">
-          <div className="flex items-center justify-center gap-2">
-            <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name}</span>
-            <span className="text-gray-600 text-base ml-1"> WORKSHEET </span>
-            {fragmentUsageType()}
+          <div className="flex items-center justify-center">
+            <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name} </span>
+            <span className="text-gray-500 mx-2 text-xl">|</span>
+            <span className="text-gray-600 text-base"> WORKSHEET </span>
           </div>
-          <div className="mb-3 text-gray-300 italic">
+          <div className="my-2 text-gray-300 italic">
             <span className="text-gray-500">Assigned: </span>{dayjs(new Date(MAIN_TAKEOVER.closeoutTable.guest.assignedAt)).format(DAYJS_DATE_FORMAT)}
           </div>
           {!SELECTED_RATE.tableRateRules.isFlatRate && (
@@ -285,6 +285,7 @@ export default function TableCloseout() {
                   }}
                 />
               </div>
+
               <div className={`${!player.billable && 'pointer-events-none'}`}>
                 <div className="text-center">
                   <div className={`inline-block text-base ${(index > MAIN_TAKEOVER.closeoutTable.guest.extraPlayers.length) ? 'text-gray-300 italic' : 'text-green-700'}`}>
@@ -298,48 +299,52 @@ export default function TableCloseout() {
                   {playerAssignedAt(player, index)}
                 </div>
 
-                <div className="text-sm mt-2 text-center">
-                  <div className="px-1 inline-block">
-                    <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
-                    <input
-                      type="text"
-                      className={`w-[90px] !text-center ${formFieldStyles}`}
-                      onChange={(event) => {
-                        player.hours = event.target.value;
-                        setBillableData({...BILLABLE_DATA});
-                      }}
-                      value={`${player.hours}`}
-                    />
-                  </div>
-                  <div className="px-1 inline-block">
-                    <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
-                    <input
-                      type="text"
-                      className={`w-[90px] !text-center ${formFieldStyles}`}
-                      maxLength={6}
-                      onChange={(event) => {
-                        player.rate = event.target.value;
-                        setBillableData({...BILLABLE_DATA});
-                      }}
-                      value={`${player.rate}`}
-                    />
-                  </div>
+                <div className="text-sm mt-2 text-center w-[200px]">
+                  {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
+                    <div className="px-1 inline-block">
+                      <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                      <input
+                        type="text"
+                        className={`w-[90px] !text-center ${formFieldStyles}`}
+                        onChange={(event) => {
+                          player.hours = event.target.value;
+                          setBillableData({...BILLABLE_DATA});
+                        }}
+                        value={`${player.hours}`}
+                      />
+                    </div>
+                    <div className="px-1 inline-block">
+                      <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                      <input
+                        type="text"
+                        className={`w-[90px] !text-center ${formFieldStyles}`}
+                        maxLength={6}
+                        onChange={(event) => {
+                          player.rate = event.target.value;
+                          setBillableData({...BILLABLE_DATA});
+                        }}
+                        value={`${player.rate}`}
+                      />
+                    </div>
+                  </>)}
                 </div>
 
-                {player.isAddedPlayer && (<>
-                  <div className="flex shrink gap-2 text-xs items-center my-2 justify-center">
-                    <div className={`${playerOrTableTimeStyles} ${player.usePlayerTime && `!bg-blue-400 ${playerOrTableTimeSelectedStyles}`}`}
-                      onClick={() => {usePlayerTime(player, true)}}
-                    >
-                      Player Time
+                {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
+                  {player.isAddedPlayer && (<>
+                    <div className="flex shrink gap-2 text-xs items-center my-2 justify-center">
+                      <div className={`${playerOrTableTimeStyles} ${player.usePlayerTime && `!bg-blue-400 ${playerOrTableTimeSelectedStyles}`}`}
+                        onClick={() => {usePlayerTime(player, true)}}
+                      >
+                        Player Time
+                      </div>
+                      <div> OR </div>
+                      <div className={`${playerOrTableTimeStyles} ${!player.usePlayerTime && playerOrTableTimeSelectedStyles}`}
+                        onClick={() => {usePlayerTime(player, false)}}
+                      >
+                        Table Time
+                      </div>
                     </div>
-                    <div> OR </div>
-                    <div className={`${playerOrTableTimeStyles} ${!player.usePlayerTime && playerOrTableTimeSelectedStyles}`}
-                      onClick={() => {usePlayerTime(player, false)}}
-                    >
-                      Table Time
-                    </div>
-                  </div>
+                  </>)}
                 </>)}
 
                 <div className="text-center text-xl text-green-500 mt-2">
@@ -347,11 +352,6 @@ export default function TableCloseout() {
                   <span className="!text-gray-500 ml-2 text-base"> / ${playersTotal()}</span>
                 </div>
 
-                {SELECTED_RATE.tableRateRules.isFlatRate && (
-                  <div className="text-center text-xl my-2 text-green-500">
-                    ${Number(player.rate).toFixed(2)}
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -422,6 +422,9 @@ export default function TableCloseout() {
       {fragmentExitTakeover(exit)}
       {fragmentFormHeader()}
       <div className="CONTENT flex-1 text-center">
+        <div className="my-3">
+          {fragmentUsageType()}
+        </div>
         {fragmentTableRate()}
         {fragmentBusinessDay()}
         {fragmentBillableData()}
