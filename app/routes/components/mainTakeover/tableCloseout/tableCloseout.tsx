@@ -19,7 +19,7 @@ export default function TableCloseout() {
   const [TABLE_HOURS, setTableHours] = useState('');
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
-  const [BILLABLE_DATA, setBillableData] = useState<BillableData>({} as BillableData);
+  const [BILLABLE_DATA, setBillableData] = useState<BillableData>({players: []} as BillableData);
 
   const playerOrTableTimeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500 ring-gray-800`;
   const playerOrTableTimeSelectedStyles = `bg-green-500 !text-black`;
@@ -272,6 +272,10 @@ export default function TableCloseout() {
     )
   }
 
+  const allPlayersBillable = (): boolean => {
+    return !BILLABLE_DATA.players?.find((player) => !player.billable);
+  }
+
   const fragmentFormActionButtons = () => {
     return (
       <div className="my-3 mb-10">
@@ -381,7 +385,7 @@ export default function TableCloseout() {
         </div>))}
       </div>
       <div className="text-xl text-gray-400 my-5">
-        Bill Total: &nbsp;
+        {allPlayersBillable() ? 'Total': 'Remaining'} Bill: &nbsp;
         <span className="text-green-500 text-xl">${playersTotal()}</span>
       </div>
     </>)
