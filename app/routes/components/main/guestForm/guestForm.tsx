@@ -1,7 +1,7 @@
 
 import { useMask } from '@react-input/mask';
 import { useEffect, useState } from "react";
-import { DEFAULT_ID, DefaultGuestData, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
+import { DEFAULT_ID, DefaultGuestData, FeatureFlags, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -391,6 +391,7 @@ export default function GuestForm(props: {
             </textarea>
           </div>
         </div>
+        {FeatureFlags.SHOW_RESERVATIONS && (
         <div className={`flex flex-row items-center ml-2 mb-3 ${FORM_FIELDS.isReservation ? ' text-green-500' : 'text-gray-700 italic'}`}>
           <div>
             RESERVATION
@@ -405,6 +406,7 @@ export default function GuestForm(props: {
             }}
           />
         </div>
+        )}
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
