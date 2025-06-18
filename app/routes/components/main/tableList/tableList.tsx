@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 import { Helpers } from "~/util/Helpers";
-import { buttonHoverRing, selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
+import { selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
 
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
@@ -36,7 +36,7 @@ export default function TableList() {
 
   const fragmentMiniMap = () => {
     return (
-      <div className="MINIMAP CHIPS my-2 mt-3 mb-5 top-0 z-10" ref={miniMapRef}>
+      <div className="MINIMAP CHIPS my-2 mt-3 mb-5 top-0 z-10 flex flex-wrap gap-2 justify-center" ref={miniMapRef}>
         {Helpers.tablesAssigned(APP_STATE)
           .sort((A: TableItem, B: TableItem) => A.number - B.number)
           .map((table: TableItem, index: number) =>
@@ -47,7 +47,7 @@ export default function TableList() {
             >
               {table.name}
               {APP_STATE.adminSettings.showTableChipInfo && (
-                <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
                   {table.guest.name} {table.guest.partySize > 1 && (<>
                     : <span className="text-gray-300">{table.guest.partySize}</span>
                   </>)}
@@ -88,7 +88,7 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} mx-auto flex-1 max-w-xl text-center select-none`}>
+    <div className={`${styles.tableListContainer} flex-1 text-center select-none border border-gray-900 rounded-xl px-2 max-w-[580px]`}>
       <div className={`${mainStyles.column} ${styles.tableList}`}>
         {fragmentMiniMap()}
         {fragmentTables()}

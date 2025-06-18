@@ -20,7 +20,7 @@ export default function GuestList() {
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
 
   return (
-    <div className={`${styles.guestListContainer} text-center mx-auto flex-1 max-w-xl select-none`}>
+    <div className={`${styles.guestListContainer} flex-1 select-none border border-gray-900 rounded-xl px-2 max-w-[580px]`}>
       <div className="flex mt-3 m-1">
         <div className="flex-1">
           {!MAIN_TAKEOVER && (

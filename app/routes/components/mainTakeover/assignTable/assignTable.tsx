@@ -94,77 +94,75 @@ export default function AssignTable() {
   }, []);
 
   return (<>
-    <div className="select-none flex justify-center" ref={TopRef}>
-      <div>
-        {fragmentExitTakeover(exit)}
-        <div className="border border-red-500 rounded-xl py-5 text-center min-w-[300px] max-w-[700px]">
-          <div className="CONTENT">
-            {!tables.length && <>
-              <div className="text-gray-500 text-sm p-3 uppercase">
-                No open tables available
+    <div className="select-none flex flex-col justify-center items-center" ref={TopRef}>
+      {fragmentExitTakeover(exit)}
+      <div className="border border-gray-800 rounded-xl py-3 mt-2 text-center min-w-[300px] max-w-[700px]">
+        <div className="CONTENT">
+          {!tables.length && <>
+            <div className="text-gray-500 text-sm p-3 uppercase">
+              No open tables available
+            </div>
+            <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
+          </>}
+          {!!tables.length && <>
+            <div className="flex items-center gap-3 justify-center mb-2">
+              <div className="text-gray-300 uppercase text-2xl">
+                {!!MAIN_TAKEOVER?.assignTableGuest?.assignedAt && (
+                  <span>Move</span>
+                )}
+                {!MAIN_TAKEOVER?.assignTableGuest?.assignedAt && (
+                  <span>Assign</span>
+                )}
               </div>
-              <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
-            </>}
-            {!!tables.length && <>
-              <div className="flex items-center gap-3 justify-center mb-2">
-                <div className="text-gray-300 uppercase text-2xl">
-                  {!!MAIN_TAKEOVER?.assignTableGuest?.assignedAt && (
-                    <span>Move</span>
-                  )}
-                  {!MAIN_TAKEOVER?.assignTableGuest?.assignedAt && (
-                    <span>Assign</span>
-                  )}
-                </div>
-                <div className="uppercase text-rose-500 text-xl">
-                   | {MAIN_TAKEOVER.assignTableGuest?.name}
-                </div>
+              <div className="uppercase text-rose-500 text-xl">
+                  | {MAIN_TAKEOVER.assignTableGuest?.name}
               </div>
-              <div>
-                <div className="text-gray-500 text-sm italic">
-                  to an open table
-                  {!guest.assignedAt && (
-                    <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
-                      <div className={`inline-block p-2 px-6 ${guest.prefersTable && '!border-green-600'} border border-gray-700 rounded-lg`}>
-                        <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
-                      </div>
+            </div>
+            <div>
+              <div className="text-gray-500 text-sm italic">
+                to an open table
+                {!guest.assignedAt && (
+                  <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
+                    <div className={`inline-block p-2 px-6 ${guest.prefersTable && '!border-green-600'} border border-gray-700 rounded-lg`}>
+                      <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
-              <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
-                {tables
-                  .filter((table: TableItem) => {
-                    return guest.assignedAt || guest.prefersTable || (table.tableTypeId === TABLE_TYPE_ID) || TABLE_TYPE_ID === -1;
-                  })
-                  .sort((A: TableItem, B: TableItem) =>
-                    A.number - B.number
-                  )
-                  .map((table: TableItem) =>
-                    <button
-                      disabled={SAVING}
-                      className={`CHIP ${tableChipsStyle} uppercase !m-0 !border-gray-800 hover:cursor-pointer ${buttonHoverRing}`}
-                      key={table.id}
-                      data-table-id={table.id}
-                      onClick={(event) => onClickTableChip(event, table)}
-                    >
-                      <div className="">{table.name}</div>
-                      {APP_STATE.adminSettings.showTableChipInfo && (
-                        <div className="text-gray-700 italic">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
-                      )}
-                    </button>
-                  )
-                }
+            </div>
+            <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
+              {tables
+                .filter((table: TableItem) => {
+                  return guest.assignedAt || guest.prefersTable || (table.tableTypeId === TABLE_TYPE_ID) || TABLE_TYPE_ID === -1;
+                })
+                .sort((A: TableItem, B: TableItem) =>
+                  A.number - B.number
+                )
+                .map((table: TableItem) =>
+                  <button
+                    disabled={SAVING}
+                    className={`CHIP ${tableChipsStyle} uppercase !m-0 !border-gray-800 hover:cursor-pointer ${buttonHoverRing}`}
+                    key={table.id}
+                    data-table-id={table.id}
+                    onClick={(event) => onClickTableChip(event, table)}
+                  >
+                    <div className="">{table.name}</div>
+                    {APP_STATE.adminSettings.showTableChipInfo && (
+                      <div className="text-gray-700 italic text-[10px]">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
+                    )}
+                  </button>
+                )
+              }
+            </div>
+            {ASSIGNED_TABLE && (<>
+              <div className="my-5 text-gray-500 text-base">
+                OR
               </div>
-              {ASSIGNED_TABLE && (<>
-                <div className="my-5 text-gray-500 text-base">
-                  OR
-                </div>
-                <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={onClickReturnToGuestList}>
-                  Back to Wait List
-                </button>
-              </>)}
-            </>}
-          </div>
+              <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={onClickReturnToGuestList}>
+                Back to Wait List
+              </button>
+            </>)}
+          </>}
         </div>
       </div>
     </div>

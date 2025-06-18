@@ -233,7 +233,7 @@ export default function GuestItem(props: {
             <span className="text-gray-600">{props.index + 1}. </span>
           </div>
         )}
-        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate pb-1`}>
+        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
           <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle}`: ``}`}>
             {guest.name}
             {guest.partySize > 1 && (<>
@@ -267,14 +267,15 @@ export default function GuestItem(props: {
 
   return (
     <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
-      { props.itemExpanded && (
+      { props.itemExpanded ? (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}
         </div>
+      ) : (
+        itemCollapsedRowContent()
       )}
-      {!props.itemExpanded && itemCollapsedRowContent()}
     </div>
   )
 }

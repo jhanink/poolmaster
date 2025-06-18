@@ -112,7 +112,7 @@ export default function AdminSettings() {
               >
                 Table 1
                 {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
                     Regulation
                   </div>
                 )}
@@ -121,7 +121,7 @@ export default function AdminSettings() {
               >
                 Table 2
                 {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
                     Pro
                   </div>
                 )}
@@ -135,7 +135,7 @@ export default function AdminSettings() {
               >
                 Table 5
                 {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
                     Sam
                   </div>
                 )}
@@ -144,7 +144,7 @@ export default function AdminSettings() {
               >
                 Table 16
                 {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
                     Jennifer
                     : <span className="text-gray-300">{SETTINGS.largePartySize}</span>
                   </div>

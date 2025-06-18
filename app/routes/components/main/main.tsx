@@ -16,7 +16,7 @@ export default function AppMain() {
   const [MAIN_TAKEOVER] = useAtom(mainTakoverAtom);
 
   return (
-    <div className={`grow`}>
+    <div className={`flex flex-col grow max-w-[1400px] mx-auto`}>
       {MAIN_TAKEOVER?.closeoutTable && <TableCloseout></TableCloseout>}
       {MAIN_TAKEOVER?.assignTableGuest && <AssignTable></AssignTable>}
       {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}
@@ -24,7 +24,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} mx-3 pt-0 gap-x-4`}>
+        <div className={`${styles.mainContent} pt-0 gap-x-4 grow justify-center`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}
