@@ -392,8 +392,8 @@ export default function GuestForm(props: {
           </div>
         </div>
         {FeatureFlags.SHOW_RESERVATIONS && (
-        <div className={`flex flex-row items-center ml-2 mb-3 ${FORM_FIELDS.isReservation ? ' text-green-500' : 'text-gray-700 italic'}`}>
-          <div>
+        <div className={`flex flex-row items-center ml-2 mb-3`}>
+          <div className={`${FORM_FIELDS.isReservation ? ' text-green-500' : 'text-gray-700 italic'}`}>
             RESERVATION
           </div>
           <input
