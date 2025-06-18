@@ -16,6 +16,10 @@ export const DEFAULT_TEXT_COLOR = '#EFEFEF';
 
 export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+export const FeatureFlags = {
+  SHOW_RESERVATIONS: false,
+}
+
 export interface AppState {
   account: Account,
   tableTypes: TableType[],
@@ -23,6 +27,7 @@ export interface AppState {
   usageTypes: UsageType[],
   rateSchedules: RateSchedule[],
   guestList: Guest[],
+  reservations: Guest[],
   tables: TableItem[],
   modifiedAt: number,
   statusIndicators: StatusIndicators,
@@ -60,6 +65,7 @@ export interface Guest {
   partySize: number,
   extraPlayers?: ExtraPlayer[],
   notes: string,
+  isReservation?: boolean,
   usageTypeId?: number,
   createdAt: number,
   modifiedAt?: number,
@@ -379,6 +385,7 @@ export const DefaultAppState: AppState = {
     }
   ],
   guestList: [],
+  reservations: [],
   tables: [
     {
       id: 1,

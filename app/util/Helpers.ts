@@ -39,7 +39,10 @@ export const Helpers = {
     return appState.tables.filter(table => table.isActive && table.guest);
   },
   hasGuests: (appState: AppState) => {
-    return Helpers.tablesAssigned(appState).length > 0 ||appState.guestList.length > 0;
+    return appState.guestList.length > 0;
+  },
+  reservationsToday: (appState: AppState) => {
+    // TODO: check reservation date Business day
   },
   getTable: (appState: AppState, tableId: number) => {
     const match = appState.tables.find(table => table.id === tableId);

@@ -45,10 +45,11 @@ const mergeToGuestList = (fileAppState: AppState, guest: Guest): AppState => {
       });
     }
   }
+  guestList.sort((a, b) => a.createdAt - b.createdAt);
 
   return {
     ...fileAppState,
-    guestList: guestList,
+    guestList,
     tables,
   };
 }

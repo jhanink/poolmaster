@@ -17,6 +17,7 @@ export type MainTakeover = {
   assignTable?: Guest,
   addGuest?: boolean,
   editGuest?: Guest,
+  reservationsScreen?: boolean,
 }
 
 export const mainTakoverAtom = atom<MainTakeover | undefined>(undefined as MainTakeover);

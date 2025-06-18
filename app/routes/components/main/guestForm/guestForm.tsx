@@ -42,6 +42,7 @@ export default function GuestForm(props: {
     tableOrTableTypeId: props.guest.tableOrTableTypeId || DEFAULT_ID,
     usageTypeId: props.guest.usageTypeId || DEFAULT_ID,
     notes: props.guest.notes || "",
+    isReservation: props.guest.isReservation || false,
   });
 
   const phoneInputRef = useMask({
@@ -389,6 +390,20 @@ export default function GuestForm(props: {
               placeholder="Add Notes...">
             </textarea>
           </div>
+        </div>
+        <div className={`flex flex-row items-center ml-2 mb-3 ${FORM_FIELDS.isReservation ? ' text-green-500' : 'text-gray-700 italic'}`}>
+          <div>
+            RESERVATION
+          </div>
+          <input
+            type="checkbox"
+            className={`ml-2 size-4`}
+            checked={FORM_FIELDS.isReservation}
+            onChange={(event) => {
+              FORM_FIELDS.isReservation = event.target.checked;
+              setFormFields({...FORM_FIELDS})
+            }}
+          />
         </div>
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">

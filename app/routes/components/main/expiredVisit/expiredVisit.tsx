@@ -19,7 +19,7 @@ export default function ExpiredVisit(props: {
     <div className={``}>
       <div className={`my-3 text-gray-500`}>
         <div className="italic text-sm">
-          <span className={`${hiliteColor} uppercase`}>{props.guest.name}</span> was added <span className={`${hiliteColor}`}>{HOURS_AGO}</span> hours ago
+          <span className={`${hiliteColor} uppercase`}>{props.guest.name}</span> was {props.guest.assignedAt ? 'assigned' : 'added'} <span className={`${hiliteColor}`}>{HOURS_AGO}</span> hours ago
         </div>
         <div className="italic text-sm mb-5">
           on <span className={`${hiliteColor} uppercase`}>{CREATED_AT}</span>
