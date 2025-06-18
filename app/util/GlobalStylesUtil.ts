@@ -48,37 +48,37 @@ export const labelStyles = `text-sm text-gray-400 ml-1 top-2 relative`;
 export const largePartyStylesOptions = [
   {
     id: ID_1,
-    name: '1 (White)',
+    name: 'White',
     style: largePartyStyle1,
   },
   {
     id: ID_2,
-    name: '2 (Red)',
+    name: 'Red',
     style: largePartyStyle2,
   },
   {
     id: ID_3,
-    name: '3 (Emerald)',
+    name: 'Emerald',
     style: largePartyStyle3,
   },
   {
     id: ID_4,
-    name: '4 (Amber)',
+    name: 'Amber',
     style: largePartyStyle4,
   },
   {
     id: ID_5,
-    name: '5 (Violet)',
+    name: 'Violet',
     style: largePartyStyle5,
   },
   {
     id: ID_6,
-    name: '5 (Fuchsia)',
+    name: 'Fuchsia',
     style: largePartyStyle6,
   },
   {
     id: ID_7,
-    name: '7 (Cyan)',
+    name: 'Cyan',
     style: largePartyStyle7,
   }
 ];

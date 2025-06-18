@@ -11,7 +11,7 @@ const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 const borderColor = 'border-teal-500';
 const bgColor = 'bg-teal-500';
 
-export default function AdminStatusIndicators() {
+export default function AdminSettings() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [STATUS_INDICATORS, setStatusIndicators] = useState(DefaultStatusIndicators);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -39,7 +39,7 @@ export default function AdminStatusIndicators() {
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
-            <div>Status Indicators</div>
+            <div>Settings</div>
           </div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>

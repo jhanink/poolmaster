@@ -8,7 +8,7 @@ import AdminAccount from "./adminAccount";
 import AdminTableRates from "./adminTableRates";
 import AdminTableTypes from "./adminTableTypes";
 import AdminUsageTypes from "./adminUsageTypes";
-import AdminStatusIndicators from "./adminStatusIndicators";
+import AdminSettings from "./adminSettings";
 import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
 
@@ -51,7 +51,7 @@ export default function Admin() {
         </div>
         <div className="text-center mb-20 inline-block">
           <AdminAccount/>
-          <AdminStatusIndicators/>
+          <AdminSettings/>
           <AdminTableRates/>
           <AdminRateSchedules/>
           <AdminUsageTypes/>
