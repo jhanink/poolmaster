@@ -1,6 +1,6 @@
-import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
-import { DefaultStatusIndicators, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
+import { DefaultSettings, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
@@ -13,17 +13,17 @@ const bgColor = 'bg-teal-500';
 
 export default function AdminSettings() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [STATUS_INDICATORS, setStatusIndicators] = useState(DefaultStatusIndicators);
+  const [SETTINGS, setSettings] = useState(DefaultSettings);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
   const onClickResetForm = () => {
-    setStatusIndicators({...APP_STATE.statusIndicators});
+    setSettings({...APP_STATE.adminSettings});
   }
 
   const onClickSaveItem = () => {
     const newState = {
       ...APP_STATE,
-      statusIndicators: STATUS_INDICATORS,
+      adminSettings: SETTINGS,
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
@@ -52,39 +52,105 @@ export default function AdminSettings() {
           <div className={`${ROW} text-gray-400 `}>
             Large Party Size & Color:
           </div>
-          <div className={`${ROW}`}>
-            <select
-              onChange={(event) => {
-                STATUS_INDICATORS.largePartySize = Number(event.target.value);
-                setStatusIndicators({...STATUS_INDICATORS});
-              }}
-              value={STATUS_INDICATORS.largePartySize}
-              className={`${formSelectStyles} pb-3`}
-            >
-              {partySizeArray.map((size) => (
-                <option key={size} className={optionStyles} value={size}>{size}</option>
-              ))}
-            </select>
-          </div>
-          <div className={`${ROW}`}>
-            <select
-              onChange={(event) => {
-                STATUS_INDICATORS.largePartyStyle = Number(event.target.value);
-                setStatusIndicators({...STATUS_INDICATORS});
-              }}
-              value={STATUS_INDICATORS.largePartyStyle}
-              className={`${formSelectStyles} pb-3`}
-            >
-              {largePartyStylesOptions.map((style) => (
-                <option key={style.id} className={optionStyles} value={style.id}>{style.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className={`mt-3 uppercasetext-nowrap`}>
-            <div className={`inline-block ${largePartyStylesOptions[STATUS_INDICATORS.largePartyStyle - 1].style} text-gray-200`}>
-              Samantha : {STATUS_INDICATORS.largePartySize}
+          <div className="mt-1 border border-gray-700 p-3 rounded-lg">
+            <div className={`${ROW}`}>
+              <select
+                onChange={(event) => {
+                  SETTINGS.largePartySize = Number(event.target.value);
+                  setSettings({...SETTINGS});
+                }}
+                value={SETTINGS.largePartySize}
+                className={`${formSelectStyles} pb-3`}
+              >
+                {partySizeArray.map((size) => (
+                  <option key={size} className={optionStyles} value={size}>{size}</option>
+                ))}
+              </select>
             </div>
+            <div className={`${ROW}`}>
+              <select
+                onChange={(event) => {
+                  SETTINGS.largePartyStyle = Number(event.target.value);
+                  setSettings({...SETTINGS});
+                }}
+                value={SETTINGS.largePartyStyle}
+                className={`${formSelectStyles} pb-3`}
+              >
+                {largePartyStylesOptions.map((style) => (
+                  <option key={style.id} className={optionStyles} value={style.id}>{style.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className={`mt-3 uppercasetext-nowrap`}>
+              <div className={`inline-block ${largePartyStylesOptions[SETTINGS.largePartyStyle - 1].style} text-gray-200`}>
+                Samantha : {SETTINGS.largePartySize}
+              </div>
+            </div>
+          </div>
 
+          <div className={`${ROW} mt-5`}>
+            <div className={`text-gray-400 `}>
+              Show Table Chip Info:
+            </div>
+            <input
+              type="checkbox"
+              className={`ml-2 size-4`}
+              checked={SETTINGS.showTableChipInfo}
+              onChange={(event) => {
+                SETTINGS.showTableChipInfo = !SETTINGS.showTableChipInfo;
+                setSettings({...SETTINGS});
+              }}
+            />
+          </div>
+          <div className="mt-1 border border-gray-700 p-3 rounded-lg">
+            <div className="text-gray-500">
+              Assign Tables:
+            </div>
+            <div className="mt-2 flex items-center gap-2">
+
+              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
+              >
+                Table 1
+                {SETTINGS.showTableChipInfo && (
+                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                    Regulation
+                  </div>
+                )}
+              </button>
+              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
+              >
+                Table 2
+                {SETTINGS.showTableChipInfo && (
+                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                    Pro
+                  </div>
+                )}
+              </button>
+            </div>
+            <div className="mt-2 text-gray-500">
+              Active Tables:
+            </div>
+            <div className="mt-2 flex items-center gap-2">
+              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
+              >
+                Table 5
+                {SETTINGS.showTableChipInfo && (
+                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                    Sam
+                  </div>
+                )}
+              </button>
+              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
+              >
+                Table 16
+                {SETTINGS.showTableChipInfo && (
+                  <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                    Jennifer
+                    : <span className="text-gray-300">{SETTINGS.largePartySize}</span>
+                  </div>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>

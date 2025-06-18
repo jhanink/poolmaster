@@ -73,7 +73,7 @@ export default function AssignTable() {
     <div className="select-none flex justify-center" ref={TopRef}>
       <div>
         {fragmentExitTakeover(exit)}
-        <div className="border border-red-500 rounded-xl py-5 text-center min-w-[300px]">
+        <div className="border border-red-500 rounded-xl py-5 text-center min-w-[300px] max-w-[700px]">
           <div className="CONTENT">
             {!Helpers.tablesAvailable(APP_STATE).length && <>
               <div className="text-gray-500 text-sm p-3 uppercase">
@@ -113,7 +113,10 @@ export default function AssignTable() {
                         data-table-id={table.id}
                         onClick={(event) => onClickTableChip(event, table)}
                       >
-                        <div className="">{table.name}</div><div className="text-gray-700">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
+                        <div className="">{table.name}</div>
+                        {APP_STATE.adminSettings.showTableChipInfo && (
+                          <div className="text-gray-700 italic">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
+                        )}
                       </button>
                     )
                 }

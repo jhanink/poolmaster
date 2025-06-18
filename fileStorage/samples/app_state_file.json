@@ -15,9 +15,10 @@
     "createdAt": 0,
     "modifiedAt": 0
   },
-  "statusIndicators": {
+  "adminSettings": {
     "largePartySize": 5,
-    "largePartyStyle": 3
+    "largePartyStyle": 3,
+    "showTableChipInfo": false
   },
   "tableRates": [],
   "tableTypes": [

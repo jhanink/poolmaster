@@ -221,10 +221,10 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
-    const statusBar = APP_STATE.statusIndicators;
+    const settings = APP_STATE.adminSettings;
     const partySize = props.guest.partySize;
-    const isLargeParty = partySize >= statusBar.largePartySize;
-    const largePartyStyle = `${largePartyStylesOptions[statusBar.largePartyStyle - 1].style}`;
+    const isLargeParty = partySize >= settings.largePartySize;
+    const largePartyStyle = `${largePartyStylesOptions[settings.largePartyStyle - 1].style}`;
 
     return (<>
       <div className="flex text-sm px-1">

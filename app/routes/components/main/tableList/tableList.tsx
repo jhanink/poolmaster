@@ -7,7 +7,7 @@ import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 import { Helpers } from "~/util/Helpers";
-import { selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
+import { buttonHoverRing, selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
 
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
@@ -21,7 +21,7 @@ export default function TableList() {
   const tables = Helpers.tables(APP_STATE);
   const miniMapRef = useRef<HTMLDivElement>(null);
 
-  const onClickTableChip = (event: React.MouseEvent<HTMLDivElement>, table: TableItem) => {
+  const onClickTableChip = (event: React.MouseEvent<HTMLButtonElement>, table: TableItem) => {
     if (!table.guest) {
       event.preventDefault();
       event.stopPropagation();
@@ -40,18 +40,20 @@ export default function TableList() {
         {Helpers.tablesAssigned(APP_STATE)
           .sort((A: TableItem, B: TableItem) => A.number - B.number)
           .map((table: TableItem, index: number) =>
-            <div className={`CHIP ${tableChipsStyle} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''}`}
+            <button className={`CHIP hover: ${tableChipsStyle} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''} uppercase !m-0 hover:cursor-pointer`}
               key={table.id}
               data-table-id={table.id}
               onClick={(event) => onClickTableChip(event, table)}
             >
               {table.name}
-              <div className={`${styles.tableChipsCompact} uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
-                {table.guest.name} {table.guest.partySize > 1 && (<>
-                  : <span className="text-gray-300">{table.guest.partySize}</span>
-                </>)}
-              </div>
-            </div>
+              {APP_STATE.adminSettings.showTableChipInfo && (
+                <div className={`uppercase italic !text-xs text-gray-500 mt-1 !font-normal`}>
+                  {table.guest.name} {table.guest.partySize > 1 && (<>
+                    : <span className="text-gray-300">{table.guest.partySize}</span>
+                  </>)}
+                </div>
+              )}
+            </button>
         )}
       </div>
     )

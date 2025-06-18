@@ -30,13 +30,14 @@ export interface AppState {
   reservations: Guest[],
   tables: TableItem[],
   modifiedAt: number,
-  statusIndicators: StatusIndicators,
+  adminSettings: AdminSettings,
   businessDayOffsetHours: number,
 }
 
-export interface StatusIndicators {
+export interface AdminSettings {
   largePartySize: number,
   largePartyStyle: number,
+  showTableChipInfo: boolean,
 }
 
 export interface Account {
@@ -202,9 +203,10 @@ export interface UsageType {
   forAdd?: boolean,
 }
 
-export const DefaultStatusIndicators: StatusIndicators = {
+export const DefaultSettings: AdminSettings = {
   largePartySize: 20,
   largePartyStyle: ID_1,
+  showTableChipInfo: false,
 }
 
 export const RateScheduleDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -406,7 +408,7 @@ export const DefaultAppState: AppState = {
       tableRateId: DEFAULT_ID,
     },
   ],
-  statusIndicators: {
-    ...DefaultStatusIndicators,
+  adminSettings: {
+    ...DefaultSettings,
   }
 }
