@@ -28,7 +28,7 @@ export default function AppHeader() {
     accept: GuestItemTypeKey, // MUST match the 'type' from useDrag
     drop: (item: {guest: Guest}, monitor) => {
         if(monitor.canDrop()) {
-          setMainTakeover({assignTable: item.guest});
+          setMainTakeover({assignTableGuest: item.guest});
           setSelectedTable(undefined);
           setSelectedListFilter('');
         }

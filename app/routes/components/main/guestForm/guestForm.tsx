@@ -38,7 +38,7 @@ export default function GuestForm(props: {
     phoneNumber: props.guest.phoneNumber || "",
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
-    tableOrTableType: props.guest.tableOrTableType || false,
+    prefersTable: props.guest.prefersTable || false,
     tableOrTableTypeId: props.guest.tableOrTableTypeId || DEFAULT_ID,
     usageTypeId: props.guest.usageTypeId || DEFAULT_ID,
     notes: props.guest.notes || "",
@@ -194,9 +194,9 @@ export default function GuestForm(props: {
     </>)
   }
 
-  const toggleTableOrTableType = (which: boolean) =>{
-    if (which === FORM_FIELDS.tableOrTableType) return;
-    FORM_FIELDS.tableOrTableType = !FORM_FIELDS.tableOrTableType;
+  const togglePrefersTable = (which: boolean) =>{
+    if (which === FORM_FIELDS.prefersTable) return;
+    FORM_FIELDS.prefersTable = !FORM_FIELDS.prefersTable;
     FORM_FIELDS.tableOrTableTypeId = DEFAULT_ID;
     setFormFields({...FORM_FIELDS})
   }
@@ -292,14 +292,14 @@ export default function GuestForm(props: {
           <div className={`${formColumnStyles}`}>
             <div className={`${labelStyles} !mx-0 mb-1`}>
               <div className="flex shrink gap-2 text-xs items-center mb-1">
-                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.tableOrTableType && `!bg-blue-400 ${tableOrTableTypeSelectedStyles}`}`}
-                  onClick={() => {toggleTableOrTableType(false)}}
+                <div className={`${tableOrTableTypeStyles} ${!FORM_FIELDS.prefersTable && `!bg-blue-400 ${tableOrTableTypeSelectedStyles}`}`}
+                  onClick={() => {togglePrefersTable(false)}}
                 >
                   Table Type
                 </div>
                 <div>- OR -</div>
-                <div className={`${tableOrTableTypeStyles} ${FORM_FIELDS.tableOrTableType && tableOrTableTypeSelectedStyles}`}
-                  onClick={() => {toggleTableOrTableType(true)}}
+                <div className={`${tableOrTableTypeStyles} ${FORM_FIELDS.prefersTable && tableOrTableTypeSelectedStyles}`}
+                  onClick={() => {togglePrefersTable(true)}}
                 >
                   Table
                 </div>
@@ -308,7 +308,7 @@ export default function GuestForm(props: {
           </div>
           <div className={formColumnStyles}>
             <div className={fieldStyles}>
-              {FORM_FIELDS.tableOrTableType ? (
+              {FORM_FIELDS.prefersTable ? (
                 <select
                   name="table"
                   onChange={(event) => {
@@ -319,9 +319,14 @@ export default function GuestForm(props: {
                   className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {APP_STATE.tables
-                    .filter((type) => type.isActive)
-                    .map((type) => (
-                      <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
+                    .filter((table) => table.isActive)
+                    .map((table) => (
+                      <option key={table.id} className={`${optionStyles}`} value={table.id}>
+                        {table.name}
+                        { !!table.guest && (
+                          <span className="text-red-500"> &nbsp; → Active</span>
+                        )}
+                      </option>
                     ))
                   }
                 </select>

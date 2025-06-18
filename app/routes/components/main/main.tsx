@@ -18,7 +18,7 @@ export default function AppMain() {
   return (
     <div className={`grow`}>
       {MAIN_TAKEOVER?.closeoutTable && <TableCloseout></TableCloseout>}
-      {MAIN_TAKEOVER?.assignTable && <AssignTable></AssignTable>}
+      {MAIN_TAKEOVER?.assignTableGuest && <AssignTable></AssignTable>}
       {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}
       {MAIN_TAKEOVER?.addGuest && <AddGuest></AddGuest>}
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}

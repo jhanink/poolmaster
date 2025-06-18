@@ -14,7 +14,7 @@ export enum ListFilterTypeEnum {
 export type MainTakeover = {
   adminScreen?: boolean,
   closeoutTable?: TableItem,
-  assignTable?: Guest,
+  assignTableGuest?: Guest,
   addGuest?: boolean,
   editGuest?: Guest,
   reservationsScreen?: boolean,

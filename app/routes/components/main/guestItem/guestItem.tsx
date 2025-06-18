@@ -62,7 +62,7 @@ export default function GuestItem(props: {
   }
 
   const onClickAssignItem = (guest: Guest) => {
-    setMainTakeover({assignTable: guest});
+    setMainTakeover({assignTableGuest: guest});
   }
 
   const onClickCancelEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -144,13 +144,13 @@ export default function GuestItem(props: {
             {!props.isAssigned && (
               <div className="ROW">
                 <span className={`${fieldLabel}`}>
-                  {guest.tableOrTableType ? (
+                  {guest.prefersTable ? (
                     `Table:`
                   ): (
                     `Type:`
                   )}
                 </span>
-                <span className={`${guest.tableOrTableType ? 'text-green-600' : 'text-blue-500'} uppercase italic`}>
+                <span className={`${guest.prefersTable ? 'text-green-600' : 'text-blue-500'} uppercase italic`}>
                   {Helpers.getTableOrTableType(APP_STATE, guest).name}
                 </span>
               </div>
@@ -233,7 +233,7 @@ export default function GuestItem(props: {
             <span className="text-gray-600">{props.index + 1}. </span>
           </div>
         )}
-        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
+        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate pb-1`}>
           <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle}`: ``}`}>
             {guest.name}
             {guest.partySize > 1 && (<>

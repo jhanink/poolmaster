@@ -53,8 +53,15 @@ export const Helpers = {
     return (match.isActive && match) || appState.tableTypes[0];
   },
   getTableOrTableType: (appState: AppState, guest: Guest) => {
-    if (guest.tableOrTableType) return Helpers.getTable(appState, guest.tableOrTableTypeId);
+    if (guest.prefersTable) return Helpers.getTable(appState, guest.tableOrTableTypeId);
     return Helpers.getTableType(appState, guest.tableOrTableTypeId);
+  },
+  getTablePreference: (appState: AppState, guest: Guest) => {
+    if (guest.prefersTable) {
+      return `${Helpers.getTable(appState, guest.tableOrTableTypeId).name}`;
+    } else {
+      return `${Helpers.getTableType(appState, guest.tableOrTableTypeId).name}`;
+    }
   },
   getUsageType: (appState: AppState, usageTypeId: number) => {
     const match = appState.usageTypes.find(usageType => usageType.id === usageTypeId);
