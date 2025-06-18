@@ -39,7 +39,7 @@ export default function Admin() {
 
   return (
     <div className="text-center" ref={PageTopRef}>
-      {!!APP_STATE.modifiedAt && (
+      {(
         fragmentExitTakeover(onClickExit)
       )}
       <div className="CONTENT">

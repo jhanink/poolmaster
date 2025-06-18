@@ -1,5 +1,5 @@
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
-import { CogIcon, ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
+import { ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
 import { DEFAULT_ID, type UsageType } from "~/config/AppState";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
@@ -43,7 +43,7 @@ export const fragmentAppName = (style = '') => {
 
 export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
   return (<>
-    <div className="sticky top-0 bg-black z-10 w-full pr-2 pt-2">
+    <div className="sticky top-0 bg-black z-10 pr-2 pt-2">
       <div className="flex items-center justify-center CLOSE_BUTTON pb-2  ">
         <div className="flex items-center hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
           <ArrowUturnLeftIcon className="mr-2 size-6"></ArrowUturnLeftIcon>
@@ -58,41 +58,27 @@ export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
 export const fragmentWelcomeMessage = () => {
   const messages = [
     'Guest Wait List with elapsed time',
-    'Drag-N-Drop for table assignment',
-    'Table closeout with automatic rate calculator',
-    'Wait List and Table List stats and filters',
     'Guest details name, phone number, and notes',
-    'Admin management for tables, table types, and rates',
+    'Table List with elapsed time',
+    'Table Assignment via Drag N Drop',
+    'Wait List and Table List stats and filters',
+    'Table closeout with automatic rate calculator',
+    'Admin management to customize settings',
     'Works on desktop and mobile devices',
     'Realtime sync for all connected screens',
   ];
   return (
-    <div className="border m-3 p-10 w-full text-gray-500 text-sm rounded-xl border-gray-700">
+    <div className="inline-block m-3 py-5 px-10 text-gray-500 rounded-xl border border-gray-700">
       <div className="text-2xl mb-5 text-gray-100">
         Welcome to
         {fragmentAppName('text-xl ml-2')}
       </div>
-      <div className="text-xl italic">
-        Setup your pool room now
-      </div>
-      <div className="mt-5 text-gray-200">
-        After you save something below, this message will go away.
-        <p className="mb-3"/>
-        You can return here anytime from within the app
-        <p/>
-        by clicking the gear icon
-        <CogIcon className="inline-block mx-2 size-5 text-yellow-500"></CogIcon>
-        at the bottom of the screen.
-      </div>
 
       <div className="mt-5">
-        <div className="text-2xl mb-3 text-gray-100">
-          We hope you enjoy Pool Master
-        </div>
         <div className="text-xl mb-3 italic">
-          Here are a few notable features
+          notable features
         </div>
-        <ul className="pl-10 mt-5 text-gray-100 text-base text-left">
+        <ul className="mt-5 text-gray-100 text-sm text-center">
           {messages.map((message, index) => (
             <li key={index}><span className="text-gray-500 mr-3"> <ArrowRightIcon className="inline-block size-5"></ArrowRightIcon> </span><span>{message}</span></li>
           ))}
