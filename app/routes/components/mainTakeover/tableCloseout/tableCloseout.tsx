@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type ExtraPlayer, type Guest, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type ExtraPlayer, type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
 
 export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -67,12 +67,23 @@ export default function TableCloseout() {
     for (let i = 0; i < (PLAYERS_COUNT); i++) {
       const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
 
+      const before: MeteredTime = {hours: "0", rate: "0"};
+      const during: MeteredTime = {hours: "0", rate: "0"};
+      const after: MeteredTime = {hours: "0", rate: "0"};
+
+      const meteredDay: MeteredDay = {
+        before,
+        during,
+        after,
+      };
+
       players.push({
         id: i,
         name: `Player ${i + 1}`,
         hours,
         rate,
         daySchedule,
+        meteredDay,
         billable: true,
         isAddedPlayer: false,
         usePlayerTime: false,
@@ -95,6 +106,8 @@ export default function TableCloseout() {
       players[playersIndex].hours = hours;
     });
 
+    daySchedule && console.log(daySchedule)
+    daySchedule.start
     setBillableData({players});
   }
 

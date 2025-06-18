@@ -116,12 +116,19 @@ export interface MeteredTime {
   rate: string,
 }
 
+export interface MeteredDay {
+  before: MeteredTime,
+  during: MeteredTime,
+  after: MeteredTime,
+}
+
 export interface BillablePlayer {
   id: number,
   name: string,
   hours: string,
   rate: string,
   daySchedule: ScheduleEntry,
+  meteredDay: MeteredDay,
   billable: boolean,
   isAddedPlayer?: boolean,
   usePlayerTime?: boolean,
