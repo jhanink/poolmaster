@@ -7,7 +7,7 @@ import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentDateStyled, fragmentElapsedTime, fragmentLargePartyChip, fragmentUsageIndicator } from '../../fragments/fragments';
+import { fragmentDateStyled, fragmentElapsedTime, fragmentGuestName, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
 
 export default function GuestItem(props: {
@@ -222,17 +222,19 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
-
-
     return (<>
-      <div className="flex text-sm px-1">
-        {!props.isAssigned && (
-          <div className="flex-grow-0 text-left min-w-7">
-            <span className="text-gray-600">{props.index + 1}. </span>
-          </div>
-        )}
-        {fragmentLargePartyChip(APP_STATE.adminSettings, props.guest)}
-        {renderItemDuration()}
+      <div className="flex justify-center text-sm px-1">
+        {props.isEditForm ? (
+          <div className={`${props.isAssigned ? 'text-green-600' : 'text-blue-500'} text-xl italic uppercase`}>Edit Guest</div>
+        ): (<>
+          {!props.isAssigned && (
+            <div className="flex-grow-0 text-left min-w-7">
+              <span className="text-gray-600">{props.index + 1}. </span>
+            </div>
+          )}
+          {fragmentGuestName(APP_STATE.adminSettings, props.guest)}
+          {renderItemDuration()}
+        </>)}
       </div>
       {itemStatusBar()}
     </>)

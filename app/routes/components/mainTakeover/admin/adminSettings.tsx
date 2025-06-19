@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
-import { fragmentLargePartyChip } from "../../fragments/fragments";
+import { fragmentGuestName } from "../../fragments/fragments";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 const borderColor = 'border-teal-500';
@@ -83,7 +83,7 @@ export default function AdminSettings() {
               </select>
             </div>
             <div className="mt-1">
-              {fragmentLargePartyChip(
+              {fragmentGuestName(
                 SETTINGS,
                 {
                   ...DefaultGuestData,

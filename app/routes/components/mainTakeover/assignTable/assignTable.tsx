@@ -105,7 +105,7 @@ export default function AssignTable() {
             <button className={`${actionButtonStyles}`} onClick={exit}>Exit</button>
           </>}
           {!!tables.length && <>
-            <div className="flex items-center gap-3 justify-center mb-2">
+            <div className="flex flex-wrap items-center gap-3 justify-center mb-2">
               <div className="text-gray-300 uppercase text-2xl">
                 {!!MAIN_TAKEOVER?.assignTableGuest?.assignedAt && (
                   <span>Move</span>
@@ -114,7 +114,7 @@ export default function AssignTable() {
                   <span>Assign</span>
                 )}
               </div>
-              <div className="uppercase text-rose-500 text-xl">
+              <div className={`${guest.assignedAt ? 'text-green-500' : 'text-blue-500' } uppercase text-xl`}>
                   | {MAIN_TAKEOVER.assignTableGuest?.name}
               </div>
             </div>
@@ -171,7 +171,7 @@ export default function AssignTable() {
       dialogTitle={`CONFIRM - MOVE`}
       dialogMessageFn={() => <span className="text-sm">
         Move Guest
-        <span className="text-rose-500 font-bold mx-2">{ASSIGNED_TABLE.guest.name.toUpperCase()}</span>
+        <span className="text-blue-500 font-bold mx-2">{ASSIGNED_TABLE.guest.name.toUpperCase()}</span>
         back to the Wait List?
       </span>}
       onConfirm={returnToGuestList}

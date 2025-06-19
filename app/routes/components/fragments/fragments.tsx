@@ -110,7 +110,7 @@ export const fragmentUsageIndicator = (usageType: UsageType) => {
   </>)
 }
 
-export const fragmentLargePartyChip = (settings: AdminSettings, guest: Guest) => {
+export const fragmentGuestName = (settings: AdminSettings, guest: Guest) => {
   const partySize = guest.partySize;
   const isLargeParty = partySize >= settings.largePartySize;
   const largePartyStyle = `${largePartyStylesOptions[settings.largePartyStyle - 1].style}`;
