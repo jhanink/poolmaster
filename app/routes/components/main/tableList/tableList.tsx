@@ -1,7 +1,7 @@
 import mainStyles from '../mainStyles.module.css';
 import styles from "./tableListStyles.module.css";
 
-import { type TableItem } from "~/config/AppState";
+import { FeatureFlags, type TableItem } from "~/config/AppState";
 import TableListItem from "../tableListItem/tableListItem";
 import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -12,6 +12,8 @@ import { selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
 };
+
+const borders = `${FeatureFlags.MAIN_COLUMN_BORDERS && 'border border-gray-900 rounded-xl'}`;
 
 export default function TableList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -88,7 +90,7 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} flex-1 text-center select-none border border-gray-900 rounded-xl px-2 max-w-[580px]`}>
+    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} px-2 max-w-[580px]`}>
       <div className={`${mainStyles.column} ${styles.tableList}`}>
         {fragmentMiniMap()}
         {fragmentTables()}

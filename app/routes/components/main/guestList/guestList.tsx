@@ -8,7 +8,7 @@ import { Helpers } from '~/util/Helpers';
 
 const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
 const addGuestStyles = `${baseButtonStyles} text-sm ring-gray-500 text-gray-500 hover:ring-1 hover:ring-white`;
-const addGuestEmptyListStyles = `${baseButtonStyles} text-lg ring-rose-500 rounded-full hover:ring-3 !h-[100px] !w-[100px] !py-0 !px-0`;
+const addGuestEmptyListStyles = `${baseButtonStyles} text-lg ring-blue-500 rounded-full hover:ring-3 !h-[100px] !w-[100px] !py-0 !px-0`;
 const viewReservationsStyles = `${baseButtonStyles} text-sm ring-gray-500 text-yellow-500 hover:ring-1 hover:ring-white`;
 const reservationsDisabledStyles = `${baseButtonStyles} text-sm !ring-gray-800 !text-gray-700 hover:!cursor-default`;
 
@@ -18,9 +18,10 @@ export default function GuestList() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
+  const borders = `${FeatureFlags.MAIN_COLUMN_BORDERS && 'border border-gray-900 rounded-xl'}`;
 
   return (
-    <div className={`${styles.guestListContainer} flex-1 select-none border border-gray-900 rounded-xl px-2 max-w-[580px]`}>
+    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} px-2 max-w-[580px]`}>
       <div className="flex mt-3 m-1">
         <div className="flex-1">
           {!MAIN_TAKEOVER && (
