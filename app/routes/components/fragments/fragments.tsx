@@ -1,6 +1,7 @@
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import { ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
-import { DEFAULT_ID, type UsageType } from "~/config/AppState";
+import { DEFAULT_ID, type AdminSettings, type AppState, type Guest, type UsageType } from "~/config/AppState";
+import { largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
 
@@ -96,17 +97,33 @@ export const fragmentUsageIndicator = (usageType: UsageType) => {
       <div className="text-xs">
         <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
           <div className="flex items-center">
-          {(!icon || !iconOnly) && (
-            <div className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</div>
-          )}
-          {!!icon && (
-            <div className="text-base">{icon}</div>
-          )}
+            {(!icon || !iconOnly) && (
+              <div className={`text-gray-400 ${icon?'mr-2':''}`} style={{color: usageType.textColor}}>{usageType.name}</div>
+            )}
+            {!!icon && (
+              <div className="text-base">{icon}</div>
+            )}
           </div>
         </div>
       </div>
     </>)}
   </>)
+}
+
+export const fragmentLargePartyChip = (settings: AdminSettings, guest: Guest) => {
+  const partySize = guest.partySize;
+  const isLargeParty = partySize >= settings.largePartySize;
+  const largePartyStyle = `${largePartyStylesOptions[settings.largePartyStyle - 1].style}`;
+  return (
+    <div className={`grow ${guest.assignedAt && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
+      <div className={`inline-block italic text-xs ${isLargeParty ? `${largePartyStyle}`: ``}`}>
+        {guest.name}
+        {guest.partySize > 1 && (<>
+          <span className={`${isLargeParty?'':'text-gray-500'}`}> : {guest.partySize}</span>
+        </>)}
+      </div>
+    </div>
+  )
 }
 
 export const fragmentDateStyled = (date: number, includeDay: boolean = true) => {

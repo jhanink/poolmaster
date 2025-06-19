@@ -28,9 +28,9 @@ export const ITEM = `mb-3 border border-gray-800 rounded-lg p-3`;
 export const ROW = `flex items-center w-full`;
 export const INPUT_FIELD = `ml-2 w-[150px]`;
 
-export const partySizeStyles = `text-sm font-bold text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
+export const partySizeStyles = `text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
 export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${partySizeStyles}`;
-export const largePartyStyle1 = `!bg-gray-300 !text-black font-bold ${partySizeStyles}`;
+export const largePartyStyle1 = `!bg-gray-300 !text-black ${partySizeStyles}`;
 export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${partySizeStyles}`;
 export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${partySizeStyles}`;
 export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${partySizeStyles}`;

@@ -14,14 +14,6 @@
   min-width: 90px;
 }
 
-.itemCard {
-  min-width: 200px;
-}
-
-.itemCardName {
-  flex-basis: 100%;
-}
-
 .itemCardInitial {
   background-color: yellow;
   opacity: 0;

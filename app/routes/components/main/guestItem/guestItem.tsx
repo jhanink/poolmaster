@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
-import { actionButtonStyles, largePartyStylesOptions } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
 import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
-import { fragmentDateStyled, fragmentElapsedTime, fragmentUsageIndicator } from '../../fragments/fragments';
+import { fragmentDateStyled, fragmentElapsedTime, fragmentLargePartyChip, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
 
 export default function GuestItem(props: {
@@ -221,10 +221,7 @@ export default function GuestItem(props: {
   }
 
   const itemCollapsedRowContent = () => {
-    const settings = APP_STATE.adminSettings;
-    const partySize = props.guest.partySize;
-    const isLargeParty = partySize >= settings.largePartySize;
-    const largePartyStyle = `${largePartyStylesOptions[settings.largePartyStyle - 1].style}`;
+
 
     return (<>
       <div className="flex text-sm px-1">
@@ -233,14 +230,7 @@ export default function GuestItem(props: {
             <span className="text-gray-600">{props.index + 1}. </span>
           </div>
         )}
-        <div className={`${styles.itemCardName} ${props.isAssigned && 'text-green-600'} uppercase text-left text-blue-500 truncate`}>
-          <div className={`inline-block italic ${isLargeParty ? `${largePartyStyle}`: ``}`}>
-            {guest.name}
-            {guest.partySize > 1 && (<>
-              <span className={`${isLargeParty?'':'text-gray-500'}`}> : {guest.partySize}</span>
-            </>)}
-          </div>
-        </div>
+        {fragmentLargePartyChip(APP_STATE.adminSettings, props.guest)}
         {renderItemDuration()}
       </div>
       {itemStatusBar()}
@@ -266,7 +256,7 @@ export default function GuestItem(props: {
   }, [ITEM_EDIT]);
 
   return (
-    <div className={`${styles.itemCard} ${itemCardStyles}`} onClick={itemClicked}>
+    <div className={`${itemCardStyles}`} onClick={itemClicked}>
       { props.itemExpanded ? (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}

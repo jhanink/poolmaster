@@ -1,11 +1,12 @@
 import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
-import { DefaultSettings, LARGE_PARTY_SIZE_ARRAY} from "~/config/AppState";
+import { DefaultGuestData, DefaultSettings, LARGE_PARTY_SIZE_ARRAY, type Guest} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
+import { fragmentLargePartyChip } from "../../fragments/fragments";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 const borderColor = 'border-teal-500';
@@ -81,10 +82,15 @@ export default function AdminSettings() {
                 ))}
               </select>
             </div>
-            <div className={`mt-3 uppercasetext-nowrap`}>
-              <div className={`inline-block ${largePartyStylesOptions[SETTINGS.largePartyStyle - 1].style} text-gray-200`}>
-                Samantha : {SETTINGS.largePartySize}
-              </div>
+            <div className="mt-1">
+              {fragmentLargePartyChip(
+                SETTINGS,
+                {
+                  ...DefaultGuestData,
+                  name: 'Margaret',
+                  partySize: SETTINGS.largePartySize
+                } as Guest)
+              }
             </div>
           </div>
 
