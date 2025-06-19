@@ -35,7 +35,7 @@ import {
 } from "~/util/GlobalStylesUtil"
 import { fragmentUsageIndicator } from '../../fragments/fragments'
 
-const borderColor = 'border-pink-400';
+const borderColor = '!border-pink-400';
 const bgColor = 'bg-pink-400';
 
 export default function AdminUsageTypes(props: {

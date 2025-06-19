@@ -20,7 +20,7 @@ import { useAtom } from "jotai";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
-const borderColor = 'border-yellow-400';
+const borderColor = '!border-yellow-400';
 const bgColor = 'bg-yellow-400';
 
 export default function AdminTableRates(props: {

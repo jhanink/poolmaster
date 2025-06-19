@@ -7,7 +7,7 @@ import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
-const borderColor = 'border-sky-300';
+const borderColor = '!border-sky-300';
 const bgColor = 'bg-sky-300';
 
 export default function AdminAccount(props: {

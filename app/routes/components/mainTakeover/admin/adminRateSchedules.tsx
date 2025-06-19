@@ -9,7 +9,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const fieldLabelStyles = `mx-2 w-[45px]`;
-const borderColor = 'border-purple-400';
+const borderColor = '!border-purple-400';
 const bgColor = 'bg-purple-400';
 
 export default function AdminRateSchedules(props: {

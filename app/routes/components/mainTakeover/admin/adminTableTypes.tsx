@@ -20,7 +20,7 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 import { Helpers } from "~/util/Helpers"
 
-const borderColor = 'border-blue-500';
+const borderColor = '!border-blue-500';
 const bgColor = 'bg-blue-500';
 
 export default function AdminTableTypes(props: {
@@ -98,7 +98,7 @@ export default function AdminTableTypes(props: {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_TYPES.map((tableType: TableType, index: number) => (
-          <div className={`${tableType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableType.id}>
+          <div className={`${tableType.isActive? `${borderColor}`:'border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableType.id}>
             <div className={`${ROW}`}>
               {(tableType.id !== DEFAULT_ID) && (
                 <div

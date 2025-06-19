@@ -8,7 +8,7 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import type { TableItem } from "~/config/AppState";
 import { Helpers } from "~/util/Helpers";
 
-const borderColor = 'border-white';
+const borderColor = '!border-white';
 const bgColor = 'bg-white';
 
 enum ACTION_ENUM {

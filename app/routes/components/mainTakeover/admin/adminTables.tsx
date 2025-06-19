@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 import { Helpers } from "~/util/Helpers"
 
-const borderColor = 'border-green-500';
+const borderColor = '!border-green-500';
 const bgColor = 'bg-green-500';
 
 export default function AdminTables(props: {

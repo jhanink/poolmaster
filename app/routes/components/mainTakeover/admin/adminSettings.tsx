@@ -9,7 +9,7 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentGuestName } from "../../fragments/fragments";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
-const borderColor = 'border-teal-500';
+const borderColor = '!border-teal-500';
 const bgColor = 'bg-teal-500';
 
 export default function AdminSettings(props: {
@@ -50,7 +50,7 @@ export default function AdminSettings(props: {
           <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
-      <div className={`${ADMIN_CONTENT} mx-1`}>
+      <div className={`${ADMIN_CONTENT}`}>
         <div className={`${ITEM} ${borderColor}`}>
           <div className={`${ROW} text-gray-400 `}>
             Large Party Size & Color:
