@@ -20,7 +20,8 @@ export default function GuestItem(props: {
   setEditForm?: React.Dispatch<React.SetStateAction<boolean>>,
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const itemCardStyles = `bg-transparent mt-2 p-1 hover:cursor-pointer select-none ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'} border-blue-800 rounded-xl`;
+  const cardStyle = `bg-transparent mt-2 p-1 hover:cursor-pointer select-none border-blue-800 rounded-2xl`;
+  const itemCardStyles = `${cardStyle} ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'}`;
   const fieldLabel = `inline-block text-gray-500 !w-[75px]`;
   const statusIndicatorStyles = `flex items-center space-x-2`;
 

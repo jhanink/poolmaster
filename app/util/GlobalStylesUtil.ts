@@ -1,4 +1,4 @@
-import { ID_1, ID_2, ID_3, ID_4, ID_5, ID_6, ID_7 } from "~/config/AppState";
+import { ID_1, ID_2, ID_3, ID_4, ID_5, ID_6, ID_7, ID_8 } from "~/config/AppState";
 
 export const buttonRingRed = `hover:ring-red-600`;
 export const buttonRingBlue = `hover:ring-blue-600`;
@@ -31,12 +31,13 @@ export const INPUT_FIELD = `ml-2 w-[150px]`;
 export const partySizeStyles = `text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
 export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${partySizeStyles}`;
 export const largePartyStyle1 = `!bg-gray-300 !text-black ${partySizeStyles}`;
-export const largePartyStyle2 = `!bg-pink-700 !text-gray-100 ${partySizeStyles}`;
-export const largePartyStyle3 = `!bg-emerald-700 !text-gray-100 ${partySizeStyles}`;
-export const largePartyStyle4 = `!bg-amber-600 !text-gray-100 ${partySizeStyles}`;
-export const largePartyStyle5 = `!bg-violet-600 !text-gray-100 ${partySizeStyles}`;
-export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-100 ${partySizeStyles}`;
+export const largePartyStyle2 = `!bg-pink-700 !text-gray-200 ${partySizeStyles}`;
+export const largePartyStyle3 = `!bg-emerald-700 !text-gray-200 ${partySizeStyles}`;
+export const largePartyStyle4 = `!bg-amber-600 !text-gray-200 ${partySizeStyles}`;
+export const largePartyStyle5 = `!bg-violet-600 !text-gray-200 ${partySizeStyles}`;
+export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-200 ${partySizeStyles}`;
 export const largePartyStyle7 = `!bg-cyan-500 !text-black ${partySizeStyles}`;
+export const largePartyStyle8 = `!bg-gray-800 !text-gray-200 ${partySizeStyles}`;
 
 export const tableChipsStyle = `inline-block m-1 mb-2 rounded-full px-3 text-xs border border-green-800 text-green-600 font-bold`;
 export const selectedTableChipStyle = `ring-2 ring-white`;
@@ -80,6 +81,11 @@ export const largePartyStylesOptions = [
     id: ID_7,
     name: 'Cyan',
     style: largePartyStyle7,
+  },
+  {
+    id: ID_8,
+    name: 'Gray',
+    style: largePartyStyle8,
   }
 ];
 

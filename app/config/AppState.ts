@@ -1,13 +1,7 @@
 export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_ID = 999999999;
-export const ID_1 = 1;
-export const ID_2 = 2;
-export const ID_3 = 3;
-export const ID_4 = 4;
-export const ID_5 = 5;
-export const ID_6 = 6;
-export const ID_7 = 7;
+export const ID_1 = 1, ID_2 = 2, ID_3 = 3, ID_4 = 4, ID_5 = 5, ID_6 = 6, ID_7 = 7, ID_8 = 8;
 export const MAX_PARTY_SIZE = 20;
 export const MIN_LARGE_PARTY_SIZE = 3;
 export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
