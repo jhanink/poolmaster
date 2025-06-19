@@ -69,11 +69,11 @@ export default function Admin() {
           return (
             <div
               key={index}
-              className={`${menuStyles} text-nowrap`}
+              className={`text-nowrap`}
               onClick={() => {
                 item.ref.current && item.ref.current.scrollIntoView(true);
               }}>
-                  {item.name}
+                  <span className={`${menuStyles}`}>{item.name}</span>
                   {index < menuItems1.length - 1 && (
                     <span className="ml-2">|</span>
                   )}
@@ -86,11 +86,11 @@ export default function Admin() {
           return (
             <div
               key={index}
-              className={`${menuStyles} text-nowrap`}
+              className={`text-nowrap`}
               onClick={() => {
                 item.ref.current && item.ref.current.scrollIntoView(true);
               }}>
-                  {item.name}
+                  <span className={`${menuStyles}`}>{item.name}</span>
                   {index < menuItems2.length - 1 && (
                     <span className="ml-2">|</span>
                   )}
