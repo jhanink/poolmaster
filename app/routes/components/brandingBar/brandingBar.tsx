@@ -24,7 +24,7 @@ export default function BrandingBar() {
         <CogIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}></CogIcon>
       </span>
       <span className="text-gray-600 ml-1">POOLHALL</span>
-      <span className="text-rose-500">MASTER</span>
+      <span className="text-gray-400">MASTER</span>
       <span className="text-gray-600 ml-2">2025</span>
     </div>
   )
