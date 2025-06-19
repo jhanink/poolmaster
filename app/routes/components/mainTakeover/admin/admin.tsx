@@ -11,6 +11,7 @@ import AdminUsageTypes from "./adminUsageTypes";
 import AdminSettings from "./adminSettings";
 import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
+import { FeatureFlags } from "~/config/AppState";
 
 export const ADMIN_SECTION = `text-left mb-2`;
 export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative p-3 z-1`;
@@ -117,7 +118,7 @@ export default function Admin() {
       )}
 
       <div className="CONTENT">
-        {!APP_STATE.modifiedAt && (
+        {(!APP_STATE.modifiedAt || FeatureFlags.SHOW_WELCOME_MESSAGE )&& (
           fragmentWelcomeMessage()
         )}
         <div>
