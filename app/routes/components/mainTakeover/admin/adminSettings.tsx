@@ -12,7 +12,9 @@ const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 const borderColor = 'border-teal-500';
 const bgColor = 'bg-teal-500';
 
-export default function AdminSettings() {
+export default function AdminSettings(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [SETTINGS, setSettings] = useState(DefaultSettings);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -36,7 +38,7 @@ export default function AdminSettings() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -48,7 +50,7 @@ export default function AdminSettings() {
           <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
-      <div className={`${ADMIN_CONTENT}`}>
+      <div className={`${ADMIN_CONTENT} mx-1`}>
         <div className={`${ITEM} ${borderColor}`}>
           <div className={`${ROW} text-gray-400 `}>
             Large Party Size & Color:

@@ -23,7 +23,9 @@ import { AppStorage } from "~/util/AppStorage";
 const borderColor = 'border-yellow-400';
 const bgColor = 'bg-yellow-400';
 
-export default function AdminTableRates() {
+export default function AdminTableRates(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLE_RATES, setTableRates] = useState([] as TableRate[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -83,7 +85,7 @@ export default function AdminTableRates() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -98,7 +100,7 @@ export default function AdminTableRates() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
       {TABLE_RATES.map((tableRate: TableRate, index: number) => (
-          <div className={`!mx-1 ${tableRate.isActive? `${borderColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
+          <div className={`${tableRate.isActive? `${borderColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={tableRate.id}>
             <div className={`${ROW}`}>
               {(tableRate.id !== DEFAULT_ID) && (
                 <div

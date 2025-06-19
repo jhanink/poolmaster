@@ -38,7 +38,9 @@ import { fragmentUsageIndicator } from '../../fragments/fragments'
 const borderColor = 'border-pink-400';
 const bgColor = 'bg-pink-400';
 
-export default function AdminUsageTypes() {
+export default function AdminUsageTypes(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [USAGE_TYPES, setUsageTypes] = useState([] as UsageType[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -103,7 +105,7 @@ export default function AdminUsageTypes() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -118,7 +120,7 @@ export default function AdminUsageTypes() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!mx-1 !px-3 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
+          <div className={`!px-3 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div

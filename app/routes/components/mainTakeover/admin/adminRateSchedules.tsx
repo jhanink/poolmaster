@@ -12,7 +12,9 @@ const fieldLabelStyles = `mx-2 w-[45px]`;
 const borderColor = 'border-purple-400';
 const bgColor = 'bg-purple-400';
 
-export default function AdminRateSchedules() {
+export default function AdminRateSchedules(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [RATE_SCHEDULES, setRateSchedules] = useState([] as RateSchedule[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -72,7 +74,7 @@ export default function AdminRateSchedules() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -87,7 +89,7 @@ export default function AdminRateSchedules() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {RATE_SCHEDULES.map((rateSchedule: RateSchedule, index: number) => (
-          <div className={`!mx-1 ${rateSchedule.isActive? `${borderColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={rateSchedule.id}>
+          <div className={`${rateSchedule.isActive? `${borderColor}`: '!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={rateSchedule.id}>
             <div className={`${ROW}`}>
               {(rateSchedule.id !== DEFAULT_ID) && (
                 <div

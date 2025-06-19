@@ -12,7 +12,9 @@ import { Helpers } from "~/util/Helpers"
 const borderColor = 'border-green-500';
 const bgColor = 'bg-green-500';
 
-export default function AdminTables() {
+export default function AdminTables(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [TABLES, setTables] = useState([] as TableItem[]);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -76,7 +78,7 @@ export default function AdminTables() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+  <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -92,7 +94,7 @@ export default function AdminTables() {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
-          <div className={`!mx-1 ${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
+          <div className={`${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
             <div className={`${ROW}`}>
               <div
                 className={`mr-2 ${!!table.forDelete && 'text-rose-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}

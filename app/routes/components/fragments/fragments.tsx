@@ -1,6 +1,7 @@
+import type { JSX } from "react";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import { ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
-import { DEFAULT_ID, type AdminSettings, type AppState, type Guest, type UsageType } from "~/config/AppState";
+import { DEFAULT_ID, type AdminSettings, type Guest, type UsageType } from "~/config/AppState";
 import { largePartyStylesOptions } from "~/util/GlobalStylesUtil";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
@@ -42,7 +43,7 @@ export const fragmentAppName = (style = '') => {
   )
 }
 
-export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
+export const fragmentExitTakeover = (closeCallbackFn: () => void, fragmentCallbackFn?: () => JSX.Element) => {
   return (<>
     <div className="sticky top-0 bg-black z-10 pr-2 pt-2 w-full">
       <div className="flex items-center justify-center CLOSE_BUTTON pb-2">
@@ -52,6 +53,7 @@ export const fragmentExitTakeover = (closeCallbackFn: () => void) => {
         </div>
       </div>
       <hr className="border-gray-900"/>
+      {fragmentCallbackFn && fragmentCallbackFn()}
     </div>
   </>)
 }

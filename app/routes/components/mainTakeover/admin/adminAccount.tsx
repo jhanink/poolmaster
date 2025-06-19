@@ -10,7 +10,9 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 const borderColor = 'border-sky-300';
 const bgColor = 'bg-sky-300';
 
-export default function AdminAccount() {
+export default function AdminAccount(props: {
+  ref: React.RefObject<HTMLDivElement>;
+}) {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [ACCOUNT, setAccount] = useState(DefaultAccountData);
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
@@ -34,7 +36,7 @@ export default function AdminAccount() {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`}>
+    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
