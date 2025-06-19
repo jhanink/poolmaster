@@ -415,8 +415,8 @@ export default function GuestForm(props: {
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
-          <div onClick={onClickDeleteItem} className={`!text-rose-500 ${actionButtonStyles} !text-xs`}>
-            DELETE
+          <div onClick={onClickDeleteItem} className={`${actionButtonStyles} !text-xs`}>
+            Delete
           </div>
         )}
         <div onClick={onClickCancel} className={`${actionButtonStyles} !text-xs`}>
