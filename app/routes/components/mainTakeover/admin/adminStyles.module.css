@@ -1,0 +1,8 @@
+.stickyTop {
+  top: 283px !important;
+}
+@media (min-width: 400px) {
+  .stickyTop {
+    top: 250px !important;
+  }
+}
