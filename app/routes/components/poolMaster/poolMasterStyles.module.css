@@ -8,7 +8,7 @@
   display: none;  /* Safari and Chrome */
 }
 
-@media (min-width: 840px) {
+@media (min-width: 768px) {
   .appContentContainer {
     display: flex;
     flex-grow: 1;

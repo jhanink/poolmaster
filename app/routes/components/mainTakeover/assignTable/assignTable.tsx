@@ -96,7 +96,7 @@ export default function AssignTable() {
   return (<>
     <div className="select-none flex flex-col justify-center items-center" ref={TopRef}>
       {fragmentExitTakeover(exit)}
-      <div className="border border-gray-800 rounded-xl py-3 mt-2 text-center min-w-[300px] max-w-[700px]">
+      <div className="border border-gray-800 rounded-xl py-3 mt-2 text-center min-w-[300px] max-w-[768px]">
         <div className="CONTENT">
           {!tables.length && <>
             <div className="text-gray-500 text-sm p-3 uppercase">

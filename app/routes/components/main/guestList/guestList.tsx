@@ -5,6 +5,7 @@ import { appStateAtom, ListFilterTypeEnum, mainTakoverAtom, selectedListFilterAt
 import { FeatureFlags, type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 import { Helpers } from '~/util/Helpers';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
 const addGuestStyles = `${baseButtonStyles} text-sm ring-gray-500 text-gray-500 hover:ring-1 hover:ring-white`;
@@ -18,65 +19,75 @@ export default function GuestList() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
-  const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'border border-gray-900 rounded-xl'}`;
+
+  const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl'}`;
+
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
-      <div>
-        Hello
+      <div className="md:flex hidden border-b border-gray-800 p-3 text-xl items-center text-gray-200">
+        <div className="grow">
+        Guest List
+        </div>
+        <div className="size-6 hover:cursor-pointer">
+          <PlusIcon/>
+        </div>
       </div>
     </>)
   }
 
   return (
-    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} px-2 max-w-[580px]`}>
-      <div className="flex mt-3 m-1">
-        <div className="flex-1">
-          {!MAIN_TAKEOVER && (
-            <div className="flex justify-center gap-2">
-              <button
-                type="button"
-                className={`${Helpers.hasGuests(APP_STATE) ? addGuestStyles : addGuestEmptyListStyles}`}
-                onClick={onClickAddGuestForm}
-              >
-                <div>
-                  {Helpers.hasGuests(APP_STATE) ? (<>
-                    <div className="text-xs">Add Guest</div>
-                  </>) : (<>
-                    <div>ADD</div>
-                    <div>GUEST</div>
-                  </>)}
-                </div>
-              </button>
-              {FeatureFlags.SHOW_RESERVATIONS && (
+    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} max-w-[768px]`}>
+      {fragmentSwimlaneHeader()}
+      <div className="px-2">
+        <div className="flex mt-3 m-1">
+          <div className="flex-1">
+            {!MAIN_TAKEOVER && (
+              <div className="flex justify-center gap-2">
                 <button
                   type="button"
-                  disabled={!APP_STATE.reservations.length}
-                  className={`${APP_STATE.reservations.length ? viewReservationsStyles : reservationsDisabledStyles}`}
+                  className={`${Helpers.hasGuests(APP_STATE) ? addGuestStyles : addGuestEmptyListStyles}`}
                   onClick={onClickAddGuestForm}
                 >
-                  <div className="text-xs">See Reservations: {APP_STATE.reservations.length}</div>
+                  <div>
+                    {Helpers.hasGuests(APP_STATE) ? (<>
+                      <div className="text-xs">Add Guest</div>
+                    </>) : (<>
+                      <div>ADD</div>
+                      <div>GUEST</div>
+                    </>)}
+                  </div>
                 </button>
-              )}
+                {FeatureFlags.SHOW_RESERVATIONS && (
+                  <button
+                    type="button"
+                    disabled={!APP_STATE.reservations.length}
+                    className={`${APP_STATE.reservations.length ? viewReservationsStyles : reservationsDisabledStyles}`}
+                    onClick={onClickAddGuestForm}
+                  >
+                    <div className="text-xs">See Reservations: {APP_STATE.reservations.length}</div>
+                  </button>
+                )}
 
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      {!!APP_STATE.guestList.length && (<>
-        <div className={`${mainStyles.column} justify-center mb-10`}>
-          {APP_STATE.guestList
-            .sort((A: Guest, B: Guest) =>
-              A.createdAt - B.createdAt
-            )
-            .map((guest: Guest, index: number) =>
-              <GuestListItem guest={guest} key={guest.id} index={index}></GuestListItem>
-            )
-          }
-        </div>
-        {(!Helpers.tablesAssigned(APP_STATE).length || SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST) && (<>
-          <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
+        {!!APP_STATE.guestList.length && (<>
+          <div className={`${mainStyles.column} justify-center mb-10`}>
+            {APP_STATE.guestList
+              .sort((A: Guest, B: Guest) =>
+                A.createdAt - B.createdAt
+              )
+              .map((guest: Guest, index: number) =>
+                <GuestListItem guest={guest} key={guest.id} index={index}></GuestListItem>
+              )
+            }
+          </div>
+          {(!Helpers.tablesAssigned(APP_STATE).length || SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST) && (<>
+            <div className={`${styles.bottomScrollSpacer}`}>&nbsp;</div>
+          </>)}
         </>)}
-      </>)}
+      </div>
     </div>
   )
 }

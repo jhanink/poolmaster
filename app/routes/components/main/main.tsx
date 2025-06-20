@@ -16,7 +16,7 @@ export default function AppMain() {
   const [MAIN_TAKEOVER] = useAtom(mainTakoverAtom);
 
   return (
-    <div className={`flex flex-col grow max-w-[1400px] mx-auto`}>
+    <div className={`flex flex-col grow max-w-[1400px] mx-5`}>
       {MAIN_TAKEOVER?.closeoutTable && <TableCloseout></TableCloseout>}
       {MAIN_TAKEOVER?.assignTableGuest && <AssignTable></AssignTable>}
       {MAIN_TAKEOVER?.adminScreen && <Admin></Admin>}

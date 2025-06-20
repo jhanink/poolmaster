@@ -441,7 +441,7 @@ export default function TableCloseout() {
   return (
     <div className="flex flex-col justify-center items-center text-center bg-black border-white select-none" ref={TopRef}>
       {fragmentExitTakeover(exit)}
-      <div className="border border-gray-800 rounded-xl mt-2 px-5 text-center min-w-[300px] max-w-[700px]">
+      <div className="border border-gray-800 rounded-xl mt-2 px-5 text-center min-w-[300px] max-w-[768px]">
         {fragmentFormHeader()}
         <div className="CONTENT flex-1 text-center">
           <div className="my-3">
