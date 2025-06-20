@@ -13,7 +13,7 @@ type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
 };
 
-const borders = `${FeatureFlags.MAIN_COLUMN_BORDERS && 'border border-gray-900 rounded-xl'}`;
+const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'border border-gray-900 rounded-xl'}`;
 
 export default function TableList() {
   const [APP_STATE] = useAtom(appStateAtom);

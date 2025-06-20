@@ -18,7 +18,14 @@ export default function GuestList() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
-  const borders = `${FeatureFlags.MAIN_COLUMN_BORDERS && 'border border-gray-900 rounded-xl'}`;
+  const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'border border-gray-900 rounded-xl'}`;
+  const fragmentSwimlaneHeader = () => {
+    return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
+      <div>
+        Hello
+      </div>
+    </>)
+  }
 
   return (
     <div className={`${styles.guestListContainer} flex-1 select-none ${borders} px-2 max-w-[580px]`}>

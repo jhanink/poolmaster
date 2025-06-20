@@ -53,7 +53,7 @@ export default function GuestListItem(props: {
   return <>
     <div className="select-none mb-4">
       {IS_EXPIRED ? (
-        <div className="border border-gray-800 border-dashed rounded-xl">
+        <div className="text-center border border-gray-800 border-dashed rounded-xl">
           <ExpiredVisit guest={props.guest} />
         </div>
       ) : (

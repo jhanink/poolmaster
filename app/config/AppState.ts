@@ -12,7 +12,7 @@ export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const FeatureFlags = {
   SHOW_RESERVATIONS: false,
-  MAIN_COLUMN_BORDERS: false,
+  SHOW_MAIN_SWIMLANES: false,
   SHOW_WELCOME_MESSAGE: false,
 }
 
