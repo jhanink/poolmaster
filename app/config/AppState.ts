@@ -16,6 +16,10 @@ export const FeatureFlags = {
   SHOW_WELCOME_MESSAGE: false,
 }
 
+export const SystemConfig = {
+  LOG_CONNECTED_CLIENTS: false,
+}
+
 export interface AppState {
   account: Account,
   tableTypes: TableType[],

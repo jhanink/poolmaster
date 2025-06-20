@@ -2,7 +2,7 @@ import { WebSocketServer, WebSocket } from "ws";
 import { Server } from 'http';
 import fs from 'fs-extra';
 import { appStateFilePath } from "../config/AppConfig";
-import type { AppState } from "../config/AppState";
+import { SystemConfig, type AppState } from "../config/AppState";
 
 const BROADCAST_INTERVAL = 1000 * 10; // 10 seconds
 
@@ -35,7 +35,7 @@ class WebSocketManager {
       const clientId = url.searchParams.get('clientId');
 
       (ws as any).sourceId = sourceId;
-      console.log(`--- Client ${clientId} connected - source ${sourceId}`);
+      SystemConfig.LOG_CONNECTED_CLIENTS && console.log(`--- Client ${clientId} connected - source ${sourceId}`);
 
       ws.on('message', (message: string) => {
         console.log(`--- ${message}`, `(${this.wss.clients.size} clients), ${sourceId}`);
