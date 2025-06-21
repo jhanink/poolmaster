@@ -229,7 +229,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
                }}
                value={FORM_FIELDS.name}
-              className={`${formFieldStylesFullWidth}`}
+              className={`p-1 ${formFieldStylesFullWidth}`}
               placeholder="Enter Name..."
               maxLength={40}/>
           </div>
@@ -254,7 +254,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.phoneNumber}
-              className={`${formFieldStylesFullWidth}`}
+              className={`p-1 ${formFieldStylesFullWidth}`}
               placeholder="Enter Number..."
             />
           </div>
@@ -390,7 +390,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.notes}
-              className={`${styles.noScrollbar} text-left resize-none h-12 ${formFieldStylesFullWidth}`}
+              className={`p-1 ${styles.noScrollbar} text-left resize-none h-12 ${formFieldStylesFullWidth}`}
               maxLength={500}
               placeholder="Add Notes...">
             </textarea>
@@ -415,17 +415,16 @@ export default function GuestForm(props: {
       </div>
       <div className="flex items-center mt-1 mb-3 justify-end">
         {!MAIN_TAKEOVER?.addGuest && (
-          <div onClick={onClickDeleteItem} className={`${actionButtonStyles} !text-xs`}>
+          <button onClick={onClickDeleteItem} className={`${actionButtonStyles} !text-xs`}>
             Delete
-          </div>
+          </button>
         )}
-        <div onClick={onClickCancel} className={`${actionButtonStyles} !text-xs`}>
+        <button onClick={onClickCancel} className={`${actionButtonStyles} !text-xs`}>
           Cancel
-        </div>
+        </button>
         <button disabled={SAVING} type="submit" onClick={onClickSaveItem} className={`${actionButtonStyles} !text-xs`}>
           Save
         </button>
-
       </div>
     </fetcher.Form>
     <ModalConfirm

@@ -20,7 +20,7 @@ export default function GuestItem(props: {
   setEditForm?: React.Dispatch<React.SetStateAction<boolean>>,
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const cardStyle = `bg-transparent mt-2 p-1 hover:cursor-pointer select-none border-blue-800 rounded-2xl`;
+  const cardStyle = `bg-transparent mt-2 pt-1 px-2 hover:cursor-pointer select-none border-blue-800 rounded-xl`;
   const itemCardStyles = `${cardStyle} ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'}`;
   const fieldLabel = `inline-block text-gray-500 !w-[75px]`;
   const statusIndicatorStyles = `flex items-center space-x-2`;
@@ -259,9 +259,9 @@ export default function GuestItem(props: {
   }, [ITEM_EDIT]);
 
   return (
-    <div className={`${itemCardStyles}`} onClick={itemClicked}>
+    <div className={`${itemCardStyles} min-w-[350px]`} onClick={itemClicked}>
       { props.itemExpanded ? (
-        <div className={`text-left text-sm rounded-lg min-w-[350px]`}>
+        <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}
