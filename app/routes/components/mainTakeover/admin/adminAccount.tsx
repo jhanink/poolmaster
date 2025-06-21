@@ -1,4 +1,4 @@
-import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, ROW } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formInputStyles, ITEM, labelStyles, ROW } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultAccountData } from "~/config/AppState";
 import { useAtom } from "jotai";
@@ -49,10 +49,10 @@ export default function AdminAccount(props: {
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
-        <div className={`${ITEM} ${ROW} ${borderColor}`}>
-          <span className="text-gray-400">
+        <div className={`${ITEM} ${borderColor}`}>
+          <div className={`${labelStyles}`}>
             Venue:
-          </span>
+          </div>
           <input
             className={`
               ${formInputStyles}

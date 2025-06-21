@@ -55,7 +55,7 @@ export default function AdminSettings(props: {
           <div className={`${ROW} text-gray-400 `}>
             Large Party Size & Color:
           </div>
-          <div className="mt-1 border border-gray-700 p-3 rounded-lg">
+          <div className="mt-1 border border-gray-700 mx-2 p-3 rounded-lg">
             <div className={`${ROW}`}>
               <select
                 onChange={(event) => {
@@ -110,12 +110,11 @@ export default function AdminSettings(props: {
               }}
             />
           </div>
-          <div className="mt-1 border border-gray-700 p-3 rounded-lg">
+          <div className="mt-1 border border-gray-700 mx-2 p-3 rounded-lg">
             <div className="text-gray-500">
               Assign Tables:
             </div>
-            <div className="mt-2 flex items-center gap-2">
-
+            <div className="mt-2 flex items-center justify-center gap-2">
               <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
               >
                 Table 1
@@ -138,7 +137,7 @@ export default function AdminSettings(props: {
             <div className="mt-2 text-gray-500">
               Active Tables:
             </div>
-            <div className="mt-2 flex items-center gap-2">
+            <div className="mt-2 flex items-center justify-center gap-2">
               <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
               >
                 Table 5
