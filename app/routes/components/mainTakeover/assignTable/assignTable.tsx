@@ -114,7 +114,7 @@ export default function AssignTable() {
                   <span>Assign</span>
                 )}
               </div>
-              <div className={`${guest.assignedAt ? 'text-green-500' : 'text-blue-500' } uppercase text-xl`}>
+              <div className={`text-green-500 uppercase text-xl`}>
                   | {MAIN_TAKEOVER.assignTableGuest?.name}
               </div>
             </div>
