@@ -25,7 +25,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} pt-0 gap-x-4 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
+        <div className={`${styles.mainContent} pt-0 gap-2 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}

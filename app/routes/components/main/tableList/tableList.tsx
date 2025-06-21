@@ -13,7 +13,7 @@ type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
 };
 
-const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl'}`;
+const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl md:mr-3 sm:mx-auto md:mx-0'}`;
 
 export default function TableList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -102,7 +102,7 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} mx-auto flex-1 text-center select-none ${borders} min-w-[350px] max-w-[600px]`}>
+    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} min-w-[350px] max-w-[600px]`}>
       {fragmentSwimlaneHeader()}
       <div className={`${mainStyles.column} ${styles.tableList} px-2`}>
         {fragmentMiniMap()}
