@@ -2,7 +2,7 @@ import type { JSX } from "react";
 import { Helpers, type TimeElapsed } from "~/util/Helpers";
 import { ArrowRightIcon, ArrowUturnLeftIcon} from "@heroicons/react/24/outline";
 import { DEFAULT_ID, type AdminSettings, type Guest, type UsageType } from "~/config/AppState";
-import { largePartyStylesOptions } from "~/util/GlobalStylesUtil";
+import { largePartyStylesOptions, separatorBarStyles } from "~/util/GlobalStylesUtil";
 
 export const durationSquareStyles = `flex flex-grow-0 px-2 items-center justify-end text-sm text-nowrap`;
 
@@ -52,7 +52,7 @@ export const fragmentExitTakeover = (closeCallbackFn: () => void, fragmentCallba
           <span className="text-xl">EXIT</span>
         </div>
       </div>
-      <hr className="border-gray-900"/>
+      <hr className={`${separatorBarStyles}`}/>
       {fragmentCallbackFn && fragmentCallbackFn()}
     </div>
   </>)

@@ -45,6 +45,7 @@ export const selectedTableChipStyle = `ring-2 ring-white`;
 export const formColumnStyles = `COLUMN flex m-1`;
 export const fieldStyles = `flex-1`;
 export const labelStyles = `text-sm text-gray-400 mr-2`;
+export const separatorBarStyles = `border-b border-gray-900 mx-1`;
 
 export const largePartyStylesOptions = [
   {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
-import { actionButtonStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
 import { fragmentWelcomeMessage, fragmentExitTakeover } from "../../fragments/fragments";
 import AdminTables from "./adminTables";
 import AdminAccount from "./adminAccount";
@@ -19,8 +19,6 @@ export const ADMIN_HEADER_STICKY = `sticky top-[97px] border rounded-lg mb-2 bg-
 export const ADMIN_CONTENT = `text-sm pb-3 mb-20 z-0 mx-1`;
 export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-left py-2 my-1 z-1`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
-
-const actionsSeparatorStyles = "border-b border-gray-900 my-3";
 
 export default function Admin() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -74,10 +72,10 @@ export default function Admin() {
               onClick={() => {
                 item.ref.current && item.ref.current.scrollIntoView(true);
               }}>
-                  <span className={`${menuStyles}`}>{item.name}</span>
-                  {index < menuItems1.length - 1 && (
-                    <span className="ml-2">|</span>
-                  )}
+                <span className={`${menuStyles}`}>{item.name}</span>
+                {index < menuItems1.length - 1 && (
+                  <span className="ml-2">|</span>
+                )}
             </div>
           )
         })}
@@ -91,10 +89,10 @@ export default function Admin() {
               onClick={() => {
                 item.ref.current && item.ref.current.scrollIntoView(true);
               }}>
-                  <span className={`${menuStyles}`}>{item.name}</span>
-                  {index < menuItems2.length - 1 && (
-                    <span className="ml-2">|</span>
-                  )}
+                <span className={`${menuStyles}`}>{item.name}</span>
+                {index < menuItems2.length - 1 && (
+                  <span className="ml-2">|</span>
+                )}
             </div>
           )
         })}
@@ -132,17 +130,16 @@ export default function Admin() {
           <AdminUsageTypes ref={menuItems2[1].ref}/>
           <AdminTableTypes ref={menuItems2[2].ref}/>
           <AdminTables ref={menuItems2[3].ref}/>
-          <hr className={actionsSeparatorStyles}/>
+          <hr className={`${separatorBarStyles} !my-3`}/>
           <button className={actionButtonStyles} onClick={() => {setShowActions( !SHOW_ACTIONS)}}>
             Show Admin Actions
           </button>
           <div>
             {SHOW_ACTIONS && (<>
-              <hr className={actionsSeparatorStyles}/>
+              <hr className={`${separatorBarStyles} !my-3`}/>
               <AdminActions/>
             </>)}
           </div>
-
         </div>
       </div>
     </div>

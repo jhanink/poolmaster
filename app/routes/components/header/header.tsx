@@ -9,6 +9,7 @@ import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
+import { separatorBarStyles } from "~/util/GlobalStylesUtil";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -80,6 +81,7 @@ export default function AppHeader() {
             )}
           </>)}
         </div>
+        <hr className={`${separatorBarStyles}`}/>
       </>}
     </div>
   );
