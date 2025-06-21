@@ -213,7 +213,7 @@ export default function GuestForm(props: {
 
   return ( <>
     <fetcher.Form method="POST" className={`bg-transparent`} onSubmit={onClickSaveItem} onClick={onClickForm}>
-      <div>
+      <div className="min-w-[300px]">
         <div className={formColumnStyles}>
           <div className={`${labelStyles} ml-1`}>
             Guest Name *
@@ -323,9 +323,9 @@ export default function GuestForm(props: {
                     .map((table) => (
                       <option key={table.id} className={`${optionStyles}`} value={table.id}>
                         {table.name}
-                        { !!table.guest && (
-                          <span className="text-red-500"> &nbsp; → Active</span>
-                        )}
+                        { !!table.guest && (<>
+                          &nbsp; → Active
+                        </>)}
                       </option>
                     ))
                   }

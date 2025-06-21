@@ -8,8 +8,6 @@ import { Helpers } from '~/util/Helpers';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
-const addGuestStyles = `${baseButtonStyles} text-sm ring-gray-500 text-gray-500 hover:ring-1 hover:ring-white`;
-const addGuestEmptyListStyles = `${baseButtonStyles} text-lg ring-blue-500 rounded-full hover:ring-3 !h-[100px] !w-[100px] !py-0 !px-0`;
 const viewReservationsStyles = `${baseButtonStyles} text-sm ring-gray-500 text-yellow-500 hover:ring-1 hover:ring-white`;
 const reservationsDisabledStyles = `${baseButtonStyles} text-sm !ring-gray-800 !text-gray-700 hover:!cursor-default`;
 
@@ -43,20 +41,6 @@ export default function GuestList() {
           <div className="flex-1">
             {!MAIN_TAKEOVER && (
               <div className="flex justify-center gap-2">
-                <button
-                  type="button"
-                  className={`${Helpers.hasGuests(APP_STATE) ? addGuestStyles : addGuestEmptyListStyles}`}
-                  onClick={onClickAddGuestForm}
-                >
-                  <div>
-                    {Helpers.hasGuests(APP_STATE) ? (<>
-                      <div className="text-xs">Add Guest</div>
-                    </>) : (<>
-                      <div>ADD</div>
-                      <div>GUEST</div>
-                    </>)}
-                  </div>
-                </button>
                 {FeatureFlags.SHOW_RESERVATIONS && (
                   <button
                     type="button"

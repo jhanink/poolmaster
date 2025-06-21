@@ -10,6 +10,7 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { separatorBarStyles } from "~/util/GlobalStylesUtil";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -61,10 +62,16 @@ export default function AppHeader() {
           {((Helpers.tablesAssigned(APP_STATE).length + APP_STATE.guestList.length) > 0) && (<>
             {!(SELECTED_LIST_FILTER === 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
-                <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
-                  <span className={`${statusPillStyles} text-nowrap`}>
-                    {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
-                  </span>
+                <div className="flex items-center">
+                  <div className="size-6 text-gray-400 mr-3 hover:cursor-pointer hover:text-white"
+                    onClick={(event) => setMainTakeover({addGuest: true})}>
+                    <PlusIcon></PlusIcon>
+                  </div>
+                  <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
+                    <span className={`${statusPillStyles} text-nowrap`}>
+                      {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
+                    </span>
+                  </div>
                 </div>
                 <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
               </div>

@@ -224,9 +224,7 @@ export default function GuestItem(props: {
   const itemCollapsedRowContent = () => {
     return (<>
       <div className="flex justify-center text-sm px-1">
-        {props.isEditForm ? (
-          <div className={`${props.isAssigned ? 'text-green-600' : 'text-blue-500'} text-xl italic uppercase`}>Edit Guest</div>
-        ): (<>
+        {!props.isEditForm && (<>
           {!props.isAssigned && (
             <div className="flex-grow-0 text-left min-w-7">
               <span className="text-gray-600">{props.index + 1}. </span>
@@ -259,7 +257,7 @@ export default function GuestItem(props: {
   }, [ITEM_EDIT]);
 
   return (
-    <div className={`${itemCardStyles} min-w-[350px]`} onClick={itemClicked}>
+    <div className={`${itemCardStyles} pb-1`} onClick={itemClicked}>
       { props.itemExpanded ? (
         <div className={`text-left text-sm rounded-lg`}>
           {itemDetailHeaderContent()}
