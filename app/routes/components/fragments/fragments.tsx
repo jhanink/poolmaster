@@ -45,7 +45,7 @@ export const fragmentAppName = (style = '') => {
 
 export const fragmentExitTakeover = (closeCallbackFn: () => void, fragmentCallbackFn?: () => JSX.Element) => {
   return (<>
-    <div className="sticky top-0 bg-black z-10 pr-2 pt-2 w-full">
+    <div className="sticky top-0 bg-black z-10 pt-2 w-full">
       <div className="flex items-center justify-center CLOSE_BUTTON pb-2">
         <div className="flex items-center hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
           <ArrowUturnLeftIcon className="mr-2 size-6"></ArrowUturnLeftIcon>

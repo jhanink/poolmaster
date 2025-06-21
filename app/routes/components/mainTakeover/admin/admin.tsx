@@ -13,9 +13,9 @@ import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
 import { FeatureFlags } from "~/config/AppState";
 
-export const ADMIN_SECTION = `text-left mb-2`;
+export const ADMIN_SECTION = `text-center mb-2`;
 export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative p-3 z-1`;
-export const ADMIN_HEADER_STICKY = `sticky top-[97px] border rounded-lg mb-2 bg-black z-1 w-[320px] z-0`;
+export const ADMIN_HEADER_STICKY = `sticky top-[97px] border rounded-lg mb-2 bg-black z-1 w-[300px] z-0`;
 export const ADMIN_CONTENT = `text-sm pb-3 mb-20 z-0 mx-1`;
 export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-left py-2 my-1 z-1`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
@@ -65,7 +65,7 @@ export default function Admin() {
 
   const fragmentMenu = () => {
     return (<>
-      <div className="MENU sticky bg-black z-9 text-xs text-gray-500 italic flex gap-2 grow justify-center py-2">
+      <div className="bg-black z-9 text-xs text-gray-500 italic flex gap-2 grow justify-center py-2">
         {menuItems1.map((item, index) => {
           return (
             <div
@@ -82,7 +82,7 @@ export default function Admin() {
           )
         })}
       </div>
-      <div className="MENU sticky bg-black z-9 text-xs text-gray-500 italic flex gap-2 grow justify-center pb-1">
+      <div className="bg-black z-9 text-xs text-gray-500 italic flex gap-2 grow justify-center pb-1">
         {menuItems2.map((item, index) => {
           return (
             <div

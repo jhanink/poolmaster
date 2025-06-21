@@ -50,7 +50,7 @@ export default function AdminAccount(props: {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         <div className={`${ITEM} ${ROW} ${borderColor}`}>
-          <span className="text-gray-400 mr-2">
+          <span className="text-gray-400">
             Venue:
           </span>
           <input
