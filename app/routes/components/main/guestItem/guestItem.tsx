@@ -261,7 +261,7 @@ export default function GuestItem(props: {
   return (
     <div className={`${itemCardStyles}`} onClick={itemClicked}>
       { props.itemExpanded ? (
-        <div className={`text-left text-sm rounded-lg min-w-[300px]`}>
+        <div className={`text-left text-sm rounded-lg min-w-[350px]`}>
           {itemDetailHeaderContent()}
           {itemDetailBodyContent()}
           {itemDetailGuestEditForm()}

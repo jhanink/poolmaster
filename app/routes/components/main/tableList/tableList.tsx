@@ -90,7 +90,7 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} px-2 min-w-[300px] max-w-[768px]`}>
+    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} px-2 min-w-[350px] max-w-[600px]`}>
       <div className={`${mainStyles.column} ${styles.tableList}`}>
         {fragmentMiniMap()}
         {fragmentTables()}

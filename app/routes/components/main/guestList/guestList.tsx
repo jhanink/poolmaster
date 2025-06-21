@@ -36,7 +36,7 @@ export default function GuestList() {
   }
 
   return (
-    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} max-w-[768px]`}>
+    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} max-w-[600px]`}>
       {fragmentSwimlaneHeader()}
       <div className="px-2">
         <div className="flex mt-3 m-1">
