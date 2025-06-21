@@ -32,6 +32,7 @@ import {
   INPUT_FIELD,
   ITEM,
   ROW,
+  ADMIN_SECTION_SCROLL_MARGIN_TOP,
 } from "~/util/GlobalStylesUtil"
 import { fragmentUsageIndicator } from '../../fragments/fragments'
 
@@ -105,7 +106,7 @@ export default function AdminUsageTypes(props: {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+    <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -141,7 +142,8 @@ export default function AdminUsageTypes(props: {
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`
-                    ${usageType.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
+                    w-[180px]
+                    ${usageType.id === DEFAULT_ID ? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${formFieldStyles}
@@ -291,7 +293,7 @@ export default function AdminUsageTypes(props: {
                     <span>Clear</span>
                 </div>
               </div>
-              <div className="flex justify-end mx-2">
+              <div className="flex justify-start mt-2">
                 {fragmentUsageIndicator(usageType)}
               </div>
               {usageType.showColorPicker && (<>

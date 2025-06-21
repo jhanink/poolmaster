@@ -1,4 +1,3 @@
-export const DefaultTableTypeName = 'Regulation';
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_ID = 999999999;
 export const ID_1 = 1, ID_2 = 2, ID_3 = 3, ID_4 = 4, ID_5 = 5, ID_6 = 6, ID_7 = 7, ID_8 = 8;
@@ -294,7 +293,7 @@ export const DefaultTableRateData: TableRate = {
 
 export const DefaultTableTypeData: TableType = {
   id: DEFAULT_ID,
-  name: DefaultTableTypeName,
+  name: "-- ANY --",
   tableRateId: DEFAULT_ID,
   isActive: true,
   forDelete: false,

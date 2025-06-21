@@ -4,6 +4,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import {
   actionButtonStyles,
   actionIconStyles,
+  ADMIN_SECTION_SCROLL_MARGIN_TOP,
   formFieldStyles,
   formInputStyles,
   formInputStylesSmall,
@@ -85,7 +86,7 @@ export default function AdminTableRates(props: {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+    <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -120,6 +121,7 @@ export default function AdminTableRates(props: {
               <div className={`text-nowrap ${!!tableRate.forDelete && 'text-rose-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`
+                    w-[180px]
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${!!tableRate.forDelete && 'text-rose-500'}

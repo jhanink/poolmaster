@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { DEFAULT_ID, DefaultRateSchedule, RateScheduleDays, type RateSchedule } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, actionIconStyles, formFieldStyles, formInputStyles, formLabelLeftStyles, INPUT_FIELD, ITEM, ROW } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formFieldStyles, formInputStyles, formLabelLeftStyles, INPUT_FIELD, ITEM, ROW } from "~/util/GlobalStylesUtil";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
@@ -74,7 +74,7 @@ export default function AdminRateSchedules(props: {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+    <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -108,6 +108,7 @@ export default function AdminRateSchedules(props: {
                 <input
                   disabled={rateSchedule.id === DEFAULT_ID}
                   className={`
+                    w-[180px]
                     ${rateSchedule.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
                     ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-rose-500'}
                     ${!!rateSchedule.forAdd && 'text-green-500'}

@@ -78,7 +78,6 @@ export default function AssignTable() {
           onChange={(event) => {
             setTableTypeId(Number(event.target.value));
           }}>
-            <option value={-1}> → Show All</option>
             {types.map((item: TableType) => {
               return <option key={item.id} value={item.id}>{item.name}</option>
             })}
@@ -133,7 +132,7 @@ export default function AssignTable() {
             <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
               {tables
                 .filter((table: TableItem) => {
-                  return guest.assignedAt || guest.prefersTable || (table.tableTypeId === TABLE_TYPE_ID) || TABLE_TYPE_ID === -1;
+                  return guest.assignedAt || guest.prefersTable || (table.tableTypeId === TABLE_TYPE_ID) || TABLE_TYPE_ID === DEFAULT_ID;
                 })
                 .sort((A: TableItem, B: TableItem) =>
                   A.number - B.number

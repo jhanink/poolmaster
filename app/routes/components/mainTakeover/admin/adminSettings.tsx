@@ -1,4 +1,4 @@
-import { actionButtonStyles, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW, tableChipsStyle } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultGuestData, DefaultSettings, LARGE_PARTY_SIZE_ARRAY, type Guest} from "~/config/AppState";
 import { useAtom } from "jotai";
@@ -38,7 +38,7 @@ export default function AdminSettings(props: {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+    <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>

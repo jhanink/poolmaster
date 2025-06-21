@@ -24,7 +24,7 @@ export const formInputStylesExtraSmall =`w-[70px] ${formInputStyles}`;
 export const optionStyles=`bg-black`;
 export const dialogBackdropStyles = `fixed inset-0 bg-slate-500 bg-opacity-40 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in`;
 export const actionIconStyles = `size-5 text-gray-600 hover:cursor-pointer hover:text-gray-300`;
-export const ITEM = `mb-3 pt-2 pl-2 border border-gray-800 rounded-lg`;
+export const ITEM = `mb-3 pb-3 pt-2 pl-2 border border-gray-800 rounded-lg`;
 export const ROW = `flex items-center max-w-[295px]`;
 export const INPUT_FIELD = `ml-2 w-[130px]`;
 
@@ -90,3 +90,4 @@ export const largePartyStylesOptions = [
 ];
 
 export const GLOBAL_ZOOM = {zoom: '110%'};
+export const ADMIN_SECTION_SCROLL_MARGIN_TOP = {scrollMarginTop: '100px'};

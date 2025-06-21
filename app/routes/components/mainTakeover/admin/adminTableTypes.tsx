@@ -4,6 +4,7 @@ import { TrashIcon } from "@heroicons/react/24/outline"
 import {
   actionButtonStyles,
   actionIconStyles,
+  ADMIN_SECTION_SCROLL_MARGIN_TOP,
   formFieldStyles,
   formInputStyles,
   formLabelLeftStyles,
@@ -83,7 +84,7 @@ export default function AdminTableTypes(props: {
   }, []);
 
   return (<>
-    <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+    <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -116,11 +117,14 @@ export default function AdminTableTypes(props: {
                 )}
                 <input
                   className={`
+                    w-[200px]
+                    ${tableType.id === DEFAULT_ID ? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}
                     ${!!tableType.forDelete && 'text-rose-500'} ${!!tableType.forAdd && 'text-green-500'}
                     ${formFieldStyles}
                   `}
+                  disabled={tableType.id === DEFAULT_ID}
                   placeholder="Table Type..."
                   maxLength={55}
                   onChange={(event) => {

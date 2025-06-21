@@ -1,7 +1,7 @@
 import { DefaultTableItemData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { actionButtonStyles, actionIconStyles, formInputStyles, formLabelLeftStyles, formSelectStyles, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
+import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formInputStyles, formLabelLeftStyles, formSelectStyles, INPUT_FIELD, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
@@ -78,7 +78,7 @@ export default function AdminTables(props: {
   }, []);
 
   return (<>
-  <div className={`${ADMIN_SECTION}`} ref={props.ref}>
+  <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
           <div className={`flex items-center`}>
@@ -107,8 +107,9 @@ export default function AdminTables(props: {
                   className={`
                     uppercase
                     ${formInputStyles}
-                     ${!!table.forDelete && 'text-rose-500'}
-                     ${!!table.forAdd && 'text-green-500'}
+                    ${INPUT_FIELD}
+                    ${!!table.forDelete && 'text-rose-500'}
+                    ${!!table.forAdd && 'text-green-500'}
                   `}
                   placeholder="Table name..."
                   maxLength={30}
