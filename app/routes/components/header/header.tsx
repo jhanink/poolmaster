@@ -50,7 +50,7 @@ export default function AppHeader() {
 
   return (
     <div>
-      <div className={`${headerStyles}`}>
+      <div className={`${headerStyles} mx-1`}>
         {APP_STATE.account?.venue}
       </div>
       <BrandingBar />
