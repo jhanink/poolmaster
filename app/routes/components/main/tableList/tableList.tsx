@@ -83,6 +83,18 @@ export default function TableList() {
     )
   }
 
+    const fragmentSwimlaneHeader = () => {
+    return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
+      <div className="sticky relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-3 text-xl items-center text-gray-200 rounded-xl">
+        <div className="flex items-center w-full">
+        <div className="grow">
+          Table List
+        </div>
+        </div>
+      </div>
+    </>)
+  }
+
   useEffect(() => {
     const tableRefs: TableRefs = {};
     APP_STATE.tables.forEach((table) => {tableRefs[`${table.id}`] = React.createRef<HTMLDivElement>()});
@@ -90,8 +102,9 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} px-2 min-w-[350px] max-w-[600px]`}>
-      <div className={`${mainStyles.column} ${styles.tableList}`}>
+    <div className={`${styles.tableListContainer} mx-auto flex-1 text-center select-none ${borders} min-w-[350px] max-w-[600px]`}>
+      {fragmentSwimlaneHeader()}
+      <div className={`${mainStyles.column} ${styles.tableList} px-2`}>
         {fragmentMiniMap()}
         {fragmentTables()}
       </div>

@@ -10,6 +10,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
 const viewReservationsStyles = `${baseButtonStyles} text-sm ring-gray-500 text-yellow-500 hover:ring-1 hover:ring-white`;
 const reservationsDisabledStyles = `${baseButtonStyles} text-sm !ring-gray-800 !text-gray-700 hover:!cursor-default`;
+const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl'}`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -17,8 +18,6 @@ export default function GuestList() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
 
   const onClickAddGuestForm = (event: React.MouseEvent<HTMLButtonElement>) => setMainTakeover({addGuest: true});
-
-  const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl'}`;
 
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
@@ -36,7 +35,7 @@ export default function GuestList() {
   }
 
   return (
-    <div className={`${styles.guestListContainer} flex-1 select-none ${borders} max-w-[600px]`}>
+    <div className={`${styles.guestListContainer} mx-auto flex-1 text-center select-none ${borders} max-w-[600px]`}>
       {fragmentSwimlaneHeader()}
       <div className="px-2">
         <div className="flex mt-3 m-1">
