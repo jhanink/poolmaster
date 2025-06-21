@@ -50,22 +50,25 @@ export default function AdminAccount(props: {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         <div className={`${ITEM} ${borderColor}`}>
-          <div className={`${labelStyles}`}>
-            Venue:
+          <div className={`${ROW}`}>
+            <div className={`${labelStyles}`}>
+              Venue:
+            </div>
+            <input
+              className={`
+                ${formInputStyles}
+                ${formFieldStyles}
+                max-w-3/4
+              `}
+              value={ACCOUNT.venue}
+              placeholder="Account name..."
+              maxLength={70}
+              onChange={(event) => {
+                ACCOUNT.venue = event.target.value;
+                setAccount({...ACCOUNT});
+              }}
+            />
           </div>
-          <input
-            className={`
-              ${formInputStyles}
-              ${formFieldStyles}
-            `}
-            value={ACCOUNT.venue}
-            placeholder="Account name..."
-            maxLength={70}
-            onChange={(event) => {
-              ACCOUNT.venue = event.target.value;
-              setAccount({...ACCOUNT});
-            }}
-          />
         </div>
       </div>
     </div>
