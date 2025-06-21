@@ -1,4 +1,4 @@
-import { DefaultTableItemData, type TableItem } from "~/config/AppState"
+import { DEFAULT_ID, DefaultTableItemData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formInputStyles, formLabelLeftStyles, formSelectStyles, INPUT_FIELD, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
@@ -149,7 +149,7 @@ export default function AdminTables(props: {
                 className={`grow ${formSelectStyles} bg-transparent pb-3`}
               >
                 {APP_STATE.tableTypes
-                  .filter((type) => type.isActive)
+                  .filter((type) => type.isActive && (type.id !== DEFAULT_ID))
                   .map((type) => (
                     <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
                   ))
