@@ -11,7 +11,7 @@ export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export const FeatureFlags = {
   SHOW_RESERVATIONS: false,
-  SHOW_MAIN_SWIMLANES: false,
+  SHOW_MAIN_SWIMLANES: true,
   SHOW_WELCOME_MESSAGE: false,
 }
 
@@ -293,7 +293,7 @@ export const DefaultTableRateData: TableRate = {
 
 export const DefaultTableTypeData: TableType = {
   id: DEFAULT_ID,
-  name: "-- ANY --",
+  name: "ANY",
   tableRateId: DEFAULT_ID,
   isActive: true,
   forDelete: false,

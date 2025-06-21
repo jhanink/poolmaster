@@ -9,6 +9,7 @@ import Admin from "../mainTakeover/admin/admin";
 import AddGuest from "../mainTakeover/addGuest/addGuest";
 import EditGuest from "../mainTakeover/editGuest/editGuest";
 import styles from "./mainStyles.module.css"
+import { FeatureFlags } from "~/config/AppState";
 
 export default function AppMain() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -24,7 +25,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} pt-0 gap-x-4 grow justify-center`}>
+        <div className={`${styles.mainContent} pt-0 gap-x-4 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}

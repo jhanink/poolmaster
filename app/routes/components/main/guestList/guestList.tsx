@@ -22,12 +22,14 @@ export default function GuestList() {
 
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
-      <div className="md:flex hidden border-b border-gray-800 p-3 text-xl items-center text-gray-200">
+      <div className="sticky relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-3 text-xl items-center text-gray-200 rounded-xl">
+        <div className="flex items-center w-full">
         <div className="grow">
         Guest List
         </div>
-        <div className="size-6 hover:cursor-pointer">
-          <PlusIcon/>
+        <div className="text-gray-300 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
+          <PlusIcon></PlusIcon>
+        </div>
         </div>
       </div>
     </>)

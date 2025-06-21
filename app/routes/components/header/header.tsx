@@ -63,7 +63,7 @@ export default function AppHeader() {
             {!(SELECTED_LIST_FILTER === 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
                 <div className="flex items-center">
-                  <div className="size-6 text-gray-400 mr-3 hover:cursor-pointer hover:text-white"
+                  <div className="block md:hidden size-6 text-gray-400 mr-3 hover:cursor-pointer hover:text-white"
                     onClick={(event) => setMainTakeover({addGuest: true})}>
                     <PlusIcon></PlusIcon>
                   </div>
