@@ -62,7 +62,7 @@ export default function AppHeader() {
               <div className="flex flex-col items-center justify-center">
                 <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
                   <span className={`${statusPillStyles} text-nowrap`}>
-                    {APP_STATE.guestList.length} <span className="ml-1 capitalize">Waiting</span>
+                    {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
                   </span>
                 </div>
                 <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
