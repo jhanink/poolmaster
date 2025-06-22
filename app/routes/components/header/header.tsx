@@ -67,7 +67,7 @@ export default function AppHeader() {
                     onClick={(event) => setMainTakeover({addGuest: true})}>
                     <PlusIcon></PlusIcon>
                   </div>
-                  <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-500`} onClick={(event) => onClickListFilter('waitlist')}>
+                  <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
                     <span className={`${statusPillStyles} text-nowrap`}>
                       {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
                     </span>

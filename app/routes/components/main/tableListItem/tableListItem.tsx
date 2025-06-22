@@ -8,8 +8,8 @@ import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTable
 import { Helpers } from "~/util/Helpers";
 import ExpiredVisit from "../expiredVisit/expiredVisit";
 
-const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-2xl`;
-const guestAssigned = `${cardStyle} border-green-950 text-green-700`;
+const cardStyle = `${styles.itemCard} select-none pt-2 text-gray-700 border border-gray-900 rounded-xl`;
+const guestAssigned = `${cardStyle} border-green-900 text-green-700`;
 
 export default function TableListItem(props: {
     table: TableItem,

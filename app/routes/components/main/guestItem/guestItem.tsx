@@ -223,7 +223,7 @@ export default function GuestItem(props: {
 
   const itemCollapsedRowContent = () => {
     return (<>
-      <div className="flex justify-center text-sm px-1">
+      <div className="flex justify-center items-center text-sm px-1">
         {!props.isEditForm && (<>
           {!props.isAssigned && (
             <div className="flex-grow-0 text-left min-w-7">
