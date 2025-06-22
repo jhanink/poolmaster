@@ -102,7 +102,7 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`${styles.tableListContainer} flex-1 text-center select-none ${borders} min-w-[350px] max-w-[600px]`}>
+    <div className={`flex-1 text-center select-none ${borders} min-w-[350px] max-w-[600px]`}>
       {fragmentSwimlaneHeader()}
       <div className={`${mainStyles.column} ${styles.tableList} px-2`}>
         {fragmentMiniMap()}
