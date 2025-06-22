@@ -161,7 +161,7 @@ export default function AdminUsageTypes(props: {
             </div>
             {(usageType.id !== DEFAULT_ID) && (<>
               <div className={`${ROW} mt-1`}>
-                <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
+                <div className={`w-[90px] ${formLabelLeftStyles} ${usageType.isActive? '!text-pink-500':''}`}>
                   ENABLED:
                 </div>
                 <input
@@ -184,7 +184,7 @@ export default function AdminUsageTypes(props: {
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                   value={usageType.tableRateId}
-                  className={`grow ${formSelectStyles} focus:outline-none`}
+                  className={`grow ${formSelectStyles}`}
                 >
                   {APP_STATE.tableRates
                     .filter((tableRate) => tableRate.isActive)
@@ -195,7 +195,7 @@ export default function AdminUsageTypes(props: {
                 </select>
               </div>
               <div className={`${ROW} mt-1`}>
-                <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
+                <div className={`w-[90px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                   USE ICON:
                 </div>
                 <input
@@ -250,7 +250,7 @@ export default function AdminUsageTypes(props: {
               </>)}
               {usageType.useIcon && (<>
                 <div className={`${ROW} mt-1`}>
-                  <div className={`w-[80px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
+                  <div className={`w-[90px] ${formLabelLeftStyles} ${usageType.useIcon? '!text-cyan-500':''}`}>
                     ICON ONLY:
                   </div>
                   <input

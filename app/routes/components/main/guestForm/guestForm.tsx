@@ -275,7 +275,7 @@ export default function GuestForm(props: {
                     setFormFields({...FORM_FIELDS})
                   }}
                   value={FORM_FIELDS.partySize}
-                  className={`${formSelectStyles} pb-3 ${formFieldStylesFullWidth} focus:outline-none`}
+                  className={`${formSelectStyles} pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {partySizeArray.map((size) => (
                     <option key={size} className={optionStyles} value={size}>{size}</option>
@@ -316,7 +316,7 @@ export default function GuestForm(props: {
                     setFormFields({...FORM_FIELDS})
                   }}
                   value={FORM_FIELDS.tableOrTableTypeId}
-                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth} focus:outline-none`}
+                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {APP_STATE.tables
                     .filter((table) => table.isActive)
@@ -338,7 +338,7 @@ export default function GuestForm(props: {
                     setFormFields({...FORM_FIELDS})
                   }}
                   value={FORM_FIELDS.tableOrTableTypeId}
-                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth} focus:outline-none`}
+                  className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
                 >
                   {APP_STATE.tableTypes
                     .filter((type) => type.isActive)
@@ -365,7 +365,7 @@ export default function GuestForm(props: {
                 setFormFields({...FORM_FIELDS})
               }}
               value={FORM_FIELDS.usageTypeId}
-              className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth} focus:outline-none`}
+              className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
             >
               {APP_STATE.usageTypes
                 .filter((type) => type.isActive)

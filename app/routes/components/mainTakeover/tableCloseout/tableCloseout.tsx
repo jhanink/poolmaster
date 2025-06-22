@@ -212,7 +212,7 @@ export default function TableCloseout() {
           <select
             onChange={onChangeTableRate}
             value={SELECTED_RATE.id}
-            className={`${formSelectStyles} text-center !text-base focus:outline-none`}
+            className={`${formSelectStyles} text-center !text-base`}
           >
             {APP_STATE.tableRates
               .filter((tableRate) => tableRate.isActive)
@@ -398,7 +398,7 @@ export default function TableCloseout() {
             Business Day
           </div>
           <select
-            className={`${formSelectStyles} text-center cursor-pointer focus:outline-none`}
+            className={`${formSelectStyles} text-center cursor-pointer`}
             value={SELECTED_DAY}
             onChange={(event) => {
               setSelectedDay(Number(event.target.value));

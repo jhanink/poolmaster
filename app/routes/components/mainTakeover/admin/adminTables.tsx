@@ -146,7 +146,7 @@ export default function AdminTables(props: {
                   setTables([...TABLES]);
                 }}
                 value={table.tableTypeId}
-                className={`grow ${formSelectStyles} bg-transparent pb-3 focus:outline-none`}
+                className={`grow ${formSelectStyles} bg-transparent pb-3`}
               >
                 {APP_STATE.tableTypes
                   .filter((type) => type.isActive && (type.id !== DEFAULT_ID))
@@ -183,7 +183,7 @@ export default function AdminTables(props: {
                     setTables([...TABLES]);
                   }}
                   value={table.tableRateId}
-                  className={`w-full ${formSelectStyles} focus:outline-none`}
+                  className={`w-full ${formSelectStyles}`}
                 >
                   {APP_STATE.tableRates
                     .filter((tableRate) => tableRate.isActive)

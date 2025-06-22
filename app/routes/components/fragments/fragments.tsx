@@ -117,7 +117,7 @@ export const fragmentGuestName = (settings: AdminSettings, guest: Guest) => {
   const isLargeParty = partySize >= settings.largePartySize;
   const largePartyStyle = `${largePartyStylesOptions[settings.largePartyStyle - 1].style}`;
   return (
-    <div className={`grow ${guest.assignedAt && 'text-green-600'} uppercase text-left text-white-500 truncate`}>
+    <div className={`grow uppercase text-left text-gray-200 truncate`}>
       <div className={`inline-block text-base ${isLargeParty ? `${largePartyStyle}`: ``}`}>
         {guest.name}
         {guest.partySize > 1 && (<>

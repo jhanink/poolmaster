@@ -21,7 +21,28 @@
     "largePartyStyle": 3,
     "showTableChipInfo": false
   },
-  "tableRates": [],
+  "tableRates": [
+    {
+      "id": 999999999,
+      "name": "REG $10",
+      "tableRateRules": {
+        "isOneHourMinimum": true,
+        "hourlyRate": "10",
+        "isFlatRate": false,
+        "isChargePerPlayer": true,
+        "useRateSchedule": false,
+        "rateScheduleId": 999999999
+      },
+      "playerRateRules": {
+        "playerLimit": 4,
+        "overLimitRate": 0,
+        "afterLimitRate": "5"
+      },
+      "isActive": true,
+      "forDelete": false,
+      "forAdd": false
+    }
+  ],
   "tableTypes": [
     {
       "id": 999999999,
@@ -35,7 +56,7 @@
   "usageTypes": [
     {
       "id": 999999999,
-      "name": "REGULAR",
+      "name": "NONE",
       "usageRate": "10",
       "useIcon": false,
       "icon": "",
@@ -51,7 +72,7 @@
   "rateSchedules": [
       {
           "id": 999999999,
-          "name": "-- USE TABLE RATE --",
+          "name": "USE TABLE RATE",
           "entries": {
               "Mon": {
                   "start": "00:00",

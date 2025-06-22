@@ -212,7 +212,7 @@ export const RateScheduleDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
 
 export const DefaultRateSchedule: RateSchedule = {
   id: DEFAULT_ID,
-  name: "-- USE TABLE RATE --",
+  name: "USE TABLE RATE",
   entries: {
     Mon: {
       start: "00:00",
@@ -273,7 +273,7 @@ export const DefaultRateSchedule: RateSchedule = {
 
 export const DefaultTableRateData: TableRate = {
   id: DEFAULT_ID,
-  name: `Default Table Rate`,
+  name: `Regular Rate`,
   tableRateRules: {
     isOneHourMinimum: true,
     isFlatRate: false,
@@ -302,7 +302,7 @@ export const DefaultTableTypeData: TableType = {
 
 export const DefaultUsageTypeData: UsageType = {
   id: DEFAULT_ID,
-  name: "-- NONE --",
+  name: "NONE",
   isActive: true,
   tableRateId: DEFAULT_ID,
   useIcon: false,

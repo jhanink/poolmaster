@@ -38,7 +38,7 @@ export default function Admin() {
       ref: useRef<HTMLDivElement>(null)
     },
     {
-      name: "Table Rates",
+      name: "Rates",
       ref: useRef<HTMLDivElement>(null)
     },
   ]
@@ -52,11 +52,11 @@ export default function Admin() {
       ref: useRef<HTMLDivElement>(null)
     },
     {
-      name: "Table Types",
+      name: "Tables",
       ref: useRef<HTMLDivElement>(null)
     },
     {
-      name: "Tables",
+      name: "Types",
       ref: useRef<HTMLDivElement>(null)
     }
   ]
@@ -128,8 +128,8 @@ export default function Admin() {
           <AdminTableRates ref={menuItems1[2].ref}/>
           <AdminRateSchedules ref={menuItems2[0].ref}/>
           <AdminUsageTypes ref={menuItems2[1].ref}/>
-          <AdminTableTypes ref={menuItems2[2].ref}/>
-          <AdminTables ref={menuItems2[3].ref}/>
+          <AdminTables ref={menuItems2[2].ref}/>
+          <AdminTableTypes ref={menuItems2[3].ref}/>
           <hr className={`${separatorBarStyles} !my-3`}/>
           <button className={actionButtonStyles} onClick={() => {setShowActions( !SHOW_ACTIONS)}}>
             Show Admin Actions

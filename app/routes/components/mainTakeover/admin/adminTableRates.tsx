@@ -193,7 +193,7 @@ export default function AdminTableRates(props: {
                     setTableRates([...TABLE_RATES]);
                   }}
                   value={tableRate.tableRateRules.rateScheduleId}
-                  className={`${formSelectStyles} pb-3 focus:outline-none`}
+                  className={`${formSelectStyles} pb-3`}
                 >
                   {APP_STATE.rateSchedules.map((schedule) => (
                     <option key={schedule.id} className={optionStyles} value={schedule.id}>{schedule.name}</option>
@@ -255,7 +255,7 @@ export default function AdminTableRates(props: {
                     setTableRates([...TABLE_RATES]);
                   }}
                   value={tableRate.playerRateRules.playerLimit}
-                  className={`${formSelectStyles} pb-3 focus:outline-none`}
+                  className={`${formSelectStyles} pb-3`}
                 >
                   {PARTY_SIZE_ARRAY.map((size) => (
                     <option key={size} className={optionStyles} value={size}>{size}</option>
