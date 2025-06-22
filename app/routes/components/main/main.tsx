@@ -25,11 +25,11 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} pt-0 gap-2 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
+        <div className={`${styles.mainContent} pt-0 gap-5 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}
-          {(SELECTED_LIST_FILTER !== "waitlist") && (!!Helpers.tablesAssigned(APP_STATE).length || SELECTED_LIST_FILTER === "tablelist") && (
+          {(SELECTED_LIST_FILTER !== "waitlist") && (
             <TableList></TableList>
           )}
         </div>

@@ -161,7 +161,7 @@ export default function AdminTableTypes(props: {
                   setTableTypes([...TABLE_TYPES]);
                 }}
                 value={tableType.tableRateId}
-                className={`grow ${formSelectStyles}`}
+                className={`grow ${formSelectStyles} focus:outline-none`}
               >
                 {APP_STATE.tableRates
                   .filter((tableRate) => tableRate.isActive)

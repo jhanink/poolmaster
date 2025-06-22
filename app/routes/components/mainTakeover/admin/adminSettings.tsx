@@ -63,7 +63,7 @@ export default function AdminSettings(props: {
                   setSettings({...SETTINGS});
                 }}
                 value={SETTINGS.largePartySize}
-                className={`${formSelectStyles} pb-3`}
+                className={`${formSelectStyles} pb-3 focus:outline-none`}
               >
                 {partySizeArray.map((size) => (
                   <option key={size} className={optionStyles} value={size}>{size}</option>
@@ -77,7 +77,7 @@ export default function AdminSettings(props: {
                   setSettings({...SETTINGS});
                 }}
                 value={SETTINGS.largePartyStyle}
-                className={`${formSelectStyles} pb-3`}
+                className={`${formSelectStyles} pb-3 focus:outline-none`}
               >
                 {largePartyStylesOptions.map((style) => (
                   <option key={style.id} className={optionStyles} value={style.id}>{style.name}</option>

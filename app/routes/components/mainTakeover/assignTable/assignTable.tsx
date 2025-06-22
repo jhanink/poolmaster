@@ -73,7 +73,7 @@ export default function AssignTable() {
       {isTablePreference ? (
         <span>{Helpers.getTable(APP_STATE, guest.tableOrTableTypeId).name}</span>
       ) : (
-        <select className="text-center uppercase hover:cursor-pointer"
+        <select className="select-none text-center uppercase hover:cursor-pointer focus:outline-none"
           value={TABLE_TYPE_ID}
           onChange={(event) => {
             setTableTypeId(Number(event.target.value));

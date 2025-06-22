@@ -19,11 +19,11 @@ export default function GuestListItem(props: {
   const canDragRef = useRef(true);
 
   const [draggable, drag, dragPreview] = useDrag(() => ({
-    type: GuestItemTypeKey, // A unique string to identify the type of draggable item.  IMPORTANT!
-    item: { guest: props.guest }, // Data you want to associate with the dragged item.
-    canDrag: () => canDragRef.current, // Whether the item is draggable
+    type: GuestItemTypeKey,
+    item: { guest: props.guest },
+    canDrag: () => canDragRef.current,
     collect: (monitor) => ({
-      isDragging: monitor.isDragging(), // Get drag state (e.g., for styling)
+      isDragging: monitor.isDragging(),
     }),
     end: (item, monitor) => {
       // You can do something here after dragging has finished, before drop.
@@ -32,7 +32,7 @@ export default function GuestListItem(props: {
   }));
 
   useEffect(() => {
-    canDragRef.current = !ITEM_EDITING; // Disable dragging when editing
+    canDragRef.current = !ITEM_EDITING;
   }, [ITEM_EDITING]);
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export default function GuestListItem(props: {
     }
   }, [SELECTED_LIST_FILTER]);
 
-  drag(dragRef); // Attach drag behavior to the element
-  dragPreview(dragRef); // Use the same element as the drag preview
+  drag(dragRef);
+  dragPreview(dragRef);
 
   const IS_EXPIRED = Helpers.isExpiredVisit(props.guest);
 

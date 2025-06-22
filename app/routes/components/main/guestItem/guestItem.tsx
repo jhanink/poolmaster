@@ -20,7 +20,7 @@ export default function GuestItem(props: {
   setEditForm?: React.Dispatch<React.SetStateAction<boolean>>,
   setItemEditing?: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
-  const cardStyle = `bg-transparent mt-2 pt-1 px-2 hover:cursor-pointer select-none border-blue-800 rounded-xl`;
+  const cardStyle = `bg-transparent mt-2 pt-1 px-2 hover:cursor-pointer select-none border-gray-700 rounded-xl`;
   const itemCardStyles = `${cardStyle} ${props.isEditForm && 'border'} ${props.isAssigned?'!border-green-800':'border'}`;
   const fieldLabel = `inline-block text-gray-500 !w-[75px]`;
   const statusIndicatorStyles = `flex items-center space-x-2`;
@@ -151,7 +151,7 @@ export default function GuestItem(props: {
                     `Type:`
                   )}
                 </span>
-                <span className={`${guest.prefersTable ? 'text-green-600' : 'text-blue-500'} uppercase italic`}>
+                <span className={`${guest.prefersTable ? 'text-green-600' : 'text-gray-300'} uppercase`}>
                   {Helpers.getTableOrTableType(APP_STATE, guest).name}
                 </span>
               </div>

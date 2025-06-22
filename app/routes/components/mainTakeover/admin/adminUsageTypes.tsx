@@ -184,7 +184,7 @@ export default function AdminUsageTypes(props: {
                     setUsageTypes([...USAGE_TYPES]);
                   }}
                   value={usageType.tableRateId}
-                  className={`grow ${formSelectStyles}`}
+                  className={`grow ${formSelectStyles} focus:outline-none`}
                 >
                   {APP_STATE.tableRates
                     .filter((tableRate) => tableRate.isActive)

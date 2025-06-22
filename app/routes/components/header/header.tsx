@@ -27,7 +27,7 @@ export default function AppHeader() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: GuestItemTypeKey, // MUST match the 'type' from useDrag
+    accept: GuestItemTypeKey, // MUST match the KEY from useDrag
     drop: (item: {guest: Guest}, monitor) => {
         if(monitor.canDrop()) {
           setMainTakeover({assignTableGuest: item.guest});

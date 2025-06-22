@@ -48,7 +48,7 @@ export default function Admin() {
       ref: useRef<HTMLDivElement>(null)
     },
     {
-      name: "Usage Types",
+      name: "Usage",
       ref: useRef<HTMLDivElement>(null)
     },
     {

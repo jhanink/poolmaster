@@ -10,7 +10,8 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
 const viewReservationsStyles = `${baseButtonStyles} text-sm ring-gray-500 text-yellow-500 hover:ring-1 hover:ring-white`;
 const reservationsDisabledStyles = `${baseButtonStyles} text-sm !ring-gray-800 !text-gray-700 hover:!cursor-default`;
-const borders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl md:ml-3 sm:mx-auto md:mx-0'}`;
+
+const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl md:ml-3 sm:mx-auto md:mx-0'}`;
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -21,12 +22,12 @@ export default function GuestList() {
 
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
-      <div className="sticky relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-3 text-xl items-center text-gray-200 rounded-xl">
+      <div className="sticky bg-gray-800/40 relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-2 text-xl items-center text-gray-200 rounded-t-xl">
         <div className="flex items-center w-full">
         <div className="grow">
         Guest List
         </div>
-        <div className="text-gray-300 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
+        <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
           <PlusIcon></PlusIcon>
         </div>
         </div>
@@ -35,7 +36,7 @@ export default function GuestList() {
   }
 
   return (
-    <div className={`${styles.guestListContainer} flex-1 text-center select-none ${borders} max-w-[600px]`}>
+    <div className={`${styles.guestListContainer} snap-start flex-1 text-center select-none ${columnBorders} max-w-[600px]`}>
       {fragmentSwimlaneHeader()}
       <div className="px-2">
         <div className="flex mt-3 m-1">
