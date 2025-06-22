@@ -22,7 +22,7 @@ export default function GuestList() {
 
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
-      <div className="sticky bg-gray-800/40 relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-2 text-xl items-center text-gray-200 rounded-t-xl">
+      <div className="sticky bg-gray-800/40 relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-950 p-2 text-xl items-center text-gray-200 rounded-t-xl">
         <div className="flex items-center w-full">
         <div className="grow">
         Guest List
