@@ -224,7 +224,7 @@ export default function TableCloseout() {
               <div className="shrink">
                 <input
                   type="checkbox"
-                  className="hover:cursor-pointer"
+                  className="hover:cursor-pointer size-4 mt-1"
                   checked={player.billable}
                   onChange={(event) => {
                     player.billable = event.target.checked;
