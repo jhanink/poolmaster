@@ -1,5 +1,7 @@
 export const GuestItemTypeKey = 'GUEST_ITEM';
 export const DEFAULT_ID = 999999999;
+export const SYNTHETIC_DEFAULT_ID = 888888888;
+export const SYNTHETIC_MAP_KEY = -1;
 export const ID_1 = 1, ID_2 = 2, ID_3 = 3, ID_4 = 4, ID_5 = 5, ID_6 = 6, ID_7 = 7, ID_8 = 8;
 export const MAX_PARTY_SIZE = 20;
 export const MIN_LARGE_PARTY_SIZE = 3;
@@ -292,13 +294,15 @@ export const DefaultTableRateData: TableRate = {
 }
 
 export const DefaultTableTypeData: TableType = {
-  id: DEFAULT_ID,
+  id: SYNTHETIC_DEFAULT_ID,
   name: "ANY",
   tableRateId: DEFAULT_ID,
   isActive: true,
   forDelete: false,
   forAdd: true,
 }
+
+export const SyntheticTableTypeAny: TableType = DefaultTableTypeData;
 
 export const DefaultUsageTypeData: UsageType = {
   id: DEFAULT_ID,
@@ -330,7 +334,7 @@ export const DefaultGuestData: Guest = {
   name: "",
   phoneNumber: "",
   prefersTable: false,
-  tableOrTableTypeId: DEFAULT_ID,
+  tableOrTableTypeId: SYNTHETIC_DEFAULT_ID,
   createdAt: 0,
   assignedAt : 0,
   closedOutAt: 0,

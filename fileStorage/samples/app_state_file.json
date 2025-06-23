@@ -46,7 +46,8 @@
   "tableTypes": [
     {
       "id": 999999999,
-      "name": "ANY",
+      "number": 1,
+      "name": "Regulation",
       "tableRateId": 999999999,
       "isActive": true,
       "forDelete": false,

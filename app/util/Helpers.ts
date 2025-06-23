@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
-import {type AppState, type Guest, type TableRate} from "~/config/AppState";
+import {SyntheticTableTypeAny, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
+  type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules,
+  type ScheduleEntry, type TableItem, type TableRate, type TableRateRules
+} from "~/config/AppState";
 
 export const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
 export const DAYJS_DATE_FORMAT = 'MMM D, h:mm a';
@@ -30,13 +33,17 @@ export const InitialTimeElapsed: TimeElapsed = {
 
 export const Helpers = {
   tables: (appState: AppState) => {
-    return appState.tables.filter(table => table.isActive);
+    return appState.tables.filter(table => table.isActive)
+      .sort((a:TableItem, b:TableItem) => a.number - b.number);
+  },
+  tableTypes: (appState: AppState) => {
+    return appState.tableTypes.filter(tableType => tableType.isActive);
   },
   tablesAvailable: (appState: AppState) => {
-    return appState.tables.filter(table => table.isActive && !table.guest);
+    return Helpers.tables(appState).filter(table => !table.guest);
   },
   tablesAssigned: (appState: AppState) => {
-    return appState.tables.filter(table => table.isActive && table.guest);
+    return Helpers.tables(appState).filter(table => table.guest);
   },
   hasGuests: (appState: AppState) => {
     return appState.guestList.length > 0;
@@ -45,12 +52,11 @@ export const Helpers = {
     // TODO: check reservation date Business day
   },
   getTable: (appState: AppState, tableId: number) => {
-    const match = appState.tables.find(table => table.id === tableId);
-    return (match && match.isActive && match) || appState.tables[0];
+    const match = Helpers.tables(appState).find(table => table.id === tableId);
+    return match || appState.tables[0];
   },
   getTableType: (appState: AppState, tableTypeId: number) => {
-    const match = appState.tableTypes.find(tableType => tableType.id === tableTypeId);
-    return (match.isActive && match) || appState.tableTypes[0];
+    return Helpers.tableTypes(appState).find(tableType => tableType.id === tableTypeId) || SyntheticTableTypeAny;
   },
   getTableOrTableType: (appState: AppState, guest: Guest) => {
     if (guest.prefersTable) return Helpers.getTable(appState, guest.tableOrTableTypeId);
@@ -70,6 +76,79 @@ export const Helpers = {
   getRateSchedule: (appState: AppState, rateScheduleId: number) => {
     const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
     return (match.isActive && match) || appState.rateSchedules[0];
+  },
+  getBillablePlayers: (APP_STATE: AppState, table: TableItem, businessDay: number, tableRate: TableRate) => {
+    const guest: Guest = table.guest;
+
+    const playerRateRules: PlayerRateRules = tableRate.playerRateRules;
+    const tableRateRules: TableRateRules = tableRate.tableRateRules;
+
+    const useRateSchedule = tableRateRules.useRateSchedule;
+    const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
+    const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[businessDay]];
+
+    const start = guest.assignedAt;
+    const end = guest.closedOutAt;
+    const time: TimeElapsed = Helpers.timeElapsed(start, end);
+    const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+
+    const hourlyRate = tableRateRules.hourlyRate;
+    const isChargePerPlayer = tableRateRules.isChargePerPlayer;
+    const playerLimit = playerRateRules.playerLimit;
+    const afterLimitRate = playerRateRules.afterLimitRate;
+
+    const PLAYERS_COUNT = isChargePerPlayer ? Math.max(guest.partySize, guest.extraPlayers.length + 1) : 1;
+    const players: BillablePlayer[] = [];
+
+    for (let i = 0; i < (PLAYERS_COUNT); i++) {
+      const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
+
+      const before: MeteredTime = {hours: "0", rate: "0"};
+      const during: MeteredTime = {hours: "0", rate: "0"};
+      const after: MeteredTime = {hours: "0", rate: "0"};
+
+      const meteredDay: MeteredDay = {
+        before,
+        during,
+        after,
+      };
+
+      players.push({
+        id: i,
+        name: `Player ${i + 1}`,
+        hours,
+        rate,
+        daySchedule,
+        meteredDay,
+        billable: true,
+        isAddedPlayer: false,
+        usePlayerTime: false,
+        assignedAt: guest.assignedAt,
+      } as BillablePlayer);
+    }
+    players[0].name = guest.name.toUpperCase();
+
+    guest.extraPlayers.forEach((player: ExtraPlayer, index) => {
+      const playersIndex = index + 1;
+      if (playersIndex > players.length - 1) return;
+      players[playersIndex].name = player.name.toUpperCase();
+      players[playersIndex].isAddedPlayer = true;
+      players[playersIndex].usePlayerTime = true;
+      players[playersIndex].assignedAt = player.assignedAt;
+
+      // NOTE: Added Players:  Player-Assignment TIME !== Table-Assignment TIME
+      const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
+      const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
+      players[playersIndex].hours = hours;
+    });
+
+    daySchedule && console.log(daySchedule);
+
+    const dsStart = daySchedule.start;
+
+
+
+    return players;
   },
   isExpiredVisit: (guest: Guest) => {
     const startTime = guest.createdAt;

@@ -1,7 +1,7 @@
 
 import { useMask } from '@react-input/mask';
 import { useEffect, useState } from "react";
-import { DEFAULT_ID, DefaultGuestData, FeatureFlags, PARTY_SIZE_ARRAY, type ExtraPlayer, type Guest } from "~/config/AppState";
+import { DEFAULT_ID, DefaultGuestData, FeatureFlags, PARTY_SIZE_ARRAY, SYNTHETIC_DEFAULT_ID, SYNTHETIC_MAP_KEY, type ExtraPlayer, type Guest } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
@@ -11,6 +11,7 @@ import { actionButtonStyles, optionStyles } from "~/util/GlobalStylesUtil";
 import { useFetcher } from 'react-router';
 import ModalConfirm from '../../ui-components/modal/modalConfirm';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import { Helpers } from '~/util/Helpers';
 
 const partySizeArray = [...PARTY_SIZE_ARRAY];
 const actionButtons = `${actionButtonStyles} !py-0`;
@@ -39,11 +40,13 @@ export default function GuestForm(props: {
     partySize: props.guest.partySize || 1,
     extraPlayers: props.guest.extraPlayers || [],
     prefersTable: props.guest.prefersTable || false,
-    tableOrTableTypeId: props.guest.tableOrTableTypeId || DEFAULT_ID,
+    tableOrTableTypeId: props.guest.tableOrTableTypeId || SYNTHETIC_DEFAULT_ID,
     usageTypeId: props.guest.usageTypeId || DEFAULT_ID,
     notes: props.guest.notes || "",
     isReservation: props.guest.isReservation || false,
   });
+
+  console.log(FORM_FIELDS)
 
   const phoneInputRef = useMask({
     mask: '(___) ___-____',
@@ -78,6 +81,7 @@ export default function GuestForm(props: {
       ...FORM_FIELDS,
       extraPlayers,
     }
+    console.log(guest)
     await saveGuest(guest);
     cleanupForm(event);
   }
@@ -196,8 +200,8 @@ export default function GuestForm(props: {
 
   const togglePrefersTable = (which: boolean) =>{
     if (which === FORM_FIELDS.prefersTable) return;
+    FORM_FIELDS.tableOrTableTypeId = which ? Helpers.tables(APP_STATE)[0].id : SYNTHETIC_DEFAULT_ID;
     FORM_FIELDS.prefersTable = !FORM_FIELDS.prefersTable;
-    FORM_FIELDS.tableOrTableTypeId = DEFAULT_ID;
     setFormFields({...FORM_FIELDS})
   }
 
@@ -318,8 +322,7 @@ export default function GuestForm(props: {
                   value={FORM_FIELDS.tableOrTableTypeId}
                   className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
                 >
-                  {APP_STATE.tables
-                    .filter((table) => table.isActive)
+                  {Helpers.tables(APP_STATE)
                     .map((table) => (
                       <option key={table.id} className={`${optionStyles}`} value={table.id}>
                         {table.name}
@@ -340,6 +343,7 @@ export default function GuestForm(props: {
                   value={FORM_FIELDS.tableOrTableTypeId}
                   className={`${formSelectStyles} uppercase bg-transparent pb-3 ${formFieldStylesFullWidth}`}
                 >
+                  <option key={SYNTHETIC_MAP_KEY} className={`${optionStyles}`} value={SYNTHETIC_DEFAULT_ID}>ANY</option>
                   {APP_STATE.tableTypes
                     .filter((type) => type.isActive)
                     .map((type) => (
@@ -432,7 +436,7 @@ export default function GuestForm(props: {
       dialogTitle={`CONFIRM DELETE`}
       dialogMessageFn={() => <span className="text-sm">
         Remove
-        <span className="text-rose-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
+        <span className="text-blue-500 font-bold mx-2">{props.guest.name.toUpperCase()}</span>
         {props.guest.assignedAt ? `from ${APP_STATE.tables.find(_ => _.guest?.id === props.guest.id)?.name.toUpperCase()}?` : 'from the Wait List?'}
       </span>}
       onConfirm={onClickConfirmDelete}

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
-import { DEFAULT_ID, type TableItem, type TableType } from "~/config/AppState";
+import { DEFAULT_ID, SYNTHETIC_DEFAULT_ID, SYNTHETIC_MAP_KEY, type TableItem, type TableType } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, buttonHoverRing, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { Helpers } from "~/util/Helpers";
@@ -20,7 +20,7 @@ export default function AssignTable() {
   const tables = Helpers.tablesAvailable(APP_STATE);
   const guest = MAIN_TAKEOVER.assignTableGuest;
 
-  const [TABLE_TYPE_ID, setTableTypeId] = useState((!guest.prefersTable && guest.tableOrTableTypeId) || DEFAULT_ID);
+  const [TABLE_TYPE_ID, setTableTypeId] = useState(guest.tableOrTableTypeId);
 
   const onClickTableChip = async (event: React.MouseEvent<HTMLButtonElement>, table: TableItem) => {
     event.stopPropagation();
@@ -68,16 +68,17 @@ export default function AssignTable() {
 
   const fragmentTableOrTypeList = () => {
     const isTablePreference = guest.prefersTable;
-    const types: TableType[] = APP_STATE.tableTypes;
+    const types: TableType[] = Helpers.tableTypes(APP_STATE);
     return <>
       {isTablePreference ? (
-        <span>{Helpers.getTable(APP_STATE, guest.tableOrTableTypeId).name}</span>
+        <span className="uppercase">{Helpers.getTable(APP_STATE, guest.tableOrTableTypeId).name}</span>
       ) : (
         <select className="select-none text-center uppercase hover:cursor-pointer focus:outline-none"
           value={TABLE_TYPE_ID}
           onChange={(event) => {
             setTableTypeId(Number(event.target.value));
           }}>
+            <option key={SYNTHETIC_MAP_KEY} value={SYNTHETIC_DEFAULT_ID}>ANY</option>
             {types.map((item: TableType) => {
               return <option key={item.id} value={item.id}>{item.name}</option>
             })}
@@ -113,7 +114,7 @@ export default function AssignTable() {
                   <span>Assign</span>
                 )}
               </div>
-              <div className={`text-green-500 uppercase text-xl`}>
+              <div className={`text-green-700 uppercase text-xl`}>
                   | {MAIN_TAKEOVER.assignTableGuest?.name}
               </div>
             </div>
@@ -122,7 +123,7 @@ export default function AssignTable() {
                 to an open table
                 {!guest.assignedAt && (
                   <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
-                    <div className={`inline-block p-2 px-6 ${guest.prefersTable && '!border-green-600'} border border-gray-700 rounded-lg`}>
+                    <div className={`inline-block p-2 px-6 border border-gray-800 rounded-lg`}>
                       <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
                     </div>
                   </div>
@@ -132,7 +133,11 @@ export default function AssignTable() {
             <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
               {tables
                 .filter((table: TableItem) => {
-                  return guest.assignedAt || guest.prefersTable || (table.tableTypeId === TABLE_TYPE_ID) || TABLE_TYPE_ID === DEFAULT_ID;
+                  if (guest.prefersTable || TABLE_TYPE_ID === SYNTHETIC_DEFAULT_ID) {
+                    return true;
+                  } else {
+                    return (TABLE_TYPE_ID === table.tableTypeId);
+                  }
                 })
                 .sort((A: TableItem, B: TableItem) =>
                   A.number - B.number
@@ -140,14 +145,14 @@ export default function AssignTable() {
                 .map((table: TableItem) =>
                   <button
                     disabled={SAVING}
-                    className={`CHIP ${tableChipsStyle} uppercase !m-0 !border-gray-800 hover:cursor-pointer ${buttonHoverRing}`}
+                    className={`CHIP ${tableChipsStyle} uppercase !m-0 ${(guest.prefersTable && (guest.tableOrTableTypeId === table.id)) ? '!border-green-500' : '!border-gray-800'} hover:cursor-pointer ${buttonHoverRing}`}
                     key={table.id}
                     data-table-id={table.id}
                     onClick={(event) => onClickTableChip(event, table)}
                   >
                     <div className="">{table.name}</div>
                     {APP_STATE.adminSettings.showTableChipInfo && (
-                      <div className="text-gray-700 italic text-[10px]">{Helpers.getTableType(APP_STATE, table.tableTypeId).name}</div>
+                      <div className="text-gray-700 italic text-[10px]">{Helpers.getTableType(APP_STATE, table.tableTypeId)?.name}</div>
                     )}
                   </button>
                 )

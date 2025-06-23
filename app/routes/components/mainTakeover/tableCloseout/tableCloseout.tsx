@@ -33,81 +33,15 @@ export default function TableCloseout() {
 
   const setupBillablePlayers = () => {
     if (!SELECTED_RATE.id) return;
-
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
-    const guest: Guest = table.guest;
-
     const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
     const assignedAt = table.guest.assignedAt;
 
-    // Use local time from the browser, not server.
-    // See assignTable.tsx and assignGuestService.server.ts
-    setSelectedDay(dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour').day());
+    // Use local browser time instead of server time (TZ always current, no conversions needed)
+    const businessDay = dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour');
+    setSelectedDay(businessDay.day());
 
-    const playerRateRules: PlayerRateRules = SELECTED_RATE.playerRateRules;
-    const tableRateRules: TableRateRules = SELECTED_RATE.tableRateRules;
-
-    const useRateSchedule = tableRateRules.useRateSchedule;
-    const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
-    const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[SELECTED_DAY]];
-
-    const start = guest.assignedAt;
-    const end = guest.closedOutAt;
-    const time: TimeElapsed = Helpers.timeElapsed(start, end);
-    const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
-
-    const hourlyRate = tableRateRules.hourlyRate;
-    const isChargePerPlayer = tableRateRules.isChargePerPlayer;
-    const playerLimit = playerRateRules.playerLimit;
-    const afterLimitRate = playerRateRules.afterLimitRate;
-
-    const PLAYERS_COUNT = isChargePerPlayer ? Math.max(guest.partySize, guest.extraPlayers.length + 1) : 1;
-    const players: BillablePlayer[] = [];
-
-    for (let i = 0; i < (PLAYERS_COUNT); i++) {
-      const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
-
-      const before: MeteredTime = {hours: "0", rate: "0"};
-      const during: MeteredTime = {hours: "0", rate: "0"};
-      const after: MeteredTime = {hours: "0", rate: "0"};
-
-      const meteredDay: MeteredDay = {
-        before,
-        during,
-        after,
-      };
-
-      players.push({
-        id: i,
-        name: `Player ${i + 1}`,
-        hours,
-        rate,
-        daySchedule,
-        meteredDay,
-        billable: true,
-        isAddedPlayer: false,
-        usePlayerTime: false,
-        assignedAt: guest.assignedAt,
-      } as BillablePlayer);
-    }
-    players[0].name = guest.name.toUpperCase();
-
-    guest.extraPlayers.forEach((player: ExtraPlayer, index) => {
-      const playersIndex = index + 1;
-      if (playersIndex > players.length - 1) return;
-      players[playersIndex].name = player.name.toUpperCase();
-      players[playersIndex].isAddedPlayer = true;
-      players[playersIndex].usePlayerTime = true;
-      players[playersIndex].assignedAt = player.assignedAt;
-
-      // NOTE: Added Players:  Player-Assignment TIME !== Table-Assignment TIME
-      const time = Helpers.timeElapsed(player.assignedAt, guest.closedOutAt);
-      const hours = (tableRateRules.isOneHourMinimum && (time.hoursExact < 1 )) ? `1.000` : time.durationHoursDecimal3;
-      players[playersIndex].hours = hours;
-    });
-
-    daySchedule && console.log(daySchedule)
-    daySchedule.start
+    const players: BillablePlayer[] = Helpers.getBillablePlayers(APP_STATE, table, SELECTED_DAY, SELECTED_RATE)
     setBillableData({players});
   }
 
@@ -431,7 +365,7 @@ export default function TableCloseout() {
 
   useEffect(() => {
     setupBillablePlayers();
-  }, [SELECTED_RATE]);
+  }, [SELECTED_DAY, SELECTED_RATE]);
 
   useEffect(() => {
     onClickReset();

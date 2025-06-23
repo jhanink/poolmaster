@@ -20,14 +20,15 @@ export default function AdminTables(props: {
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
   const onClickResetForm = () => {
-    const tables = APP_STATE.tables.map((table: TableItem ) => ({...table}));
+    const tables = Helpers.tables(APP_STATE).map((table: TableItem ) => ({...table}));
     setTables(tables);
   }
 
   const onClickSaveItem = () => {
     const tables = TABLES
       .map((table: TableItem) => ({...table, forAdd: false}))
-      .filter((table: TableItem) => !table.forDelete);
+      .filter((table: TableItem) => !table.forDelete)
+      .sort((A: TableItem, B: TableItem) => A.number - B.number);
 
     const newState = {
       ...APP_STATE,
@@ -122,6 +123,25 @@ export default function AdminTables(props: {
               </div>
             </div>
             <div className={`${ROW}`}>
+              <div className={`text-nowrap ${!!table.forDelete && 'text-rose-500'} ${!!table.forAdd && 'text-green-500'}`}>
+                <div className="text-gray-400 mr-2">
+                  Order:
+                </div>
+                <input
+                  className={`
+                    ${formInputStyles}
+                    ${INPUT_FIELD}
+                  `}
+                  maxLength={3}
+                  onChange={(event) => {
+                    table.number = Number(event.target.value);
+                    setTables([...TABLES]);
+                  }}
+                  value={table.number}
+                  />
+              </div>
+            </div>
+            <div className={`${ROW}`}>
               <div className={`${formLabelLeftStyles} ${table.isActive? 'text-green-500':''}`}>
                 ENABLED:
               </div>
@@ -148,8 +168,7 @@ export default function AdminTables(props: {
                 value={table.tableTypeId}
                 className={`grow ${formSelectStyles} bg-transparent pb-3`}
               >
-                {APP_STATE.tableTypes
-                  .filter((type) => type.isActive && (type.id !== DEFAULT_ID))
+                {Helpers.tableTypes(APP_STATE)
                   .map((type) => (
                     <option key={type.id} className={optionStyles} value={type.id}>{type.name}</option>
                   ))
