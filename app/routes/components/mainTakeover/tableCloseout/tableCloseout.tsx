@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type ExtraPlayer, type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules, type ScheduleEntry, type TableItem, type TableRate, type TableRateRules } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type Guest, type TableItem, type TableRate } from "~/config/AppState";
 
 export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
