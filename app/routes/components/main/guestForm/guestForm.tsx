@@ -46,8 +46,6 @@ export default function GuestForm(props: {
     isReservation: props.guest.isReservation || false,
   });
 
-  console.log(FORM_FIELDS)
-
   const phoneInputRef = useMask({
     mask: '(___) ___-____',
     replacement: { _: /\d/ },
@@ -81,7 +79,7 @@ export default function GuestForm(props: {
       ...FORM_FIELDS,
       extraPlayers,
     }
-    console.log(guest)
+
     await saveGuest(guest);
     cleanupForm(event);
   }
