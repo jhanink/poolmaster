@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillableData, type BillablePlayer, type Guest, type TableItem, type TableRate } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillablePlayer, type Guest, type TableItem, type TableRate } from "~/config/AppState";
 
 export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -19,7 +19,7 @@ export default function TableCloseout() {
   const [TABLE_HOURS, setTableHours] = useState('');
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
-  const [BILLABLE_DATA, setBillableData] = useState<BillableData>({players: []} as BillableData);
+  const [BILLABLE_PLAYERS, setBillablePlayers] = useState<BillablePlayer[]>([]);
 
   const playerOrTableTimeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500 ring-gray-800`;
   const playerOrTableTimeSelectedStyles = `bg-green-500 !text-black`;
@@ -42,7 +42,7 @@ export default function TableCloseout() {
     setSelectedDay(businessDay.day());
 
     const players: BillablePlayer[] = Helpers.getBillablePlayers(APP_STATE, table, SELECTED_DAY, SELECTED_RATE)
-    setBillableData({players});
+    setBillablePlayers([...players]);
   }
 
   const getPlayerHours = (player: BillablePlayer, guest: Guest) => {
@@ -54,24 +54,24 @@ export default function TableCloseout() {
   const onChangeTableRate = (event) => {
     const selectedRate: TableRate = APP_STATE.tableRates.find((rate) => rate.id === Number(event.target.value));
     setSelectedRate(selectedRate);
-    const players: BillablePlayer[] = BILLABLE_DATA.players.map((player) => {
+    BILLABLE_PLAYERS.map((player) => {
       player.rate = selectedRate.tableRateRules.hourlyRate;
       return player;
     });
     useTableHours(TABLE_HOURS);
-    setBillableData({...BILLABLE_DATA, players});
+    setBillablePlayers([...BILLABLE_PLAYERS]);
   }
 
   const useTableHours = (hours: string) => {
-    BILLABLE_DATA.players.forEach((player) => {
+    BILLABLE_PLAYERS.forEach((player) => {
       player.hours = player.usePlayerTime ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : hours;
     })
-    setBillableData({...BILLABLE_DATA});
+    setBillablePlayers([...BILLABLE_PLAYERS]);
   }
 
   const playersRunningTotal = (includeClosedPlayer = false) => {
     let total = 0;
-    BILLABLE_DATA.players?.forEach((player) => {
+    BILLABLE_PLAYERS.forEach((player) => {
       if (includeClosedPlayer ||player.billable) {
         const playerHours = player.hours;
         const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(playerHours);
@@ -91,7 +91,7 @@ export default function TableCloseout() {
     if (which === player.usePlayerTime) return;
     player.usePlayerTime = which;
     player.hours = which ? getPlayerHours(player, MAIN_TAKEOVER.closeoutTable.guest) : TABLE_HOURS;
-    setBillableData({...BILLABLE_DATA});
+    setBillablePlayers([...BILLABLE_PLAYERS]);
   }
 
   const onClickReset = () => {
@@ -206,10 +206,6 @@ export default function TableCloseout() {
     )
   }
 
-  const allPlayersBillable = (): boolean => {
-    return !BILLABLE_DATA.players?.find((player) => !player.billable);
-  }
-
   const fragmentFormActionButtons = () => {
     return (
       <div className="my-3 mb-10">
@@ -219,10 +215,10 @@ export default function TableCloseout() {
     )
   }
 
-  const fragmentBillableData = () => {
+  const fragmentBillablePlayers = () => {
     return (<>
       <div className="WORKSHEET mt-2 text-left ">
-        {BILLABLE_DATA.players?.map((player, index) => (<div key={player.id}>
+        {BILLABLE_PLAYERS?.map((player, index) => (<div key={player.id}>
           <div key={player.id} className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
             <div className="flex">
               <div className="shrink">
@@ -232,7 +228,7 @@ export default function TableCloseout() {
                   checked={player.billable}
                   onChange={(event) => {
                     player.billable = event.target.checked;
-                    setBillableData({...BILLABLE_DATA});
+                    setBillablePlayers([...BILLABLE_PLAYERS]);
                   }}
                 />
               </div>
@@ -263,7 +259,7 @@ export default function TableCloseout() {
                         className={`w-[90px] !text-center ${formFieldStyles}`}
                         onChange={(event) => {
                           player.hours = event.target.value;
-                          setBillableData({...BILLABLE_DATA});
+                          setBillablePlayers([...BILLABLE_PLAYERS]);
                         }}
                         value={`${player.hours}`}
                       />
@@ -276,7 +272,7 @@ export default function TableCloseout() {
                         maxLength={6}
                         onChange={(event) => {
                           player.rate = event.target.value;
-                          setBillableData({...BILLABLE_DATA});
+                          setBillablePlayers([...BILLABLE_PLAYERS]);
                         }}
                         value={`${player.rate}`}
                       />
@@ -383,7 +379,7 @@ export default function TableCloseout() {
           </div>
           {fragmentTableRate()}
           {fragmentBusinessDay()}
-          {fragmentBillableData()}
+          {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}
         </div>
       </div>
