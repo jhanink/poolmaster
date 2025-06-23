@@ -152,7 +152,7 @@ export default function GuestItem(props: {
                   )}
                 </span>
                 <span className={`${guest.prefersTable ? 'text-green-600' : 'text-gray-300'} uppercase`}>
-                  {Helpers.getTableOrTableType(APP_STATE, guest)?.name || 'ANY'}
+                  {Helpers.getTableOrTableType(APP_STATE, guest).name}
                 </span>
               </div>
             )}
