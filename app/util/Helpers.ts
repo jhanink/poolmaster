@@ -143,11 +143,7 @@ export const Helpers = {
     });
 
     daySchedule && console.log(daySchedule);
-
     const dsStart = daySchedule.start;
-
-
-
     return players;
   },
   isExpiredVisit: (guest: Guest) => {

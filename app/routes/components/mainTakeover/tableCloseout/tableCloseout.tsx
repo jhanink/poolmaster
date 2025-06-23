@@ -69,11 +69,11 @@ export default function TableCloseout() {
     setBillableData({...BILLABLE_DATA});
   }
 
-  const playersTotal = () => {
+  const playersRunningTotal = (includeClosedPlayer = false) => {
     let total = 0;
     BILLABLE_DATA.players?.forEach((player) => {
-      if (player.billable) {
-        const playerHours = player.isAddedPlayer && player.usePlayerTime ? player.hours : TABLE_HOURS;
+      if (includeClosedPlayer ||player.billable) {
+        const playerHours = player.hours;
         const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(playerHours);
         total += hours * Number(player.rate);
       }
@@ -304,7 +304,7 @@ export default function TableCloseout() {
 
                 <div className="text-center text-xl text-green-500 mt-2">
                   ${(Number(SELECTED_RATE.tableRateRules.isFlatRate? 1:player.hours) * Number(player.rate)).toFixed(2)}
-                  <span className="!text-gray-500 ml-2 text-base"> / ${playersTotal()}</span>
+                  <span className="!text-gray-500 ml-2 text-base"> / ${playersRunningTotal(true)}</span>
                 </div>
 
               </div>
@@ -319,8 +319,8 @@ export default function TableCloseout() {
         </div>))}
       </div>
       <div className="text-xl text-gray-400 my-5">
-        {allPlayersBillable() ? 'Total': 'Remaining'} Bill: &nbsp;
-        <span className="text-green-500 text-xl">${playersTotal()}</span>
+        Running Total: &nbsp;
+        <span className="text-green-500 text-xl">${playersRunningTotal()}</span>
       </div>
     </>)
   }
@@ -355,7 +355,7 @@ export default function TableCloseout() {
         dialogTitle={`CLOSE OUT ${MAIN_TAKEOVER.closeoutTable.name}`}
         dialogMessageFn={() => <div className="text-base">
           <div className="mt-3 text-xl text-sky-500">{MAIN_TAKEOVER.closeoutTable.guest.name.toUpperCase()}</div>
-          <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersTotal()}</span></div>
+          <div className="mt-2 text-2xl">Total: <span className="text-green-500">${playersRunningTotal()}</span></div>
         </div>}
         onConfirm={onClickFinalConfirm}
         onCancel={() => {setShowConfirmCloseout(false)}}
