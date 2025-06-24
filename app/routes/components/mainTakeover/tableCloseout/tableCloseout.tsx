@@ -7,7 +7,7 @@ import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, RO
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
-import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillablePlayer, type Guest, type TableItem, type TableRate } from "~/config/AppState";
+import { DEFAULT_ID, DefaultTableRateData, WEEK_DAYS, type BillablePlayer, type Guest, type RateSchedule,type TableItem, type TableRate } from "~/config/AppState";
 
 export default function TableCloseout() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
@@ -20,6 +20,7 @@ export default function TableCloseout() {
   const [SELECTED_RATE, setSelectedRate] = useState<TableRate>(DefaultTableRateData);
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
   const [BILLABLE_PLAYERS, setBillablePlayers] = useState<BillablePlayer[]>([]);
+  const [SCHEDULE, setSchedule] = useState<RateSchedule>(undefined);
 
   const playerOrTableTimeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500 ring-gray-800`;
   const playerOrTableTimeSelectedStyles = `bg-green-500 !text-black`;
@@ -36,6 +37,11 @@ export default function TableCloseout() {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
     const assignedAt = table.guest.assignedAt;
+    const rules = SELECTED_RATE.tableRateRules;
+    const useSchedule = rules.useRateSchedule;
+    const scheduleId =  rules.rateScheduleId;
+    const schedule = useSchedule && Helpers.getRateSchedule(APP_STATE, scheduleId);
+    schedule && setSchedule(schedule);
 
     // Use local browser time instead of server time (TZ always current, no conversions needed)
     const businessDay = dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour');
@@ -359,6 +365,17 @@ export default function TableCloseout() {
     )
   }
 
+  const fragmentRateSchedule = () =>  {
+    return (<>
+      {SCHEDULE && (
+        <div className="inline-block mx-auto text-gray-500 mb-2 p-3 border rounded-lg border-gray-800">
+          <div>Schedule:</div>
+          <div className="text-gray-100">{SCHEDULE.name}</div>
+        </div>
+      )}
+    </>)
+  }
+
   useEffect(() => {
     setupBillablePlayers();
   }, [SELECTED_DAY, SELECTED_RATE]);
@@ -379,6 +396,7 @@ export default function TableCloseout() {
           </div>
           {fragmentTableRate()}
           {fragmentBusinessDay()}
+          {fragmentRateSchedule()}
           {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}
         </div>

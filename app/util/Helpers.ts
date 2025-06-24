@@ -79,13 +79,86 @@ export const Helpers = {
   },
   getBillablePlayers: (APP_STATE: AppState, table: TableItem, businessDay: number, tableRate: TableRate) => {
     const guest: Guest = table.guest;
+    const assignedAt = dayjs(guest.assignedAt);
+    const closedOutAt = dayjs(guest.closedOutAt);
 
     const playerRateRules: PlayerRateRules = tableRate.playerRateRules;
     const tableRateRules: TableRateRules = tableRate.tableRateRules;
-
     const useRateSchedule = tableRateRules.useRateSchedule;
     const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
     const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[businessDay]];
+
+    const T: any = {
+      assignedAt,
+      closedOutAt,
+    };
+    if (daySchedule) {
+      // subtract offset to get correct day. Then set
+      let _ = daySchedule.start.split(':');
+      T.start =  dayjs().subtract(APP_STATE.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
+      _ = daySchedule.end.split(':');
+      T.end =  dayjs().subtract(APP_STATE.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
+      /*
+        CASES
+          1. [] < start
+          2. [ < start < ] < end
+          3. [ < start < end < ]
+          4. start < [] < end
+          5. start < [ < end ]
+          6. start < end < []
+      */
+      if (T.assignedAt.isBefore(T.start)) {
+        if (T.closedOutAt.isBefore(T.start)) {
+          T.windowScenario = 1;
+          T.before = {
+            hours: T.closedOutAt.diff(T.assignedAt, 'hours', true),
+          }
+        } else {
+          T.before = {
+            hours: T.start.diff(T.assignedAt, 'hours', true),
+          };
+          if (T.closedOutAt.isBefore(T.end)) {
+            T.windowScenario = 2;
+            T.during = {
+              hours: T.closedOutAt.diff(T.start, 'hours', true),
+            };
+          } else {
+            T.windowScenario = 3;
+            T.during = {
+              hours: T.end.diff(T.start, 'hours', true),
+            };
+            T.after = {
+              hours: T.closedOutAt.diff(T.end, 'hours', true),
+            }
+          }
+        }
+      }
+      if (T.assignedAt.isAfter(T.start)) {
+        if (T.closedOutAt.isBefore(T.end)) {
+          T.windowScenario = 4;
+          T.during = {
+            hours: T.closedOutAt.diff(T.assignedAt, 'hours', true),
+          };
+        } else {
+          T.windowScenario = 5;
+          T.during = {
+            hours: T.end.diff(T.assignedAt, 'hours', true),
+          };
+          T.after = {
+            hours: T.closedOutAt.diff(T.end, 'hours', true),
+          };
+        }
+      }
+      if (T.assignedAt.isAfter(T.end)) {
+        T.windowScenario = 6;
+        T.after = {
+          hours: T.end.diff(T.start, 'hours', true),
+        };
+      }
+      console.log(T)
+    }
+
+
 
     const start = guest.assignedAt;
     const end = guest.closedOutAt;
@@ -142,8 +215,6 @@ export const Helpers = {
       players[playersIndex].hours = hours;
     });
 
-    daySchedule && console.log(daySchedule);
-    const dsStart = daySchedule.start;
     return players;
   },
   isExpiredVisit: (guest: Guest) => {
