@@ -2,9 +2,9 @@ import { type TableItem } from "~/config/AppState";
 import styles from "./tableListItemStyles.module.css";
 import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
-import { ArrowsPointingInIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom, tableExpandAllAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import ExpiredVisit from "../expiredVisit/expiredVisit";
 
@@ -21,18 +21,14 @@ export default function TableListItem(props: {
     const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);
     const [EDIT_FORM, setEditForm] = useState(false);
+    const [TABLE_EXPAND_ALL] = useAtom(tableExpandAllAtom);
 
     const table = props.table;
 
     useEffect(() => {
-      switch (SELECTED_LIST_FILTER) {
-        case (ListFilterTypeEnum.TABLELIST):
-          setItemExpanded(true);
-          break;
-        default:
-          setItemExpanded(false);
-      }
-    }, [SELECTED_LIST_FILTER]);
+      const expand = TABLE_EXPAND_ALL;
+      setItemExpanded(expand);
+  }, [TABLE_EXPAND_ALL]);
 
     const onClickTable = (event: React.MouseEvent<HTMLDivElement>) => {
       if (ITEM_EXPANDED || !props.table.guest) {
@@ -57,9 +53,9 @@ export default function TableListItem(props: {
           <div  onClick={onClickCloseExpanded}>
             <span>{table.name}</span>
             <div className="absolute top-2 right-0 hover:cursor-pointer">
-              {table.guest && ITEM_EXPANDED && !SELECTED_LIST_FILTER && !SELECTED_TABLE && !IS_EXPIRED && <>
+              {table.guest && ITEM_EXPANDED && !SELECTED_TABLE && !IS_EXPIRED && <>
                 <div className="text-gray-500">
-                  <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-3 size-7 hover:stroke-white" />
+                  <XMarkIcon aria-hidden="true" className="inline-block text-right mr-3 size-6 hover:stroke-white" />
                 </div>
               </>}
             </div>

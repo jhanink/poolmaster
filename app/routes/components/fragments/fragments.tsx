@@ -47,7 +47,7 @@ export const fragmentExitTakeover = (closeCallbackFn: () => void, fragmentCallba
   return (<>
     <div className="sticky top-0 bg-black z-10 pt-2 w-full">
       <div className="flex items-center justify-center CLOSE_BUTTON pb-2">
-        <div className="flex items-center hover:cursor-pointer text-gray-500 hover:text-gray-300" onClick={closeCallbackFn}>
+        <div className="flex items-center hover:cursor-pointer text-gray-500 hover:text-gray-100" onClick={closeCallbackFn}>
           <ArrowUturnLeftIcon className="mr-2 size-6"></ArrowUturnLeftIcon>
           <span className="text-xl">EXIT</span>
         </div>

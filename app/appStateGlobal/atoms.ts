@@ -28,5 +28,7 @@ export const appReadyAtom = atom<boolean>(false);
 export const profileMenuOpenAtom = atom<boolean>(false);
 export const selectedTableAtom = atom<TableItem | undefined>(undefined as TableItem);
 export const selectedListFilterAtom = atom<ListFilterType>('');
+export const guestExpandAllAtom = atom<boolean>(false);
+export const tableExpandAllAtom = atom<boolean>(false);
 export const manageTablesAtom = atom<boolean>(false);
 export const isSavingAtom = atom<boolean>(false);

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, guestExpandAllAtom, isSavingAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles } from "~/util/GlobalStylesUtil";
 import styles from "./guestItemStyles.module.css"
 import { DEFAULT_ID, type Guest } from "~/config/AppState"
 import GuestForm from '../guestForm/guestForm';
-import { ArrowsPointingInIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Helpers, InitialTimeElapsed, type TimeElapsed } from '~/util/Helpers';
 import { fragmentDateStyled, fragmentElapsedTime, fragmentGuestName, fragmentUsageIndicator } from '../../fragments/fragments';
 import { AppStorage } from '~/util/AppStorage';
@@ -31,6 +31,7 @@ export default function GuestItem(props: {
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
+  const [GUEST_EXPAND_ALL] = useAtom(guestExpandAllAtom);
 
   const guest = props.guest;
 
@@ -87,9 +88,9 @@ export default function GuestItem(props: {
   const itemDetailHeaderContent = () => {
     return (<>
       <div className="flex relative">
-        {!props.isAssigned && props.itemExpanded && !SELECTED_LIST_FILTER && !props.isEditForm && <>
+        {!props.isAssigned && props.itemExpanded && !props.isEditForm && <>
           <div className="flex-1 text-right mb-2 text-gray-500" onClick={onClickCloseExpanded}>
-            <ArrowsPointingInIcon aria-hidden="true" className="inline-block text-right mr-1 size-7 hover:stroke-white" />
+            <XMarkIcon aria-hidden="true" className="inline-block text-right mr-1 size-6 hover:stroke-white" />
           </div>
         </>}
       </div>

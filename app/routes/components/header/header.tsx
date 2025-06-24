@@ -9,8 +9,8 @@ import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
-import { separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
+import { CogIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -19,6 +19,7 @@ const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm 
 const dndActiveStyle = `bg-green-300 invert`;
 const dndOverStyle = `blur-[2px] bg-white`;
 const headerStyles = `flex items-center justify-center select-none text-nowrap text-lg text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
+const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 
 export default function AppHeader() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -50,10 +51,21 @@ export default function AppHeader() {
     setSelectedTable(undefined);
   }
 
+  const onClickSettings = () => {
+    if (!!MAIN_TAKEOVER) return;
+    setSelectedTable(undefined);
+    setMainTakeover({adminScreen: true});
+  }
+
   return (
     <div>
       <div className={`${headerStyles} mx-1`}>
         {APP_STATE.account?.venue}
+        <span
+          className={`inline-block ml-2 ${actionIconStyles}`}
+          onClick={onClickSettings}>
+          <CogIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}></CogIcon>
+        </span>
       </div>
       <BrandingBar />
       {!MAIN_TAKEOVER && <>
