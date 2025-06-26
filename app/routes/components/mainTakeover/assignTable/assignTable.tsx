@@ -121,13 +121,11 @@ export default function AssignTable() {
             <div>
               <div className="text-gray-500 text-sm italic">
                 to an open table
-                {!guest.assignedAt && (
-                  <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
-                    <div className={`inline-block p-2 px-6 border border-gray-800 rounded-lg`}>
-                      <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
-                    </div>
+                <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
+                  <div className={`inline-block p-2 px-6 border border-gray-800 rounded-lg`}>
+                    <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
                   </div>
-                )}
+                </div>
               </div>
             </div>
             <div className={`mt-5 mx-2 flex flex-wrap gap-2 justify-center`}>
