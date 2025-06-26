@@ -248,7 +248,7 @@ export default function TableCloseout() {
   }
 
   const showMeteredPeriod = (period) => {
-    return period && Number(period.hours) > 0 && Number(period.rate);
+    return period && Number(period.hours) > 0 && !!Number(period.rate);
   }
 
   const fragmentBillablePlayers = () => {
