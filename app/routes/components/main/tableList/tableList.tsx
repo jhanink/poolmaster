@@ -7,14 +7,12 @@ import { useAtom } from "jotai";
 import { appStateAtom, selectedTableAtom, tableExpandAllAtom } from "~/appStateGlobal/atoms";
 import React, { useEffect, useRef, useState } from 'react';
 import { Helpers } from "~/util/Helpers";
-import { selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
+import { columnItemListStyles, mainColumnContentStyles, mainColumnStyles, mainListSwimLaneHeader, selectedTableChipStyle, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon } from '@heroicons/react/24/outline';
 
 type TableRefs = {
   [key: number]: React.RefObject<HTMLDivElement | null>;
 };
-
-const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl md:mr-3 sm:mx-auto md:mx-0'}`;
 
 export default function TableList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -44,7 +42,7 @@ export default function TableList() {
 
   const fragmentMiniMap = () => {
     return (
-      <div className="MINIMAP CHIPS my-2 mt-3 mb-5 top-0 z-10 flex flex-wrap gap-2 justify-center" ref={miniMapRef}>
+      <div className={`MINIMAP CHIPS flex flex-wrap gap-2 justify-center ${Helpers.tablesAssigned(APP_STATE).length && 'mb-2'}`} ref={miniMapRef}>
         {Helpers.tablesAssigned(APP_STATE)
           .sort((A: TableItem, B: TableItem) => A.number - B.number)
           .map((table: TableItem, index: number) =>
@@ -67,37 +65,15 @@ export default function TableList() {
     )
   }
 
-  const fragmentTables = () => {
-    return (
-      <div>
-        {tables
-          .filter((table) => table.guest)
-          .sort((A: TableItem, B: TableItem) =>
-            A.number - B.number
-          )
-          .map((table, index) => (
-            <div
-              key={table.id}
-              ref={TABLE_REFS[`${table.id}`]}
-              className={`mb-5 ${SELECTED_TABLE && SELECTED_TABLE.id !== table.id ? "hidden" : ""}`}
-            >
-              <TableListItem table={table} index={index} tableRef={TABLE_REFS[`${table.id}`]} />
-            </div>
-          )
-        )}
-      </div>
-    )
-  }
-
-    const fragmentSwimlaneHeader = () => {
+  const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
-      <div className="sticky bg-gray-800/40 relative top-[-1px] z-9 bg-black md:flex hidden border-b border-gray-900 p-2 text-xl items-center text-gray-200 rounded-t-xl">
+      <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full">
           <div className="grow">
             <span className="ml-5">Table List</span>
           </div>
           {TABLE_EXPAND_ALL ? (
-            <div className="text-gray-500 size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
+            <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
             <ArrowsPointingInIcon></ArrowsPointingInIcon>
           </div>
           ) : (
@@ -110,6 +86,28 @@ export default function TableList() {
     </>)
   }
 
+  const fragmentTables = () => {
+    return (
+      <div className={`${columnItemListStyles}`}>
+        {tables
+          .filter((table) => table.guest)
+          .sort((A: TableItem, B: TableItem) =>
+            A.number - B.number
+          )
+          .map((table, index) => (
+            <div
+              key={table.id}
+              ref={TABLE_REFS[`${table.id}`]}
+              className={`${SELECTED_TABLE && SELECTED_TABLE.id !== table.id ? "hidden" : ""}`}
+            >
+              <TableListItem table={table} index={index} tableRef={TABLE_REFS[`${table.id}`]} />
+            </div>
+          )
+        )}
+      </div>
+    )
+  }
+
   useEffect(() => {
     const tableRefs: TableRefs = {};
     APP_STATE.tables.forEach((table) => {tableRefs[`${table.id}`] = React.createRef<HTMLDivElement>()});
@@ -117,9 +115,9 @@ export default function TableList() {
   }, [APP_STATE.tables]);
 
   return (
-    <div className={`flex-1 text-center select-none ${columnBorders} min-w-[350px] max-w-[600px]`}>
+    <div className={`${mainColumnStyles}`}>
       {fragmentSwimlaneHeader()}
-      <div className={`${mainStyles.column} ${styles.tableList} px-2`}>
+      <div className={`${mainStyles.column} ${styles.tableList} ${mainColumnContentStyles}`}>
         {fragmentMiniMap()}
         {fragmentTables()}
       </div>

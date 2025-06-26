@@ -11,8 +11,8 @@ export default function ExpiredVisit(props: {
   const [, setAppState] = useAtom(appStateAtom);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
 
-  const CREATED_AT = Helpers.formatDate(props.guest.assignedAt || props.guest.createdAt);
-  const HOURS_AGO = Helpers.timeElapsedGuest(props.guest).hours;
+  const WHEN = Helpers.formatDate(props.guest.assignedAt || props.guest.createdAt);
+  const HOURS_AGO = props.guest.assignedAt ? Helpers.timeElapsedTable(props.guest).hours : Helpers.timeElapsedGuest(props.guest).hours;
   const hiliteColor = 'text-gray-400 font-bold';
 
   return (<>
@@ -22,7 +22,7 @@ export default function ExpiredVisit(props: {
           <span className={`${hiliteColor} uppercase`}>{props.guest.name}</span> was {props.guest.assignedAt ? 'assigned' : 'added'} <span className={`${hiliteColor}`}>{HOURS_AGO}</span> hours ago
         </div>
         <div className="italic text-sm mb-5">
-          on <span className={`${hiliteColor} uppercase`}>{CREATED_AT}</span>
+          on <span className={`${hiliteColor} uppercase`}>{WHEN}</span>
         </div>
       </div>
       <div className={'mb-3'}>

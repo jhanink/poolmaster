@@ -21,6 +21,7 @@ export default function TableCloseout() {
   const [SELECTED_DAY, setSelectedDay] = useState<number>(dayjs().day());
   const [BILLABLE_PLAYERS, setBillablePlayers] = useState<BillablePlayer[]>([]);
   const [SCHEDULE, setSchedule] = useState<RateSchedule>(undefined);
+  const [METERED_DAY, setMeteredDay] = useState<any>({})
 
   const playerOrTableTimeStyles = `hover:cursor-pointer ring-1 rounded-full px-2 text-gray-500 ring-gray-800`;
   const playerOrTableTimeSelectedStyles = `bg-green-500 !text-black`;
@@ -35,7 +36,6 @@ export default function TableCloseout() {
   const setupBillablePlayers = () => {
     if (!SELECTED_RATE.id) return;
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
-    const businessDayOffsetHours = APP_STATE.businessDayOffsetHours;
     const assignedAt = table.guest.assignedAt;
     const rules = SELECTED_RATE.tableRateRules;
     const useSchedule = rules.useRateSchedule;
@@ -44,8 +44,7 @@ export default function TableCloseout() {
     schedule && setSchedule(schedule);
 
     // Use local browser time instead of server time (TZ always current, no conversions needed)
-    const businessDay = dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour');
-    setSelectedDay(businessDay.day());
+    setSelectedDay(Helpers.getBusinessDay(APP_STATE, assignedAt));
 
     const players: BillablePlayer[] = Helpers.getBillablePlayers(APP_STATE, table, SELECTED_DAY, SELECTED_RATE)
     setBillablePlayers([...players]);
@@ -75,13 +74,36 @@ export default function TableCloseout() {
     setBillablePlayers([...BILLABLE_PLAYERS]);
   }
 
+  const getMeterTotal = (player: BillablePlayer) => {
+    const before = player.meteredDay.before
+    const during = player.meteredDay.during
+    const after = player.meteredDay.after
+    const total = (before && Number(before.hours) * Number(before.rate) || 0)
+      + (during && Number(during.hours) * Number(during.rate) || 0)
+      + (after && Number(after.hours) * Number(after.rate) || 0);
+    return total;
+  }
+
+  const getPlayerTotal = (player: BillablePlayer) => {
+    if (SCHEDULE) {
+      const totalHours = Number(player.hours);
+      if (totalHours <= 1) {
+        return Number(player.meteredDay.rate1hrMin);
+      }
+      return getMeterTotal(player);
+    }
+
+    const playerHours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(player.hours);
+    const adjustedPlayerHours = (SELECTED_RATE.tableRateRules.isOneHourMinimum && (playerHours < 1 )) ? 1 : playerHours;
+    const playerRate = Number(player.rate);
+    return adjustedPlayerHours * playerRate;
+  }
+
   const playersRunningTotal = (includeClosedPlayer = false) => {
     let total = 0;
     BILLABLE_PLAYERS.forEach((player) => {
-      if (includeClosedPlayer ||player.billable) {
-        const playerHours = player.hours;
-        const hours = SELECTED_RATE.tableRateRules.isFlatRate ? 1 : Number(playerHours);
-        total += hours * Number(player.rate);
+      if (includeClosedPlayer || player.billable) {
+        total += getPlayerTotal(player);
       }
     })
     return total.toFixed(2);
@@ -221,6 +243,14 @@ export default function TableCloseout() {
     )
   }
 
+  const fragmentMeteredDay = () => {
+    const timeFrames = ['before', 'during', 'after'];
+  }
+
+  const showMeteredPeriod = (period) => {
+    return period && Number(period.hours) > 0 && Number(period.rate);
+  }
+
   const fragmentBillablePlayers = () => {
     return (<>
       <div className="WORKSHEET mt-2 text-left ">
@@ -258,31 +288,121 @@ export default function TableCloseout() {
 
                 <div className="text-sm mt-2 text-center w-[200px]">
                   {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
-                    <div className="px-1 inline-block">
-                      <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
-                      <input
-                        type="text"
-                        className={`w-[90px] !text-center ${formFieldStyles}`}
-                        onChange={(event) => {
-                          player.hours = event.target.value;
-                          setBillablePlayers([...BILLABLE_PLAYERS]);
-                        }}
-                        value={`${player.hours}`}
-                      />
-                    </div>
-                    <div className="px-1 inline-block">
-                      <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
-                      <input
-                        type="text"
-                        className={`w-[90px] !text-center ${formFieldStyles}`}
-                        maxLength={6}
-                        onChange={(event) => {
-                          player.rate = event.target.value;
-                          setBillablePlayers([...BILLABLE_PLAYERS]);
-                        }}
-                        value={`${player.rate}`}
-                      />
-                    </div>
+                    {SCHEDULE ? (<>
+                      {showMeteredPeriod(METERED_DAY.before) &&  (
+                        <div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              onChange={(event) => {
+                                player.meteredDay.before.hours = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.before.hours}`}
+                            />
+                          </div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              maxLength={6}
+                              onChange={(event) => {
+                                player.meteredDay.before.rate = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.before.rate}`}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {showMeteredPeriod(METERED_DAY.during) && (
+                        <div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              onChange={(event) => {
+                                player.meteredDay.during.hours = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.during.hours}`}
+                            />
+                          </div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              maxLength={6}
+                              onChange={(event) => {
+                                player.meteredDay.during.rate = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.during.rate}`}
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {showMeteredPeriod(METERED_DAY.after) && (
+                        <div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              onChange={(event) => {
+                                player.meteredDay.after.hours = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.after.hours}`}
+                            />
+                          </div>
+                          <div className="px-1 inline-block">
+                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                            <input
+                              type="text"
+                              className={`w-[90px] !text-center ${formFieldStyles}`}
+                              maxLength={6}
+                              onChange={(event) => {
+                                player.meteredDay.after.rate = event.target.value;
+                                setBillablePlayers([...BILLABLE_PLAYERS]);
+                              }}
+                              value={`${player.meteredDay.after.rate}`}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </>) : (<>
+                      <div className="px-1 inline-block">
+                        <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                        <input
+                          type="text"
+                          className={`w-[90px] !text-center ${formFieldStyles}`}
+                          onChange={(event) => {
+                            player.hours = event.target.value;
+                            setBillablePlayers([...BILLABLE_PLAYERS]);
+                          }}
+                          value={`${player.hours}`}
+                        />
+                      </div>
+                      <div className="px-1 inline-block">
+                        <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                        <input
+                          type="text"
+                          className={`w-[90px] !text-center ${formFieldStyles}`}
+                          maxLength={6}
+                          onChange={(event) => {
+                            player.rate = event.target.value;
+                            setBillablePlayers([...BILLABLE_PLAYERS]);
+                          }}
+                          value={`${player.rate}`}
+                        />
+                      </div>
+                    </>)}
                   </>)}
                 </div>
 
@@ -305,7 +425,7 @@ export default function TableCloseout() {
                 </>)}
 
                 <div className="text-center text-xl text-green-500 mt-2">
-                  ${(Number(SELECTED_RATE.tableRateRules.isFlatRate? 1:player.hours) * Number(player.rate)).toFixed(2)}
+                  ${getPlayerTotal(player).toFixed(2)}
                   <span className="!text-gray-500 ml-2 text-base"> / ${playersRunningTotal(true)}</span>
                 </div>
 
@@ -368,7 +488,7 @@ export default function TableCloseout() {
   const fragmentRateSchedule = () =>  {
     return (<>
       {SCHEDULE && (
-        <div className="inline-block mx-auto text-gray-500 mb-2 p-3 border rounded-lg border-gray-800">
+        <div className="inline-block mx-auto text-gray-500 my-2 px-3 pb-1 border rounded-lg border-gray-800">
           <div>Schedule:</div>
           <div className="text-gray-100">{SCHEDULE.name}</div>
         </div>
@@ -378,6 +498,10 @@ export default function TableCloseout() {
 
   useEffect(() => {
     setupBillablePlayers();
+    const table: TableItem = MAIN_TAKEOVER.closeoutTable;
+    const guest = table.guest;
+    const md = Helpers.getMeteredDay(APP_STATE, SELECTED_RATE, guest);
+    setMeteredDay(md);
   }, [SELECTED_DAY, SELECTED_RATE]);
 
   useEffect(() => {
@@ -395,7 +519,7 @@ export default function TableCloseout() {
             {fragmentUsageType()}
           </div>
           {fragmentTableRate()}
-          {fragmentBusinessDay()}
+          {/* {fragmentBusinessDay()} */}
           {fragmentRateSchedule()}
           {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}

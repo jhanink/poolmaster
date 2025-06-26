@@ -1,7 +1,12 @@
 
+.mainContent {
+  margin-top: 5px;
+}
 @media (min-width: 768px) {
   .mainContent {
     display: flex;
     flex-grow: 1;
+    margin-top: 0;
+    margin-top: 15px;
   }
 }

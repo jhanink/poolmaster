@@ -2,7 +2,7 @@ import GuestItem from "../guestItem/guestItem";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import { useState, useRef, useEffect } from "react";
 import { useDrag } from 'react-dnd';
-import { appStateAtom, guestExpandAllAtom} from "~/appStateGlobal/atoms";
+import { guestExpandAllAtom} from "~/appStateGlobal/atoms";
 import { useAtom } from "jotai";
 import { Helpers } from "~/util/Helpers";
 import ExpiredVisit from "../expiredVisit/expiredVisit";
@@ -13,7 +13,7 @@ export default function GuestListItem(props: {
 }) {
   const [ITEM_EXPANDED, setItemExpanded] = useState(false);
   const [ITEM_EDITING, setItemEditing] = useState(false);
-  const [GUEST_EXPAND_ALL, setGuestExpandAll] = useAtom(guestExpandAllAtom);
+  const [GUEST_EXPAND_ALL] = useAtom(guestExpandAllAtom);
 
   const dragRef = useRef<HTMLDivElement>(null);
   const canDragRef = useRef(true);
@@ -46,7 +46,7 @@ export default function GuestListItem(props: {
   const IS_EXPIRED = Helpers.isExpiredVisit(props.guest);
 
   return <>
-    <div className="select-none mb-4">
+    <div className="select-none">
       {IS_EXPIRED ? (
         <div className="text-center border border-gray-800 border-dashed rounded-xl">
           <ExpiredVisit guest={props.guest} />

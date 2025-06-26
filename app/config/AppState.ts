@@ -8,6 +8,7 @@ export const MIN_LARGE_PARTY_SIZE = 3;
 export const PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE}, (_, i) => i + 1);
 export const LARGE_PARTY_SIZE_ARRAY = Array.from({length: MAX_PARTY_SIZE - (MIN_LARGE_PARTY_SIZE - 1) }, (_, i) => i + MIN_LARGE_PARTY_SIZE);
 export const DEFAULT_TEXT_COLOR = '#EFEFEF';
+export const EXPIRED_VISIT_HOURS = 1000 * 60 * 60 * 24;
 
 export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -117,6 +118,7 @@ export interface ScheduleEntry {
   rateBefore: string,
   rateAfter: string,
   rateDuring: string,
+  rate1HrMin: string,
 }
 
 export interface MeteredTime {
@@ -128,6 +130,7 @@ export interface MeteredDay {
   before: MeteredTime,
   during: MeteredTime,
   after: MeteredTime,
+  rate1hrMin: string,
 }
 
 export interface BillablePlayer {
@@ -218,6 +221,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Tue: {
       start: "00:00",
@@ -225,6 +229,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Wed: {
       start: "00:00",
@@ -232,6 +237,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Thu: {
       start: "00:00",
@@ -239,6 +245,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Fri: {
       start: "00:00",
@@ -246,6 +253,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Sat: {
       start: "00:00",
@@ -253,6 +261,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
     Sun: {
       start: "00:00",
@@ -260,6 +269,7 @@ export const DefaultRateSchedule: RateSchedule = {
       rateBefore: "0.00",
       rateAfter: "0.00",
       rateDuring: "10.00",
+      rate1HrMin: "10.00",
     },
 
   },

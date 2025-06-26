@@ -1,7 +1,6 @@
 import TableList from "./tableList/tableList";
 import GuestList from "./guestList/guestList";
 import { useAtom } from "jotai";
-import { Helpers } from "~/util/Helpers";
 import { appStateAtom, mainTakoverAtom, selectedListFilterAtom } from "~/appStateGlobal/atoms";
 import AssignTable from "../mainTakeover/assignTable/assignTable";
 import TableCloseout from "../mainTakeover/tableCloseout/tableCloseout";
@@ -9,7 +8,6 @@ import Admin from "../mainTakeover/admin/admin";
 import AddGuest from "../mainTakeover/addGuest/addGuest";
 import EditGuest from "../mainTakeover/editGuest/editGuest";
 import styles from "./mainStyles.module.css"
-import { FeatureFlags } from "~/config/AppState";
 
 export default function AppMain() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -25,7 +23,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} pt-0 gap-5 grow justify-center ${FeatureFlags.SHOW_MAIN_SWIMLANES && 'mt-5'}`}>
+        <div className={`${styles.mainContent} pt-0 gap-5 mx-3 grow justify-center`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}

@@ -8,7 +8,7 @@ import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, 
 import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
-const fieldLabelStyles = `mx-2 w-[45px]`;
+const fieldLabelStyles = `mx-2 w-[65px]`;
 const borderColor = '!border-purple-400';
 const bgColor = 'bg-purple-400';
 
@@ -156,7 +156,7 @@ export default function AdminRateSchedules(props: {
               </div>
             )}
             {(rateSchedule.id !== DEFAULT_ID) && (rateSchedule.show) && (
-              <div className="ml-1 pl-6 border border-gray-800 rounded-md mt-5">
+              <div className="ml-1 pl-3 border border-gray-800 rounded-md mt-5">
                 {RateScheduleDays.map((day: string) => (
                   <div className="text-gray-500 " key={day}>
                     <div className={`${ROW} mt-3`}>
@@ -224,6 +224,19 @@ export default function AdminRateSchedules(props: {
                           value={rateSchedule.entries[day].rateAfter}
                           onChange={(event) => {
                             rateSchedule.entries[day].rateAfter = event.target.value;
+                            setRateSchedules([...RATE_SCHEDULES]);
+                          }}
+                        />
+                      </div>
+                      <div className={`${ROW} mt-1`}>
+                        <span className={`${fieldLabelStyles}`}>1 Hour Min:</span>
+                        <input
+                          className={`${formInputStyles} ${INPUT_FIELD}`}
+                          type="number"
+                          step="0.01"
+                          value={rateSchedule.entries[day].rate1hrMin}
+                          onChange={(event) => {
+                            rateSchedule.entries[day].rate1hrMin = event.target.value;
                             setRateSchedules([...RATE_SCHEDULES]);
                           }}
                         />

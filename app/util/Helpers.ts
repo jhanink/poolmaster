@@ -1,10 +1,9 @@
 import dayjs from "dayjs";
-import {SyntheticTableTypeAny, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
+import {EXPIRED_VISIT_HOURS, SyntheticTableTypeAny, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
   type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules,
   type ScheduleEntry, type TableItem, type TableRate, type TableRateRules
 } from "~/config/AppState";
 
-export const MILLIS_24_HOURS = 1000 * 60 * 60 * 24;
 export const DAYJS_DATE_FORMAT = 'MMM D, h:mm a';
 export const DAYJS_DAY_FORMAT = 'MMM D';
 export const DAYJS_TIME_FORMAT = 'h:mm a';
@@ -77,15 +76,13 @@ export const Helpers = {
     const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
     return (match.isActive && match) || appState.rateSchedules[0];
   },
-  getBillablePlayers: (APP_STATE: AppState, table: TableItem, businessDay: number, tableRate: TableRate) => {
-    const guest: Guest = table.guest;
+  getMeteredDay: (appState: AppState, tableRate: TableRate, guest: Guest)=> {
     const assignedAt = dayjs(guest.assignedAt);
     const closedOutAt = dayjs(guest.closedOutAt);
-
-    const playerRateRules: PlayerRateRules = tableRate.playerRateRules;
+    const businessDay = Helpers.getBusinessDay(appState, guest.assignedAt);
     const tableRateRules: TableRateRules = tableRate.tableRateRules;
     const useRateSchedule = tableRateRules.useRateSchedule;
-    const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
+    const schedule = useRateSchedule && Helpers.getRateSchedule(appState, tableRateRules.rateScheduleId);
     const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[businessDay]];
 
     const T: any = {
@@ -95,9 +92,9 @@ export const Helpers = {
     if (daySchedule) {
       // subtract offset to get correct day. Then set
       let _ = daySchedule.start.split(':');
-      T.start =  dayjs().subtract(APP_STATE.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
+      T.start =  dayjs().subtract(appState.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
       _ = daySchedule.end.split(':');
-      T.end =  dayjs().subtract(APP_STATE.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
+      T.end =  dayjs().subtract(appState.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
       /*
         CASES
           1. [] < start
@@ -112,23 +109,33 @@ export const Helpers = {
           T.windowScenario = 1;
           T.before = {
             hours: T.closedOutAt.diff(T.assignedAt, 'hours', true),
+            rate: daySchedule.rateBefore,
+            elapsed: Helpers.timeElapsed(T.assignedAt, T.closedOutAt).durationHoursDecimal3,
           }
         } else {
           T.before = {
             hours: T.start.diff(T.assignedAt, 'hours', true),
+            rate: daySchedule.rateBefore,
+            elapsed: Helpers.timeElapsed(T.assignedAt, T.start).durationHoursDecimal3,
           };
           if (T.closedOutAt.isBefore(T.end)) {
             T.windowScenario = 2;
             T.during = {
               hours: T.closedOutAt.diff(T.start, 'hours', true),
+              rate: daySchedule.rateDuring,
+              elapsed: Helpers.timeElapsed(T.start, T.closedOutAt).durationHoursDecimal3,
             };
           } else {
             T.windowScenario = 3;
             T.during = {
               hours: T.end.diff(T.start, 'hours', true),
+              rate: daySchedule.rateDuring,
+              elapsed: Helpers.timeElapsed(T.start, T.end).durationHoursDecimal3,
             };
             T.after = {
               hours: T.closedOutAt.diff(T.end, 'hours', true),
+              rate: daySchedule.rateAfter,
+              elapsed: Helpers.timeElapsed(T.end, T.closedOutAt).durationHoursDecimal3,
             }
           }
         }
@@ -138,14 +145,20 @@ export const Helpers = {
           T.windowScenario = 4;
           T.during = {
             hours: T.closedOutAt.diff(T.assignedAt, 'hours', true),
+            rate: daySchedule.rateDuring,
+            elapsed: Helpers.timeElapsed(T.assignedAt, T.closedOutAt).durationHoursDecimal3,
           };
         } else {
           T.windowScenario = 5;
           T.during = {
             hours: T.end.diff(T.assignedAt, 'hours', true),
+            rate: daySchedule.rateDuring,
+            elapsed: Helpers.timeElapsed(T.assignedAt, T.end).durationHoursDecimal3,
           };
           T.after = {
             hours: T.closedOutAt.diff(T.end, 'hours', true),
+            rate: daySchedule.rateAfter,
+            elapsed: Helpers.timeElapsed(T.end, T.closedOutAt).durationHoursDecimal3,
           };
         }
       }
@@ -153,12 +166,32 @@ export const Helpers = {
         T.windowScenario = 6;
         T.after = {
           hours: T.end.diff(T.start, 'hours', true),
+          rate: daySchedule.rateAfter,
+          elapsed: Helpers.timeElapsed(T.start, T.end).durationHoursDecimal3,
         };
       }
-      console.log(T)
     }
+    const meteredDay: MeteredDay = {
+      before: T.before && {hours: T.before.elapsed, rate: T.before.rate},
+      during: T.during && {hours: T.during.elapsed, rate: T.during.rate},
+      after: T.after && {hours: T.after.elapsed, rate: T.after.rate},
+      rate1hrMin: daySchedule.rate1HrMin,
+    };
+    return meteredDay;
+  },
+  getBusinessDay: (appState: AppState, assignedAt: number) => {
+    const businessDayOffsetHours = appState.businessDayOffsetHours;
+    const businessDay = dayjs(new Date(assignedAt)).subtract(businessDayOffsetHours, 'hour');
+    return businessDay.day();
+  },
+  getBillablePlayers: (APP_STATE: AppState, table: TableItem, businessDay: number, tableRate: TableRate) => {
+    const guest: Guest = table.guest;
 
-
+    const playerRateRules: PlayerRateRules = tableRate.playerRateRules;
+    const tableRateRules: TableRateRules = tableRate.tableRateRules;
+    const useRateSchedule = tableRateRules.useRateSchedule;
+    const schedule = useRateSchedule && Helpers.getRateSchedule(APP_STATE, tableRateRules.rateScheduleId);
+    const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[businessDay]];
 
     const start = guest.assignedAt;
     const end = guest.closedOutAt;
@@ -175,24 +208,13 @@ export const Helpers = {
 
     for (let i = 0; i < (PLAYERS_COUNT); i++) {
       const rate = (isChargePerPlayer && (i >= playerLimit)) ? afterLimitRate : hourlyRate;
-
-      const before: MeteredTime = {hours: "0", rate: "0"};
-      const during: MeteredTime = {hours: "0", rate: "0"};
-      const after: MeteredTime = {hours: "0", rate: "0"};
-
-      const meteredDay: MeteredDay = {
-        before,
-        during,
-        after,
-      };
-
       players.push({
         id: i,
         name: `Player ${i + 1}`,
         hours,
         rate,
         daySchedule,
-        meteredDay,
+        meteredDay: Helpers.getMeteredDay(APP_STATE, tableRate, guest),
         billable: true,
         isAddedPlayer: false,
         usePlayerTime: false,
@@ -218,10 +240,10 @@ export const Helpers = {
     return players;
   },
   isExpiredVisit: (guest: Guest) => {
-    const startTime = guest.createdAt;
+    const startTime = guest.assignedAt || guest.createdAt;
     if (!startTime) return false;
     const NOW = Date.now();
-    return (NOW - startTime) >= MILLIS_24_HOURS;
+    return (NOW - startTime) >= EXPIRED_VISIT_HOURS;
   },
   tableRateSuffix: (tableRate: TableRate) => {
     const temp = [];
@@ -262,6 +284,9 @@ export const Helpers = {
   },
   timeElapsedGuest: (guest: Guest) => {
     return Helpers.timeElapsed(guest.createdAt, Date.now());
+  },
+  timeElapsedTable: (guest: Guest) => {
+    return Helpers.timeElapsed(guest.assignedAt, Date.now());
   },
   averageWaitTime: (appState: AppState) => {
     const totalWaitTime = appState.guestList.reduce((sum, guest) => {
