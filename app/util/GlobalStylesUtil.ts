@@ -50,7 +50,7 @@ export const separatorBarStyles = `border-b border-gray-900 mx-1`;
 export const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl sm:mx-auto md:mx-0 md'}`;
 export const mainListSwimLaneHeader = `sticky bg-gray-900 top-[-1px] z-9 md:flex hidden border-b border-gray-950 p-2 text-xl items-center text-slate-400 rounded-t-xl`;
 export const mainColumnStyles = `flex-1 text-center select-none min-w-[345px] max-w-[600px] ${columnBorders}`;
-export const mainColumnContentStyles = `mt-3 md:px-2`;
+export const mainColumnContentStyles = `mt-3 px-1 md:px-2`;
 export const columnItemListStyles = `flex flex-col gap-2`;
 
 export const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;

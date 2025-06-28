@@ -365,7 +365,7 @@ export const DefaultAccountData: Account = {
 
 export const DefaultAppState: AppState = {
   modifiedAt: 0,
-  businessDayOffsetHours: 2,
+  businessDayOffsetHours: 4,
   account: {
     ...DefaultAccountData
   },

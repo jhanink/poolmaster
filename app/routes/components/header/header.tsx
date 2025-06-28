@@ -59,13 +59,17 @@ export default function AppHeader() {
 
   return (
     <div>
-      <div className={`${headerStyles} mx-1`}>
+      <div className={`${headerStyles} mx-1 px-2`}>
+        <div className={`text-transparent size-[20px]`}>
+        </div>
+        <div className="grow text-center">
         {APP_STATE.account?.venue}
-        <span
-          className={`inline-block ml-2 ${actionIconStyles}`}
+        </div>
+        <div
+          className={`${actionIconStyles}`}
           onClick={onClickSettings}>
           <CogIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}></CogIcon>
-        </span>
+        </div>
       </div>
       <BrandingBar />
       {!MAIN_TAKEOVER && <>
