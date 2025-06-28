@@ -10,7 +10,7 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { CogIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { CogIcon, EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -59,16 +59,18 @@ export default function AppHeader() {
 
   return (
     <div>
-      <div className={`${headerStyles} mx-1 px-2`}>
-        <div className={`text-transparent size-[20px]`}>
-        </div>
-        <div className="grow text-center">
-        {APP_STATE.account?.venue}
+      <div className="flex items-center justify-center">
+        <div className={`${headerStyles} ml-1 px-2 grow`}>
+          <div className={`text-transparent size-[20px]`}>
+          </div>
+          <div className="grow text-center">
+          {APP_STATE.account?.venue}
+          </div>
         </div>
         <div
           className={`${actionIconStyles}`}
           onClick={onClickSettings}>
-          <CogIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}></CogIcon>
+          <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}/>
         </div>
       </div>
       <BrandingBar />
