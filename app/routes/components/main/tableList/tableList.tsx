@@ -46,19 +46,20 @@ export default function TableList() {
         {Helpers.tablesAssigned(APP_STATE)
           .sort((A: TableItem, B: TableItem) => A.number - B.number)
           .map((table: TableItem, index: number) =>
-            <button className={`CHIP hover: ${tableChipsStyle} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''} uppercase !m-0 hover:cursor-pointer`}
+            <button className={`CHIP ${tableChipsStyle} ${SELECTED_TABLE?.id === table.id ? selectedTableChipStyle : ''} uppercase !m-0 hover:cursor-pointer`}
               key={table.id}
               data-table-id={table.id}
               onClick={(event) => onClickTableChip(event, table)}
             >
-              {table.name}
-              {APP_STATE.adminSettings.showTableChipInfo && (
+              <div>{table.name}</div>
+              {APP_STATE.adminSettings.showTableChipInfo && (<>
                 <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
-                  {table.guest.name} {table.guest.partySize > 1 && (<>
-                    : <span className="text-gray-300">{table.guest.partySize}</span>
-                  </>)}
+                  {table.guest.name}
                 </div>
-              )}
+                {table.guest.partySize > 1 && (<>
+                  <div className="text-gray-300">{table.guest.partySize}</div>
+                </>)}
+              </>)}
             </button>
         )}
       </div>
@@ -91,9 +92,15 @@ export default function TableList() {
       <div className={`${columnItemListStyles}`}>
         {tables
           .filter((table) => table.guest)
-          .sort((A: TableItem, B: TableItem) =>
-            A.number - B.number
-          )
+          .sort((A: TableItem, B: TableItem) => {
+            if (!Helpers.isExpiredVisit(A.guest) && Helpers.isExpiredVisit(B.guest)) {
+              return -1;
+            }
+            if (!Helpers.isExpiredVisit(B.guest) && Helpers.isExpiredVisit(A.guest)) {
+              return 1;
+            }
+            return A.number - B.number;
+          })
           .map((table, index) => (
             <div
               key={table.id}

@@ -6,6 +6,7 @@ import { FeatureFlags, type Guest } from "~/config/AppState";
 import GuestListItem from "../guestListItem/guestListItem";
 import { ArrowsPointingInIcon, ArrowsPointingOutIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { columnItemListStyles, mainColumnContentStyles, mainColumnStyles, mainListSwimLaneHeader } from '~/util/GlobalStylesUtil';
+import { Helpers } from '~/util/Helpers';
 
 export default function GuestList() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -45,9 +46,15 @@ export default function GuestList() {
     return (
       <div className={`${columnItemListStyles}`}>
         {APP_STATE.guestList
-          .sort((A: Guest, B: Guest) =>
-            A.createdAt - B.createdAt
-          )
+          .sort((A: Guest, B: Guest) => {
+            if (!Helpers.isExpiredVisit(A) && Helpers.isExpiredVisit(B)) {
+              return -1;
+            }
+            if (!Helpers.isExpiredVisit(B) && Helpers.isExpiredVisit(A)) {
+              return 1;
+            }
+            return A.createdAt - B.createdAt;
+  }         )
           .map((guest: Guest, index: number) =>
             <GuestListItem guest={guest} key={guest.id} index={index}></GuestListItem>
           )

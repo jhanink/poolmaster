@@ -23,7 +23,7 @@ export default function AppMain() {
       {MAIN_TAKEOVER?.editGuest && <EditGuest></EditGuest>}
 
       {!MAIN_TAKEOVER &&
-        <div className={`${styles.mainContent} pt-0 gap-5 mx-3 grow justify-center`}>
+        <div className={`${styles.mainContent} pt-0 gap-5 md:mx-3 grow justify-center`}>
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}

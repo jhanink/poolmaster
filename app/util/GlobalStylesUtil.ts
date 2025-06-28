@@ -39,18 +39,18 @@ export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-200 ${partySizeStyle
 export const largePartyStyle7 = `!bg-cyan-500 !text-black ${partySizeStyles}`;
 export const largePartyStyle8 = `!bg-gray-800 !text-gray-200 ${partySizeStyles}`;
 
-const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl sm:mx-auto md:mx-0'}`;
-
-export const tableChipsStyle = `inline-block m-1 mb-2 rounded-full px-3 text-xs border border-green-800 text-green-600 font-bold`;
+export const tableChipsStyle = `flex gap-2 items-center justify-center rounded-full py-1 px-3 text-xs border border-green-800 text-green-600 font-bold`;
 export const selectedTableChipStyle = `ring-2 ring-white`;
 
 export const formColumnStyles = `COLUMN flex m-1`;
 export const fieldStyles = `flex-1`;
 export const labelStyles = `text-sm text-gray-400 mr-2`;
 export const separatorBarStyles = `border-b border-gray-900 mx-1`;
+
+export const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl sm:mx-auto md:mx-0 md'}`;
 export const mainListSwimLaneHeader = `sticky bg-gray-900 top-[-1px] z-9 md:flex hidden border-b border-gray-950 p-2 text-xl items-center text-slate-400 rounded-t-xl`;
-export const mainColumnStyles = `flex-1 text-center select-none min-w-[350px] max-w-[600px] ${columnBorders}`;
-export const mainColumnContentStyles = `mt-3 px-2`;
+export const mainColumnStyles = `flex-1 text-center select-none min-w-[345px] max-w-[600px] ${columnBorders}`;
+export const mainColumnContentStyles = `mt-3 md:px-2`;
 export const columnItemListStyles = `flex flex-col gap-2`;
 
 export const baseButtonStyles = `inline-flex items-center justify-center text-white py-1 px-5 mt-1 mb-2 ring-1 rounded-full hover:cursor-pointer`;
