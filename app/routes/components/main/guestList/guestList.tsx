@@ -25,15 +25,9 @@ export default function GuestList() {
           <div className="grow">
             <span className="ml-15">Guest List</span>
           </div>
-          {GUEST_EXPAND_ALL ? (
-            <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
+          <div className={`${GUEST_EXPAND_ALL ? `size-5 hover:cursor-pointer text-sky-500` : `text-gray-500 size-5 hover:cursor-pointer hover:text-white`}`} onClick={() => {onClickExpandAll()}}>
             <ArrowsPointingInIcon></ArrowsPointingInIcon>
           </div>
-          ) : (
-            <div className="text-gray-500 size-5 hover:cursor-pointer hover:text-white" onClick={() => {onClickExpandAll()}}>
-            <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
-          </div>
-          )}
           <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
             <PlusIcon></PlusIcon>
           </div>
