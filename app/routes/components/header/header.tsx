@@ -15,9 +15,9 @@ import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
 const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-800 rounded-full hover:cursor-pointer`;
-const dndTargetBaseStyle = `flex justify-center text-gray-500 py-2 pb-2 text-sm select-none`;
-const dndActiveStyle = `bg-green-300 invert`;
-const dndOverStyle = `blur-[2px] bg-white`;
+const dndTargetBaseStyle = `border-2 border-transparent flex justify-center text-gray-500 pt-2 pb-1 text-sm select-none rounded-full mb-1`;
+const dndActiveStyle = `border-2 !border-dashed !border-gray-500 `;
+const dndOverStyle = `border-2 !border-white`;
 const headerStyles = `flex items-center justify-center select-none text-nowrap text-lg text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
 const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 
@@ -76,7 +76,7 @@ export default function AppHeader() {
       <BrandingBar />
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
-          className={`text-lg ${dndTargetBaseStyle} ${canDrop &&  (isOver ? dndOverStyle : dndActiveStyle)}`}>
+          className={`text-lg ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto`}>
           {((Helpers.tablesAssigned(APP_STATE).length + APP_STATE.guestList.length) > 0) && (<>
             {!(SELECTED_LIST_FILTER === 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
