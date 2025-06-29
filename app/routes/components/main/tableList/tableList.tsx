@@ -71,7 +71,7 @@ export default function TableList() {
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full">
           <div className="grow">
-            <span className="ml-5">Table List</span>
+            <span className="ml-5">Tables</span>
           </div>
           {TABLE_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
