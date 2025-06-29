@@ -174,7 +174,7 @@ export default function TableCloseout() {
           <select
             onChange={onChangeTableRate}
             value={SELECTED_RATE.id}
-            className={`${formSelectStyles} text-center !text-base`}
+            className={`${formSelectStyles} text-center !text-xs `}
           >
             {APP_STATE.tableRates
               .filter((tableRate) => tableRate.isActive)
@@ -184,7 +184,7 @@ export default function TableCloseout() {
             }
           </select>
         </div>
-        <div className="text-sm text-gray-500 mt-1 italic">
+        <div className="text-xs text-gray-500 mt-1 italic">
           (S) = Single Player, (F) = Flat Rate
         </div>
       </div>
@@ -205,7 +205,7 @@ export default function TableCloseout() {
             <span className="text-gray-500 mx-2 text-xl">|</span>
             <span className="text-gray-600 text-base"> WORKSHEET </span>
           </div>
-          <div className="my-2 text-gray-300 italic">
+          <div className="my-2 text-sm text-gray-300 italic">
             <span className="text-gray-500">Assigned: </span>{dayjs(new Date(MAIN_TAKEOVER.closeoutTable.guest.assignedAt)).format(DAYJS_DATE_FORMAT)}
           </div>
           {!SELECTED_RATE.tableRateRules.isFlatRate && (
@@ -224,7 +224,7 @@ export default function TableCloseout() {
                     }}
                   />
                 </div>
-                <div className="ml-2 text-center text-gray-500">
+                <div className="ml-2 text-center text-gray-500 text-xs">
                   hrs
                 </div>
               </div>
@@ -277,108 +277,49 @@ export default function TableCloseout() {
                     ) : (
                       <span>{player.name}</span>
                     )}
-                    {index === 0 && (
-                      <div className="inline-block">&nbsp; (Main)</div>
-                    )}
                   </div>
                 </div>
-                <div className="text-sm text-gray-500 text-center">
+                <div className="text-xs text-gray-500 text-center">
                   {playerAssignedAt(player, index)}
                 </div>
 
                 <div className="text-sm mt-2 text-center w-[200px]">
                   {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
                     {SCHEDULE ? (<>
-                      {showMeteredPeriod(METERED_DAY.before) &&  (
+                    {['before', 'during', 'after'].map((period) => {
+                      return showMeteredPeriod(METERED_DAY[period]) &&  (
                         <div>
                           <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                            <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
                             <input
                               type="text"
                               className={`w-[90px] !text-center ${formFieldStyles}`}
                               onChange={(event) => {
-                                player.meteredDay.before.hours = event.target.value;
+                                player.meteredDay[period].hours = event.target.value;
                                 setBillablePlayers([...BILLABLE_PLAYERS]);
                               }}
-                              value={`${player.meteredDay.before.hours}`}
+                              value={`${player.meteredDay[period].hours}`}
                             />
                           </div>
                           <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                            <div className="text-xs text-gray-500 w-[90px] text-center">RATE</div>
                             <input
                               type="text"
                               className={`w-[90px] !text-center ${formFieldStyles}`}
                               maxLength={6}
                               onChange={(event) => {
-                                player.meteredDay.before.rate = event.target.value;
+                                player.meteredDay[period].rate = event.target.value;
                                 setBillablePlayers([...BILLABLE_PLAYERS]);
                               }}
-                              value={`${player.meteredDay.before.rate}`}
+                              value={`${player.meteredDay[period].rate}`}
                             />
                           </div>
                         </div>
-                      )}
-                      {showMeteredPeriod(METERED_DAY.during) && (
-                        <div>
-                          <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              onChange={(event) => {
-                                player.meteredDay.during.hours = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay.during.hours}`}
-                            />
-                          </div>
-                          <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              maxLength={6}
-                              onChange={(event) => {
-                                player.meteredDay.during.rate = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay.during.rate}`}
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {showMeteredPeriod(METERED_DAY.after) && (
-                        <div>
-                          <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              onChange={(event) => {
-                                player.meteredDay.after.hours = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay.after.hours}`}
-                            />
-                          </div>
-                          <div className="px-1 inline-block">
-                            <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              maxLength={6}
-                              onChange={(event) => {
-                                player.meteredDay.after.rate = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay.after.rate}`}
-                            />
-                          </div>
-                        </div>
-                      )}
+                      )
+                    })}
                     </>) : (<>
                       <div className="px-1 inline-block">
-                        <div className="text-sm text-gray-500 w-[90px] text-center">HOURS</div>
+                        <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
                         <input
                           type="text"
                           className={`w-[90px] !text-center ${formFieldStyles}`}
@@ -390,7 +331,7 @@ export default function TableCloseout() {
                         />
                       </div>
                       <div className="px-1 inline-block">
-                        <div className="text-sm text-gray-500 w-[90px] text-center">RATE</div>
+                        <div className="text-xs text-gray-500 w-[90px] text-center">RATE</div>
                         <input
                           type="text"
                           className={`w-[90px] !text-center ${formFieldStyles}`}
@@ -440,7 +381,7 @@ export default function TableCloseout() {
           </>)}
         </div>))}
       </div>
-      <div className="text-xl text-gray-400 my-5">
+      <div className="text-lg text-gray-400 my-5">
         Running Total: &nbsp;
         <span className="text-green-500 text-xl">${playersRunningTotal()}</span>
       </div>
@@ -488,8 +429,8 @@ export default function TableCloseout() {
   const fragmentRateSchedule = () =>  {
     return (<>
       {SCHEDULE && (
-        <div className="inline-block mx-auto text-gray-500 my-2 px-3 pb-1 border rounded-lg border-gray-800">
-          <div>Schedule:</div>
+        <div className="inline-block mx-auto text-gray-500 my-2 px-3 py-1 border rounded-lg border-gray-800">
+          <div className="text-xs">Schedule:</div>
           <div className="text-gray-100">{SCHEDULE.name}</div>
         </div>
       )}
