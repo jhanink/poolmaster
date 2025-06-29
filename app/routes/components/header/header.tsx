@@ -10,7 +10,7 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { CogIcon, EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -68,7 +68,7 @@ export default function AppHeader() {
           </div>
         </div>
         <div
-          className={`${actionIconStyles}`}
+          className={`${actionIconStyles} mr-1`}
           onClick={onClickSettings}>
           <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}/>
         </div>
