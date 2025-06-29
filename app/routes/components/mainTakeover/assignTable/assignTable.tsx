@@ -161,7 +161,7 @@ export default function AssignTable() {
                 OR
               </div>
               <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={onClickReturnToGuestList}>
-                Back to Wait List
+                Back to Guest List
               </button>
             </>)}
           </>}
@@ -172,9 +172,9 @@ export default function AssignTable() {
       show={SHOW_CONFIRM_DELETE}
       dialogTitle={`CONFIRM - MOVE`}
       dialogMessageFn={() => <span className="text-sm">
-        Move Guest
+        Move
         <span className="text-blue-500 font-bold mx-2">{ASSIGNED_TABLE.guest.name.toUpperCase()}</span>
-        back to the Wait List?
+        back to Guest List?
       </span>}
       onConfirm={returnToGuestList}
       onCancel={() => {setShowConfirmDelete(false); exit()}}

@@ -16,7 +16,7 @@ const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
 const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-800 rounded-full hover:cursor-pointer`;
 const dndTargetBaseStyle = `border-2 border-transparent flex justify-center text-gray-500 pt-2 pb-1 text-sm select-none rounded-full mb-1`;
-const dndActiveStyle = `border-2 !border-dashed !border-gray-500 `;
+const dndActiveStyle = `border-2 !border-dashed !border-red-500 `;
 const dndOverStyle = `border-2 !border-white`;
 const headerStyles = `flex items-center justify-center select-none text-nowrap text-lg text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
 const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
@@ -78,7 +78,7 @@ export default function AppHeader() {
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
           className={`text-lg ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto`}>
           {((Helpers.tablesAssigned(APP_STATE).length + APP_STATE.guestList.length) > 0) && (<>
-            {!(SELECTED_LIST_FILTER === 'tablelist') && (
+            {(SELECTED_LIST_FILTER !== 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
                 <div className="flex items-center">
                   <div className="block md:hidden size-6 text-gray-400 mr-2 hover:cursor-pointer hover:text-white"
@@ -94,7 +94,7 @@ export default function AppHeader() {
                 <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
               </div>
             )}
-            {!(SELECTED_LIST_FILTER === 'waitlist') && (
+            {(SELECTED_LIST_FILTER !== 'waitlist') && (
               <div className="flex flex-col items-center justify-center">
                 <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
                   <span className={`${statusPillStyles}`}>
