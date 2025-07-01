@@ -111,16 +111,10 @@ export default function Admin() {
 
   return (
     <div className="text-center" ref={PageTopRef}>
-      {(
-        fragmentExitTakeover(onClickExit, fragmentMenu)
-      )}
-
+      {fragmentExitTakeover(onClickExit, fragmentMenu)}
       <div className="CONTENT bg-black">
-        {(!APP_STATE.modifiedAt || FeatureFlags.SHOW_WELCOME_MESSAGE )&& (
-          fragmentWelcomeMessage()
-        )}
         <div>
-          <h1 className="text-xl text-gray-300 pb-10 pt-3">Admin Console</h1>
+          <h1 className="text-xl text-gray-300 py-3">Admin Console</h1>
         </div>
         <div className="text-center mb-20 inline-block">
           <AdminAccount ref={menuItems1[0].ref}/>

@@ -90,7 +90,7 @@ export default function AppHeader() {
           <div
             className={`${actionIconStyles} mr-1`}
             onClick={onClickQuietMode}>
-            <ViewfinderCircleIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`}/>
+            <ViewfinderCircleIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
           </div>
           <div className="grow text-center">
           {APP_STATE.account?.venue}
@@ -99,7 +99,7 @@ export default function AppHeader() {
         <div
           className={`${actionIconStyles} mr-1`}
           onClick={onClickSettings}>
-          <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`}/>
+          <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`} title="Admin"/>
         </div>
       </div>
       <BrandingBar />
