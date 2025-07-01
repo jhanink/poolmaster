@@ -76,16 +76,9 @@ export default function AppHeader() {
     setSearchParams(SEARCH_PARAMS);
   }
 
-  useEffect(() => {
-    const qm = SEARCH_PARAMS.get('qm');
-    setQuietMode(qm === '1');
-    const lf = SEARCH_PARAMS.get('lf');
-    lf && setSelectedListFilter(lf as ListFilterType);
-  }, [SEARCH_PARAMS]);
-
-
-  return (<>
-      <div className="flex items-center justify-center">
+  const fragmentVenueHeader = () => {
+    return (<>
+      <div className="flex items-center justify-center w-full">
         <div className={`${headerStyles} ml-1 px-2 grow`}>
           <div
             className={`${actionIconStyles} mr-1`}
@@ -102,42 +95,66 @@ export default function AppHeader() {
           <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`} title="Admin"/>
         </div>
       </div>
-      <BrandingBar />
-      {!MAIN_TAKEOVER && <>
-        <div ref={drop as unknown as React.Ref<HTMLDivElement>}
-          className={`${QUIET_MODE && 'mt-50'} ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto text-lg`}>
-            {(SELECTED_LIST_FILTER !== 'tablelist') && (
-              <div className="flex flex-col items-center justify-center">
-                <div className="flex items-center">
-                  {!QUIET_MODE && (
-                    <div className="block md:hidden size-6 text-gray-400 mr-2 hover:cursor-pointer hover:text-white"
-                      onClick={(event) => setMainTakeover({addGuest: true})}>
-                      <PlusIcon></PlusIcon>
-                    </div>
-                  )}
-                  <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
-                    <span className={`${statusPillStyles} text-nowrap`}>
-                      {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
-                    </span>
-                  </div>
-                </div>
-                <div className="mt-2 text-gray-500">Est Wait: {Helpers.averageWaitTime(APP_STATE)}</div>
+    </>)
+  }
+
+  const fragmentListFilters = () => {
+    return (<>
+      {(SELECTED_LIST_FILTER !== 'tablelist') && (
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center">
+            {!QUIET_MODE && (
+              <div className="block md:hidden size-6 text-gray-400 mr-2 hover:cursor-pointer hover:text-white"
+                onClick={(event) => setMainTakeover({addGuest: true})}>
+                <PlusIcon></PlusIcon>
               </div>
             )}
-            {(SELECTED_LIST_FILTER !== 'waitlist') && (
-              <div className="flex flex-col items-center justify-center">
-                <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
-                  <span className={`${statusPillStyles}`}>
-                    {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
-                  </span>
-                </div>
-                <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
-              </div>
-            )}
+            <div className={`${SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
+              <span className={`${statusPillStyles} text-nowrap`}>
+                {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
+              </span>
+            </div>
+          </div>
+          <div className="mt-2 text-gray-500">Est wait: {Helpers.averageWaitTime(APP_STATE)}</div>
         </div>
-        {!QUIET_MODE && (
-          <hr className={`${separatorBarStyles}`}/>
-        )}
-      </>}
+      )}
+      {(SELECTED_LIST_FILTER !== ListFilterTypeEnum.WAITLIST) && (
+        <div className="flex flex-col items-center justify-center">
+          <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
+            <span className={`${statusPillStyles}`}>
+              {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
+            </span>
+          </div>
+          <div className="mt-2 text-gray-500"> &nbsp; Open tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
+        </div>
+      )}
+    </>)
+  }
+
+  useEffect(() => {
+    const qm = SEARCH_PARAMS.get('qm');
+    setQuietMode(qm === '1');
+    const lf = SEARCH_PARAMS.get('lf');
+    lf && setSelectedListFilter(lf as ListFilterType);
+  }, [SEARCH_PARAMS]);
+
+
+  return (<>
+    {fragmentVenueHeader()}
+    <BrandingBar />
+    {QUIET_MODE && (<>
+      <div className="flex items-center justify-center grow pb-20 text-sm">
+        {fragmentListFilters()}
+      </div>
+    </>)}
+    {!MAIN_TAKEOVER && <>
+      {!QUIET_MODE && (<>
+        <div ref={drop as unknown as React.Ref<HTMLDivElement>}
+          className={`${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto text-lg`}>
+            {fragmentListFilters()}
+        </div>
+        <hr className={`${separatorBarStyles}`}/>
+      </>)}
+    </>}
   </>);
 }

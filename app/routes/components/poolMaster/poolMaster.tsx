@@ -95,16 +95,14 @@ export default function AppPoolMaster() {
     };
   }, []);
 
-  return (
-    <>
-      <div style={GLOBAL_ZOOM}>
-        <AppHeader />
+  return (<>
+    <div style={GLOBAL_ZOOM} className={`${QUIET_MODE && 'flex flex-col items-center justify-center grow'}`}>
+      <AppHeader/>
+    </div>
+    {!QUIET_MODE && (
+      <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
+        <AppMain/>
       </div>
-      {!QUIET_MODE && (
-        <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
-          <AppMain />
-        </div>
-      )}
-    </>
-  );
+    )}
+  </>);
 }
