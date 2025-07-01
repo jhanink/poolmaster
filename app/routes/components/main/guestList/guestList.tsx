@@ -23,7 +23,7 @@ export default function GuestList() {
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full gap-3">
           <div className="grow">
-            <span className="ml-15">Guests</span>
+            <span className="ml-15">Waitlist</span>
           </div>
           {GUEST_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
