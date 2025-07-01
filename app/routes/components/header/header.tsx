@@ -77,7 +77,6 @@ export default function AppHeader() {
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
           className={`text-lg ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto`}>
-          {((Helpers.tablesAssigned(APP_STATE).length + APP_STATE.guestList.length) > 0) && (<>
             {(SELECTED_LIST_FILTER !== 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
                 <div className="flex items-center">
@@ -104,7 +103,6 @@ export default function AppHeader() {
                 <div className="mt-2 text-gray-500"> &nbsp; Open Tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
               </div>
             )}
-          </>)}
         </div>
         <hr className={`${separatorBarStyles}`}/>
       </>}
