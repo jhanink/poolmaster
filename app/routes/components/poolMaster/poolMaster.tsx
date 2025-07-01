@@ -100,7 +100,7 @@ export default function AppPoolMaster() {
       <AppHeader/>
     </div>
     {!QUIET_MODE && (
-      <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
+      <div className={`${styles.appContentContainer} grow overflow-y-scroll px-1 md:!px-10`} style={GLOBAL_ZOOM}>
         <AppMain/>
       </div>
     )}

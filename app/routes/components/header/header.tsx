@@ -64,11 +64,14 @@ export default function AppHeader() {
 
   const onClickSettings = () => {
     if (!!MAIN_TAKEOVER) return;
+    if (!!QUIET_MODE) return;
     setSelectedTable(undefined);
     setMainTakeover({adminScreen: true});
   }
 
   const onClickQuietMode = () => {
+    if (!!MAIN_TAKEOVER) return;
+    setSelectedTable(undefined)
     const QM = QUIET_MODE;
     setQuietMode(!QM);
     QM && SEARCH_PARAMS.delete('qm');
@@ -78,7 +81,7 @@ export default function AppHeader() {
 
   const fragmentVenueHeader = () => {
     return (<>
-      <div className="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center w-full select-none">
         <div className={`${headerStyles} ml-1 px-2 grow`}>
           <div
             className={`${actionIconStyles} mr-1`}
