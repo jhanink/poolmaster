@@ -11,7 +11,9 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { EllipsisVerticalIcon, MoonIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
+import { useSearchParams } from "react-router";
+import { useEffect } from "react";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -29,6 +31,7 @@ export default function AppHeader() {
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [QUIET_MODE, setQuietMode] = useAtom(isQuietModeAtom);
+  const [SEARCH_PARAMS, setSearchParams] = useSearchParams();
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: GuestItemTypeKey, // MUST match the KEY from useDrag
@@ -62,7 +65,15 @@ export default function AppHeader() {
 
   const onClickQuietMode = () => {
     setQuietMode(!QUIET_MODE);
+    SEARCH_PARAMS.delete('qm');
+    !QUIET_MODE ? setSearchParams({qm: '1'}, {replace: true}) : setSearchParams(SEARCH_PARAMS, {replace: true});
   }
+
+  useEffect(() => {
+    const qm = SEARCH_PARAMS.get('qm');
+    setQuietMode(qm === '1');
+  }, [SEARCH_PARAMS]);
+
 
   return (<>
       <div className="flex items-center justify-center">
@@ -70,7 +81,7 @@ export default function AppHeader() {
           <div
             className={`${actionIconStyles} mr-1`}
             onClick={onClickQuietMode}>
-            <MoonIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`}/>
+            <ViewfinderCircleIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`}/>
           </div>
           <div className="grow text-center">
           {APP_STATE.account?.venue}
