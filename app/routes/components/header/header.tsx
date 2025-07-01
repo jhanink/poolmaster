@@ -64,9 +64,11 @@ export default function AppHeader() {
   }
 
   const onClickQuietMode = () => {
-    setQuietMode(!QUIET_MODE);
-    SEARCH_PARAMS.delete('qm');
-    !QUIET_MODE ? setSearchParams({qm: '1'}, {replace: true}) : setSearchParams(SEARCH_PARAMS, {replace: true});
+    const QM = QUIET_MODE;
+    setQuietMode(!QM);
+    QM && SEARCH_PARAMS.delete('qm');
+    !QM && SEARCH_PARAMS.set('qm', '1');
+    setSearchParams(SEARCH_PARAMS);
   }
 
   useEffect(() => {
