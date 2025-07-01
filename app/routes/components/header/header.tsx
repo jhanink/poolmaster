@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import {
   type ListFilterType,
+  ListFilterTypeEnum,
   appStateAtom,
   isQuietModeAtom,
   mainTakoverAtom, selectedListFilterAtom,
@@ -51,7 +52,11 @@ export default function AppHeader() {
   const onClickListFilter = (type: ListFilterType) => {
     if (type === SELECTED_LIST_FILTER) {
       setSelectedListFilter('');
+      SEARCH_PARAMS.delete('lf');
+      setSearchParams(SEARCH_PARAMS);
     } else {
+      SEARCH_PARAMS.set('lf', type);
+      setSearchParams(SEARCH_PARAMS);
       setSelectedListFilter(type);
     }
     setSelectedTable(undefined);
@@ -74,6 +79,8 @@ export default function AppHeader() {
   useEffect(() => {
     const qm = SEARCH_PARAMS.get('qm');
     setQuietMode(qm === '1');
+    const lf = SEARCH_PARAMS.get('lf');
+    lf && setSelectedListFilter(lf as ListFilterType);
   }, [SEARCH_PARAMS]);
 
 
