@@ -32,3 +32,4 @@ export const guestExpandAllAtom = atom<boolean>(false);
 export const tableExpandAllAtom = atom<boolean>(false);
 export const manageTablesAtom = atom<boolean>(false);
 export const isSavingAtom = atom<boolean>(false);
+export const isQuietModeAtom = atom<boolean>(false);

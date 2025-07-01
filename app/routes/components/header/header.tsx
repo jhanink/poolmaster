@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import {
   type ListFilterType,
   appStateAtom,
+  isQuietModeAtom,
   mainTakoverAtom, selectedListFilterAtom,
   selectedTableAtom
 } from "~/appStateGlobal/atoms";
@@ -10,7 +11,7 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { EllipsisVerticalIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, MoonIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -20,12 +21,14 @@ const dndActiveStyle = `border-2 !border-dashed !border-red-500 `;
 const dndOverStyle = `border-2 !border-white`;
 const headerStyles = `flex items-center justify-center select-none text-nowrap text-lg text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
 const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
+const quietModeStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 
 export default function AppHeader() {
   const [APP_STATE] = useAtom(appStateAtom);
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
+  const [QUIET_MODE, setQuietMode] = useAtom(isQuietModeAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: GuestItemTypeKey, // MUST match the KEY from useDrag
@@ -57,11 +60,17 @@ export default function AppHeader() {
     setMainTakeover({adminScreen: true});
   }
 
-  return (
-    <div>
+  const onClickQuietMode = () => {
+    setQuietMode(!QUIET_MODE);
+  }
+
+  return (<>
       <div className="flex items-center justify-center">
         <div className={`${headerStyles} ml-1 px-2 grow`}>
-          <div className={`text-transparent size-[20px]`}>
+          <div
+            className={`${actionIconStyles} mr-1`}
+            onClick={onClickQuietMode}>
+            <MoonIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`}/>
           </div>
           <div className="grow text-center">
           {APP_STATE.account?.venue}
@@ -76,14 +85,16 @@ export default function AppHeader() {
       <BrandingBar />
       {!MAIN_TAKEOVER && <>
         <div ref={drop as unknown as React.Ref<HTMLDivElement>}
-          className={`text-lg ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto`}>
+          className={`${QUIET_MODE && 'mt-50'} ${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto text-lg`}>
             {(SELECTED_LIST_FILTER !== 'tablelist') && (
               <div className="flex flex-col items-center justify-center">
                 <div className="flex items-center">
-                  <div className="block md:hidden size-6 text-gray-400 mr-2 hover:cursor-pointer hover:text-white"
-                    onClick={(event) => setMainTakeover({addGuest: true})}>
-                    <PlusIcon></PlusIcon>
-                  </div>
+                  {!QUIET_MODE && (
+                    <div className="block md:hidden size-6 text-gray-400 mr-2 hover:cursor-pointer hover:text-white"
+                      onClick={(event) => setMainTakeover({addGuest: true})}>
+                      <PlusIcon></PlusIcon>
+                    </div>
+                  )}
                   <div className={`${SELECTED_LIST_FILTER === 'waitlist' && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
                     <span className={`${statusPillStyles} text-nowrap`}>
                       {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
@@ -104,8 +115,9 @@ export default function AppHeader() {
               </div>
             )}
         </div>
-        <hr className={`${separatorBarStyles}`}/>
+        {!QUIET_MODE && (
+          <hr className={`${separatorBarStyles}`}/>
+        )}
       </>}
-    </div>
-  );
+  </>);
 }

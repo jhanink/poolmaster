@@ -9,7 +9,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import AppHeader from "../header/header";
 import AppMain from "../main/main";
 import styles from "./poolMasterStyles.module.css";
-import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, isQuietModeAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { GLOBAL_ZOOM } from "~/util/GlobalStylesUtil";
 
@@ -22,6 +22,7 @@ const CONNECTION_RETRY_INTERVAL = 5000;
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [QUIET_MODE] = useAtom(isQuietModeAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
 
@@ -99,9 +100,11 @@ export default function AppPoolMaster() {
       <div style={GLOBAL_ZOOM}>
         <AppHeader />
       </div>
-      <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
-        <AppMain />
-      </div>
+      {!QUIET_MODE && (
+        <div className={`${styles.appContentContainer} grow overflow-y-scroll`} style={GLOBAL_ZOOM}>
+          <AppMain />
+        </div>
+      )}
     </>
   );
 }
