@@ -146,7 +146,7 @@ export default function AppHeader() {
     {fragmentVenueHeader()}
     <BrandingBar />
     {QUIET_MODE && (<>
-      <div className="flex items-center justify-center grow pb-20 text-sm">
+      <div className="flex items-center justify-center grow pb-20 text-sm select-none">
         {fragmentListFilters()}
       </div>
     </>)}
