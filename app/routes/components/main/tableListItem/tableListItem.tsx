@@ -38,7 +38,6 @@ export default function TableListItem(props: {
     }
 
     const onClickCloseExpanded = (event: React.MouseEvent<HTMLDivElement>) => {
-      if (SELECTED_LIST_FILTER === ListFilterTypeEnum.TABLELIST) return;
       setItemExpanded(prev => false);
       setEditForm(prev => false);
       setSelectedTable(undefined as TableItem);
@@ -51,8 +50,13 @@ export default function TableListItem(props: {
       <div className={`${EXPIRED_OVERRIDE} ${guestAssigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
           <div  onClick={onClickCloseExpanded}>
-            <span>{table.name}</span>
-            <div className="absolute top-2 right-0 hover:cursor-pointer">
+            <div className="flex items-center justify-center">
+              <div>{table.name}</div>
+            </div>
+            <div className="text-gray-500 text-xs absolute top-2 right-5">
+              {Helpers.getTableType(APP_STATE, table.tableTypeId).name}
+            </div>
+            <div className="absolute top-2 left-3 hover:cursor-pointer">
               {table.guest && ITEM_EXPANDED && !SELECTED_TABLE && !IS_EXPIRED && <>
                 <div className="text-gray-500">
                   <XMarkIcon aria-hidden="true" className="inline-block text-right mr-3 size-6 hover:stroke-white" />
@@ -60,9 +64,7 @@ export default function TableListItem(props: {
               </>}
             </div>
           </div>
-          <div className="text-gray-500 text-xs italic">
-            {Helpers.getTableType(APP_STATE, table.tableTypeId).name}
-          </div>
+
         </div>
 
         {IS_EXPIRED ? (
