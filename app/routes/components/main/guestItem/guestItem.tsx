@@ -31,7 +31,6 @@ export default function GuestItem(props: {
   const [TIME_ELAPSED, setTimeElapsed] = useState(InitialTimeElapsed);
   const [ITEM_EDIT, setEditItem] = useState(false);
   const [SAVING, setSaving] = useAtom(isSavingAtom);
-  const [GUEST_EXPAND_ALL] = useAtom(guestExpandAllAtom);
 
   const guest = props.guest;
 

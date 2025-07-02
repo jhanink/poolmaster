@@ -38,6 +38,7 @@ export default function GuestListItem(props: {
   useEffect(() => {
     const expand = GUEST_EXPAND_ALL;
     setItemExpanded(expand);
+    console.log('expand all', GUEST_EXPAND_ALL)
 }, [GUEST_EXPAND_ALL]);
 
   drag(dragRef);

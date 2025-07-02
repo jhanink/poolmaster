@@ -15,15 +15,17 @@ export default function GuestList() {
 
   const onClickExpandAll = () => {
     setGuestExpandAll(!GUEST_EXPAND_ALL);
-    console.log(GUEST_EXPAND_ALL)
   }
 
   const fragmentSwimlaneHeader = () => {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full gap-3">
+          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
+            <PlusIcon></PlusIcon>
+          </div>
           <div className="grow">
-            <span className="ml-15">Waitlist</span>
+            <span>Waitlist</span>
           </div>
           {GUEST_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
@@ -34,9 +36,6 @@ export default function GuestList() {
             <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
           </div>
           )}
-          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
-            <PlusIcon></PlusIcon>
-          </div>
         </div>
       </div>
     </>)

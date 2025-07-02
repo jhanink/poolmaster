@@ -3,18 +3,21 @@ import {
   type ListFilterType,
   ListFilterTypeEnum,
   appStateAtom,
+  guestExpandAllAtom,
   isQuietModeAtom,
   mainTakoverAtom, selectedListFilterAtom,
-  selectedTableAtom
+  selectedTableAtom,
+  tableExpandAllAtom
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { EllipsisVerticalIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, HomeIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "react-router";
 import { useEffect } from "react";
+import { AppStorage } from "~/util/AppStorage";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -22,17 +25,20 @@ const filterStyle = `inline-block py-1 px-2 mx-2 border border-gray-800 rounded-
 const dndTargetBaseStyle = `border-2 border-transparent flex justify-center text-gray-500 pt-2 pb-1 text-sm select-none rounded-full mb-1`;
 const dndActiveStyle = `border-2 !border-dashed !border-red-500 `;
 const dndOverStyle = `border-2 !border-white`;
-const headerStyles = `flex items-center justify-center select-none text-nowrap text-lg text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
+const headerStyles = `flex items-center justify-center select-none text-nowrap text-base text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
 const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
-const quietModeStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
+const headerActionIconStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 
 export default function AppHeader() {
-  const [APP_STATE] = useAtom(appStateAtom);
+  const [APP_STATE, setAppState] = useAtom(appStateAtom);
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [QUIET_MODE, setQuietMode] = useAtom(isQuietModeAtom);
   const [SEARCH_PARAMS, setSearchParams] = useSearchParams();
+  const [, setTableExpandAll] = useAtom(tableExpandAllAtom);
+  const [, setGuestExpandAll] = useAtom(guestExpandAllAtom);
+
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: GuestItemTypeKey, // MUST match the KEY from useDrag
@@ -77,23 +83,42 @@ export default function AppHeader() {
     QM && SEARCH_PARAMS.delete('qm');
     !QM && SEARCH_PARAMS.set('qm', '1');
     setSearchParams(SEARCH_PARAMS);
+    setSelectedListFilter('');
+  }
+
+  const onClickHome = async () => {
+    const appState = await AppStorage.getAppStateRemote();
+    setAppState(appState);
+    setSearchParams({});
+    setSelectedListFilter('');
+    setMainTakeover(undefined);
+    setSelectedTable(undefined);
+    setTableExpandAll(false);
+    setGuestExpandAll(false);
   }
 
   const fragmentVenueHeader = () => {
     return (<>
       <div className="flex items-center justify-center w-full select-none">
-        <div className={`${headerStyles} ml-1 px-2 grow`}>
-          <div
-            className={`${actionIconStyles} mr-1`}
-            onClick={onClickQuietMode}>
-            <ViewfinderCircleIcon className={`${quietModeStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
-          </div>
-          <div className="grow text-center">
-          {APP_STATE.account?.venue}
-          </div>
-        </div>
         <div
-          className={`${actionIconStyles} mr-1`}
+            className={`${actionIconStyles} ml-3 mr-1`}
+            onClick={onClickQuietMode}>
+            <ViewfinderCircleIcon className={`${headerActionIconStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
+          </div>
+        <div className={`${headerStyles} ml-1 px-2 grow`}>
+          <div className="grow text-center ml-7">
+            {APP_STATE.account?.venue}
+          </div>
+          <div
+          className={`${actionIconStyles} ml-2`}
+          onClick={onClickHome}
+          >
+          <HomeIcon className={`${headerActionIconStyles}`} title="Refresh"/>
+        </div>
+        </div>
+
+        <div
+          className={`${actionIconStyles} ml-1 mr-2`}
           onClick={onClickSettings}>
           <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`} title="Admin"/>
         </div>
