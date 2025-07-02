@@ -114,11 +114,11 @@ export default function AppHeader() {
             )}
             <div className={`${SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
               <span className={`${statusPillStyles} text-nowrap`}>
-                {APP_STATE.guestList.length} <span className="ml-1 capitalize">Guests</span>
+                {APP_STATE.guestList.length} <span className="ml-1 capitalize">Waiting</span>
               </span>
             </div>
           </div>
-          <div className="mt-2 text-gray-500">Est wait: {Helpers.averageWaitTime(APP_STATE)}</div>
+          <div className="mt-2 text-gray-500">Est wait: <span className="text-gray-300 text-xs">{Helpers.averageWaitTime(APP_STATE)}</span></div>
         </div>
       )}
       {(SELECTED_LIST_FILTER !== ListFilterTypeEnum.WAITLIST) && (
@@ -128,7 +128,7 @@ export default function AppHeader() {
               {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
             </span>
           </div>
-          <div className="mt-2 text-gray-500"> &nbsp; Open tables: {Helpers.tablesAvailable(APP_STATE).length}</div>
+          <div className="mt-2 text-gray-500"> &nbsp; Tables Open: <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
         </div>
       )}
     </>)
