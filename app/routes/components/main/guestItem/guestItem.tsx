@@ -102,7 +102,7 @@ export default function GuestItem(props: {
     return (<>
       <hr className="border-gray-900 mt-3 mx-1"/>
       <div className="text-gray-500 mt-1 mx-6 text-center uppercase">
-        <span className="italic mr-1">Visit</span> <span className="text-gray-300">Info</span>
+        <span className="mr-1">Visit</span> <span className="text-gray-300">Info</span>
       </div>
       <div className="text-sm mx-3">
         <div className="">

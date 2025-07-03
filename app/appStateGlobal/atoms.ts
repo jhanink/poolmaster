@@ -18,6 +18,7 @@ export type MainTakeover = {
   addGuest?: boolean,
   editGuest?: Guest,
   reservationsScreen?: boolean,
+  homeRedirect?: boolean,
 }
 
 export const mainTakoverAtom = atom<MainTakeover | undefined>(undefined as MainTakeover);

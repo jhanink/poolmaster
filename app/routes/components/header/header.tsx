@@ -3,11 +3,9 @@ import {
   type ListFilterType,
   ListFilterTypeEnum,
   appStateAtom,
-  guestExpandAllAtom,
   isQuietModeAtom,
   mainTakoverAtom, selectedListFilterAtom,
   selectedTableAtom,
-  tableExpandAllAtom
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
@@ -17,7 +15,6 @@ import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
 import { EllipsisVerticalIcon, HomeIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "react-router";
 import { useEffect } from "react";
-import { AppStorage } from "~/util/AppStorage";
 
 const statusPillStyles = `mx-1 px-1 text-nowrap`;
 const selectedFilterStyle = `ring-2 ring-white border-transparent`;
@@ -30,15 +27,12 @@ const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gra
 const headerActionIconStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 
 export default function AppHeader() {
-  const [APP_STATE, setAppState] = useAtom(appStateAtom);
+  const [APP_STATE] = useAtom(appStateAtom);
   const [SELECTED_LIST_FILTER, setSelectedListFilter] = useAtom(selectedListFilterAtom);
   const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [QUIET_MODE, setQuietMode] = useAtom(isQuietModeAtom);
   const [SEARCH_PARAMS, setSearchParams] = useSearchParams();
-  const [, setTableExpandAll] = useAtom(tableExpandAllAtom);
-  const [, setGuestExpandAll] = useAtom(guestExpandAllAtom);
-
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: GuestItemTypeKey, // MUST match the KEY from useDrag
@@ -87,14 +81,7 @@ export default function AppHeader() {
   }
 
   const onClickHome = async () => {
-    const appState = await AppStorage.getAppStateRemote();
-    setAppState(appState);
-    setSearchParams({});
-    setSelectedListFilter('');
-    setMainTakeover(undefined);
-    setSelectedTable(undefined);
-    setTableExpandAll(false);
-    setGuestExpandAll(false);
+    setMainTakeover({homeRedirect: true});
   }
 
   const fragmentVenueHeader = () => {

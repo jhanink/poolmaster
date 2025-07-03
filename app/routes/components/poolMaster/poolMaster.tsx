@@ -12,6 +12,7 @@ import styles from "./poolMasterStyles.module.css";
 import { appStateAtom, isQuietModeAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import { GLOBAL_ZOOM } from "~/util/GlobalStylesUtil";
+import HomeRedirect from '../mainTakeover/homeRedirect/homeRedirect';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -21,7 +22,7 @@ const CONNECTION_RETRY_INTERVAL = 5000;
 
 export default function AppPoolMaster() {
   const [APP_STATE, setAppState] = useAtom(appStateAtom);
-  const [, setMainTakeover] = useAtom(mainTakoverAtom);
+  const [MAIN_TAKEOVER, setMainTakeover] = useAtom(mainTakoverAtom);
   const [QUIET_MODE] = useAtom(isQuietModeAtom);
 
   const ws = useRef<ReconnectingWebSocket | null>(null);
@@ -104,5 +105,7 @@ export default function AppPoolMaster() {
         <AppMain/>
       </div>
     )}
+    {MAIN_TAKEOVER?.homeRedirect && <HomeRedirect></HomeRedirect>}
+
   </>);
 }
