@@ -118,7 +118,7 @@ export default function AppHeader() {
         </div>
 
         <div
-          className={`${actionIconStyles} ml-1 mr-2`}
+          className={`${actionIconStyles} ml-1 mr-2 mt-1`}
           onClick={onClickSettings}>
           <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`} title="Admin"/>
         </div>
