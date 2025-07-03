@@ -76,8 +76,10 @@ export default function AppHeader() {
     setQuietMode(!QM);
     QM && SEARCH_PARAMS.delete('qm');
     !QM && SEARCH_PARAMS.set('qm', '1');
-    setSearchParams(SEARCH_PARAMS);
+    const LF = SELECTED_LIST_FILTER;
+    LF && SEARCH_PARAMS.delete('lf');
     setSelectedListFilter('');
+    setSearchParams(SEARCH_PARAMS);
   }
 
   const onClickHome = async () => {
