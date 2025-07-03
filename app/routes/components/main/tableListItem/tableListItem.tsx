@@ -49,17 +49,17 @@ export default function TableListItem(props: {
     return (
       <div className={`${EXPIRED_OVERRIDE} ${guestAssigned} hover:cursor-pointer relative`} onClick={onClickTable}>
         <div className="uppercase text-sm">
-          <div  onClick={onClickCloseExpanded}>
+          <div  onClick={onClickCloseExpanded} className="relative">
             <div className="flex items-center justify-center">
               <div>{table.name}</div>
             </div>
-            <div className="text-gray-500 text-xs absolute top-2 right-5">
+            <div className="text-gray-500 text-xs absolute top-[1px] right-5">
               {Helpers.getTableType(APP_STATE, table.tableTypeId).name}
             </div>
-            <div className="absolute top-2 left-3 hover:cursor-pointer">
+            <div className="absolute top-0 left-3 hover:cursor-pointer">
               {table.guest && ITEM_EXPANDED && !SELECTED_TABLE && !IS_EXPIRED && <>
                 <div className="text-gray-500">
-                  <XMarkIcon aria-hidden="true" className="inline-block text-right mr-3 size-6 hover:stroke-white" />
+                  <XMarkIcon aria-hidden="true" className="inline-block text-right mr-3 size-5 hover:stroke-white" />
                 </div>
               </>}
             </div>

@@ -89,7 +89,7 @@ export default function GuestItem(props: {
       <div className="flex relative">
         {!props.isAssigned && props.itemExpanded && !props.isEditForm && <>
           <div className="flex-1 text-left mb-1 mt-1 text-gray-500" onClick={onClickCloseExpanded}>
-            <XMarkIcon aria-hidden="true" className="inline-block text-right mr-1 size-6 hover:stroke-white" />
+            <XMarkIcon aria-hidden="true" className="inline-block text-right mr-1 size-5 hover:stroke-white" />
           </div>
         </>}
       </div>
