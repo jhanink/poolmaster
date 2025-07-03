@@ -76,10 +76,10 @@ export default function AppHeader() {
     setQuietMode(!QM);
     QM && SEARCH_PARAMS.delete('qm');
     !QM && SEARCH_PARAMS.set('qm', '1');
-    const LF = SELECTED_LIST_FILTER;
-    LF && SEARCH_PARAMS.delete('lf');
     setSelectedListFilter('');
+    SEARCH_PARAMS.delete('lf');
     setSearchParams(SEARCH_PARAMS);
+    QM && setMainTakeover({homeRedirect: true});
   }
 
   const onClickHome = async () => {
