@@ -4,7 +4,7 @@ import GuestItem from "../guestItem/guestItem";
 import React, { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAtom } from "jotai";
-import { appStateAtom, ListFilterTypeEnum, selectedListFilterAtom, selectedTableAtom, tableExpandAllAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, selectedTableAtom, tableExpandAllAtom } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import ExpiredVisit from "../expiredVisit/expiredVisit";
 
@@ -18,7 +18,6 @@ export default function TableListItem(props: {
   }) {
     const [APP_STATE] = useAtom(appStateAtom);
     const [SELECTED_TABLE, setSelectedTable] = useAtom(selectedTableAtom);
-    const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
     const [ITEM_EXPANDED, setItemExpanded] = useState(false);
     const [EDIT_FORM, setEditForm] = useState(false);
     const [TABLE_EXPAND_ALL] = useAtom(tableExpandAllAtom);
