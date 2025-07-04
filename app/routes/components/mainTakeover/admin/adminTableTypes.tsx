@@ -124,7 +124,6 @@ export default function AdminTableTypes(props: {
                     ${!!tableType.forDelete && 'text-rose-500'} ${!!tableType.forAdd && 'text-green-500'}
                     ${formFieldStyles}
                   `}
-                  disabled={tableType.id === DEFAULT_ID}
                   placeholder="Table Type..."
                   maxLength={55}
                   onChange={(event) => {
