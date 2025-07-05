@@ -161,14 +161,14 @@ export default function AdminSettings(props: {
           </div>
           <div className={`${ROW} mt-5`}>
             <div className={`text-gray-400 `}>
-              Show Table Chips ONLY:
+              Show Table List Cards:
             </div>
             <input
               type="checkbox"
               className={`ml-2 size-4`}
-              checked={SETTINGS.showTableChipsOnly}
+              checked={SETTINGS.showTableListCards}
               onChange={(event) => {
-                SETTINGS.showTableChipsOnly = !SETTINGS.showTableChipsOnly;
+                SETTINGS.showTableListCards = !SETTINGS.showTableListCards;
                 setSettings({...SETTINGS});
               }}
             />

@@ -324,7 +324,7 @@ export const Helpers = {
   pluralizeGuestsWaiting: (appState: AppState) => {
     return `guest${appState.guestList.length === 1 ? '' : 's'}`;
   },
-  showTableChipsOnly: (appState: AppState) => {
-    return appState.adminSettings.showTableChipsOnly;
+  showTableListCards: (appState: AppState) => {
+    return appState.adminSettings.showTableListCards;
   },
 }

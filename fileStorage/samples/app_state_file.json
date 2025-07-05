@@ -20,7 +20,7 @@
     "largePartySize": 5,
     "largePartyStyle": 3,
     "showTableChipInfo": false,
-    "showTableChipsOnly": false
+    "showTableListCards": false
   },
   "tableRates": [
     {
