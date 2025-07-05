@@ -12,7 +12,7 @@ import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { EllipsisVerticalIcon, HomeIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "react-router";
 import { useEffect } from "react";
 
@@ -82,10 +82,6 @@ export default function AppHeader() {
     QM && setMainTakeover({homeRedirect: true});
   }
 
-  const onClickHome = async () => {
-    setMainTakeover({homeRedirect: true});
-  }
-
   const fragmentVenueHeader = () => {
     return (<>
       <div className="flex items-center justify-center w-full select-none">
@@ -95,15 +91,9 @@ export default function AppHeader() {
             <ViewfinderCircleIcon className={`${headerActionIconStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
           </div>
         <div className={`${headerStyles} ml-1 px-2 grow`}>
-          <div className="grow text-center ml-7">
+          <div className="grow text-center">
             {APP_STATE.account?.venue}
           </div>
-          <div
-          className={`${actionIconStyles} ml-2`}
-          onClick={onClickHome}
-          >
-          <HomeIcon className={`${headerActionIconStyles}`} title="Refresh"/>
-        </div>
         </div>
 
         <div
