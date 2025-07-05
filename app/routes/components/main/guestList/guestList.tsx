@@ -21,21 +21,21 @@ export default function GuestList() {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full gap-3">
-          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
-            <PlusIcon></PlusIcon>
-          </div>
+          {GUEST_EXPAND_ALL ? (
+            <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
+              <ArrowsPointingInIcon></ArrowsPointingInIcon>
+            </div>
+          ) : (
+            <div className="text-gray-500 size-5 hover:cursor-pointer hover:text-white" onClick={() => {onClickExpandAll()}}>
+              <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
+            </div>
+          )}
           <div className="grow">
             <span>Waitlist</span>
           </div>
-          {GUEST_EXPAND_ALL ? (
-            <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
-            <ArrowsPointingInIcon></ArrowsPointingInIcon>
+          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
+            <PlusIcon></PlusIcon>
           </div>
-          ) : (
-            <div className="text-gray-500 size-5 hover:cursor-pointer hover:text-white" onClick={() => {onClickExpandAll()}}>
-            <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
-          </div>
-          )}
         </div>
       </div>
     </>)

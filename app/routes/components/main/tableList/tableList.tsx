@@ -70,18 +70,21 @@ export default function TableList() {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full">
-          <div className="grow">
-            <span className="ml-5">Tables</span>
-          </div>
           {TABLE_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
-            <ArrowsPointingInIcon></ArrowsPointingInIcon>
-          </div>
+              <ArrowsPointingInIcon></ArrowsPointingInIcon>
+            </div>
           ) : (
             <div className="text-gray-500 size-5 hover:cursor-pointer hover:text-white" onClick={() => {onClickExpandAll()}}>
+              <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
+            </div>
+          )}
+          <div className="grow">
+            Tables
+          </div>
+          <div className="text-transparent size-5">
             <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
           </div>
-          )}
         </div>
       </div>
     </>)
@@ -91,7 +94,7 @@ export default function TableList() {
     return (
       <div className={`${columnItemListStyles}`}>
         {tables
-          .filter((table) => table.guest && (!Helpers.showTableListCards(APP_STATE) ? table.id === SELECTED_TABLE?.id : true))
+          .filter((table) => table.guest && (TABLE_EXPAND_ALL || (!Helpers.showTableListCards(APP_STATE) ? table.id === SELECTED_TABLE?.id : true)))
           .sort((A: TableItem, B: TableItem) => {
             if (!Helpers.isExpiredVisit(A.guest) && Helpers.isExpiredVisit(B.guest)) {
               return -1;
