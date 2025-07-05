@@ -80,7 +80,7 @@ export default function TableList() {
             </div>
           )}
           <div className="grow">
-            Tables
+            <span>Tables: <span className="text-gray-300 ml-2">{Helpers.tablesAssigned(APP_STATE).length}</span></span>
           </div>
           <div className="text-transparent size-5">
             <ArrowsPointingOutIcon></ArrowsPointingOutIcon>

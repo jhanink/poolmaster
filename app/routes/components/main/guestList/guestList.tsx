@@ -31,7 +31,7 @@ export default function GuestList() {
             </div>
           )}
           <div className="grow">
-            <span>Waitlist</span>
+            <span>Waitlist: <span className="text-gray-300 ml-2">{APP_STATE.guestList.length}</span></span>
           </div>
           <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
             <PlusIcon></PlusIcon>
