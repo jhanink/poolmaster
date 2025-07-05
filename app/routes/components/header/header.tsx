@@ -170,7 +170,7 @@ export default function AppHeader() {
           className={`${dndTargetBaseStyle} ${canDrop && (isOver ? dndOverStyle : dndActiveStyle)} max-w-[1220px] mx-auto text-lg`}>
             {fragmentListFilters()}
         </div>
-        <hr className={`${separatorBarStyles}`}/>
+        <hr className={`${separatorBarStyles} mx-1`}/>
       </>)}
     </>}
   </>);

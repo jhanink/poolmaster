@@ -8,6 +8,7 @@ import Admin from "../mainTakeover/admin/admin";
 import AddGuest from "../mainTakeover/addGuest/addGuest";
 import EditGuest from "../mainTakeover/editGuest/editGuest";
 import styles from "./mainStyles.module.css"
+import { separatorBarStyles } from "~/util/GlobalStylesUtil";
 
 export default function AppMain() {
   const [SELECTED_LIST_FILTER] = useAtom(selectedListFilterAtom);
@@ -27,6 +28,9 @@ export default function AppMain() {
           {(SELECTED_LIST_FILTER !== "tablelist") && (
             <GuestList></GuestList>
           )}
+
+          <hr className={`${separatorBarStyles} mt-4`}/>
+
           {(SELECTED_LIST_FILTER !== "waitlist") && (
             <TableList></TableList>
           )}

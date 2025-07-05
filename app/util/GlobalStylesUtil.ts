@@ -45,7 +45,7 @@ export const selectedTableChipStyle = `ring-2 ring-white`;
 export const formColumnStyles = `COLUMN flex m-1`;
 export const fieldStyles = `flex-1`;
 export const labelStyles = `text-sm text-gray-400 mr-2`;
-export const separatorBarStyles = `border-b border-gray-900 mx-1`;
+export const separatorBarStyles = `border-transparent border-t-gray-900 h-0`;
 
 export const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl sm:mx-auto md:mx-0 md'}`;
 export const mainListSwimLaneHeader = `sticky bg-gray-900 top-[-1px] z-9 md:flex hidden border-b border-gray-950 p-2 text-xl items-center text-slate-400 rounded-t-xl`;
