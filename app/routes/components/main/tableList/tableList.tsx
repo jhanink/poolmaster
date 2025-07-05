@@ -91,7 +91,7 @@ export default function TableList() {
     return (
       <div className={`${columnItemListStyles}`}>
         {tables
-          .filter((table) => table.guest)
+          .filter((table) => table.guest && (Helpers.showTableChipsOnly(APP_STATE) ? table.id === SELECTED_TABLE?.id : true))
           .sort((A: TableItem, B: TableItem) => {
             if (!Helpers.isExpiredVisit(A.guest) && Helpers.isExpiredVisit(B.guest)) {
               return -1;
