@@ -19,7 +19,8 @@
   "adminSettings": {
     "largePartySize": 5,
     "largePartyStyle": 3,
-    "showTableChipInfo": false
+    "showTableChipInfo": false,
+    "showTableChipsOnly": false
   },
   "tableRates": [
     {

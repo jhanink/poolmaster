@@ -40,6 +40,7 @@ export interface AdminSettings {
   largePartySize: number,
   largePartyStyle: number,
   showTableChipInfo: boolean,
+  showTableChipsOnly: boolean,
 }
 
 export interface Account {
@@ -207,6 +208,7 @@ export const DefaultSettings: AdminSettings = {
   largePartySize: 20,
   largePartyStyle: ID_1,
   showTableChipInfo: false,
+  showTableChipsOnly: false,
 }
 
 export const RateScheduleDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
