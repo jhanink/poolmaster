@@ -107,7 +107,7 @@ export default function AppHeader() {
 
   const fragmentListFilters = () => {
     return (<>
-      <div className={`flex items-center justify-center ${QUIET_MODE && 'md:scale-125'}`}>
+      <div className={`flex items-center justify-center md:scale-125`}>
         {(SELECTED_LIST_FILTER !== 'tablelist') && (
           <div className="flex flex-col items-center justify-center">
             <div className="flex items-center">
