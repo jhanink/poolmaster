@@ -123,7 +123,7 @@ export default function AppHeader() {
                 </span>
               </div>
             </div>
-            <div className="mt-2 text-gray-500 text-xs">Ave - <span className="text-gray-300 text-xs">{Helpers.averageWaitTime(APP_STATE)}</span></div>
+            <div className="mt-2 md:mt-0 text-gray-500 text-xs">Ave - <span className="text-gray-300 text-xs">{Helpers.averageWaitTime(APP_STATE)}</span></div>
           </div>
         )}
         {(SELECTED_LIST_FILTER !== ListFilterTypeEnum.WAITLIST) && (
@@ -133,7 +133,7 @@ export default function AppHeader() {
                 {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
               </span>
             </div>
-            <div className="mt-2 text-gray-500 text-xs"> &nbsp; Open - <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
+            <div className="mt-2 md:mt-0 text-gray-500 text-xs"> &nbsp; Open - <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
           </div>
         )}
       </div>
