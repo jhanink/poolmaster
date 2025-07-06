@@ -41,9 +41,8 @@ export default function AdminSettings(props: {
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
             <div>Settings</div>
-          </div>
+            <div className="italic text-sm">App settings</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

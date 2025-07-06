@@ -115,6 +115,7 @@ export default function AdminUsageTypes(props: {
             <div className="pr-2">Usage Types</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
+          <div className="italic text-sm">Usage name, rate, indicators</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

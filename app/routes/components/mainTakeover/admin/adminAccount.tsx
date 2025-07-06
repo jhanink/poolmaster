@@ -39,9 +39,8 @@ export default function AdminAccount(props: {
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
       <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
         <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
-            <div>Account</div>
-          </div>
+          <div>Account</div>
+          <div className="italic text-sm">Venue and account info</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

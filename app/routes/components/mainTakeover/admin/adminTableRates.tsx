@@ -94,6 +94,7 @@ export default function AdminTableRates(props: {
             <div className="pr-2">Table Rates</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
+          <div className="italic text-sm">Rates, minimums, player limits</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

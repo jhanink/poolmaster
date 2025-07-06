@@ -81,6 +81,9 @@ export default function AdminRateSchedules(props: {
             <div className="pr-2">Rate Schedules</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
+          <div>
+            <div className="italic text-sm">Variable day rate schedules</div>
+          </div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

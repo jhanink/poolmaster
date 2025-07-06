@@ -87,6 +87,7 @@ export default function AdminTables(props: {
             <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
             <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
           </div>
+          <div className="italic text-sm">Table name, type, and rate</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>

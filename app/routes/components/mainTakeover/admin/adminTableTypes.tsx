@@ -91,6 +91,7 @@ export default function AdminTableTypes(props: {
             <div className="pr-2">Table Types</div>
             <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
           </div>
+          <div className="italic text-sm">Table type and associated rate</div>
         </div>
         <div className={`${ADMIN_ACTIONS}`}>
           <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
