@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
-import { DEFAULT_ID, SYNTHETIC_DEFAULT_ID, SYNTHETIC_MAP_KEY, type TableItem, type TableType } from "~/config/AppState";
+import { SYNTHETIC_DEFAULT_ID, SYNTHETIC_MAP_KEY, type TableItem, type TableType } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
 import { actionButtonStyles, buttonHoverRing, tableChipsStyle } from "~/util/GlobalStylesUtil";
 import { Helpers } from "~/util/Helpers";
@@ -99,6 +99,9 @@ export default function AssignTable() {
       <div className="border border-gray-800 rounded-xl py-3 mt-2 text-center min-w-[300px] max-w-[768px]">
         <div className="CONTENT">
           {!tables.length && <>
+            <div className={`text-green-700 uppercase text-xl`}>
+                <span className="text-gray-400">Guest</span> | {MAIN_TAKEOVER.assignTableGuest?.name}
+            </div>
             <div className="text-gray-500 text-sm p-3 uppercase">
               No open tables available
             </div>
@@ -123,7 +126,10 @@ export default function AssignTable() {
                 to an open table
                 <div className="my-5 text-gray-300 text-base flex items-center justify-center gap-1">
                   <div className={`inline-block p-2 px-6 border border-gray-800 rounded-lg`}>
-                    <span className="text-gray-500">Prefers:</span> {fragmentTableOrTypeList()}
+                    {TABLE_TYPE_ID === (!guest.prefersTable && guest.tableOrTableTypeId) && (
+                      <span className="text-gray-500">Prefers:</span>
+                    )}
+                    {fragmentTableOrTypeList()}
                   </div>
                 </div>
               </div>
@@ -156,16 +162,16 @@ export default function AssignTable() {
                 )
               }
             </div>
-            {ASSIGNED_TABLE && (<>
-              <div className="my-5 text-gray-500 text-base">
-                OR
-              </div>
-              <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={onClickReturnToGuestList}>
-                Back to Guest List
-              </button>
-            </>)}
           </>}
         </div>
+        {ASSIGNED_TABLE && (<>
+          <div className="my-5 text-gray-500 text-base">
+            OR
+          </div>
+          <button disabled={SAVING} className={`!text-gray-500 !text-sm ${actionButtonStyles}`} onClick={onClickReturnToGuestList}>
+            Move back to Waitlist
+          </button>
+        </>)}
       </div>
     </div>
     <ModalConfirm
@@ -174,7 +180,7 @@ export default function AssignTable() {
       dialogMessageFn={() => <span className="text-sm">
         Move
         <span className="text-blue-500 font-bold mx-2">{ASSIGNED_TABLE.guest.name.toUpperCase()}</span>
-        back to Guest List?
+        back to Waitlist?
       </span>}
       onConfirm={returnToGuestList}
       onCancel={() => {setShowConfirmDelete(false); exit()}}
