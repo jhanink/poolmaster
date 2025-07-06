@@ -3,16 +3,18 @@ import {
   type ListFilterType,
   ListFilterTypeEnum,
   appStateAtom,
+  guestExpandAllAtom,
   isQuietModeAtom,
   mainTakoverAtom, selectedListFilterAtom,
   selectedTableAtom,
+  tableExpandAllAtom,
 } from "~/appStateGlobal/atoms";
 import { Helpers } from "~/util/Helpers";
 import { useDrop } from "react-dnd";
 import { GuestItemTypeKey, type Guest } from "~/config/AppState";
 import BrandingBar from "../brandingBar/brandingBar";
 import { actionIconStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { EllipsisVerticalIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowsPointingInIcon, ArrowsPointingOutIcon, EllipsisVerticalIcon, PlusIcon, ViewfinderCircleIcon } from "@heroicons/react/24/outline";
 import { useSearchParams } from "react-router";
 import { useEffect } from "react";
 
@@ -25,6 +27,7 @@ const dndOverStyle = `border-2 !border-white`;
 const headerStyles = `flex items-center justify-center select-none text-nowrap text-base text-slate-400 rounded-full bg-gray-900 mt-2 py-1 mb-1`;
 const adminCogStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
 const headerActionIconStyles = `size-[20px] relative top-[1px] hover:text-white text-gray-500`;
+const listFilterIcons = `block md:hidden text-gray-400 hover:cursor-pointer hover:text-white`;
 
 export default function AppHeader() {
   const [APP_STATE] = useAtom(appStateAtom);
@@ -33,6 +36,8 @@ export default function AppHeader() {
   const [, setSelectedTable] = useAtom(selectedTableAtom);
   const [QUIET_MODE, setQuietMode] = useAtom(isQuietModeAtom);
   const [SEARCH_PARAMS, setSearchParams] = useSearchParams();
+  const [TABLE_EXPAND_ALL, setTableExpandAll] = useAtom(tableExpandAllAtom);
+  const [GUEST_EXPAND_ALL, setGuestExpandAll] = useAtom(guestExpandAllAtom);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: GuestItemTypeKey, // MUST match the KEY from useDrag
@@ -82,14 +87,20 @@ export default function AppHeader() {
     QM && setMainTakeover({homeRedirect: true});
   }
 
+  const onClickExpandAll = () => {
+    setTableExpandAll(!TABLE_EXPAND_ALL);
+    setGuestExpandAll(!GUEST_EXPAND_ALL);
+  }
+
   const fragmentVenueHeader = () => {
     return (<>
       <div className="flex items-center justify-center w-full select-none">
         <div
-            className={`${actionIconStyles} ml-3 mr-1`}
-            onClick={onClickQuietMode}>
-            <ViewfinderCircleIcon className={`${headerActionIconStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
-          </div>
+          className={`${actionIconStyles} ml-3 mr-1`}
+          onClick={onClickQuietMode}
+        >
+          <ViewfinderCircleIcon className={`${headerActionIconStyles} ${QUIET_MODE && 'text-white'}`} title="Quiet Mode"/>
+        </div>
         <div className={`${headerStyles} ml-1 px-2 grow`}>
           <div className="grow text-center">
             {APP_STATE.account?.venue}
@@ -98,7 +109,8 @@ export default function AppHeader() {
 
         <div
           className={`${actionIconStyles} ml-1 mr-2 mt-1`}
-          onClick={onClickSettings}>
+          onClick={onClickSettings}
+        >
           <EllipsisVerticalIcon className={`${adminCogStyles} ${MAIN_TAKEOVER?.adminScreen && 'text-white'}`} title="Admin"/>
         </div>
       </div>
@@ -109,7 +121,7 @@ export default function AppHeader() {
     return (<>
       <div className={`flex justify-center md:scale-125`}>
         {!QUIET_MODE && (
-          <div className="block md:hidden size-6 text-gray-400 mt-[2px] mr-2 hover:cursor-pointer hover:text-white"
+          <div className={`${listFilterIcons} size-6 mt-[2px] mr-2`}
             onClick={(event) => setMainTakeover({addGuest: true})}>
             <PlusIcon></PlusIcon>
           </div>
@@ -134,6 +146,15 @@ export default function AppHeader() {
               </span>
             </div>
             <div className="mt-2 md:mt-1 text-gray-500 text-xs"> &nbsp; Open - <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
+          </div>
+        )}
+        {!QUIET_MODE && (
+          <div className={`${listFilterIcons} size-5 mt-[5px] ml-2 ${TABLE_EXPAND_ALL && 'text-sky-500'}`} onClick={() => {onClickExpandAll()}}>
+            {TABLE_EXPAND_ALL ? (
+              <ArrowsPointingInIcon></ArrowsPointingInIcon>
+            ): (
+              <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
+            )}
           </div>
         )}
       </div>
