@@ -1,7 +1,7 @@
-import { DEFAULT_ID, DefaultTableItemData, type TableItem } from "~/config/AppState"
+import { DefaultTableItemData, type TableItem } from "~/config/AppState"
 import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
-import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formInputStyles, formLabelLeftStyles, formSelectStyles, INPUT_FIELD, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
+import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formInputStyles, formLabelLeftStyles, formSelectStyles, INPUT_FIELD, INPUT_FIELD_MED, INPUT_FIELD_SMALL, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
 import { useAtom } from "jotai"
 import { appStateAtom } from "~/appStateGlobal/atoms"
@@ -108,7 +108,7 @@ export default function AdminTables(props: {
                   className={`
                     uppercase
                     ${formInputStyles}
-                    ${INPUT_FIELD}
+                    ${INPUT_FIELD_MED}
                     ${!!table.forDelete && 'text-rose-500'}
                     ${!!table.forAdd && 'text-green-500'}
                   `}
@@ -122,24 +122,22 @@ export default function AdminTables(props: {
                   />
               </div>
             </div>
-            <div className={`${ROW}`}>
-              <div className={`text-nowrap ${!!table.forDelete && 'text-rose-500'} ${!!table.forAdd && 'text-green-500'}`}>
-                <div className="text-gray-400 mr-2">
-                  Order:
-                </div>
-                <input
-                  className={`
-                    ${formInputStyles}
-                    ${INPUT_FIELD}
-                  `}
-                  maxLength={3}
-                  onChange={(event) => {
-                    table.number = Number(event.target.value);
-                    setTables([...TABLES]);
-                  }}
-                  value={table.number}
-                  />
+            <div className={`${ROW} items-center text-nowrap ${!!table.forDelete && 'text-rose-500'} ${!!table.forAdd && 'text-green-500'}`}>
+              <div className="text-gray-400 mr-2">
+                Order:
               </div>
+              <input
+                className={`
+                  ${formInputStyles}
+                  ${INPUT_FIELD_SMALL}
+                `}
+                maxLength={3}
+                onChange={(event) => {
+                  table.number = Number(event.target.value);
+                  setTables([...TABLES]);
+                }}
+                value={table.number}
+                />
             </div>
             <div className={`${ROW}`}>
               <div className={`${formLabelLeftStyles} ${table.isActive? 'text-green-500':''}`}>

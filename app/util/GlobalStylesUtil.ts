@@ -27,6 +27,8 @@ export const actionIconStyles = `size-5 text-gray-600 hover:cursor-pointer hover
 export const ITEM = `mb-3 pb-3 pt-2 pl-2 border border-gray-800 rounded-lg`;
 export const ROW = `flex items-center max-w-[295px]`;
 export const INPUT_FIELD = `ml-2 w-[130px]`;
+export const INPUT_FIELD_MED = `ml-2 w-[230px]`;
+export const INPUT_FIELD_SMALL = `ml-2 w-[40px]`;
 
 export const partySizeStyles = `text-nowrap inline-block px-3 bg-gray-950 border border-gray-800 rounded-full`;
 export const smallPartyStyle = `!bg-transparent !text-gray-400 !border-gray-800 ${partySizeStyles}`;
