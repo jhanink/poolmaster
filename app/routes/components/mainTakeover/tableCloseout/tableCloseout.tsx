@@ -201,9 +201,9 @@ export default function TableCloseout() {
     return (
         <div className="text-gray-400 mt-5">
           <div className="flex items-center justify-center">
-            <span className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name} </span>
-            <span className="text-gray-500 mx-2 text-xl">|</span>
-            <span className="text-gray-600 text-base"> WORKSHEET </span>
+            <div className="text-green-500 text-2xl">{MAIN_TAKEOVER.closeoutTable.name}</div>
+            <div className="text-gray-500 mx-2 text-xl">|</div>
+            <div className="text-gray-600 text-base">WORKSHEET</div>
           </div>
           <div className="my-2 text-sm text-gray-300 italic">
             <span className="text-gray-500">Assigned: </span>{dayjs(new Date(MAIN_TAKEOVER.closeoutTable.guest.assignedAt)).format(DAYJS_DATE_FORMAT)}

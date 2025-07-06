@@ -72,7 +72,7 @@ export default function AdminActions() {
         <div className={`${ITEM} ${ROW} ${borderColor} text-xl`}>
           <span className="w-[175px] text-left">
             <button className={`${actionButtonStyles}`} onClick={() => {onClickAction(ACTION_ENUM.CLEAR_GUEST_LIST)}}>
-              Clear GUEST List
+              Clear Waitlist
             </button>
           </span>
           {APP_STATE.guestList.length}
@@ -80,7 +80,7 @@ export default function AdminActions() {
         <div className={`${ITEM} ${ROW} ${borderColor} text-xl`}>
           <span className="w-[175px] text-left">
             <button className={`${actionButtonStyles}`} onClick={() => {onClickAction(ACTION_ENUM.CLEAR_TABLE_LIST)}}>
-              Clear TABLE List
+              Clear Table List
             </button>
           </span>
           {Helpers.tablesAssigned(APP_STATE).length}
