@@ -33,6 +33,8 @@ import {
   ITEM,
   ROW,
   ADMIN_SECTION_SCROLL_MARGIN_TOP,
+  INPUT_FIELD_LG,
+  INPUT_FIELD_MED,
 } from "~/util/GlobalStylesUtil"
 import { fragmentUsageIndicator } from '../../fragments/fragments'
 
@@ -142,7 +144,7 @@ export default function AdminUsageTypes(props: {
                 <input
                   disabled={usageType.id === DEFAULT_ID}
                   className={`
-                    w-[180px]
+                    ${usageType.id === DEFAULT_ID ? INPUT_FIELD_MED : INPUT_FIELD_LG}
                     ${usageType.id === DEFAULT_ID ? 'select-none text-gray-500' : ''}
                     ${formInputStyles}
                     ${INPUT_FIELD}

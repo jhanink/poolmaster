@@ -1,4 +1,4 @@
-import { actionButtonStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formFieldStyles, formInputStyles, ITEM, labelStyles, ROW } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formFieldStyles, formInputStyles, INPUT_FIELD_MED_LG, ITEM, labelStyles, ROW } from "~/util/GlobalStylesUtil";
 import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
 import { DefaultAccountData } from "~/config/AppState";
 import { useAtom } from "jotai";
@@ -58,7 +58,7 @@ export default function AdminAccount(props: {
               className={`
                 ${formInputStyles}
                 ${formFieldStyles}
-                max-w-3/4
+                ${INPUT_FIELD_MED_LG}
               `}
               value={ACCOUNT.venue}
               placeholder="Account name..."

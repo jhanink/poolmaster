@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { DEFAULT_ID, DefaultRateSchedule, RateScheduleDays, type RateSchedule } from "~/config/AppState";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formFieldStyles, formInputStyles, formLabelLeftStyles, INPUT_FIELD, ITEM, ROW } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formFieldStyles, formInputStyles, formLabelLeftStyles, INPUT_FIELD, INPUT_FIELD_LG, INPUT_FIELD_MED, ITEM, ROW } from "~/util/GlobalStylesUtil";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
@@ -108,8 +108,8 @@ export default function AdminRateSchedules(props: {
                 <input
                   disabled={rateSchedule.id === DEFAULT_ID}
                   className={`
-                    w-[180px]
-                    ${rateSchedule.id === DEFAULT_ID? 'select-none text-gray-500' : ''}
+                    ${rateSchedule.id === DEFAULT_ID ? INPUT_FIELD_MED : INPUT_FIELD_LG}
+                    ${rateSchedule.id === DEFAULT_ID ? 'select-none text-gray-500' : ''}
                     ${formInputStyles} ${INPUT_FIELD} ${!!rateSchedule.forDelete && 'text-rose-500'}
                     ${!!rateSchedule.forAdd && 'text-green-500'}
                     ${formFieldStyles}

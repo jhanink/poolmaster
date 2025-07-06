@@ -10,7 +10,8 @@ import {
   formInputStylesSmall,
   formLabelLeftStyles,
   formSelectStyles,
-  INPUT_FIELD,
+  INPUT_FIELD_LG,
+  INPUT_FIELD_MED,
   ITEM,
   optionStyles,
   ROW
@@ -121,9 +122,8 @@ export default function AdminTableRates(props: {
               <div className={`text-nowrap ${!!tableRate.forDelete && 'text-rose-500'} ${!!tableRate.forAdd && 'text-green-500'}`}>
                 <input
                   className={`
-                    w-[180px]
+                    ${tableRate.id === DEFAULT_ID ? INPUT_FIELD_MED : INPUT_FIELD_LG}
                     ${formInputStyles}
-                    ${INPUT_FIELD}
                     ${!!tableRate.forDelete && 'text-rose-500'}
                     ${!!tableRate.forAdd && 'text-green-500'}
                     ${formFieldStyles}
