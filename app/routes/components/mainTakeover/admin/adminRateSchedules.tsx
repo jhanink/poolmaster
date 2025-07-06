@@ -145,7 +145,7 @@ export default function AdminRateSchedules(props: {
             {(rateSchedule.id !== DEFAULT_ID) && (
               <div className={`${ROW} mt-2`}>
                 <div className={`w-[80px] text-sm text-nowrap ${formLabelLeftStyles} ${rateSchedule.show? '!text-cyan-500':''}`}>
-                  SHOW:
+                  VIEW:
                 </div>
                 <input
                   type="checkbox"

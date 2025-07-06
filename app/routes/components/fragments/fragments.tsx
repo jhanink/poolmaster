@@ -96,7 +96,7 @@ export const fragmentUsageIndicator = (usageType: UsageType) => {
   const iconOnly = usageType.iconOnly;
   return (<>
     {(usageType.id !== DEFAULT_ID) && (<>
-      <div className="text-xs">
+      <div className="text-xs my-3">
         <div className={`inline-block px-2 border rounded-xl border-gray-700`}>
           <div className="flex items-center">
             {(!icon || !iconOnly) && (
