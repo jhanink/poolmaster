@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {EXPIRED_VISIT_HOURS, SyntheticTableTypeAny, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
+import {EXPIRED_VISIT_HOURS, SyntheticTableTypeAny, SystemConfig, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
   type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules,
   type ScheduleEntry, type TableItem, type TableRate, type TableRateRules
 } from "~/config/AppState";
@@ -327,4 +327,9 @@ export const Helpers = {
   showTableListCards: (appState: AppState) => {
     return appState.adminSettings.showTableListCards;
   },
+  debug: (obj: any) => {
+    if (SystemConfig.DEBUG) {
+      console.log(obj);
+    }
+  }
 }

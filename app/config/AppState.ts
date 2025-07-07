@@ -20,6 +20,7 @@ export const FeatureFlags = {
 
 export const SystemConfig = {
   LOG_CONNECTED_CLIENTS: false,
+  DEBUG: false,
 }
 
 export interface AppState {
