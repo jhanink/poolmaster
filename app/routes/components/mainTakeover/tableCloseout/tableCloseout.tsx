@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import dayjs from "dayjs";
 import { appStateAtom, isSavingAtom, mainTakoverAtom, selectedTableAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
-import { actionButtonStyles, formFieldStyles, formSelectStyles, optionStyles, ROW, separatorBarStyles } from "~/util/GlobalStylesUtil";
+import { actionButtonStyles, formFieldStyles, formSelectStyles, INPUT_FIELD_100, INPUT_FIELD_SM, optionStyles, ROW, separatorBarStyles } from "~/util/GlobalStylesUtil";
 import { DAYJS_DATE_FORMAT, Helpers, type TimeElapsed } from "~/util/Helpers";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentExitTakeover, fragmentUsageIndicator } from "../../fragments/fragments";
@@ -44,7 +44,7 @@ export default function TableCloseout() {
     schedule && setSchedule(schedule);
 
     // Use local browser time instead of server time (TZ always current, no conversions needed)
-    setSelectedDay(Helpers.getBusinessDay(APP_STATE, assignedAt));
+    setSelectedDay(SELECTED_DAY || Helpers.getBusinessDay(APP_STATE, assignedAt));
 
     const players: BillablePlayer[] = Helpers.getBillablePlayers(APP_STATE, table, SELECTED_DAY, SELECTED_RATE)
     setBillablePlayers([...players]);
@@ -219,7 +219,7 @@ export default function TableCloseout() {
                 <div className="inline-block shrink">
                   <input
                     type="text"
-                    className={`text-gray-500 w-[100px] !text-center !text-lg ${formFieldStyles}`}
+                    className={`text-gray-500 ${INPUT_FIELD_100} !text-center !text-lg ${formFieldStyles}`}
                     maxLength={6}
                     value={TABLE_HOURS}
                     onChange={(event) => {
@@ -252,7 +252,7 @@ export default function TableCloseout() {
   const fragmentBillablePlayers = () => {
     return (<>
       <div className="WORKSHEET mt-2 text-left ">
-        {BILLABLE_PLAYERS?.map((player, index) => (<div key={player.id}>
+        {BILLABLE_PLAYERS?.map((player, index) => (
           <div key={player.id} className={`PLAYER mb-2 p-4 border ${player.billable? 'border-green-800' : 'border-dashed border-gray-500 opacity-50'} rounded-xl`}>
             <div className="flex">
               <div className="shrink">
@@ -284,43 +284,43 @@ export default function TableCloseout() {
                 <div className="text-sm mt-2 text-center w-[200px]">
                   {!SELECTED_RATE.tableRateRules.isFlatRate && (<>
                     {SCHEDULE ? (<>
-                    {['before', 'during', 'after'].map((period) => {
-                      return showMeteredPeriod(METERED_DAY[period]) &&  (
-                        <div>
-                          <div className="px-1 inline-block">
-                            <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              onChange={(event) => {
-                                player.meteredDay[period].hours = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay[period].hours}`}
-                            />
+                      {['before', 'during', 'after'].map((period, index) => {
+                        return showMeteredPeriod(METERED_DAY[period]) &&  (
+                          <div key={index}>
+                            <div className="px-1 inline-block">
+                              <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
+                              <input
+                                type="text"
+                                className={`${INPUT_FIELD_SM} !text-center ${formFieldStyles}`}
+                                onChange={(event) => {
+                                  player.meteredDay[period].hours = event.target.value;
+                                  setBillablePlayers([...BILLABLE_PLAYERS]);
+                                }}
+                                value={`${player.meteredDay[period].hours}`}
+                              />
+                            </div>
+                            <div className="px-1 inline-block">
+                              <div className="text-xs text-gray-500 w-[90px] text-center">RATE</div>
+                              <input
+                                type="text"
+                                className={`${INPUT_FIELD_SM} !text-center ${formFieldStyles}`}
+                                maxLength={6}
+                                onChange={(event) => {
+                                  player.meteredDay[period].rate = event.target.value;
+                                  setBillablePlayers([...BILLABLE_PLAYERS]);
+                                }}
+                                value={`${player.meteredDay[period].rate}`}
+                              />
+                            </div>
                           </div>
-                          <div className="px-1 inline-block">
-                            <div className="text-xs text-gray-500 w-[90px] text-center">RATE</div>
-                            <input
-                              type="text"
-                              className={`w-[90px] !text-center ${formFieldStyles}`}
-                              maxLength={6}
-                              onChange={(event) => {
-                                player.meteredDay[period].rate = event.target.value;
-                                setBillablePlayers([...BILLABLE_PLAYERS]);
-                              }}
-                              value={`${player.meteredDay[period].rate}`}
-                            />
-                          </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })}
                     </>) : (<>
                       <div className="px-1 inline-block">
                         <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
                         <input
                           type="text"
-                          className={`w-[90px] !text-center ${formFieldStyles}`}
+                          className={`${INPUT_FIELD_SM} !text-center ${formFieldStyles}`}
                           onChange={(event) => {
                             player.hours = event.target.value;
                             setBillablePlayers([...BILLABLE_PLAYERS]);
@@ -332,7 +332,7 @@ export default function TableCloseout() {
                         <div className="text-xs text-gray-500 w-[90px] text-center">RATE</div>
                         <input
                           type="text"
-                          className={`w-[90px] !text-center ${formFieldStyles}`}
+                          className={`${INPUT_FIELD_SM} !text-center ${formFieldStyles}`}
                           maxLength={6}
                           onChange={(event) => {
                             player.rate = event.target.value;
@@ -370,7 +370,6 @@ export default function TableCloseout() {
 
               </div>
             </div>
-          </div>
 
           {SELECTED_RATE.tableRateRules.isChargePerPlayer && (index+1 === SELECTED_RATE.playerRateRules.playerLimit)  && (<>
             <div className="mb-3 text-center text-sm text-gray-500 py-2 italic">
@@ -406,9 +405,32 @@ export default function TableCloseout() {
       {SCHEDULE && (
         <div className="inline-block mx-auto text-gray-500 my-2 px-3 py-1 border rounded-lg border-gray-800">
           <div className="text-xs">Schedule:</div>
-          <div className="text-gray-100">{SCHEDULE.name}</div>
+          <div className="text-gray-100 text-xs">{SCHEDULE.name}</div>
         </div>
       )}
+    </>)
+  }
+
+    const fragmentBusinessDay = () => {
+    return (<>
+      <div className={`text-gray-500 text-xs`}>
+        Business Day
+      </div>
+      <div className={`${ROW} items-center justify-center mb-2`}>
+        <select
+          className={`${formSelectStyles} text-center cursor-pointer`}
+          value={SELECTED_DAY}
+          onChange={(event) => {
+            setSelectedDay(Number(event.target.value));
+          }}
+          >
+            {WEEK_DAYS.map((day, index) => {
+              return (
+                <option key={index} value={index} className={`${optionStyles} text-center`}>{day}</option>
+              )
+            })}
+        </select>
+      </div>
     </>)
   }
 
@@ -434,6 +456,7 @@ export default function TableCloseout() {
           {fragmentUsageType()}
           {fragmentTableRate()}
           {fragmentRateSchedule()}
+          {fragmentBusinessDay()}
           {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}
         </div>
