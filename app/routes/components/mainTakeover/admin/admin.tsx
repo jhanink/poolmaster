@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
+import { mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
-import { fragmentWelcomeMessage, fragmentExitTakeover } from "../../fragments/fragments";
+import { fragmentExitTakeover } from "../../fragments/fragments";
 import AdminTables from "./adminTables";
 import AdminAccount from "./adminAccount";
 import AdminTableRates from "./adminTableRates";
@@ -11,7 +11,6 @@ import AdminUsageTypes from "./adminUsageTypes";
 import AdminSettings from "./adminSettings";
 import AdminRateSchedules from "./adminRateSchedules";
 import AdminActions from "./adminActions";
-import { FeatureFlags } from "~/config/AppState";
 
 export const ADMIN_SECTION = `text-left mb-2`;
 export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative p-3 z-1 bg-black`;
@@ -21,7 +20,6 @@ export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-lef
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
 
 export default function Admin() {
-  const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [SHOW_ACTIONS, setShowActions] = useState(false);
 

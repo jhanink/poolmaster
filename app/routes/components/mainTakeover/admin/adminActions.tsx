@@ -24,7 +24,6 @@ export default function AdminActions() {
   const [ACTION, setAction] = useState(undefined as ADMIN_ACTIONS);
 
   const onClickSaveItem = () => {
-
     const newState = {
       ...APP_STATE,
     }

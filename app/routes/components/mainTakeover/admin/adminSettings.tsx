@@ -21,6 +21,7 @@ export default function AdminSettings(props: {
 
   const onClickResetForm = () => {
     setSettings({...APP_STATE.adminSettings});
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = () => {
@@ -30,7 +31,8 @@ export default function AdminSettings(props: {
     }
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
-    setShowConfirmSave(false)
+    setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   useEffect(() => {

@@ -22,6 +22,7 @@ export default function AdminTables(props: {
   const onClickResetForm = () => {
     const tables = Helpers.tables(APP_STATE).map((table: TableItem ) => ({...table}));
     setTables(tables);
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = () => {
@@ -39,6 +40,7 @@ export default function AdminTables(props: {
     setAppState(newState);
     setTables(tables);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickForDeleteItem = (table: TableItem) => {

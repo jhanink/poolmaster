@@ -34,6 +34,7 @@ export default function AdminTableTypes(props: {
   const onClickResetForm = () => {
     const types = APP_STATE.tableTypes.map((type: TableType ) => ({...type}));
     setTableTypes(types);
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = () => {
@@ -50,6 +51,7 @@ export default function AdminTableTypes(props: {
     setAppState(newState);
     setTableTypes(types);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   const generateNewItem = (index: number = 1) => {

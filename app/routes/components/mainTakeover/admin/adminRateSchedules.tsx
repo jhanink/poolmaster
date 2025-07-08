@@ -20,10 +20,11 @@ export default function AdminRateSchedules(props: {
   const [SHOW_CONFIRM_SAVE, setShowConfirmSave] = useState(false);
 
   const onClickResetForm = () => {
-      if (!APP_STATE.rateSchedules.length) return;
-      const rateSchedules = APP_STATE.rateSchedules.map((rateSchedule: RateSchedule) => ({...rateSchedule}));
-      setRateSchedules(rateSchedules);
-    }
+    if (!APP_STATE.rateSchedules.length) return;
+    const rateSchedules = APP_STATE.rateSchedules.map((rateSchedule: RateSchedule) => ({...rateSchedule}));
+    setRateSchedules(rateSchedules);
+    props.ref.current.scrollIntoView(true);
+  }
 
   const onClickSaveItem = () => {
     const rateSchedules = RATE_SCHEDULES
@@ -39,6 +40,7 @@ export default function AdminRateSchedules(props: {
     setAppState(newState);
     setRateSchedules(rateSchedules);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   const generateNewItem = (index: number = 1) => {

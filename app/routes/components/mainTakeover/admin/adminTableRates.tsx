@@ -36,6 +36,7 @@ export default function AdminTableRates(props: {
     if (!APP_STATE.tableRates.length) return;
     const tableRates = APP_STATE.tableRates.map((tableRate: TableRate) => ({...tableRate}));
     setTableRates(tableRates);
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = () => {
@@ -52,6 +53,7 @@ export default function AdminTableRates(props: {
     setAppState(newState);
     setTableRates(tableRates);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   const generateNewItem = (index: number = 1) => {

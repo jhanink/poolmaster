@@ -19,6 +19,7 @@ export default function AdminAccount(props: {
 
   const onClickResetForm = () => {
     setAccount({...APP_STATE.account});
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = () => {
@@ -29,6 +30,7 @@ export default function AdminAccount(props: {
     AppStorage.setAppStateRemote(newState);
     setAppState(newState);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   useEffect(() => {

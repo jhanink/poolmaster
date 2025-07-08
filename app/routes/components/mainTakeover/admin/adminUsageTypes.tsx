@@ -52,6 +52,7 @@ export default function AdminUsageTypes(props: {
   const onClickResetForm = () => {
     const types = APP_STATE.usageTypes.map((type: UsageType ) => ({...type}));
     setUsageTypes(types);
+    props.ref.current.scrollIntoView(true);
   }
 
   const onClickSaveItem = async () => {
@@ -74,6 +75,7 @@ export default function AdminUsageTypes(props: {
     setAppState(newState);
     setUsageTypes(types);
     setShowConfirmSave(false);
+    props.ref.current.scrollIntoView(true);
   }
 
   const generateNewItem = (index: number = 1): UsageType => {
