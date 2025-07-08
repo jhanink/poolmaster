@@ -8,6 +8,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { GLOBAL_ZOOM } from "./util/GlobalStylesUtil";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -27,12 +28,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en" className="bg-black touch-none">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
         <Links />
       </head>
       <body>
-        <div className={`h-dvh flex flex-col w-full mx-auto max-w-[1400px]`}>
-        {children}
+        <div className={`h-dvh flex flex-col w-full mx-auto max-w-[1400px]`} style={GLOBAL_ZOOM}>
+          {children}
         </div>
         <ScrollRestoration />
         <Scripts />
