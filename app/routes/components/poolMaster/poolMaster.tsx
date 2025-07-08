@@ -12,6 +12,7 @@ import styles from "./poolMasterStyles.module.css";
 import { appStateAtom, isQuietModeAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 import HomeRedirect from '../mainTakeover/homeRedirect/homeRedirect';
+import { GLOBAL_ZOOM } from '~/util/GlobalStylesUtil';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -96,11 +97,11 @@ export default function AppPoolMaster() {
   }, []);
 
   return (<>
-    <div className={`${QUIET_MODE && 'flex flex-col items-center justify-center grow'}`}>
+    <div className={`${QUIET_MODE && 'flex flex-col items-center justify-center grow'}`} style={GLOBAL_ZOOM}>
       <AppHeader/>
     </div>
     {!QUIET_MODE && (
-      <div className={`${styles.appContentContainer} grow overflow-y-scroll px-1 md:!px-10`}>
+      <div className={`${styles.appContentContainer} grow overflow-y-scroll px-1 md:!px-10`} style={GLOBAL_ZOOM}>
         <AppMain/>
       </div>
     )}

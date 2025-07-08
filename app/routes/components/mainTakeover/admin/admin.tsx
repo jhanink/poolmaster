@@ -110,11 +110,7 @@ export default function Admin() {
   return (
     <div className="text-center" ref={PageTopRef}>
       {fragmentExitTakeover(onClickExit, fragmentMenu)}
-      <div className="CONTENT bg-black">
-        <div>
-          <h1 className="text-xl text-gray-300 py-3">Admin Console</h1>
-        </div>
-        <div className="text-center mb-20 inline-block">
+        <div className="flex flex-col items-center justify-center">
           <AdminAccount ref={menuItems1[0].ref}/>
           <AdminSettings ref={menuItems1[1].ref}/>
           <AdminTableRates ref={menuItems1[2].ref}/>
@@ -134,6 +130,5 @@ export default function Admin() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

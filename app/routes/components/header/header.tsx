@@ -120,7 +120,7 @@ export default function AppHeader() {
 
   const fragmentListFilters = () => {
     return (<>
-      <div className={`flex justify-center md:scale-125`}>
+      <div className={`flex justify-center`}>
         {!QUIET_MODE && (
           <div className={`${listFilterIcons} size-6 mt-[2px] mr-2`}
             onClick={(event) => setMainTakeover({addGuest: true})}>
