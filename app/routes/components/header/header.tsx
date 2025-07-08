@@ -5,7 +5,8 @@ import {
   appStateAtom,
   guestExpandAllAtom,
   isQuietModeAtom,
-  mainTakoverAtom, selectedListFilterAtom,
+  mainTakoverAtom,
+  selectedListFilterAtom,
   selectedTableAtom,
   tableExpandAllAtom,
 } from "~/appStateGlobal/atoms";
