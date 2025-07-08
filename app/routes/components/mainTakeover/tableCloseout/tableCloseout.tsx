@@ -191,9 +191,17 @@ export default function TableCloseout() {
           }
         </select>
       </div>
-      <div className="text-xs text-gray-500 mt-1 italic">
-        (S) = Single Player, (F) = Flat Rate
-      </div>
+      {!SELECTED_RATE.tableRateRules.isChargePerPlayer && (
+        <div className="text-xs text-gray-500 italic">
+          (S) = Single Player
+        </div>
+      )}
+
+      {SELECTED_RATE.tableRateRules.isFlatRate && (
+        <div className="text-xs text-gray-500 italic">
+          (F) = Flat Rate
+        </div>
+      )}
     </>)
   }
 
@@ -411,9 +419,15 @@ export default function TableCloseout() {
   const fragmentRateSchedule = () =>  {
     return (<>
       {SCHEDULE && (
-        <div className="inline-block mx-auto text-gray-500 my-2 px-3 py-1 border rounded-lg border-gray-800">
-          <div className="text-xs">Schedule:</div>
-          <div className="text-gray-100 text-xs">{SCHEDULE.name}</div>
+        <div className="flex flex-col text-gray-500 px-3 py-1 gap-2">
+          <div>
+            <div className="text-xs italic">Schedule:</div>
+            <div className="text-gray-100 text-sm">{SCHEDULE.name}</div>
+          </div>
+          <div>
+            <div className="text-xs italic">Business Day:</div>
+            <div className="text-gray-100 text-sm uppercase">{WEEK_DAYS[SELECTED_DAY]}</div>
+          </div>
         </div>
       )}
     </>)
@@ -421,24 +435,10 @@ export default function TableCloseout() {
 
   const fragmentBusinessDay = () => {
     return (<>
-      <div className={`text-gray-500 text-xs`}>
-        Business Day
-      </div>
-      <div className={`${ROW} items-center justify-center mb-2`}>
-        <select
-          className={`${formSelectStyles} text-center cursor-pointer`}
-          value={SELECTED_DAY}
-          onChange={(event) => {
-            setSelectedDay(Number(event.target.value));
-          }}
-          >
-            {WEEK_DAYS.map((day, index) => {
-              return (
-                <option key={index} value={index} className={`${optionStyles} text-center`}>{day}</option>
-              )
-            })}
-        </select>
-      </div>
+      {SCHEDULE && (<>
+        <div className="text-xs">Business Day:</div>
+        <div className="text-gray-100 text-xs">{WEEK_DAYS[SELECTED_DAY]}</div>
+      </>)}
     </>)
   }
 
@@ -462,11 +462,11 @@ export default function TableCloseout() {
       {fragmentExitTakeover(exit)}
       <div className="border border-gray-800 rounded-xl mt-2 px-5 text-center min-w-[300px] max-w-[768px]">
         {fragmentFormHeader()}
-        <div className="CONTENT flex-1 text-center">
+        <div className="CONTENT flex flex-col items-center text-center">
           {fragmentUsageType()}
           {fragmentTableRate()}
           {SCHEDULE && fragmentRateSchedule()}
-          {SCHEDULE && fragmentBusinessDay()}
+
           {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}
         </div>
