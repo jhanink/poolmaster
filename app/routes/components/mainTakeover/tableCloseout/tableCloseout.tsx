@@ -33,19 +33,27 @@ export default function TableCloseout() {
     setMainTakeover(undefined);
   }
 
-  const setupBillablePlayers = () => {
-    if (!SELECTED_RATE.id) return;
+  const handleRateSchedule = () => {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const assignedAt = table.guest.assignedAt;
     const rules = SELECTED_RATE.tableRateRules;
     const useSchedule = rules.useRateSchedule;
     const scheduleId =  rules.rateScheduleId;
     const schedule = useSchedule && Helpers.getRateSchedule(APP_STATE, scheduleId);
-    schedule && setSchedule(schedule);
+    if (schedule) {
+      setSchedule(schedule);
+      // Use local browser time instead of server time (TZ always current, no conversions needed)
+      setSelectedDay(SELECTED_DAY || Helpers.getBusinessDay(APP_STATE, assignedAt));
+    } else {
+      setSelectedDay(undefined);
+      setSchedule(undefined);
+    }
+  }
 
-    // Use local browser time instead of server time (TZ always current, no conversions needed)
-    setSelectedDay(SELECTED_DAY || Helpers.getBusinessDay(APP_STATE, assignedAt));
-
+  const setupBillablePlayers = () => {
+    if (!SELECTED_RATE.id) return;
+    handleRateSchedule();
+    const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const players: BillablePlayer[] = Helpers.getBillablePlayers(APP_STATE, table, SELECTED_DAY, SELECTED_RATE)
     setBillablePlayers([...players]);
   }
@@ -411,7 +419,7 @@ export default function TableCloseout() {
     </>)
   }
 
-    const fragmentBusinessDay = () => {
+  const fragmentBusinessDay = () => {
     return (<>
       <div className={`text-gray-500 text-xs`}>
         Business Day
@@ -439,7 +447,9 @@ export default function TableCloseout() {
     const table: TableItem = MAIN_TAKEOVER.closeoutTable;
     const guest = table.guest;
     const md = Helpers.getMeteredDay(APP_STATE, SELECTED_RATE, guest);
+    if (!md.daySchedule) return;
     setMeteredDay(md);
+    Helpers.debug({md})
   }, [SELECTED_DAY, SELECTED_RATE]);
 
   useEffect(() => {
@@ -455,8 +465,8 @@ export default function TableCloseout() {
         <div className="CONTENT flex-1 text-center">
           {fragmentUsageType()}
           {fragmentTableRate()}
-          {fragmentRateSchedule()}
-          {fragmentBusinessDay()}
+          {SCHEDULE && fragmentRateSchedule()}
+          {SCHEDULE && fragmentBusinessDay()}
           {fragmentBillablePlayers()}
           {fragmentFormActionButtons()}
         </div>

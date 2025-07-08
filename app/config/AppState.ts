@@ -20,7 +20,7 @@ export const FeatureFlags = {
 
 export const SystemConfig = {
   LOG_CONNECTED_CLIENTS: false,
-  DEBUG: false,
+  DEBUG: true,
 }
 
 export interface AppState {
@@ -133,6 +133,9 @@ export interface MeteredDay {
   during: MeteredTime,
   after: MeteredTime,
   rate1hrMin: string,
+  businessDay: number,
+  daySchedule: ScheduleEntry,
+  T: any,
 }
 
 export interface BillablePlayer {

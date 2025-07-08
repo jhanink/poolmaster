@@ -76,7 +76,8 @@ export const Helpers = {
     const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
     return (match.isActive && match) || appState.rateSchedules[0];
   },
-  getMeteredDay: (appState: AppState, tableRate: TableRate, guest: Guest)=> {
+  getMeteredDay: (appState: AppState, tableRate: TableRate, guest: Guest) => {
+    const debug = Helpers.debug;
     const assignedAt = dayjs(guest.assignedAt);
     const closedOutAt = dayjs(guest.closedOutAt);
     const businessDay = Helpers.getBusinessDay(appState, guest.assignedAt);
@@ -176,6 +177,9 @@ export const Helpers = {
       during: T.during && {hours: T.during.elapsed, rate: T.during.rate},
       after: T.after && {hours: T.after.elapsed, rate: T.after.rate},
       rate1hrMin: daySchedule.rate1HrMin,
+      businessDay,
+      daySchedule,
+      T
     };
     return meteredDay;
   },
