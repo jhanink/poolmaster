@@ -1,5 +1,5 @@
 import { useAtom } from "jotai";
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_HEADER_STICKY_SPACER_TOP, ADMIN_SECTION } from "./admin";
 import { useEffect, useState } from "react";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { DEFAULT_ID, DefaultRateSchedule, RateScheduleDays, type RateSchedule } from "~/config/AppState";
@@ -9,7 +9,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import ModalConfirm from "../../ui-components/modal/modalConfirm";
 
 const fieldLabelStyles = `mx-2 w-[65px]`;
-const borderColor = '!border-purple-400';
+const borderColor = 'border rounded-lg !border-purple-400';
 const bgColor = 'bg-purple-400';
 
 export default function AdminRateSchedules(props: {
@@ -77,19 +77,23 @@ export default function AdminRateSchedules(props: {
 
   return (<>
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
-      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
-        <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
-            <div className="pr-2">Rate Schedules</div>
-            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER_STICKY_SPACER_TOP}`}>
+          <div className={`${borderColor}`}>
+            <div className={`${ADMIN_HEADER} ${bgColor}`}>
+              <div className={`flex items-center`}>
+                <div className="pr-2">Rate Schedules</div>
+                <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+              </div>
+              <div>
+                <div className="italic text-sm">Variable day rate schedules</div>
+              </div>
+            </div>
+            <div className={`${ADMIN_ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+            </div>
           </div>
-          <div>
-            <div className="italic text-sm">Variable day rate schedules</div>
-          </div>
-        </div>
-        <div className={`${ADMIN_ACTIONS}`}>
-          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>

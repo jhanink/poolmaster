@@ -1,5 +1,5 @@
 import { DefaultTableItemData, type TableItem } from "~/config/AppState"
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin"
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_HEADER_STICKY_SPACER_TOP, ADMIN_SECTION } from "./admin"
 import { ArrowRightIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { actionButtonStyles, actionIconStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formInputStyles, formLabelLeftStyles, formSelectStyles, INPUT_FIELD, INPUT_FIELD_LG, INPUT_FIELD_SMALL, ITEM, optionStyles, ROW } from "~/util/GlobalStylesUtil"
 import ModalConfirm from "../../ui-components/modal/modalConfirm"
@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { AppStorage } from "~/util/AppStorage"
 import { Helpers } from "~/util/Helpers"
 
-const borderColor = '!border-green-500';
+const borderColor = 'border rounded-lg !border-green-500';
 const bgColor = 'bg-green-500';
 
 export default function AdminTables(props: {
@@ -82,18 +82,22 @@ export default function AdminTables(props: {
 
   return (<>
   <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
-      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
-        <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
-            <div className="pr-2">Tables</div>
-            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
-            <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER_STICKY_SPACER_TOP}`}>
+          <div className={`${borderColor}`}>
+            <div className={`${ADMIN_HEADER} ${bgColor}`}>
+              <div className={`flex items-center`}>
+                <div className="pr-2">Tables</div>
+                <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(1)}}>+1</button>
+                <button className={ADMIN_ACTION_BUTTONS} onClick={() => {onClickAddItem(3)}}>+3</button>
+              </div>
+              <div className="italic text-sm">Table name, type, and rate</div>
+            </div>
+            <div className={`${ADMIN_ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+            </div>
           </div>
-          <div className="italic text-sm">Table name, type, and rate</div>
-        </div>
-        <div className={`${ADMIN_ACTIONS}`}>
-          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>

@@ -18,6 +18,7 @@ import {
   ADMIN_CONTENT,
   ADMIN_HEADER,
   ADMIN_HEADER_STICKY,
+  ADMIN_HEADER_STICKY_SPACER_TOP,
   ADMIN_SECTION
 } from "./admin"
 import {
@@ -38,7 +39,7 @@ import {
 } from "~/util/GlobalStylesUtil"
 import { fragmentUsageIndicator } from '../../fragments/fragments'
 
-const borderColor = '!border-pink-400';
+const borderColor = 'border rounded-lg !border-pink-400';
 const bgColor = 'bg-pink-400';
 
 export default function AdminUsageTypes(props: {
@@ -111,17 +112,21 @@ export default function AdminUsageTypes(props: {
 
   return (<>
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
-      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
-        <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
-            <div className="pr-2">Usage Types</div>
-            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER_STICKY_SPACER_TOP}`}>
+          <div className={`${borderColor}`}>
+            <div className={`${ADMIN_HEADER} ${bgColor}`}>
+              <div className={`flex items-center`}>
+                <div className="pr-2">Usage Types</div>
+                <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+              </div>
+              <div className="italic text-sm">Usage name, rate, indicators</div>
+            </div>
+            <div className={`${ADMIN_ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+            </div>
           </div>
-          <div className="italic text-sm">Usage name, rate, indicators</div>
-        </div>
-        <div className={`${ADMIN_ACTIONS}`}>
-          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>

@@ -14,8 +14,9 @@ import AdminActions from "./adminActions";
 
 export const ADMIN_SECTION = `text-left mb-2`;
 export const ADMIN_HEADER = `text-xl py-2 px-5 text-black rounded-lg relative p-3 z-1 bg-black`;
-export const ADMIN_HEADER_STICKY = `sticky top-[97px] border rounded-lg mb-2 bg-black z-1 w-[300px] z-0`;
-export const ADMIN_CONTENT = `text-sm pb-3 mb-20 z-0 mx-1 w-[292px]`;
+export const ADMIN_HEADER_STICKY = `sticky top-[85px] mb-2 bg-black z-1 w-[300px] z-0`;
+export const ADMIN_HEADER_STICKY_SPACER_TOP = `pt-5 bg-black`;
+export const ADMIN_CONTENT = `text-sm pb-3 mb-5 z-0 mx-1 w-[292px]`;
 export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-left py-2 my-1 z-1`;
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
 

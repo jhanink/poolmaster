@@ -1,5 +1,5 @@
 import { DEFAULT_ID, DefaultTableRateData, PARTY_SIZE_ARRAY, type TableRate } from "~/config/AppState";
-import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTION_BUTTONS, ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_HEADER_STICKY_SPACER_TOP, ADMIN_SECTION } from "./admin";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import {
   actionButtonStyles,
@@ -22,7 +22,7 @@ import { useAtom } from "jotai";
 import { appStateAtom } from "~/appStateGlobal/atoms";
 import { AppStorage } from "~/util/AppStorage";
 
-const borderColor = '!border-yellow-400';
+const borderColor = 'border rounded-lg !border-yellow-400';
 const bgColor = 'bg-yellow-400';
 
 export default function AdminTableRates(props: {
@@ -90,17 +90,21 @@ export default function AdminTableRates(props: {
 
   return (<>
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
-      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
-        <div className={`${ADMIN_HEADER} ${bgColor}`}>
-          <div className={`flex items-center`}>
-            <div className="pr-2">Table Rates</div>
-            <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER_STICKY_SPACER_TOP}`}>
+          <div className={`${borderColor}`}>
+            <div className={`${ADMIN_HEADER} ${bgColor}`}>
+              <div className={`flex items-center`}>
+                <div className="pr-2">Table Rates</div>
+                <button className={`${ADMIN_ACTION_BUTTONS}`} onClick={onClickAddItem}>+1</button>
+              </div>
+              <div className="italic text-sm">Rates, minimums, player limits</div>
+            </div>
+            <div className={`${ADMIN_ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+            </div>
           </div>
-          <div className="italic text-sm">Rates, minimums, player limits</div>
-        </div>
-        <div className={`${ADMIN_ACTIONS}`}>
-          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>

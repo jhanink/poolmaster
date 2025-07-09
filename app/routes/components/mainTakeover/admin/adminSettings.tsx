@@ -1,5 +1,5 @@
 import { actionButtonStyles, ADMIN_SECTION_SCROLL_MARGIN_TOP, formSelectStyles, ITEM, largePartyStylesOptions, optionStyles, ROW, tableChipsStyle } from "~/util/GlobalStylesUtil";
-import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_SECTION } from "./admin";
+import { ADMIN_ACTIONS, ADMIN_CONTENT, ADMIN_HEADER, ADMIN_HEADER_STICKY, ADMIN_HEADER_STICKY_SPACER_TOP, ADMIN_SECTION } from "./admin";
 import { DefaultGuestData, DefaultSettings, LARGE_PARTY_SIZE_ARRAY, type Guest} from "~/config/AppState";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import ModalConfirm from "../../ui-components/modal/modalConfirm";
 import { fragmentGuestName } from "../../fragments/fragments";
 
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
-const borderColor = '!border-teal-500';
+const borderColor = 'border rounded-lg !border-teal-500';
 const bgColor = 'bg-teal-500';
 
 export default function AdminSettings(props: {
@@ -41,14 +41,18 @@ export default function AdminSettings(props: {
 
   return (<>
     <div className={`${ADMIN_SECTION}`} style={ADMIN_SECTION_SCROLL_MARGIN_TOP} ref={props.ref}>
-      <div className={`${ADMIN_HEADER_STICKY} ${borderColor}`}>
-        <div className={`${ADMIN_HEADER} ${bgColor}`}>
-            <div>Settings</div>
-            <div className="italic text-sm">App settings</div>
-        </div>
-        <div className={`${ADMIN_ACTIONS}`}>
-          <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
-          <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+      <div className={`${ADMIN_HEADER_STICKY}`}>
+        <div className={`${ADMIN_HEADER_STICKY_SPACER_TOP}`}>
+          <div className={`${borderColor}`}>
+            <div className={`${ADMIN_HEADER} ${bgColor}`}>
+                <div>Settings</div>
+                <div className="italic text-sm">App settings</div>
+            </div>
+            <div className={`${ADMIN_ACTIONS}`}>
+              <button className={`${actionButtonStyles}`} onClick={onClickResetForm}>Reset</button>
+              <button className={`${actionButtonStyles}`} onClick={() => {setShowConfirmSave(true)} }>Save</button>
+            </div>
+          </div>
         </div>
       </div>
       <div className={`${ADMIN_CONTENT}`}>
