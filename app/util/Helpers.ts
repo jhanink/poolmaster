@@ -8,7 +8,6 @@ export const DAYJS_DATE_FORMAT = 'MMM D, h:mm a';
 export const DAYJS_DAY_FORMAT = 'MMM D';
 export const DAYJS_TIME_FORMAT = 'h:mm a';
 
-
 export type TimeElapsed = {
   durationMinutes: number;
   durationHoursDecimal: string;

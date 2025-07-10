@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
-import { mainTakoverAtom } from "~/appStateGlobal/atoms";
+import { appStateAtom, mainTakoverAtom } from "~/appStateGlobal/atoms";
 import { actionButtonStyles, separatorBarStyles } from "~/util/GlobalStylesUtil";
 import { fragmentExitTakeover } from "../../fragments/fragments";
 import AdminTables from "./adminTables";
@@ -21,6 +21,7 @@ export const ADMIN_ACTIONS = `flex items-center justify-center bg-black text-lef
 export const ADMIN_ACTION_BUTTONS = `${actionButtonStyles} !py-0 !text-black`;
 
 export default function Admin() {
+  const [APP_STATE] = useAtom(appStateAtom);
   const [, setMainTakeover] = useAtom(mainTakoverAtom);
   const [SHOW_ACTIONS, setShowActions] = useState(false);
 
@@ -110,7 +111,7 @@ export default function Admin() {
 
   return (
     <div className="text-center" ref={PageTopRef}>
-      {fragmentExitTakeover(onClickExit, fragmentMenu)}
+      {fragmentExitTakeover(onClickExit, {fragmentCallbackFn: fragmentMenu, appState: APP_STATE})}
         <div className="flex flex-col items-center justify-center">
           <AdminAccount ref={menuItems1[0].ref}/>
           <AdminSettings ref={menuItems1[1].ref}/>
