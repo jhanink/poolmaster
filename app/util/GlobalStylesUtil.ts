@@ -45,7 +45,7 @@ export const largePartyStyle6 = `!bg-fuchsia-600 !text-gray-200 ${partySizeStyle
 export const largePartyStyle7 = `!bg-cyan-500 !text-black ${partySizeStyles}`;
 export const largePartyStyle8 = `!bg-gray-800 !text-gray-200 ${partySizeStyles}`;
 
-export const tableChipsStyle = `flex gap-2 items-center text-nowrap justify-center rounded-full py-1 px-3 text-xs border border-green-800 text-green-600 font-bold`;
+export const tableChipsStyle = `flex items-center text-nowrap justify-center rounded-full py-1 px-3 text-xs border border-green-800 text-green-600 font-bold`;
 export const selectedTableChipStyle = `ring-2 ring-white`;
 
 export const formColumnStyles = `COLUMN flex m-1`;

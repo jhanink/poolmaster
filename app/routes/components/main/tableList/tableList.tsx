@@ -53,11 +53,12 @@ export default function TableList() {
             >
               <div>{table.name}</div>
               {APP_STATE.adminSettings.showTableChipInfo && (<>
-                <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
+                <div className={`uppercase italic text-[10px] text-gray-500 !font-normal ml-2`}>
                   {table.guest.name}
                 </div>
                 {table.guest.partySize > 1 && (<>
-                  <div className="text-gray-300">{table.guest.partySize}</div>
+                  <div className="text-gray-400 text-[10px] mx-1">:</div>
+                  <div className="text-gray-400 text-[10px]">{table.guest.partySize}</div>
                 </>)}
               </>)}
             </button>
