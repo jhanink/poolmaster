@@ -156,7 +156,7 @@ export default function AssignTable() {
                   >
                     <div className="">{table.name}</div>
                     {APP_STATE.adminSettings.showTableChipInfo && (
-                      <div className="text-gray-700 italic text-[10px]">{Helpers.getTableType(APP_STATE, table.tableTypeId)?.name}</div>
+                      <div className="text-gray-700 italic text-[10px] ml-2">{Helpers.getTableType(APP_STATE, table.tableTypeId)?.name}</div>
                     )}
                   </button>
                 )
