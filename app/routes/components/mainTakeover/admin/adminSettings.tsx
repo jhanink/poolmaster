@@ -11,6 +11,8 @@ import { fragmentGuestName } from "../../fragments/fragments";
 const partySizeArray = [...LARGE_PARTY_SIZE_ARRAY];
 const borderColor = 'border rounded-lg !border-teal-500';
 const bgColor = 'bg-teal-500';
+const chipTable = ['Table 1', 'Table 2', 'Table 5', 'Table 16'];
+const chipContent = ['Regulation', 'Pro', 'Sam', 'Jen : 4'];
 
 export default function AdminSettings(props: {
   ref: React.RefObject<HTMLDivElement>;
@@ -33,6 +35,19 @@ export default function AdminSettings(props: {
     setAppState(newState);
     setShowConfirmSave(false);
     props.ref.current.scrollIntoView(true);
+  }
+
+  const tableChip = (index: number) => {
+    return (
+      <button className={`CHIP hover: ${tableChipsStyle} gap-2 uppercase !m-0 hover:cursor-pointer`}>
+        {chipTable[index]}
+        {SETTINGS.showTableChipInfo && (
+          <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
+            {chipContent[index]}
+          </div>
+        )}
+      </button>
+    )
   }
 
   useEffect(() => {
@@ -120,48 +135,15 @@ export default function AdminSettings(props: {
               Assign Tables:
             </div>
             <div className="mt-2 flex items-center justify-center gap-2">
-              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
-              >
-                Table 1
-                {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
-                    Regulation
-                  </div>
-                )}
-              </button>
-              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
-              >
-                Table 2
-                {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
-                    Pro
-                  </div>
-                )}
-              </button>
+              {tableChip(0)}
+              {tableChip(1)}
             </div>
             <div className="mt-2 text-gray-500">
               Active Tables:
             </div>
             <div className="mt-2 flex items-center justify-center gap-2">
-              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
-              >
-                Table 5
-                {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
-                    Sam
-                  </div>
-                )}
-              </button>
-              <button className={`CHIP hover: ${tableChipsStyle} uppercase !m-0 hover:cursor-pointer`}
-              >
-                Table 16
-                {SETTINGS.showTableChipInfo && (
-                  <div className={`uppercase italic text-[10px] text-gray-500 !font-normal`}>
-                    Jennifer
-                    : <span className="text-gray-300">{SETTINGS.largePartySize}</span>
-                  </div>
-                )}
-              </button>
+              {tableChip(2)}
+              {tableChip(3)}
             </div>
           </div>
           <div className={`${ROW} mt-5`}>
