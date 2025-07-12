@@ -30,47 +30,30 @@ export const InitialTimeElapsed: TimeElapsed = {
 };
 
 export const Helpers = {
-  tables: (appState: AppState) => {
-    return appState.tables.filter(table => table.isActive)
-      .sort((a:TableItem, b:TableItem) => a.number - b.number);
-  },
-  tableTypes: (appState: AppState) => {
-    return appState.tableTypes.filter(tableType => tableType.isActive);
-  },
-  tablesAvailable: (appState: AppState) => {
-    return Helpers.tables(appState).filter(table => !table.guest);
-  },
-  tablesAssigned: (appState: AppState) => {
-    return Helpers.tables(appState).filter(table => table.guest);
-  },
-  hasGuests: (appState: AppState) => {
-    return appState.guestList.length > 0;
-  },
-  reservationsToday: (appState: AppState) => {
-    // TODO: check reservation date Business day
-  },
-  getTable: (appState: AppState, tableId: number) => {
-    const match = Helpers.tables(appState).find(table => table.id === tableId);
-    return match || appState.tables[0];
-  },
-  getTableType: (appState: AppState, tableTypeId: number) => {
-    return Helpers.tableTypes(appState).find(tableType => tableType.id === tableTypeId) || SyntheticTableTypeAny;
-  },
-  getTableOrTableType: (appState: AppState, guest: Guest) => {
-    if (guest.prefersTable) return Helpers.getTable(appState, guest.tableOrTableTypeId);
-    return Helpers.getTableType(appState, guest.tableOrTableTypeId);
-  },
-  getTablePreference: (appState: AppState, guest: Guest) => {
-    if (guest.prefersTable) {
-      return `${Helpers.getTable(appState, guest.tableOrTableTypeId).name}`;
-    } else {
-      return `${Helpers.getTableType(appState, guest.tableOrTableTypeId).name}`;
-    }
-  },
-  getUsageType: (appState: AppState, usageTypeId: number) => {
-    const match = appState.usageTypes.find(usageType => usageType.id === usageTypeId);
-    return (match.isActive && match) || appState.usageTypes[0];
-  },
+  tables: (appState: AppState) =>
+    appState.tables.filter(table => table.isActive).sort((a:TableItem, b:TableItem) => a.number - b.number),
+  tableTypes: (appState: AppState) =>
+    appState.tableTypes.filter(tableType => tableType.isActive),
+  tablesAvailable: (appState: AppState) =>
+    Helpers.tables(appState).filter(table => !table.guest),
+  tablesAssigned: (appState: AppState) =>
+    Helpers.tables(appState).filter(table => table.guest),
+  tablesExpired: (appState: AppState) =>
+    appState.tables.filter(table => Helpers.isExpiredVisit(table.guest)),
+  hasGuests: (appState: AppState) => appState.guestList.length > 0,
+  reservationsToday: (appState: AppState) => [],
+  getTable: (appState: AppState, tableId: number) =>
+    Helpers.tables(appState).find(table => table.id === tableId)|| appState.tables[0],
+  getTableType: (appState: AppState, tableTypeId: number) =>
+    Helpers.tableTypes(appState).find(tableType => tableType.id === tableTypeId) || SyntheticTableTypeAny,
+  getTableOrTableType: (appState: AppState, guest: Guest) =>
+    guest.prefersTable ? Helpers.getTable(appState, guest.tableOrTableTypeId) : Helpers.getTableType(appState, guest.tableOrTableTypeId),
+  getTablePreference: (appState: AppState, guest: Guest) =>
+    guest.prefersTable
+      ? `${Helpers.getTable(appState, guest.tableOrTableTypeId).name}`
+      : `${Helpers.getTableType(appState, guest.tableOrTableTypeId).name}`,
+  getUsageType: (appState: AppState, usageTypeId: number) =>
+    appState.usageTypes.find(usageType => usageType.id === usageTypeId) || appState.usageTypes[0],
   getRateSchedule: (appState: AppState, rateScheduleId: number) => {
     const match = appState.rateSchedules.find(rateSchedule => rateSchedule.id === rateScheduleId);
     return (match.isActive && match) || appState.rateSchedules[0];
@@ -85,10 +68,8 @@ export const Helpers = {
     const schedule = useRateSchedule && Helpers.getRateSchedule(appState, tableRateRules.rateScheduleId);
     const daySchedule: ScheduleEntry = schedule && schedule.entries[WEEK_DAYS[businessDay]];
 
-    const T: any = {
-      assignedAt,
-      closedOutAt,
-    };
+    const T: any = {assignedAt, closedOutAt};
+
     if (daySchedule) {
       // subtract offset to get correct day. Then set
       let _ = daySchedule.start.split(':');
@@ -281,16 +262,9 @@ export const Helpers = {
       days,
     }
   },
-  formatHoursDecimal: (hoursExact: number, decimals: number = 2) => {
-    hoursExact.toFixed(decimals);
-    return `${hoursExact.toFixed(decimals)}`;
-  },
-  timeElapsedGuest: (guest: Guest) => {
-    return Helpers.timeElapsed(guest.createdAt, Date.now());
-  },
-  timeElapsedTable: (guest: Guest) => {
-    return Helpers.timeElapsed(guest.assignedAt, Date.now());
-  },
+  formatHoursDecimal: (hoursExact: number, decimals: number = 2) => `${hoursExact.toFixed(decimals)}`,
+  timeElapsedGuest: (guest: Guest) => Helpers.timeElapsed(guest.createdAt, Date.now()),
+  timeElapsedTable: (guest: Guest) => Helpers.timeElapsed(guest.assignedAt, Date.now()),
   averageWaitTime: (appState: AppState) => {
     const totalWaitTime = appState.guestList.reduce((sum, guest) => {
       const timeElapsed = Helpers.timeElapsedGuest(guest);
@@ -303,36 +277,14 @@ export const Helpers = {
     }
     return `${Math.round(averageWaitTimeMinutes)} min`;
   },
-  formatDate: (date: number) => {
-    return dayjs(date).format(DAYJS_DATE_FORMAT);
-  },
-  formatDay: (date: number) => {
-    return dayjs(date).format(DAYJS_DAY_FORMAT);
-  },
-  formatTime: (date: number) => {
-    return dayjs(date).format(DAYJS_TIME_FORMAT);
-  },
-  percentTablesAssigned: (appState: AppState) => {
-    return Math.round(Helpers.tablesAssigned(appState).length / Helpers.tables(appState).length * 100);
-  },
-  percentTablesAvailable: (appState: AppState) => {
-    return Math.round(Helpers.tablesAvailable(appState).length / Helpers.tables(appState).length * 100);
-  },
-  pluralizeTablesAssigned: (appState: AppState) => {
-    return `table${Helpers.tablesAssigned(appState).length === 1 ? '' : 's'}`
-  },
-  pluralizeTablesAvailable: (appState: AppState) => {
-    return `table${Helpers.tablesAvailable(appState).length === 1 ? '': 's'}`
-  },
-  pluralizeGuestsWaiting: (appState: AppState) => {
-    return `guest${appState.guestList.length === 1 ? '' : 's'}`;
-  },
-  showTableListCards: (appState: AppState) => {
-    return appState.adminSettings.showTableListCards;
-  },
-  debug: (obj: any) => {
-    if (SystemConfig.DEBUG) {
-      console.log(obj);
-    }
-  }
+  formatDate: (date: number) => dayjs(date).format(DAYJS_DATE_FORMAT),
+  formatDay: (date: number) => dayjs(date).format(DAYJS_DAY_FORMAT),
+  formatTime: (date: number) => dayjs(date).format(DAYJS_TIME_FORMAT),
+  percentTablesAssigned: (appState: AppState) => Math.round(Helpers.tablesAssigned(appState).length / Helpers.tables(appState).length * 100),
+  percentTablesAvailable: (appState: AppState) => Math.round(Helpers.tablesAvailable(appState).length / Helpers.tables(appState).length * 100),
+  pluralizeTablesAssigned: (appState: AppState) => `table${Helpers.tablesAssigned(appState).length === 1 ? '' : 's'}`,
+  pluralizeTablesAvailable: (appState: AppState) => `table${Helpers.tablesAvailable(appState).length === 1 ? '': 's'}`,
+  pluralizeGuestsWaiting: (appState: AppState) => `guest${appState.guestList.length === 1 ? '' : 's'}`,
+  showTableListCards: (appState: AppState) => appState.adminSettings.showTableListCards,
+  debug: (obj: any) => SystemConfig.DEBUG && console.log(obj),
 }
