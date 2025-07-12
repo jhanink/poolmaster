@@ -94,8 +94,11 @@ export default function TableList() {
   const fragmentTables = () => {
     return (
       <div className={`${columnItemListStyles}`}>
-        {tables
-          .filter((table) => table.guest && (TABLE_EXPAND_ALL || (!Helpers.showTableListCards(APP_STATE) ? table.id === SELECTED_TABLE?.id : true)))
+        {Helpers.tablesAssigned(APP_STATE)
+          .filter((table) => TABLE_EXPAND_ALL
+            || (!Helpers.showTableListCards(APP_STATE) ? table.id === SELECTED_TABLE?.id : true)
+            || Helpers.isExpiredVisit(table.guest)
+          )
           .sort((A: TableItem, B: TableItem) => {
             if (!Helpers.isExpiredVisit(A.guest) && Helpers.isExpiredVisit(B.guest)) {
               return -1;
