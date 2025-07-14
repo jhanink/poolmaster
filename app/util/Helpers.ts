@@ -229,6 +229,9 @@ export const Helpers = {
     const NOW = Date.now();
     return (NOW - startTime) >= EXPIRED_VISIT_HOURS;
   },
+  isEmptyListData: (appState: AppState) => {
+    return !Helpers.hasGuests(appState) && !Helpers.tablesAssigned(appState).length;
+  },
   tableRateSuffix: (tableRate: TableRate) => {
     const temp = [];
     if (!tableRate.tableRateRules.isChargePerPlayer) {

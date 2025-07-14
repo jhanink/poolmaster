@@ -128,7 +128,7 @@ export default function AppHeader() {
           </div>
         )}
         {(SELECTED_LIST_FILTER !== 'tablelist') && (
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center md:text-lg">
             <div className="flex items-center">
               <div className={`${SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
                 <span className={`${statusPillStyles} decoration-none border-0`}>
@@ -136,17 +136,17 @@ export default function AppHeader() {
                 </span>
               </div>
             </div>
-            <div className="mt-2 md:mt-1 text-gray-500 text-xs">Ave - <span className="text-gray-300 text-xs">{Helpers.averageWaitTime(APP_STATE)}</span></div>
+            <div className="mt-2 text-gray-500 text-xs">Ave - <span className="text-gray-300 text-xs">{Helpers.averageWaitTime(APP_STATE)}</span></div>
           </div>
         )}
         {(SELECTED_LIST_FILTER !== ListFilterTypeEnum.WAITLIST) && (
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center md:text-lg">
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
               <span className={`${statusPillStyles}`}>
                 {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
               </span>
             </div>
-            <div className="mt-2 md:mt-1 text-gray-500 text-xs"> &nbsp; Open - <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
+            <div className="mt-2 text-gray-500 text-xs"> &nbsp; Open - <span className="text-gray-300 text-xs">{Helpers.tablesAvailable(APP_STATE).length}</span></div>
           </div>
         )}
         {!QUIET_MODE && (

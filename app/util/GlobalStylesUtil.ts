@@ -54,7 +54,7 @@ export const labelStyles = `text-sm text-gray-400 mr-2`;
 export const separatorBarStyles = `border-transparent border-t-gray-900 h-0`;
 
 export const columnBorders = `${FeatureFlags.SHOW_MAIN_SWIMLANES && 'md:border border-gray-900 rounded-xl mx-auto md:mx-0'}`;
-export const mainListSwimLaneHeader = `sticky bg-gray-900 top-[-1px] z-9 md:flex hidden border-b border-gray-950 p-2 text-xl items-center text-slate-400 rounded-t-xl`;
+export const mainListSwimLaneHeader = `sticky bg-gray-900 top-[-1px] z-9 md:flex hidden border-b border-gray-950 p-2 text-lg items-center text-slate-400 rounded-t-xl`;
 export const mainColumnStyles = `flex-1 text-center select-none min-w-[345px] max-w-[450px] ${columnBorders}`;
 export const mainColumnContentStyles = `mt-3 px-1 md:px-2`;
 export const columnItemListStyles = `flex flex-col gap-2`;

@@ -102,7 +102,7 @@ export default function AdminTables(props: {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {TABLES.map((table: TableItem, index: number) => (
-          <div className={`${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
+          <div className={`!px-2 ${table.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={table.id}>
             <div className={`${ROW}`}>
               <div
                 className={`mr-2 ${!!table.forDelete && 'text-rose-500 hover:text-red-800'} ${!!table.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}

@@ -131,11 +131,11 @@ export default function AdminUsageTypes(props: {
       </div>
       <div className={`${ADMIN_CONTENT}`}>
         {USAGE_TYPES.map((usageType: UsageType, index: number) => (
-          <div className={`!px-3 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM} !px-0`} key={usageType.id}>
+          <div className={`!px-2 ${usageType.isActive? `${borderColor}`:'!border-gray-500 border-dashed opacity-50'} ${ITEM}`} key={usageType.id}>
             <div className={`${ROW}`}>
               {(usageType.id !== DEFAULT_ID) && (
                 <div
-                  className={`mr-2 ${!!usageType.forDelete && 'text-rose-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
+                  className={`${!!usageType.forDelete && 'text-rose-500 hover:text-red-800'} ${!!usageType.forAdd && 'text-green-500 hover:text-green-800'} ${actionIconStyles}`}
                   onClick={(event) => {onClickForDeleteItem(usageType)}}>
                   <TrashIcon></TrashIcon>
                 </div>
@@ -146,7 +146,7 @@ export default function AdminUsageTypes(props: {
                 </span>
               )}
               {usageType.id !== DEFAULT_ID && (
-                <span>{index+1}</span>
+                <span className="ml-2">{index+1}</span>
               )}
               <div className={`text-nowrap ${!!usageType.forDelete && 'text-rose-500'} ${!!usageType.forAdd && 'text-green-500'}`}>
                 <input
