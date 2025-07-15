@@ -110,7 +110,7 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="text-center" ref={PageTopRef}>
+    <div className="text-center select-none" ref={PageTopRef}>
       {fragmentExitTakeover(onClickExit, {fragmentCallbackFn: fragmentMenu, appState: APP_STATE})}
         <div className="flex flex-col items-center justify-center">
           <AdminAccount ref={menuItems1[0].ref}/>
