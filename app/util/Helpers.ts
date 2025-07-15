@@ -59,7 +59,6 @@ export const Helpers = {
     return (match.isActive && match) || appState.rateSchedules[0];
   },
   getMeteredDay: (appState: AppState, tableRate: TableRate, guest: Guest) => {
-    const debug = Helpers.debug;
     const assignedAt = dayjs(guest.assignedAt);
     const closedOutAt = dayjs(guest.closedOutAt);
     const businessDay = Helpers.getBusinessDay(appState, guest.assignedAt);
@@ -77,7 +76,7 @@ export const Helpers = {
       _ = daySchedule.end.split(':');
       T.end =  dayjs().subtract(appState.businessDayOffsetHours, 'hours').hour(Number(_[0])).minute(Number(_[1]));
       /*
-        CASES
+        Window Scenarios
           1. [] < start
           2. [ < start < ] < end
           3. [ < start < end < ]
@@ -146,9 +145,9 @@ export const Helpers = {
       if (T.assignedAt.isAfter(T.end)) {
         T.windowScenario = 6;
         T.after = {
-          hours: T.end.diff(T.start, 'hours', true),
+          hours: T.closedOutAt.diff(T.assignedAt, 'hours', true),
           rate: daySchedule.rateAfter,
-          elapsed: Helpers.timeElapsed(T.start, T.end).durationHoursDecimal3,
+          elapsed: Helpers.timeElapsed(T.assignedAt, T.closedOutAt).durationHoursDecimal3,
         };
       }
     }
@@ -290,4 +289,6 @@ export const Helpers = {
   pluralizeGuestsWaiting: (appState: AppState) => `guest${appState.guestList.length === 1 ? '' : 's'}`,
   showTableListCards: (appState: AppState) => appState.adminSettings.showTableListCards,
   debug: (obj: any) => SystemConfig.DEBUG && console.log(obj),
+  isDebug: () => SystemConfig.DEBUG,
+  isDebugUI: () => SystemConfig.DEBUG_UI,
 }

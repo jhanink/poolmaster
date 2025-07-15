@@ -303,6 +303,9 @@ export default function TableCloseout() {
                       {['before', 'during', 'after'].map((period, index) => {
                         return showMeteredPeriod(METERED_DAY[period]) &&  (
                           <div key={index}>
+                            {Helpers.isDebugUI() && (
+                              <div className="text-xs text-yellow-500">period: {period}</div>
+                            )}
                             <div className="px-1 inline-block">
                               <div className="text-xs text-gray-500 w-[90px] text-center">HOURS</div>
                               <input
