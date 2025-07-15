@@ -21,6 +21,12 @@ export default function GuestList() {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full gap-3">
+          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
+            <PlusIcon></PlusIcon>
+          </div>
+          <div className="grow">
+            <span>Waitlist: <span className="text-gray-300 ml-2">{APP_STATE.guestList.length}</span></span>
+          </div>
           {GUEST_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
               <ArrowsPointingInIcon></ArrowsPointingInIcon>
@@ -30,12 +36,6 @@ export default function GuestList() {
               <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
             </div>
           )}
-          <div className="grow">
-            <span>Waitlist: <span className="text-gray-300 ml-2">{APP_STATE.guestList.length}</span></span>
-          </div>
-          <div className="text-gray-500 size-6 hover:cursor-pointer hover:text-white" onClick={() => {setMainTakeover({addGuest: true})}}>
-            <PlusIcon></PlusIcon>
-          </div>
         </div>
       </div>
     </>)

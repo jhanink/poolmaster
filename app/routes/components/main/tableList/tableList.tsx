@@ -71,6 +71,12 @@ export default function TableList() {
     return FeatureFlags.SHOW_MAIN_SWIMLANES && (<>
       <div className={`${mainListSwimLaneHeader}`}>
         <div className="flex items-center w-full">
+          <div className="text-transparent size-5">
+            <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
+          </div>
+          <div className="grow">
+            <span>Tables: <span className="text-gray-300 ml-2">{Helpers.tablesAssigned(APP_STATE).length}</span></span>
+          </div>
           {TABLE_EXPAND_ALL ? (
             <div className="size-5 hover:cursor-pointer text-sky-500" onClick={() => {onClickExpandAll()}}>
               <ArrowsPointingInIcon></ArrowsPointingInIcon>
@@ -80,12 +86,6 @@ export default function TableList() {
               <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
             </div>
           )}
-          <div className="grow">
-            <span>Tables: <span className="text-gray-300 ml-2">{Helpers.tablesAssigned(APP_STATE).length}</span></span>
-          </div>
-          <div className="text-transparent size-5">
-            <ArrowsPointingOutIcon></ArrowsPointingOutIcon>
-          </div>
         </div>
       </div>
     </>)
