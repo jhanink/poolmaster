@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {EXPIRED_VISIT_HOURS, SyntheticTableTypeAny, SystemConfig, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
+import {EXPIRED_ASSIGNED_HOURS, EXPIRED_VISIT_HOURS, SyntheticTableTypeAny, SystemConfig, WEEK_DAYS, type AppState, type BillablePlayer, type ExtraPlayer,
   type Guest, type MeteredDay, type MeteredTime, type PlayerRateRules,
   type ScheduleEntry, type TableItem, type TableRate, type TableRateRules
 } from "~/config/AppState";
@@ -226,7 +226,7 @@ export const Helpers = {
     const startTime = guest.assignedAt || guest.createdAt;
     if (!startTime) return false;
     const NOW = Date.now();
-    return (NOW - startTime) >= EXPIRED_VISIT_HOURS;
+    return (NOW - startTime) >= (guest.assignedAt ? EXPIRED_ASSIGNED_HOURS : EXPIRED_VISIT_HOURS);
   },
   isEmptyListData: (appState: AppState) => {
     return !Helpers.hasGuests(appState) && !Helpers.tablesAssigned(appState).length;
