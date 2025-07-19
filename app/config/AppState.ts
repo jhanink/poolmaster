@@ -13,6 +13,12 @@ export const EXPIRED_ASSIGNED_HOURS = 1000 * 60 * 60 * 20;
 
 export const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+export const POS_PROVIDERS = [{
+  id: 1,
+  key: 'PROVIDER_SQUARE',
+  name: 'Square',
+}];
+
 export const FeatureFlags = {
   SHOW_RESERVATIONS: false,
   SHOW_MAIN_SWIMLANES: true,
@@ -59,6 +65,14 @@ export interface Account {
   password: string,
   createdAt: number,
   modifiedAt?: number,
+}
+
+export interface POSIntegration {
+  apiKey: string,
+}
+
+export interface SquareIntegration extends POSIntegration  {
+
 }
 
 export interface Guest {
