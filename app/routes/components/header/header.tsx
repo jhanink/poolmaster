@@ -128,7 +128,7 @@ export default function AppHeader() {
           </div>
         )}
         {(SELECTED_LIST_FILTER !== 'tablelist') && (
-          <div className="flex flex-col items-center justify-center md:text-lg">
+          <div className="flex flex-col items-center justify-center md:text-base">
             <div className="flex items-center">
               <div className={`${SELECTED_LIST_FILTER === ListFilterTypeEnum.WAITLIST && selectedFilterStyle} ${filterStyle} !mx-1 text-blue-600`} onClick={(event) => onClickListFilter('waitlist')}>
                 <span className={`${statusPillStyles} decoration-none border-0`}>
@@ -140,7 +140,7 @@ export default function AppHeader() {
           </div>
         )}
         {(SELECTED_LIST_FILTER !== ListFilterTypeEnum.WAITLIST) && (
-          <div className="flex flex-col items-center justify-center md:text-lg">
+          <div className="flex flex-col items-center justify-center md:text-base">
             <div className={`${SELECTED_LIST_FILTER === 'tablelist' && selectedFilterStyle} ${filterStyle} !mx-1 text-green-500`} onClick={(event) => onClickListFilter('tablelist')}>
               <span className={`${statusPillStyles}`}>
                 {Helpers.tablesAssigned(APP_STATE).length} <span className="ml-1 capitalize">Active - {Helpers.percentTablesAssigned(APP_STATE)}%</span>
