@@ -8,6 +8,7 @@ nohup.out
 
 # App
 /fileStorage/app_state_file*
+/fileStorage/app_members_file*
 
 # Playwright
 node_modules/

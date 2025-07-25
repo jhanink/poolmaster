@@ -67,6 +67,32 @@ export interface Account {
   modifiedAt?: number,
 }
 
+export interface Member {
+  id: string,
+  name: string,
+  first_name: string,
+  last_name: string,
+  phone_numnber: string,
+  email: string,
+  photo_file: string;
+  createdAt: number,
+  modifiedAt?: number,
+}
+
+export interface Membership {
+  id: string,
+  name: string,
+  description: string,
+  discount_id: string,
+}
+
+export interface Discount {
+  id: string,
+  name: string,
+  description: string,
+}
+export interface Discounts {}
+
 export interface POSIntegration {
   apiKey: string,
 }
