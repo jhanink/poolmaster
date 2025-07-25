@@ -9,6 +9,9 @@ nohup.out
 # App
 /fileStorage/app_state_file*
 /fileStorage/app_members_file*
+/fileStorage/members/*
+!/fileStorage/members/
+!/fileStorage/members/.empty
 
 # Playwright
 node_modules/
