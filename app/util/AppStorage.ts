@@ -7,6 +7,7 @@ export interface AppStorageInterface {
   deleteGuestRemote(guestId: number): Promise<AppState>;
   assignToTableRemote: (data: {tableId: number, guestId: number, assignedAt: number}) => Promise<AppState>;
   toggleDarkModeRemote: (isDarkModeEnabled: boolean) => Promise<AppState>;
+  getMembersRemote: () => Promise<AppState>;
 }
 
 export const AppStorage: AppStorageInterface = {
@@ -27,6 +28,9 @@ export const AppStorage: AppStorageInterface = {
   },
   setAppStateRemote: async (newAppState: AppState): Promise<AppState> => {
     return await requestPOST(newAppState, '/services/storage');
+  },
+  getMembersRemote: async (): Promise<AppState> => {
+    return await requestGET('/services/members');
   },
 };
 
