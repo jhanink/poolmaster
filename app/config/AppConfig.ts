@@ -9,3 +9,4 @@ const projectRoot = path.resolve('.');
 
 // Construct the path to the state file relative to the project root
 export const appStateFilePath = path.join(projectRoot, '/fileStorage/app_state_file.json');
+export const membersFilePath = path.join(projectRoot, '/fileStorage/members/members_file.json');

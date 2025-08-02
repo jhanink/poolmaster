@@ -6,4 +6,5 @@ export default [
   route("/services/delete-guest", "server/deleteGuestService.server.ts"),
   route("/services/save-guest", "server/saveGuestService.server.ts"),
   route("/services/storage", "server/storageService.server.ts"),
+  route("/services/members", "server/membersService.server.ts"),
 ] satisfies RouteConfig;
