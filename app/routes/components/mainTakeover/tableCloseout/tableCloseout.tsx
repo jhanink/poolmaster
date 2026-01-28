@@ -95,7 +95,7 @@ export default function TableCloseout() {
   const getPlayerTotal = (player: BillablePlayer) => {
     if (SCHEDULE) {
       const totalHours = Number(player.hours);
-      if (totalHours <= 1) {
+      if (SELECTED_RATE.tableRateRules.isOneHourMinimum && (totalHours <= 1)) {
         return Number(player.meteredDay.rate1hrMin);
       }
       return getMeterTotal(player);
