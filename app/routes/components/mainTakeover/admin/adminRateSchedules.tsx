@@ -243,9 +243,9 @@ export default function AdminRateSchedules(props: {
                           className={`${formInputStyles} ${INPUT_FIELD}`}
                           type="number"
                           step="0.01"
-                          value={rateSchedule.entries[day].rate1hrMin}
+                          value={rateSchedule.entries[day].rate1HrMin}
                           onChange={(event) => {
-                            rateSchedule.entries[day].rate1hrMin = event.target.value;
+                            rateSchedule.entries[day].rate1HrMin = event.target.value;
                             setRateSchedules([...RATE_SCHEDULES]);
                           }}
                         />
